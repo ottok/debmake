@@ -1,0 +1,19 @@
+debmake for Debian
+------------------
+
+The debmake command is helper script to generate basic Debian packaging files
+using debhelper version 9 or newer.  See TUTORIAL and debmake(1) for more.
+
+The debmake command is written in python and is intended to replace functions
+offered by deb-make and dh_make commands.
+
+The author thanks previous efforts on this topic:
+
+ * debmake: 1996-1997 Christoph Lameter <clameter@debian.org>
+            1997-2006 Santiago Vila <sanvila@debian.org>
+            command: deb-make, version up to 3.8         (shell script)
+ * dh-make: 1998-2012 Craig Small <csmall@debian.org>
+            command: dh_make                             (perl script)
+
+ -- Osamu Aoki <osamu@debian.org>  Thu, 09 May 2013 22:40:49 +0900
+

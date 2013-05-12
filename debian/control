@@ -1,0 +1,31 @@
+Source: debmake
+Section: devel
+Priority: extra
+Maintainer: Osamu Aoki <osamu@debian.org>
+Build-Depends: debhelper (>=9), python3-all
+Standards-Version: 3.9.4
+Homepage: http://git.debian.org/?p=collab-maint/debmake.git
+Vcs-Git: git://git.debian.org/collab-maint/debmake.git
+Vcs-Browser: http://git.debian.org/?p=collab-maint/debmake.git
+X-Python3-Version: >= 3.2
+
+Package: debmake
+Architecture: any
+Multi-Arch: foreign
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${python:Depends}, python3
+Description: helper script to make the Debian source package
+ This package helps you to convert a upstream source package (or VCS contents)
+ into the Debian package by adding files required for the Debian source 
+ package.  The generated debian/rules file uses the new dh command syntax from
+ the debhelper (>=9) package.
+ .
+ The debmake command invoked in the upstream source tree without any option
+ can generate template files which is good enough to create a single arch=any
+ Debian binary package for local use.  The generated files should be edited to
+ make it conform to the Debian policy if the package is uploaded to the Debian
+ archive.  By adding few options, this command can generate template files for
+ the arbitrary combination of the multi-binary and multi-arch package, etc.
+ .
+ This debmake command also scans copyright and license texts in the source
+ files to help crafting the proper DEP-5 compatible debian/copyright file.

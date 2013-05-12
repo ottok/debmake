@@ -1,0 +1,38 @@
+Experimental featurs of debmake
+-------------------------------
+
+Experimental features of debmake described here may change in future.
+
+Notes
+-----
+
+The standard option arguments of the -b are:
+
+ -b package[:type],... or --binaryspec package[:type],...
+
+Here the optional type values and their defaults may be:
+
+    type    Architecture    Multi-arch
+    all     all		        foreign     (all is always foreign)
+    any     any		        foreign
+    any     any             same        (if package name starts with "lib")
+    foreign any             foreign
+    same    any             same
+
+There are additional experimental types:
+
+    type    Architecture    Multi-arch  Note
+    doc     all             foreign     (doc-base, install path)
+    data    all             foreign     (install path)
+    script  all             foreign     (manpages, install path)
+    perl    all             foreign     (dependency support, dh support)
+    python  all             foreign     (dependency support, dh support)
+    python3 all             foreign     (dependency support, dh support)
+    lib     any             same        (install path)
+    dev     any             same
+    dbg     any             same
+    bin     any             foreign     (manpages, install path)
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 12 May 2013 14:00:27 +0000
+
+vim: ts=4 sts=4 et:

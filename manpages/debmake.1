@@ -1,0 +1,145 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" see man(7), man(1)
+.TH DEBMAKE "1" "May 2013" "4.0" "User Commands"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics,
+.\" respectively.
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+debmake \- program to make the Debian source package
+.SH SYNOPSIS
+.B debmake 
+[\fB\-h\fP] [\fB\-a\fP \fIupstream\-version.orig.tar.gz\fP | \fB\-d\fP] [\fB\-p\fP \fIpackage_name\fP] [\fB\-u\fP \fIupstream_version\fP] [\fB\-r\fP \fIdebian_revision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP \fIpackage[:type]\fP] [\fB\-c\fP \fIlicense_file\fP] [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-i\fP] [\fB\-m\fP] [\fB\-n\fP] [\fB\-o\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-x\fP]
+
+.SH DESCRIPTION
+\fBdebmake\fP builds the Debian package from the upstream source.
+Normally, this is done as follows:
+.IP
+* The upstream tarball is downloaded as the \fIupstream\-version.tar.gz\fP file.
+.IP
+* The \fIupstream_version.orig.tar.gz\fP symlink is generated pointing to the upstream tarball.
+.IP
+(Please note that the underscore "\fB_\fP" is used between the upstream package name and the upstream version; and "\fBorig.\fP" is added to the start of the file extension.)
+.IP
+* It is untared to create many files under the \fIupstream\-version/\fP directory.
+.IP
+* \fBdebmake\fP is invoked in the \fIupstream\-version/\fP directory without any arguments.
+.IP
+* Files in the \fBupstream-version/debian/\fP directory are manually adjusted.
+.IP
+* \fBdpkg-buildpackage\fP is invoked in the \fIupstream\-version/\fP directory to make debian packages.
+.PP
+Most obvious option states and values are automatically set by \fBdebmake\fP as default and you do not need to use them for most cases.
+.PP
+\fBdebmake\fP can automate and customize these procedures by providing optional arguments.  For example, The \fB-b\fP option is needed for the multi-binary package.  Otherwise, a single arch=any binary package is generated. Unless \fB\-m\fP option is specified, \fBdebmake\fP builds the multi\-arch package.  Unless \fB\-o\fP option is specified, \fBdebmake\fP never overwrites existing files and is safe to run as many times.
+.PP
+Wrapper programs of \fBdpkg\-buildpackage\fP such as \fBdebuild\fP,  \fBpdebuild\fP may alternatively used to build Debian packages under the more controlled build environment.
+
+.SS "optional arguments:"
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+show this help message and exit.
+.TP
+\fB\-a\fR \fIupstream\-version.tar.gz\fP, \fB\-\-archive\fR \fIupstream\-version.tar.gz\fP
+use the upstream source tarball directly. (\fB\-p\fR, \fB\-u\fR, \fB\-z\fR: overridden)
+.IP
+The upstream tarball may be specified as \fIupstream\_version.orig.tar.gz\fP and; \fBtar.gz\fP for all cases may be \fBtar.bz2\fP, or \fBtar.xz\fP.
+.TP
+\fB\-d\fR, \fB\-\-dist\fR
+run "\fBmake dist\fR" equivalent first to generate upstream tarball and use it.
+.IP
+"\fBdebmake \-\-dist\fP" is run in the \fIupstream/\fP directory hosting the upstream VCS.
+.TP
+\fB\-p\fR \fIpackage_name\fP, \fB\-\-package\fR \fIpackage_name\fP
+set the Debian package name.
+.TP
+\fB\-u\fR \fIupstream_version\fP, \fB\-\-upstreamversion\fR \fIupstream_version\fP
+set the upstream package version.
+.TP
+\fB\-r\fR \fIdebian_revision\fP, \fB\-\-revision\fR \fIdebian_revision\fP
+set the Debian package revision.
+.TP
+\fB\-z\fR \fIextension\fP, \fB\-\-targz\fR \fIextension\fP
+set the tarball type,
+.IP
+\fIextension\fP=(\fBtar.gz\fP|\fBtar.bz2\fP|\fBtar.xz\fP)
+.TP
+\fB\-b\fR \fIpackage[:type],...\fP, \fB\-\-binaryspec\fR \fIpackage[:type],...\fP
+set binary package specs,
+.IP
+\fIpackage\fP=(\fB\-\fP|\fB\-doc\fP|\fB\-dev\fP|\fB\-common\fB|\fB\-bin\fP|\fB\-dbg\fP),
+.IP
+\fItype\fP=(\fBall\fP|\fBany\fP|\fBforeign\fP|\fBsame\fP)
+.IP
+Multiple binary file names can be specified by listing them all separated by "\fB,\fP".  For example, 2 binary packages \fBfoo\fP (arch=\fBany\fP) and \fBfoo\-doc\fP (arch=\fBall\fP) can be generated from the upstream source name \fBfoo\fP with \fB-d \-:any,\-doc:all\fP or \fB\-d foo:any,foo\-doc:all\fP.  Please note the way binary package names are abbreviated dropping the upstream source name.
+.TP
+\fB\-c\fR \fIlicense_file,...\fP, \fB\-\-copyright\fR \fIlicense_file,...\fP
+add formatted license text to the end of the \fBdebian/copyright\fP file holding license scan results
+.IP
+The default is add \fBCOPYING\fP and \fBLICENSE\fP and \fIlicense_file\fP needs to list only the additional file names all separated by "\fB,\fP".
+.TP
+\fB\-e\fR \fIfoo@example.org\fP, \fB\-\-email\fR \fIfoo@example.org\fP
+set e\-mail address.
+.IP
+The default is taken from the value of the environment variable \fB$DEBEMAIL\fP.  
+.TP
+\fB\-f\fR "\fIfirstname lastname\fP", \fB\-\-fullname\fR "\fIfirstname lastname\fP"
+set the fullname.
+.IP
+The default is taken from the value of the environment variable \fB$DEBFULLNAME\fP.  
+.TP
+\fB\-m\fR, \fB\-\-monoarch\fR
+force packages to be non\-multiarch.
+.TP
+\fB\-n\fR, \fB\-\-native\fR
+make a native source package without \fB.orig.tar.gz\fP.
+.IP
+The "\fB3.0 (quilt)\fP" format package is designed to neglect \fBdebian/*\fP files in the upstream tarball.  So creating the "\fB3.0 (quilt)\fP" format package using the simple tarball of the whole source (including \fBdebian/*\fP files) as the upstream tarball is generally better than creating the "\fB3.0 (native)\fP" package with the \fB-n\fP option.
+.TP
+\fB\-o\fR, \fB\-\-overwrite\fR
+overwrite existing configuration files.
+.TP
+\fB\-q\fR, \fB\-\-quitearly\fR
+quit early before creating files in the \fBdebian/\fP directory.
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+show version information.
+.TP
+\fB\-w\fR \fIaddon,...\fP, \fB\-\-with\fR \fIaddon,...\fP
+add extra arguments to the \fB\-\-with\fP option of the \fBdh\fP(1) command as \fIaddon\fP in \fBdebian/rules\fP.
+.IP
+\fIaddon\fP values are listed all separated by "\fB,\fP", e.g., "\fB\-w python2,autoreconf\fP".
+.IP
+For Autotools based packages, setting \fBautoreconf\fP as \fIaddon\fP forces to run "\fBautoreconf \-i \-v \-f\fP" for every package building.  Otherwise, \fBautotools\-dev\fP as \fIaddon\fP is used as default.
+.IP
+For Autotools based packages, if they install Python programs, \fBpython2\fP as \fIaddon\fP is needed since this is non-obvious.  But for \fBsetup.py\fP based packages, \fBpython2\fP as \fIaddon\fP is not needed since this is obvious and it is automatically set for the \fBdh\fP(1) command.
+.TP
+\fB\-x\fR, \fB\-\-extra\fR
+generate extra configuration files as templates.
+
+.SH REMINDERS
+The multi-binary package is usually generated as:
+.IP
+* Invoke \fBdebmake\fP with the \fB-b\fP option.
+.IP
+* Build the source by the "\fBmake DESTDIR=debian/tmp\fP" equivalent.
+.IP
+* Split the build result by copying them from "\fBdebian/tmp\fP" to "\fBdebian/\fP\fIbinpackagename\fP" by manually editing the \fBdebhelper\fP(7) config files such as  \fIbinpackagename\fP.install etc for each binary package \fIbinpackagename\fP.
+
+.SH AUTHOR
+Copyright \(co 2013 Osamu Aoki <osamu@debian.org>
+.SH LICENSE
+MIT License
+.SH "SEE ALSO"
+See also \fBdpkg\-buildpackage\fP(1) \fBdebuild\fP(1) and \fBpdebuild\fP(1) manpages and files in \fB/usr/share/doc/debmake/\fP.
+
+Learn basics of Debian packaging with the "Debian New Maintainers' Guide" at http://www.debian.org/doc/manuals/maint-guide/ or with the maint-guide package.

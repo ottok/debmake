@@ -1,0 +1,96 @@
+A short TUTORIAL for debmake
+----------------------------
+
+This is the new debmake program written in Python.  This provides convenient
+command to make a Debian package from the upstream VCS/archive/source.
+
+Reminder
+--------
+
+Please do not forget that making of package for distribution through Debian
+takes much more efforts than just compiling the source code into working
+set of installable binary files.  There are much more to it.
+
+Please read the basic Debian documentations and "Debian New Maintainers' Guide"
+as a starter and other important documents.
+
+ * http://www.debian.org/doc/devel-manuals#policy
+ * http://www.debian.org/doc/devel-manuals#devref
+ * http://www.debian.org/doc/devel-manuals#maint-guide
+
+The design guide line of debmake
+--------------------------------
+
+ * Keep it simple.
+ * Use the new dh syntax.  (No cdbs.)
+ * The basic ability of dh_make (and its predecessor deb-make) should be
+   covered.  (debmake intends to replace them.)
+ * The debmake command should require no or minimum arguments to do useful things.
+ * The debmake command should help reviewing of the license for all source files.
+ * The program structure should be friendly for adding the GUI.
+ * The native build system of the upstream source should be identified and
+   utilized.
+ * The debmake command should make it easy to create various combinations of
+   binary packages in multi-arch compatible ways.
+ * The debmake command should not overwrite existing files by default.
+ * The debmake command should not generate non-essential template files as default.
+
+The author thanks previous efforts on this topic:
+ * debmake: 1996-1997 Christoph Lameter <clameter@debian.org>
+            1997-2006 Santiago Vila <sanvila@debian.org>
+            command: deb-make, version up to 3.8
+ * dh-make: 1998-2012 Craig Small <csmall@debian.org>
+            command: dh_make
+
+(debmake package has debmake as its command and start from version 4.0)
+
+Typical use cases
+-----------------
+
+1. execute in the untared source tree
+
+ $ mkdir -p /path/to; cd /path/to
+ $ tar -xvzf upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debmake
+ $ debuild
+
+2. execute with the upstream tar-ball
+
+ $ mkdir -p /path/to; cd /path/to
+ $ debmake -a upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debuild
+
+3. execute in the upstream VCS ("make dist" with upstream version as 1.0~pre1)
+
+ $ cd /path/to/upstream-vcs
+ $ debmake -d -v 1.0~pre1
+ $ cd ../upstreampackage-1.0
+ $ debuild
+
+4. make a arch=all package only
+ $ cd /path/to/upstreampackage-1.0
+ $ debmake -b"-:all"
+ $ debuild
+ (Please note the binary package "-" means that it is the same as upstream source name.)
+
+5. make arch=any(foo) and all(foo-doc) packages
+ $ debmake -b"foo:any,foo-doc:all"
+ $ debuild
+
+6. make arch=any(foo) and all(foo-doc) packages (Autotool based, python code)
+ $ debmake -w python2 -b"foo:any,foo-doc:all"
+ $ debuild
+
+ (Please note binary package name such as lib* will make them arch=same.)
+
+The debuild command used to make Debian binary packages from the source package
+in the above examples may be substituted by the equivalent commands such as
+pdebuild.
+
+In order to get extra template files such as the one for the init script and
+manpages, please add the "-x" option to the debmake.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 20 Apr 2013 04:09:26 +0900
+
