@@ -13,8 +13,8 @@ The standard option arguments of the -b are:
 Here the optional type values and their defaults may be:
 
     type    Architecture    Multi-arch
-    all     all	            foreign     (all is always foreign)
-    any     any	            foreign
+    all     all		        foreign     (all is always foreign)
+    any     any		        foreign
     any     any             same        (if package name starts with "lib")
     foreign any             foreign
     same    any             same

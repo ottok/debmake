@@ -1,3 +1,9 @@
+debmake (4.0.0-2) unstable; urgency=low
+
+  * Fix architecture to be all. 
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 15 May 2013 20:53:29 +0900
+
 debmake (4.0.0-1) unstable; urgency=low
 
   * Initial release. Closes: #707601

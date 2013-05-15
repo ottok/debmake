@@ -14,6 +14,8 @@ PYTHON3 := $(filter-out $(PY3DEFAULT),$(PY3REQUESTED)) python3
 
 override_dh_auto_clean:
 	-rm -rf build
+	-rm -rf dist
+	-rm -rf debmake/__pycache__
 
 override_dh_auto_build:
 	set -ex; for python in $(PYTHON3); do \

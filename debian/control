@@ -10,7 +10,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/debmake.git
 X-Python3-Version: >= 3.2
 
 Package: debmake
-Architecture: any
+Architecture: all
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${python:Depends}, python3
