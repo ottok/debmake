@@ -26,6 +26,7 @@ override_dh_auto_install:
 	set -ex; for python in $(PYTHON3); do \
 	    $$python setup.py install \
 	        --root=debian/debmake\
+		--force\
 	        --install-layout=deb; \
 	done
 

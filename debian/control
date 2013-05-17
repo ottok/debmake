@@ -13,7 +13,7 @@ Package: debmake
 Architecture: all
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${python:Depends}, python3
+Depends: ${misc:Depends}, ${python3:Depends}
 Description: helper script to make the Debian source package
  This package helps you to convert a upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source 

@@ -1,3 +1,10 @@
+debmake (4.0.0-4) unstable; urgency=low
+
+  * Remove lintian-override.
+  * Fix build script. 
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 18 May 2013 06:31:04 +0900
+
 debmake (4.0.0-3) unstable; urgency=low
 
   * Add lintian-override based on Bug#708138.

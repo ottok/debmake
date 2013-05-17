@@ -1,0 +1,38 @@
+From: Osamu Aoki
+Description: Lessen from Bug#708138
+--- a/debmake/gen.py
++++ b/debmake/gen.py
+@@ -187,6 +187,7 @@
+ 	set -ex; for python in $(PYTHON3); do \\
+ 	    $$python setup.py install \\
+ 	        --root=''' + build_dir + '''\\
++	        --force\\
+ 	        --install-layout=deb; \\
+ 	done
+ '''
+--- a/debmake/src.py
++++ b/debmake/src.py
+@@ -657,19 +657,19 @@
+             if 'perl_makemaker' in para['dh_with']:
+                 dp.update({'${perl:Depends}', 'perl'})
+             if 'python2' in para['dh_with']:
+-                dp.update({'${python:Depends}', 'python'})
++                dp.update({'${python:Depends}'})
+             if 'python3' in para['dh_with']:
+-                dp.update({'${python:Depends}', 'python3'})
++                dp.update({'${python3:Depends}'})
+ 
+         if t == 'perl':
+             dp.update({'${perl:Depends}', 'perl'})
+             #para['dh_with'].update({'perl'})
+             print('W: no dh perl build support.  Maybe OK.', file=sys.stderr)
+         if t == 'python':
+-            dp.update({'${python:Depends}', 'python'})
++            dp.update({'${python:Depends}')
+             para['dh_with'].update({'python2'})
+         if t == 'python3':
+-            dp.update({'${python:Depends}', 'python3'})
++            dp.update({'${python3:Depends}')
+             para['dh_with'].update({'python3'})
+ 
+         rn.append({'package': p, 
