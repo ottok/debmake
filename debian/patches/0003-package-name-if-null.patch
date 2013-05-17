@@ -1,0 +1,12 @@
+Description: set package name only if it is null
++++ debmake-4.0.0/debmake/src.py
+@@ -176,7 +176,8 @@ def sanity(para):
+                 print('E: Need --upstreamversion (-u) for source directory {}.'.format(parent), file=sys.stderr)
+                 exit(1)
+             else:
+-                para['package'] = parent
++                if para['package'] == '':
++                    para['package'] = parent
+                 para['versionedsourcedir'] = False
+         #----------------------------------------------------------------------
+         # -d set
