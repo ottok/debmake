@@ -1,3 +1,11 @@
+debmake (4.0.1-1) unstable; urgency=low
+
+  * -a option with path fixed.
+  * use ${python3::Depends} for python3.
+  * Use anonscm.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 01 Jun 2013 09:31:47 +0900
+
 debmake (4.0.0-4) unstable; urgency=low
 
   * Remove lintian-override.
