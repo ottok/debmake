@@ -18,7 +18,7 @@
 debmake \- program to make the Debian source package
 .SH SYNOPSIS
 .B debmake 
-[\fB\-h\fP] [\fB\-a\fP \fIupstream\-version.orig.tar.gz\fP | \fB\-d\fP] [\fB\-p\fP \fIpackage_name\fP] [\fB\-u\fP \fIupstream_version\fP] [\fB\-r\fP \fIdebian_revision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP \fIpackage[:type]\fP] [\fB\-c\fP \fIlicense_file\fP] [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-i\fP] [\fB\-m\fP] [\fB\-n\fP] [\fB\-o\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-x\fP]
+[\fB\-h\fP] [\fB\-a\fP \fIupstream\-version.orig.tar.gz\fP | \fB\-d\fP | \fB\-t\fP ] [\fB\-p\fP \fIpackage_name\fP] [\fB\-u\fP \fIupstream_version\fP] [\fB\-r\fP \fIdebian_revision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP \fIpackage[:type]\fP] [\fB\-c\fP \fIlicense_file\fP] [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-i\fP] [\fB\-m\fP] [\fB\-n\fP] [\fB\-o\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-x\fP]
 
 .SH DESCRIPTION
 \fBdebmake\fP builds the Debian package from the upstream source.
@@ -58,6 +58,11 @@ The upstream tarball may be specified as \fIupstream\_version.orig.tar.gz\fP and
 run "\fBmake dist\fR" equivalent first to generate upstream tarball and use it.
 .IP
 "\fBdebmake \-\-dist\fP" is run in the \fIupstream/\fP directory hosting the upstream VCS.
+.TP
+\fB\-t\fR, \fB\-\-tar\fR
+run "\fBtar\fR" to generate upstream tarball and use it
+.IP
+"\fBdebmake \-\-tar\fP" is run in the \fIupstream/\fP directory hosting the VCS.  The generated tarball excludes the \fBdebian/\fP directory.
 .TP
 \fB\-p\fR \fIpackage_name\fP, \fB\-\-package\fR \fIpackage_name\fP
 set the Debian package name.

@@ -386,12 +386,76 @@ def sanity(para):
     return para
 
 ###########################################################################
+# assume in upstream VCS, try to make tar with tar --exclude=debian
+# para['package'] para['version'] para['targz'] were sanitized already
+###########################################################################
+def tar(para):
+    print('I: pwd = {}'.format(os.getcwd()), file=sys.stderr)
+    #######################################################################
+    # make distribution tar-ball using tar excluding debian/ directory
+    #######################################################################
+    print('I: Run tar to make {}'.format(basetargz(para)), file=sys.stderr)
+    if os.chdir('..'):
+        print('E: failed to cd to {}'.format('..'), file=sys.stderr)
+        exit(1)
+    else:
+        print('I: pwd = {}'.format(os.getcwd()), file=sys.stderr)
+    if os.path.isdir(basedir(para)):
+        print('E: directory {} exists.'.format(basedir(para)), file=sys.stderr)
+        exit(1)
+    # set cmd: move directory
+    cmd = 'mv ' + para['parent'] + ' ' + basedir(para) + ' && '
+    # set cmd: tar while excluding VCS and debian directories
+    if para['targz'] == 'tar.gz':
+        cmd += 'tar --exclude=debian --exclude-caches --exclude-vcs -cvzf '
+    elif para['targz'] == 'tar.bz2':
+        cmd += 'tar --bzip2 --exclude=debian --exclude-caches --exclude-vcs -cvf '
+    elif para['targz'] == 'tar.xz':
+        cmd += 'tar --xz --exclude=debian --exclude-caches --exclude-vcs -cvf '
+    else:
+        print('E: Should not be {}. (inisde --dist)'.format(para['targz']), file=sys.stderr)
+        exit(1)
+    # set cmd: tar file-tree tar-filename  && restore directory name
+    cmd += basetargz(para) + ' ' + basedir(para) + '&&' + 'mv ' + basedir(para) + ' ' + para['parent']
+    # execute cmd: move directory, tar , restore directory, cd back
+    if subprocess.call(cmd, shell=True) != 0:
+        print('E: make dist failed.', file=sys.stderr)
+        exit(1)
+    else:
+        print('I: "make dist ..." script run OK', file=sys.stderr)
+        print('I: {} tar-ball made'.format(para['archive']), file=sys.stderr)
+    if os.chdir(para['parent']):
+        print('E: failed to cd to {}'.format('..'), file=sys.stderr)
+        exit(1)
+    else:
+        print('I: pwd = {}'.format(os.getcwd()), file=sys.stderr)
+    distdir = ''
+    #######################################################################
+    # make debian orig.tar
+    #######################################################################
+    # cd ..
+    if os.chdir('..'):
+        print('E: failed to cd to {}'.format('..'), file=sys.stderr)
+        exit(1)
+    else:
+        print('I: pwd = {}'.format(os.getcwd()), file=sys.stderr)
+    # ln -f para['parent']/dist/foo-1.0.tar.gz foo_1.0.orig.tar.gz
+    fn1 = distdir + basetargz(para)
+    fn2 = origtargz(para)
+    command = 'ln -f ' + fn1 + ' ' + fn2
+    if subprocess.call(command, shell=True) != 0:
+        print('E: failed to create hardlink at {} pointing to {}'.format(fn2, fn1), file=sys.stderr)
+        exit(1)
+    else:
+        print('I: create hardlink at {}/{} pointing to {}'.format(os.getcwd(), fn2, fn1), file=sys.stderr)
+    para['archive'] = origtargz(para)
+    return para
+###########################################################################
 # assume in upstream VCS, try to make tar with the (s)dist target
 # para['package'] para['version'] para['targz'] were sanitized already
 ###########################################################################
 def dist(para):
     print('I: pwd = {}'.format(os.getcwd()), file=sys.stderr)
-    # -u
     #######################################################################
     # make distribution tar-ball using the Autotools
     #######################################################################

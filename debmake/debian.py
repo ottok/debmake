@@ -106,6 +106,12 @@ Argument may need to be quoted to protect from the shell.
             action = 'store_true', 
             default = False, 
             help = 'run "make dist" equivalent first to generate upstream tarball and use it')
+    sp.add_argument(
+            '-t', 
+            '--tar',
+            action = 'store_true', 
+            default = False, 
+            help = 'run "tar" to generate upstream tarball and use it')
     p.add_argument(
             '-p', 
             '--package', 
@@ -241,6 +247,7 @@ Argument may need to be quoted to protect from the shell.
     para['native']          = args.native       # -n
     para['overwrite']       = args.overwrite    # -o
     para['quitearly']       = args.quitearly    # -q
+    para['tar']             = args.tar          # -t
     para['extra']           = args.extra        # -x
     para['targz']           = args.targz        # -z
     ############################################# -w
@@ -264,6 +271,13 @@ Argument may need to be quoted to protect from the shell.
     print('I: sanity check of parameters', file=sys.stderr)
     para                    = debmake.src.sanity(para)
     debug_para('D: post-sanitize', para)
+#######################################################################
+# -t: Make tar (with "tar --exclude=debian" command)
+#######################################################################
+    if para['tar']:
+        print('I: make upstream with "tar"', file=sys.stderr)
+        para                = debmake.src.tar(para)
+        debug_para('D: post-dist', para)
 #######################################################################
 # -d: Make dist (with dist/sdist target)
 #######################################################################
