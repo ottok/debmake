@@ -3,7 +3,7 @@ debmake (4.0.1-1) unstable; urgency=low
   * -a option with path fixed.
   * use ${python3::Depends} for python3.
   * Use anonscm.
-  * Make Upstream tarball without the debian directory
+  * -t option to make Upstream tarball without the debian directory
 
  -- Osamu Aoki <osamu@debian.org>  Mon, 16 Sep 2013 21:12:30 +0900
 
