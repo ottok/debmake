@@ -1,7 +1,0 @@
-#!/bin/sh
-# vi:se ts=4 sts=4 et ai:
-if [ -x ./setup.py ]; then
-rm -rf build
-rm -rf dist
-rm -rf debmake/__pycache__
-fi
