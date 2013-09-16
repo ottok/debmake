@@ -478,7 +478,7 @@ def dist(para):
         exit(1)
         distdir = para['parent'] + '/dist/'
     #######################################################################
-    # make distribution tar-ball using tar
+    # make distribution tar-ball using tar excluding debian/ directory
     #######################################################################
     else:
         print('W: unsupported platform for --dist (-d). Run tar to make {}'.format(basetargz(para)), file=sys.stderr)
@@ -490,24 +490,27 @@ def dist(para):
         if os.path.isdir(basedir(para)):
             print('E: directory {} exists.'.format(basedir(para)), file=sys.stderr)
             exit(1)
+        # set cmd: move directory
         cmd = 'mv ' + para['parent'] + ' ' + basedir(para) + ' && '
-        # tar while excluding VCS
+        # set cmd: tar while excluding VCS and debian directories
         if para['targz'] == 'tar.gz':
-            cmd += 'tar --exclude-vcs -cvzf '
+            cmd += 'tar --exclude=debian --exclude-caches --exclude-vcs -cvzf '
         elif para['targz'] == 'tar.bz2':
-            cmd += 'tar --bzip2 --exclude-vcs -cvf '
+            cmd += 'tar --bzip2 --exclude=debian --exclude-caches --exclude-vcs -cvf '
         elif para['targz'] == 'tar.xz':
-            cmd += 'tar --xz --exclude-vcs -cvf '
+            cmd += 'tar --xz --exclude=debian --exclude-caches --exclude-vcs -cvf '
         else:
             print('E: Should not be {}. (inisde --dist)'.format(para['targz']), file=sys.stderr)
             exit(1)
-        # move directory, tar , restore directory, cd back
+        # set cmd: tar file-tree tar-filename  && restore directory name
         cmd += basetargz(para) + ' ' + basedir(para) + '&&' + 'mv ' + basedir(para) + ' ' + para['parent']
+        # execute cmd: move directory, tar , restore directory, cd back
         if subprocess.call(cmd, shell=True) != 0:
             print('E: make dist failed.', file=sys.stderr)
             exit(1)
         else:
             print('I: "make dist ..." script run OK', file=sys.stderr)
+            print('I: {} tar-ball made'.format(para['archive']), file=sys.stderr)
         if os.chdir(para['parent']):
             print('E: failed to cd to {}'.format('..'), file=sys.stderr)
             exit(1)
