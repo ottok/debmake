@@ -526,15 +526,15 @@ def dist(para):
         exit(1)
     else:
         print('I: pwd = {}'.format(os.getcwd()), file=sys.stderr)
-    # ln -sf para['parent']/dist/foo-1.0.tar.gz foo_1.0.orig.tar.gz
+    # ln -f para['parent']/dist/foo-1.0.tar.gz foo_1.0.orig.tar.gz
     fn1 = distdir + basetargz(para)
     fn2 = origtargz(para)
-    command = 'ln -sf ' + fn1 + ' ' + fn2
+    command = 'ln -f ' + fn1 + ' ' + fn2
     if subprocess.call(command, shell=True) != 0:
-        print('E: failed to create symlink at {} pointing to {}'.format(fn2, fn1), file=sys.stderr)
+        print('E: failed to create hardlink at {} pointing to {}'.format(fn2, fn1), file=sys.stderr)
         exit(1)
     else:
-        print('I: create symlink at {}/{} pointing to {}'.format(os.getcwd(), fn2, fn1), file=sys.stderr)
+        print('I: create hardlink at {}/{} pointing to {}'.format(os.getcwd(), fn2, fn1), file=sys.stderr)
     para['archive'] = origtargz(para)
     return para
 
