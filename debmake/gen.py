@@ -187,6 +187,7 @@ override_dh_auto_install:
 	set -ex; for python in $(PYTHON3); do \\
 	    $$python setup.py install \\
 	        --root=''' + build_dir + '''\\
+	        --force\\
 	        --install-layout=deb; \\
 	done
 '''
@@ -195,6 +196,7 @@ override_dh_auto_install:
     # write to file
     ###################################################################
     writefile(para, 'debian/rules', msg)
+    os.chmod('debian/rules', 0o755)
     return
 
 #######################################################################

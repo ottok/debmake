@@ -92,19 +92,24 @@ def sanity(para):
         if not os.path.isfile(para['archive']):
             print('E: Non-existing archive name {}'.format(para['archive']), file=sys.stderr)
             exit(1)
-        rebasetar = re.match(r'(.+)-([^-_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', para['archive'])
-        reorigtar = re.match(r'(.+)_([^-_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', para['archive'])
+        rebasetar = re.match(r'(.+)-([^-_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', os.path.basename(para['archive']))
+        reorigtar = re.match(r'(.+)_([^-_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', os.path.basename(para['archive']))
         if reorigtar:
             # Debian upstream tar-ball (most likely downloaded with dget)
             para['package'] = reorigtar.group(1)
             para['version'] = reorigtar.group(2)
             para['targz'] = reorigtar.group(3)
+            para['parchive'] = para['archive'][:-len(origtargz(para))]
+            if para['parchive'] != '' and para['parchive'] != './':
+                print('E: orig.tar should be in the current directory.. Remove {} from {}.'.format(para['parchive'], para['archive']), file=sys.stderr)
+                exit(1)
         elif rebasetar:
             # standard upstream tar-ball
             para['package'] = rebasetar.group(1)
             para['version'] = rebasetar.group(2)
             para['targz'] = rebasetar.group(3)
-            cmd = 'ln -sf ' + basetargz(para) + ' ' + origtargz(para)
+            para['parchive'] = para['archive'][:-len(origtargz(para))]
+            cmd = 'ln -sf ' + para['archive'] + ' ' + origtargz(para)
             print('I: {}'.format(cmd), file=sys.stderr)
             if subprocess.call(cmd, shell=True) != 0:
                 print('E: failed to generate symlink.', file=sys.stderr)
@@ -176,7 +181,8 @@ def sanity(para):
                 print('E: Need --upstreamversion (-u) for source directory {}.'.format(parent), file=sys.stderr)
                 exit(1)
             else:
-                para['package'] = parent
+                if para['package'] == '':
+                    para['package'] = parent
                 para['versionedsourcedir'] = False
         #----------------------------------------------------------------------
         # -d set
@@ -191,8 +197,8 @@ def sanity(para):
     para['section'] = 'unknown'
     para['priority'] = 'extra'
     para['homepage'] = '<insert the upstream URL, if relevant>'
-    para['vcsvcs'] = 'git://git.debian.org/collab-maint/' + para['package'] + '.git'
-    para['vcsbrowser'] = 'http://git.debian.org/?p=collab-maint/' + para['package'] + '.git'
+    para['vcsvcs'] = 'git://anonscm.debian.org/collab-maint/' + para['package'] + '.git'
+    para['vcsbrowser'] = 'http://anonscm.debian.org/gitweb/?p=collab-maint/' + para['package'] + '.git'
     #######################################################################
     # Binary package name and specification: binaryspec -> debs
     #######################################################################
@@ -656,19 +662,19 @@ def analyze(para):
             if 'perl_makemaker' in para['dh_with']:
                 dp.update({'${perl:Depends}', 'perl'})
             if 'python2' in para['dh_with']:
-                dp.update({'${python:Depends}', 'python'})
+                dp.update({'${python:Depends}'})
             if 'python3' in para['dh_with']:
-                dp.update({'${python:Depends}', 'python3'})
+                dp.update({'${python3:Depends}'})
 
         if t == 'perl':
             dp.update({'${perl:Depends}', 'perl'})
             #para['dh_with'].update({'perl'})
             print('W: no dh perl build support.  Maybe OK.', file=sys.stderr)
         if t == 'python':
-            dp.update({'${python:Depends}', 'python'})
+            dp.update({'${python:Depends}'})
             para['dh_with'].update({'python2'})
         if t == 'python3':
-            dp.update({'${python:Depends}', 'python3'})
+            dp.update({'${python3:Depends}'})
             para['dh_with'].update({'python3'})
 
         rn.append({'package': p, 

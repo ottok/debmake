@@ -1,5 +1,0 @@
-debmake (4.0.0-1) unstable; urgency=low
-
-  * Initial release. Closes: #707601
-
- -- Osamu Aoki <osamu@debian.org>  Sat, 11 May 2013 12:36:02 +0900
