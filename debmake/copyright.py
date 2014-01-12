@@ -1,14 +1,15 @@
 #!/usr/bin/python3
-# vim: set sts=4 expandtab:
+# vim:se tw=0 sts=4 ts=4 et ai:
 """
-Copyright © 2013 Osamu Aoki
+Copyright © 2014 Osamu Aoki
 
 Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
@@ -21,9 +22,13 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-import sys, os, re, operator, argparse, glob
-import debmake.debian
-
+import glob
+import operator
+import os
+import re
+import subprocess
+import sys
+import debmake.debug
 ###################################################################
 # Define constants
 ###################################################################
@@ -52,6 +57,8 @@ SKIP_FILES = [
         'mkinstalldirs',
         'py-compile'
 ]       # Skip these files for scanning
+
+# First 2 are specified by --license
 
 ###################################################################
 # Emulate C's enum by function enums
@@ -99,14 +106,14 @@ regex_copyright_exclusion_0 = re.compile(r'''(
 regex_copyright_1 = re.compile(r'''
                 (?P<marker>\*+|/\*|\#+|//|dnl\s|--|@c|\.\\"|%|;;)
                 # C, C++, Shell, m4, Lua, info, man comment, tex
-                (\s|written\s+by\s)*                        # possible leader
+                (\s|written\s+by\s+)*                        # possible leader
                 (?P<copyright>(Copyright|\(C\)|©).*)        # copyright mark
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: copyright line with quotes
 regex_copyright_2 = re.compile(r'''
                 .*(?P<q1>["'])                          # quote opening
-                (\s|\\t|written\s+by\s)*                # possible leader
+                (\s+|\t+|written\s+by\s+)?                # possible leader
                 (?P<copyright>(Copyright|\(C\)|©)[^"']+)    # copyright text
                 (?P=q1)                                     # quote closing
                 ''', re.IGNORECASE | re.VERBOSE)
@@ -114,14 +121,14 @@ regex_copyright_2 = re.compile(r'''
 # re.match: copyright line with quotes (cont)
 regex_copyright_continue_2 = re.compile(r'''
                 .*(?P<q1>["'])                          # quote opening
-                (\s|\\t|written\s+by\s)*                # possible leader
+                (\s+|\t+|written\s+by\s+)?                # possible leader
                 (?P<copyright>[^"']+)                       # continued copyright text
                 (?P=q1)                                     # quote closing
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: copyright line in plain text
 regex_copyright_3 = re.compile(r'''
-                (written\s+by\s)?                       # possible leader
+                (\s+|\t+|written\s+by\s+)?                # possible leader
                 (?P<copyright>(Copyright|\(C\)|©|\\\(co)\s.+)  # Copyright mark
                 ''', re.IGNORECASE | re.VERBOSE)
 
@@ -146,7 +153,7 @@ regex_license = re.compile(r'''(
                 .*See.*legal\s+use|
                 .*See.*distribution\s+rights)''', re.IGNORECASE | re.VERBOSE)
 
-# re.match: move autheor from license to copyright
+# re.match: move author from license to copyright
 regex_license_copyright = re.compile(r'''(
                 written\s+by\s                         # possible leader
                 )''', re.IGNORECASE | re.VERBOSE)
@@ -208,7 +215,7 @@ def check_line(line, section, style, marker):
     lmarker = len(marker)
     copyright_line = ''
     license_line = ''
-    debmake.debian.debug('D: <- section {}, style {}, line {}'.format(section, style, line))
+    debmake.debug.debug('D: <- section {}, style {}, line {}'.format(section, style, line), type='i')
 
     # drop useless line section       
     line = regex_allrightreserved.sub('', line)
@@ -338,7 +345,7 @@ def check_line(line, section, style, marker):
         print('E: Section should be valid {}'.format(section), file=sys.stderr)
         exit(1)
 
-    debmake.debian.debug('D: -> section {}, style {}, line {}'.format(section, style, line))
+    debmake.debug.debug('D: -> section {}, style {}, line {}'.format(section, style, line), type='o')
 
     return (copyright_line, license_line, section, style, marker)
 
@@ -507,6 +514,7 @@ def check_all_license(files, encoding='utf-8'):
         exit(1)
     data = []
     for file in files:
+        debmake.debug.debug('D: *** {} ***'.format(file), type='f')
         if os.path.isfile(file):
             parts = check_license(file, encoding=encoding)
             if len(parts) == 0:
@@ -641,11 +649,11 @@ def scan_copyright_data():
     return (bdata, nonlink_files, binary_files, huge_files)
 
 #######################################################################
-# license text files (glob cased on --copyright)
+# license text files (glob files specified by --license)
 #######################################################################
-def license_files(para): 
-    f = set([])
-    for fx in para['copyright']:
+def license_files(files): 
+    f = set()
+    for fx in files:
         f.update(set(glob.glob(fx)))
     return f
 
@@ -666,9 +674,89 @@ def license_text(file, encoding='utf-8'):
             for line in fd.readlines():
                 lines.append(line.rstrip())
     return format_license(lines)
+
+#######################################################################
+# main program
+#######################################################################
+def copyright(package_name, license_file_masks):
+    # get scan result of copyright
+    (bdata, nonlink_files, binary_files, huge_files) = scan_copyright_data()
+    # make text to print
+    text = '''\
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: {}
+Source: <url://example.com>
+
+'''.format(package_name)
+    for bd in bdata:
+        text += '#----------------------------------------------------------------------------\n'
+        # Copyright:
+        text += 'Copyright:'
+        for name in bd[2].keys():
+            # name found
+            if bd[2][name][0] == bd[2][name][1]:
+                if bd[2][name][1] == 0: # max == 0 for binary etc.
+                    text += ' {}\n'.format(name)    # XXXXX FIXME
+                else:
+                    text += ' {} {}\n'.format(bd[2][name][0], name)
+            else:
+                if bd[2][name][1] == 0: # max == 0 means not found
+                    text += ' {}\n'.format(name)
+                else:
+                    text += ' {}-{} {}\n'.format(bd[2][name][0], bd[2][name][1], name)
+        # Files:
+        text += 'Files: {}\n'.format('\n\t'.join(bd[1]))
+        # licensecheck(1):
+        command = 'licensecheck '+ bd[1][0]
+        p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        for line in p.stdout.readlines():
+            text += '# licensecheck(1): ' + line.decode('utf-8').strip() + '\n'
+        if p.wait() != 0:
+            print('E: "{}" returns "{}"'.format(command, retval), file=sys.stderr)
+            exit(1)
+        # License:
+        if bd[3] == []:
+            text += 'License: NO_LICENSE_TEXT_FOUND\n\n'
+        else:
+            text += 'License:\n {}\n'.format(format_license(bd[3]))
+        # add comments
+        if bd[4] != '':
+            text += '#............................................................................\n'
+            text += '# Gray hits with matching text of "copyright":\n'
+            text += bd[4]
+    if binary_files != []:
+        text += '#----------------------------------------------------------------------------\n'
+        text += '# Binary files (skipped):\n# {}\n\n'.format('\n# '.join(binary_files))
+    if huge_files != []:
+        text += '#----------------------------------------------------------------------------\n'
+        text += '# Huge files   (skipped):\n# {}\n\n'.format('\n# '.join(huge_files))
+    text += '''\
+#----------------------------------------------------------------------------
+# This is meant only as a template example.
+#
+# Edit this accordinng to the "Machine-readable debian/copyright file" as
+# http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ .
+#
+# Generate typical license templates with the "debmake -c" to STDOUT
+# and merge them into here as needed.  See "man 8 debmake" for more.
+#
+# licensecheck(1) from the devscripts package is used here to determin
+# the name of the license that applies.
+#
+# Please avoid to pick license terms that are more restrictive than the
+# packaged work, as it may make Debian's contributions unacceptable upstream.
+
+'''
+    for f in license_files(license_file_masks):
+        text += '#----------------------------------------------------------------------------\n'
+        text += '# License: {}\n'.format(f)
+        text += license_text(f)
+        text += '\n'
+
+    return text
+
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    main()
-
+    print(copyright('foo', {'LICENSE*', 'COPYRIGHT'}))
