@@ -1,4 +1,4 @@
-debmake (4.0.2-1) UNRELEASED; urgency=medium
+debmake (4.0.2-1) unstable; urgency=medium
 
   * split source files into smaller files.
     - copyright.py still needs to be worked on.
@@ -6,7 +6,7 @@ debmake (4.0.2-1) UNRELEASED; urgency=medium
   * -o dropped because we do not do it.
   * -y added to confirm before deleting the source tree.
 
- -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 10:38:24 +0900
+ -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 17:33:19 +0900
 
 debmake (4.0.1-1) unstable; urgency=low
 
