@@ -71,6 +71,8 @@ Debian:
 Non-Debian POSIX system with Python3 (user: ~/.local)
  $ python3 setup.py install --user
 
+ ($PATH should include ~/.local/bin )
+
 Non-Debian POSIX system with Python3 (system: /usr/local)
  $ sudo python3 setup.py install
 

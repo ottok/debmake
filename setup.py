@@ -17,7 +17,8 @@ setup(name=__programname__,
     package_dir={__programname__: __programname__},
     scripts=['scripts/' + __programname__ ],
     data_files=[
-        ('share/debmake/extra', glob.glob('extra/*')),
+        ('share/debmake/extra', glob.glob('extra/*.ex')),
+        ('share/debmake/extra/license-examples', glob.glob('extra/license-examples/*')),
         ('share/doc/debmake', glob.glob('doc/*')),
         ],
     classifiers = ['Development Status :: 3 - Alpha',
@@ -30,7 +31,7 @@ setup(name=__programname__,
         'Topic :: Utilities',
     ],
     platforms   = 'POSIX',
-    license     = 'GNU General Public License v2 or later (GPLv2+)'
+    license     = 'MIT License'
 )
 
 
