@@ -7,7 +7,7 @@ command to make a Debian package from the upstream VCS/archive/source.
 Reminder
 --------
 
-Please do not forget that making of package for distribution through Debian
+Please do not forget that making of the package for the Debain distribution
 takes much more efforts than just compiling the source code into working
 set of installable binary files.  There are much more to it.
 
@@ -17,32 +17,6 @@ as a starter and other important documents.
  * http://www.debian.org/doc/devel-manuals#policy
  * http://www.debian.org/doc/devel-manuals#devref
  * http://www.debian.org/doc/devel-manuals#maint-guide
-
-The design guide line of debmake
---------------------------------
-
- * Keep it simple.
- * Use the new dh syntax.  (No cdbs.)
- * The basic ability of dh_make (and its predecessor deb-make) should be
-   covered.  (debmake intends to replace them.)
- * The debmake command should require no or minimum arguments to do useful things.
- * The debmake command should help reviewing of the license for all source files.
- * The program structure should be friendly for adding the GUI.
- * The native build system of the upstream source should be identified and
-   utilized.
- * The debmake command should make it easy to create various combinations of
-   binary packages in multi-arch compatible ways.
- * The debmake command should not overwrite existing files by default.
- * The debmake command should not generate non-essential template files as default.
-
-The author thanks previous efforts on this topic:
- * debmake: 1996-1997 Christoph Lameter <clameter@debian.org>
-            1997-2006 Santiago Vila <sanvila@debian.org>
-            command: deb-make, version up to 3.8
- * dh-make: 1998-2012 Craig Small <csmall@debian.org>
-            command: dh_make
-
-(debmake package has debmake as its command and start from version 4.0)
 
 Typical use cases
 -----------------
@@ -62,10 +36,21 @@ Typical use cases
  $ cd upstreampackage-1.0
  $ debuild
 
-3. execute in the upstream VCS ("make dist" with upstream version as 1.0~pre1)
+3. execute in the upstream isource tree (usually in VCS)
+
+* upstream source tree supporting "make dist"
+ 
+ $ cd /path/to/upstream-vcs
+ $ debmake -d
+ $ cd ../upstreampackage-1.0
+ $ debuild
+
+* upstream source tree supporting quasi-native Debain package.
+  (This is in the same format as native package except for the version number
+   in the changelog which always ends with the Debian revision -1.)
 
  $ cd /path/to/upstream-vcs
- $ debmake -d -v 1.0~pre1
+ $ debmake -t
  $ cd ../upstreampackage-1.0
  $ debuild
 
@@ -87,10 +72,32 @@ Typical use cases
 
 The debuild command used to make Debian binary packages from the source package
 in the above examples may be substituted by the equivalent commands such as
-pdebuild.
+pdebuild run with the cowbuilder backend.
 
-In order to get extra template files such as the one for the init script and
-manpages, please add the "-x" option to the debmake.
+7. scan source to check copyright+license text
 
- -- Osamu Aoki <osamu@debian.org>  Sat, 20 Apr 2013 04:09:26 +0900
+ $ cd /path/to/upstream
+ $ debmake -c |less
 
+8. Get more template files
+
+ * use "-x0" option to add only minimal templates to the source package.
+
+ * use "-x1" option to add all typical templates to the source package
+   with existing debian/* for a single binary package.
+
+ * use "-x2" option to add all typical templates to the source package
+   with existing debian/* for multi binary packages.
+
+ * use "-x3" option to add specialized templates (dh_make compatibility)
+   - prerm
+   - preinst
+   - postinst
+   - postrm
+   - init script and default
+   - manpages
+
+ * use "-x4" option to add specialized templates for the typical 
+   copyright file examples.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 07:21:13 +0000

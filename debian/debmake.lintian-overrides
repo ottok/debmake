@@ -1,0 +1,6 @@
+debmake: extra-license-file usr/share/debmake/extra/license-examples/Artistic-1.0
+debmake: extra-license-file usr/share/debmake/extra/license-examples/GPL-2.0+
+debmake: extra-license-file usr/share/debmake/extra/license-examples/GPL-3.0+
+debmake: extra-license-file usr/share/debmake/extra/license-examples/LGPL-2.1+
+debmake: extra-license-file usr/share/debmake/extra/license-examples/LGPL-3.0+
+

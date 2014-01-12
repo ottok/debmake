@@ -1,3 +1,13 @@
+debmake (4.0.2-1) unstable; urgency=medium
+
+  * split source files into smaller files.
+    - copyright.py still needs to be worked on.
+  * -x[01234] supported
+  * -o dropped because we do not do it.
+  * -y added to confirm before deleting the source tree.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 17:33:19 +0900
+
 debmake (4.0.1-1) unstable; urgency=low
 
   * -a option with path fixed.

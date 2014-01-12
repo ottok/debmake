@@ -22,12 +22,8 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
-import debmake.debian, os
+import debmake
 
 if __name__ == '__main__':
-    # /usr/bin/debmake -> base_path = /usr
-    base_path = os.path.dirname(
-                os.path.dirname(
-                os.path.realpath(__file__)))
-    debmake.debian.main(base_path)
+    debmake.main()
 
