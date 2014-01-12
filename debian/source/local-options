@@ -1,4 +1,3 @@
-#### Uncomment some of the following lines if you wish :-) See dpkg-source(1)
-#unapply-patches
-#abort-on-upstream-changes
+unapply-patches
+abort-on-upstream-changes
 

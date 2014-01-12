@@ -41,6 +41,7 @@ The author thanks previous efforts on this topic:
  * dh-make: 1998-2012 Craig Small <csmall@debian.org>
             command: dh_make
 
-(debmake package has debmake as its command and start from version 4.0)
+This new debmake package has debmake as its command and starts from 
+version 4.0 to avoid version overlap.
 
  -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 07:21:13 +0000

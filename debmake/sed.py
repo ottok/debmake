@@ -22,31 +22,45 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+import glob
 import os
 import sys
+import debmake.cat
 #######################################################################
-# cat >file
-def cat(file, text, append=False, end='\n'):
-    if append:
-        with open(file, 'a') as f:
-            print(text, file=f, end=end)
-            print('I: File appended: {}'.format(file), file=sys.stderr)
-    else:
-        if os.path.isfile(file) and os.stat(file).st_size != 0:
-            # skip if a file exists and non-zero content
-            print('I: File already exits, skipping: {}'.format(file), file=sys.stderr)
-            return
-        path = os.path.dirname(file)
-        if path:
-            os.makedirs(path, exist_ok=True)
-        with open(file, 'w') as f:
-            print(text, file=f, end=end)
-            print('I: File written: {}'.format(file), file=sys.stderr)
+def sed(srcdir, destdir, substlist, package, mask='*'):
+    ###################################################################
+    # srcdir:    source directory with / at the end
+    # destdir:   destination directory with / at the end
+    # substlist: substitution dictionary
+    # package:   binary package name
+    # mask:      source file mask for glob. Usually, *
+    ###################################################################
+    lsrcdir = len(srcdir)
+    for file in glob.glob(srcdir + mask):
+        with open(file, 'r') as f:
+            text = f.read()
+        for k in substlist.keys():
+            text = text.replace(k, substlist[k])
+        if file[lsrcdir:lsrcdir+7] == 'package':
+            newfile = destdir + package + file[lsrcdir+7:]
+        else:
+            newfile = destdir + file[lsrcdir:]
+        debmake.cat.cat(newfile, text)
     return
 
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    print('no test')
+    substlist = {
+        '@PACKAGE@': 'package',
+        '@UCPACKAGE@': 'package'.upper(),
+        '@YEAR@': '2014',
+        '@FULLNAME@': 'fullname',
+        '@EMAIL@': 'email@example.org',
+        '@SHORTDATE@': '11 Jan. 2013',
+    }
+    print(sed('/share/debmake/extra2/', 'debian/', substlist, 'packagename'))
+    print(sed('/share/debmake/extra3/', 'debian/', substlist), 'packagename')
+    print(sed('/share/debmake/extra4/', 'debian/copyright-example/', substlist, 'packagename'))
 

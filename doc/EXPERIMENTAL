@@ -1,4 +1,4 @@
-Experimental featurs of debmake
+Experimental features of debmake
 -------------------------------
 
 Experimental features of debmake described here may change in future.
@@ -19,19 +19,21 @@ Here the optional type values and their defaults may be:
     foreign any             foreign
     same    any             same
 
-There are additional experimental types:
+Multi-arch "allowed" packages needs to be manually generated.
+
+There are additional experimental types: (Not yet implemented.)
 
     type    Architecture    Multi-arch  Note
-    doc     all             foreign     (doc-base, install path)
-    data    all             foreign     (install path)
-    script  all             foreign     (manpages, install path)
-    perl    all             foreign     (dependency support, dh support)
-    python  all             foreign     (dependency support, dh support)
-    python3 all             foreign     (dependency support, dh support)
-    lib     any             same        (install path)
-    dev     any             same
-    dbg     any             same
-    bin     any             foreign     (manpages, install path)
+    doc     all             foreign     (install)
+    data    all             foreign     (install)
+    script  all             foreign     (install *)
+    perl    all             foreign     (install *, dependency, dh)
+    python  all             foreign     (install *, dependency, dh)
+    python3 all             foreign     (install *, dependency, dh)
+    lib     any             same        (install)
+    dev     any             same        (install)
+    dbg     any             same        (install)
+    bin     any             foreign     (install *)
 
  -- Osamu Aoki <osamu@debian.org>  Sun, 12 May 2013 14:00:27 +0000
 

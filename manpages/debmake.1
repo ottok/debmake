@@ -11,7 +11,7 @@
 .\" .br        insert line break
 .\" .sp <n>    insert n+1 empty lines
 .\" TeX users may be more comfortable with the \fB<whatever>\fP and
-.\" \fI<whatever>\fP escape sequences to invode bold face and italics,
+.\" \fI<whatever>\fP escape sequences to invoke bold face and italics,
 .\" respectively.
 .\" for manpage-specific macros, see man(7)
 .SH NAME
@@ -133,15 +133,15 @@ generate extra configuration files as templates.
 .IP
 The number \fIn\fP changes which configuration templates are generated.
 .IP
-\fB\-x0\fR : bare minimum. (default if these files exist already)
+\fB\-x0\fR : bare minimum files. (default if these files exist already)
 .IP
-\fB\-x1\fR : typical templates. (default for new packages)
+\fB\-x1\fR : ,, + desirable files. (default for new packages)
 .IP
-\fB\-x2\fR : multi binary package templates. (default for new multi binary packages)
+\fB\-x2\fR : ,, + interesting files. (recommended for expert)
 .IP
-\fB\-x3\fR : special templates with their file names ending with the \fB.ex\fP suffix. (post/pre/rm/inst, ...) This is recommended for new users.
+\fB\-x3\fR : ,, + unusual files with the \fB.ex\fP suffix. (recommended for new users)
 .IP
-\fB\-x4\fR : copyright file examples.
+\fB\-x4\fR : ,, + copyright file examples.
 .TP
 \fB\-y\fR, \fB\-\-yes\fR
 force "yes" for all prompts.
