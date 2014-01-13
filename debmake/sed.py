@@ -27,24 +27,24 @@ import os
 import sys
 import debmake.cat
 #######################################################################
-def sed(srcdir, destdir, substlist, package, mask='*'):
+def sed(confdir, destdir, substlist, package, mask='*'):
     ###################################################################
-    # srcdir:    source directory with / at the end
+    # confdir:   configuration file directory with / at the end
     # destdir:   destination directory with / at the end
     # substlist: substitution dictionary
     # package:   binary package name
     # mask:      source file mask for glob. Usually, *
     ###################################################################
-    lsrcdir = len(srcdir)
-    for file in glob.glob(srcdir + mask):
+    lconfdir = len(confdir)
+    for file in glob.glob(confdir + mask):
         with open(file, 'r') as f:
             text = f.read()
         for k in substlist.keys():
             text = text.replace(k, substlist[k])
-        if file[lsrcdir:lsrcdir+7] == 'package':
-            newfile = destdir + package + file[lsrcdir+7:]
+        if file[lconfdir:lconfdir+7] == 'package':
+            newfile = destdir + package + file[lconfdir+7:]
         else:
-            newfile = destdir + file[lsrcdir:]
+            newfile = destdir + file[lconfdir:]
         debmake.cat.cat(newfile, text)
     return
 

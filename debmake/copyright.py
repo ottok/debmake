@@ -69,19 +69,22 @@ def enums(**enums):
 ###################################################################
 # Define constants with enums
 ###################################################################
-Style = enums(unknown=0, lead=1, quote=2, plain=3, irregular=4)
+Style = enums(unknown=0, comment=1, quote=2, plain=3, irregular=4)
+stylestr = ('??', '//', '/*', '__', 'XX')
+
 Section = enums(outside=0, copyright=1, license=2)
+sectionstr = ('outside ', 'copyright', 'license ')
 
 ###################################################################
 # Regular expressions
 ###################################################################
 # re.search: copyright line
-regex_copyright_0 = re.compile(r'''
+re_copyright_mark = re.compile(r'''
                 (Copyright|\(C\)|©|\\\(co)\s              # Copyright mark
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.search: exclusion of C MACRO, copyright holder, ...
-regex_copyright_exclusion_0 = re.compile(r'''(
+re_fake_copyright_mark = re.compile(r'''(
                 [=?]|
                 \S\(C\)|
                 if\s\(C\)|
@@ -102,38 +105,38 @@ regex_copyright_exclusion_0 = re.compile(r'''(
                 )''', re.IGNORECASE | re.VERBOSE)
 
 ###################################################################
-# re.match: copyright line with leader characters
-regex_copyright_1 = re.compile(r'''
+# re.match: copyright line with comment characters
+re_copy_in_comment = re.compile(r'''
                 (?P<marker>\*+|/\*|\#+|//|dnl\s|--|@c|\.\\"|%|;;)
                 # C, C++, Shell, m4, Lua, info, man comment, tex
-                (\s|written\s+by\s+)*                        # possible leader
+                (\s|written\s+by\s+)*                        # possible comment
                 (?P<copyright>(Copyright|\(C\)|©).*)        # copyright mark
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: copyright line with quotes
-regex_copyright_2 = re.compile(r'''
+re_copy_in_quote = re.compile(r'''
                 .*(?P<q1>["'])                          # quote opening
-                (\s+|\t+|written\s+by\s+)?                # possible leader
+                (\s+|\t+|written\s+by\s+)?                # possible quote 
                 (?P<copyright>(Copyright|\(C\)|©)[^"']+)    # copyright text
                 (?P=q1)                                     # quote closing
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: copyright line with quotes (cont)
-regex_copyright_continue_2 = re.compile(r'''
+re_copy_in_quote_continue = re.compile(r'''
                 .*(?P<q1>["'])                          # quote opening
-                (\s+|\t+|written\s+by\s+)?                # possible leader
+                (\s+|\t+|written\s+by\s+)?                # possible plain text 
                 (?P<copyright>[^"']+)                       # continued copyright text
                 (?P=q1)                                     # quote closing
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: copyright line in plain text
-regex_copyright_3 = re.compile(r'''
-                (\s+|\t+|written\s+by\s+)?                # possible leader
+re_copy_in_plaintext = re.compile(r'''
+                (\s+|\t+|written\s+by\s+)?                # possible plain text
                 (?P<copyright>(Copyright|\(C\)|©|\\\(co)\s.+)  # Copyright mark
                 ''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: start of license
-regex_license = re.compile(r'''(
+re_license = re.compile(r'''(
                 this\s+is|
                 this\s+program|
                 this\s+software|
@@ -154,12 +157,12 @@ regex_license = re.compile(r'''(
                 .*See.*distribution\s+rights)''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: move author from license to copyright
-regex_license_copyright = re.compile(r'''(
+re_license_copyright = re.compile(r'''(
                 written\s+by\s                         # possible leader
                 )''', re.IGNORECASE | re.VERBOSE)
 
 # re.match: end of copyright/license
-regex_end = re.compile(r'''(
+re_end = re.compile(r'''(
                 .*\*+/|                                 # no */ in line
                 .*[=?_]|                                # no = ? _ in line
                 """|\'\'\'|                             # python block comment
@@ -175,26 +178,26 @@ regex_end = re.compile(r'''(
 
 ###################################################################
 # re.sub: drop "All Rights Reserved"
-regex_allrightreserved = re.compile(r'''(
+re_allrightreserved = re.compile(r'''(
                 All\s+Rights\s+Reserved[.,]?                 # possible leader
                 )''', re.IGNORECASE | re.VERBOSE)
 
 # re.sub: \co -> ©
-regex_co = re.compile(r'\\\(co')
+re_co = re.compile(r'\\\(co')
 
 # re.sub: .bp -> ''
-regex_bp = re.compile(r'\.bp', re.IGNORECASE)
+re_bp = re.compile(r'\.bp', re.IGNORECASE)
 
 # re.sub: tailing and -> ,
-regex_and = re.compile(r',?\s+and$', re.IGNORECASE)
+re_and = re.compile(r',?\s+and$', re.IGNORECASE)
 
 # re.sub: copyright
-regex_copyright = re.compile(r'''Copyright|\(C\)|©''', 
+re_copyright = re.compile(r'''Copyright|\(C\)|©''', 
         re.IGNORECASE | re.VERBOSE)
 
-regex_year = re.compile(r'\d\d+')
+re_year = re.compile(r'\d\d+')
 
-regex_year_section = re.compile(r'((\d\d+)[ ,-]*)')
+re_year_section = re.compile(r'((\d\d+)[ ,-]*)')
 
 ###################################################################
 # Check if binary file
@@ -215,52 +218,51 @@ def check_line(line, section, style, marker):
     lmarker = len(marker)
     copyright_line = ''
     license_line = ''
-    debmake.debug.debug('D: <- section {}, style {}, line {}'.format(section, style, line), type='i')
-
+    debmake.debug.debug('D: {} {} {}'.format(sectionstr[section], stylestr[style], line), type='i')
     # drop useless line section       
-    line = regex_allrightreserved.sub('', line)
+    line = re_allrightreserved.sub('', line)
 
     if section == Section.outside: # if outside
        
         # if no copyright is found, skip
-        if not regex_copyright_0.search(line):
-            return (copyright_line, license_line, section, style, marker)
+        if not re_copyright_mark.search(line):
+            pass
        
         # if not really copyright line, skip
-        if regex_copyright_exclusion_0.search(line):
-            return (copyright_line, license_line, section, style, marker)
-       
-        section = Section.copyright
-        r1 = regex_copyright_1.match(line)
-        r2 = regex_copyright_2.match(line)
-        r3 = regex_copyright_3.match(line)
-        if r1: # if lead
-            marker = r1.group('marker')
-            line = r1.group('copyright')
-            style = Style.lead
-        elif r2: # if quote
-            line = r2.group('copyright')
-            style = Style.quote
-        elif r3: # if plain
-            line = r3.group('copyright')
-            line = regex_co.sub('©', line)
-            style = Style.plain
-        else: # if irregular
-            style = Style.irregular
-       
-        # normalize style (tailing "and" to ",")
-        line = regex_and.sub(',', line)
-       
-        copyright_line = line
+        elif re_fake_copyright_mark.search(line):
+            pass
+
+        else:
+            section = Section.copyright
+            r1 = re_copy_in_comment.match(line)
+            r2 = re_copy_in_quote.match(line)
+            r3 = re_copy_in_plaintext.match(line)
+            if r1: # if comment
+                marker = r1.group('marker')
+                line = r1.group('copyright')
+                style = Style.comment
+            elif r2: # if quote
+                line = r2.group('copyright')
+                style = Style.quote
+            elif r3: # if plain
+                line = r3.group('copyright')
+                line = re_co.sub('©', line)
+                style = Style.plain
+            else: # if irregular
+                style = Style.irregular
+           
+            # normalize style (tailing "and" to ",")
+            line = re_and.sub(',', line)
+           
+            copyright_line = line
        
     elif section == Section.copyright:
-        if style == Style.lead:
+        if style == Style.comment:
             if len(line) == 0:
                 pass
             elif marker[-1:] == '*' and len(line) > 1 and line[:2] == '*/':
                 style = Style.unknown
                 section = Section.outside
-                return (copyright_line, license_line, section, style, marker)
             elif len(line) >= lmarker and line[:lmarker] == marker:
                 line =  line[lmarker:].strip()  # un-boxed
             elif marker == '/*' and line[0] == '*':
@@ -268,43 +270,40 @@ def check_line(line, section, style, marker):
             else:
                 style = Style.unknown
                 section = Section.outside
-                return (copyright_line, license_line, section, style, marker)
         elif style == Style.quote:
-            rx2 = regex_copyright_continue_2.match(line)
+            rx2 = re_copy_in_quote_continue.match(line)
             if rx2:
                 line = rx2.group('copyright')
             else:
                 style = Style.unknown
                 section = Section.outside
-                return (copyright_line, license_line, section, style, marker)
         elif style == Style.plain:
-            line = regex_co.sub('©', line)
-            regex_bp.sub('', line)
+            line = re_co.sub('©', line)
+            re_bp.sub('', line)
         elif style == Style.irregular:
-            line = regex_co.sub('©', line)
-            line = regex_bp.sub('', line)
+            line = re_co.sub('©', line)
+            line = re_bp.sub('', line)
         else: # Style.unknown should not be here
             print('E: Style.unknown should not come to Section.copyright', file=sys.stderr)
             exit(1)
         #
-        if regex_end.match(line):
-            style = Style.unknown
-            section = Section.outside
-            return (copyright_line, license_line, section, style, marker)
-        if line =='' or regex_license.match(line):
-            section = Section.license
-            license_line = line
-        else:
-            copyright_line = line
+        if section != Section.outside:
+            if re_end.match(line):
+                style = Style.unknown
+                section = Section.outside
+            elif line =='' or re_license.match(line):
+                section = Section.license
+                license_line = line
+            else:
+                copyright_line = line
        
     elif section == Section.license:
-        if style == Style.lead:
+        if style == Style.comment:
             if len(line) == 0:
                 pass
             elif marker[-1:] == '*' and len(line) > 1 and line[:2] == '*/':
                 style = Style.unknown
                 section = Section.outside
-                return (copyright_line, license_line, section, style, marker)
             elif len(line) >= lmarker and line[:lmarker] == marker:
                 line =  line[lmarker:].lstrip()  # un-boxed
             elif marker == '/*' and line[0] == '*':
@@ -312,40 +311,45 @@ def check_line(line, section, style, marker):
             else:
                 style = Style.unknown
                 section = Section.outside
-                return (copyright_line, license_line, section, style, marker)
 
         elif style == Style.quote:
-            rx2 = regex_copyright_continue_2.match(line)
+            rx2 = re_copy_in_quote_continue.match(line)
             if rx2:
                 line = rx2.group('copyright')
             else:
                 style = Style.unknown
                 section = Section.outside
-                return (copyright_line, license_line, section, style, marker)
         elif style == Style.plain:
-            line = regex_bp.sub('', line)
+            line = re_bp.sub('', line)
         elif style == Style.irregular:
-            line = regex_bp.sub('', line)
+            line = re_bp.sub('', line)
         else: # Style.unknown should not be here
             print('E: Style.unknown should not come to  Section.license', file=sys.stderr)
             exit(1)
         #
-        if regex_end.match(line):
-            style = Style.unknown
-            section = Section.outside
-            return (copyright_line, license_line, section, style, marker)
-
-        if regex_license_copyright.match(line):
-            section = Section.copyright
-            copyright_line = line
-        else:
-            license_line = line
+        if section != Section.outside:
+            if re_end.match(line):
+                style = Style.unknown
+                section = Section.outside
+            elif re_license_copyright.match(line):
+                section = Section.copyright
+                copyright_line = line
+            else:
+                license_line = line
        
     else:
-        print('E: Section should be valid {}'.format(section), file=sys.stderr)
+        print('E: Section should be valid {}'.format(sectionstr[section]), file=sys.stderr)
         exit(1)
 
-    debmake.debug.debug('D: -> section {}, style {}, line {}'.format(section, style, line), type='o')
+    if section == Section.outside:
+        debmake.debug.debug('D: {} {} {}'.format(sectionstr[section], stylestr[style], line), type='o')
+    elif section == Section.copyright:
+        debmake.debug.debug('D: {} {} {}'.format(sectionstr[section], stylestr[style], line), type='c')
+    elif section == Section.license:
+        debmake.debug.debug('D: {} {} {}'.format(sectionstr[section], stylestr[style], line), type='l')
+    else:
+        print('E: Section invalid.', file=sys.stderr)
+        exit(1)
 
     return (copyright_line, license_line, section, style, marker)
 
@@ -463,10 +467,10 @@ def analyze_license(copyright_lines, license_lines):
     line = ''
     for line_new in copyright_lines:
         line_new = line_new.strip()
-        if regex_copyright.match(line_new):
+        if re_copyright.match(line_new):
             if line != '':
                 lines.append(line)
-            line = regex_copyright.sub('', line_new).strip()
+            line = re_copyright.sub('', line_new).strip()
         else:
             line = ' '.join([line, line_new])
     if line != '':
@@ -476,13 +480,13 @@ def analyze_license(copyright_lines, license_lines):
     for line in copyright_lines:
         year_min = 9999
         year_max = 0
-        for year_string in regex_year.findall(line):
+        for year_string in re_year.findall(line):
             year = int(year_string)
             if year < year_min:
                 year_min = year
             if year > year_max:
                 year_max = year
-        name = regex_year_section.sub('', line).strip()
+        name = re_year_section.sub('', line).strip()
         if name in copyright_data.keys():
             (year0_min, year0_max) = copyright_data[name]
             copyright_data[name] = merge_year_span(year0_min, year0_max, year_min, year_max)
@@ -514,7 +518,7 @@ def check_all_license(files, encoding='utf-8'):
         exit(1)
     data = []
     for file in files:
-        debmake.debug.debug('D: *** {} ***'.format(file), type='f')
+        debmake.debug.debug('D: section  ??     *** {} ***'.format(file), type='f')
         if os.path.isfile(file):
             parts = check_license(file, encoding=encoding)
             if len(parts) == 0:

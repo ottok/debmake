@@ -103,37 +103,34 @@ def guess_vcsbrowser(vcsbrowser):
 
 #######################################################################
 def control_bin(para, deb):
+    # non M-A
     if para['monoarch']:
-        msg = '''\
-Package: {0}
-Architecture: {1}
-Depends: {2}
-Description: {3}
-{4}
-'''.format(
-            deb['package'],
-            deb['arch'],
-            ',\n\t'.join(deb['depends']),
-            deb['desc'],
-            deb['desc_long'])
+        multiarch = ''
+        predepends = ''
+    # M-A + lib (pre-depends line)
+    elif deb['pre-depends']:
+        multiarch = 'Multi-Arch: ' + deb['multiarch'] + '\n'
+        predepends = 'Pre-Depends; ' + ',\n\t'.join(deb['pre-depends']) + '\n'
+    # M-A + non-lib
     else:
-        msg = '''\
+        multiarch = 'Multi-Arch: ' + deb['multiarch'] + '\n'
+        predepends = ''
+
+    ###################################################################
+    return '''\
 Package: {0}
 Architecture: {1}
-Multi-Arch: {2}
-Pre-Depends: {3}
-Depends: {4}
+{2}{3}Depends: {4}
 Description: {5}
 {6}
 '''.format(
             deb['package'],
             deb['arch'],
-            deb['multiarch'],
-            ',\n\t'.join(deb['pre-depends']),
+            multiarch,
+            predepends,
             ',\n\t'.join(deb['depends']),
             deb['desc'],
             deb['desc_long'])
-    return msg
 
 #######################################################################
 # Test script

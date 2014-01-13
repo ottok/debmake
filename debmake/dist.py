@@ -31,10 +31,11 @@ import sys
 # dist: called from debmake.main()
 ###########################################################################
 # package   = package
+# version   = version (if quasi-native or -u used)
 # targz     = tar.gz
 # parent    = parent directory name
 ###########################################################################
-def dist(package, targz, parent):
+def dist(package, version, targz, parent):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     #######################################################################
     # make distribution tarball using the Autotools
@@ -108,9 +109,17 @@ def dist(package, targz, parent):
     files1 = glob.glob(distpackage)
     files2 = glob.glob(somepackage)
     if files1:
-        version = files1[0][len(pre):-len(post)]
+        packageversion = files1[0][len(pre):-len(post)]
+        if version =='':
+            version = packageversion
+        elif version == packageversion:
+            pass
+        else:
+            print('E: generated tarball version "{}" (in "{}").'.format(packageversion, distpackage), file=sys.stderr)
+            print('E: expected version  "{}" (specified by -u option or debian/changelog).'.format(version), file=sys.stderr)
+            exit(1) 
         tarball = package + '-' + version + post
-        print('I: {}-{}.{} tarball made'.format(package, version, targz), file=sys.stderr)
+        print('I: {} tarball made'.format(tarball), file=sys.stderr)
     elif files2:
         print('E: {} can not be found.'.format(distpackage), file=sys.stderr)
         for file in files2:

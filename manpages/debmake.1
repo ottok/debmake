@@ -18,7 +18,7 @@
 debmake \- program to make the Debian source package
 .SH SYNOPSIS
 .B debmake 
-[\fB\-h\fP] [\fB\-c\fP] [\fB\-n\fP | \fB\-a\fP \fIpackagename\-version.orig.tar.gz\fP | \fB\-d\fP | \fB\-t\fP ] [\fB\-p\fP \fIpackagename\fP] [\fB\-u\fP \fIversion\fP] [\fB\-r\fP \fIrevision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP \fIpackage[:type]\fP] [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-l\fP \fIlicense_file\fP] [\fB\-i\fP] [\fB\-m\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-x\fP [01234]] [\fB\-y\fP] 
+[\fB\-h\fP] [\fB\-c\fP] [\fB\-n\fP | \fB\-a\fP \fIpackagename\-version.orig.tar.gz\fP | \fB\-d\fP | \fB\-t\fP ] [\fB\-p\fP \fIpackagename\fP] [\fB\-u\fP \fIversion\fP] [\fB\-r\fP \fIrevision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP \fIpackage[:type]\fP] [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-i\fP \fIbuildtool\fP] [\fB\-l\fP \fIlicense_file\fP] [\fB\-m\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-x\fP [01234]] [\fB\-y\fP] 
 
 .SH DESCRIPTION
 \fBdebmake\fP builds the Debian package from the upstream source.
@@ -103,6 +103,11 @@ set the fullname.
 .IP
 The default is taken from the value of the environment variable \fB$DEBFULLNAME\fP.  
 .TP
+\fB\-i\fR \fIbuildtool\fP, \fB\-\-invoke\fR \fIbuildtool\fP
+invoke \fIbuildtool\fP at the end of execution.  \fIbuildtool\fP may be \fBdpkg-buildpackage\fP, \fBdebuild\fP, \fBpdebuild\fP, \fB"pdebuild  \-\-pbuilder cowbuilder"\fP, etc..
+.IP
+The default is not to execute any program.
+.TP
 \fB\-l\fR \fIlicense_file,...\fP, \fB\-\-license\fR \fIlicense_file,...\fP
 add formatted license text to the end of the \fBdebian/copyright\fP file holding license scan results
 .IP
@@ -133,18 +138,33 @@ generate extra configuration files as templates.
 .IP
 The number \fIn\fP changes which configuration templates are generated.
 .IP
-\fB\-x0\fR : bare minimum files. (default if these files exist already)
+\fB\-x0\fR : bare minimum configuration files. (default if these files exist already)
 .IP
-\fB\-x1\fR : ,, + desirable files. (default for new packages)
+\fB\-x1\fR : ,, + desirable configuration files. (default for new packages)
 .IP
-\fB\-x2\fR : ,, + interesting files. (recommended for expert)
+\fB\-x2\fR : ,, + interesting configuration files. (recommended for experts, multi-binary aware)
 .IP
-\fB\-x3\fR : ,, + unusual files with the \fB.ex\fP suffix. (recommended for new users)
+\fB\-x3\fR : ,, + unusual configuration template files with the extra \fB.ex\fP suffix to ease their removal. (recommended for new users) To use these as configuration files, rename their file names into ones without the \fB.ex\fP suffix.
 .IP
 \fB\-x4\fR : ,, + copyright file examples.
 .TP
 \fB\-y\fR, \fB\-\-yes\fR
 force "yes" for all prompts.
+
+.SH DEBUG
+The caracter set in the environ variable \fBDEBUG\fP determins the logging output level.
+.IP
+\fBp\fP: list all parameters
+.IP
+\fBf\fP: copyright scanner input file
+.IP
+\fBi\fP: copyright scanner input line
+.IP
+\fBo\fP: line outside of copyright and license sections
+.IP
+\fBc\fP: line in copyright section
+.IP
+\fBl\fP: line in license section
 
 .SH REMINDERS
 The multi-binary package is usually generated as:

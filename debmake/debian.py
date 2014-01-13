@@ -26,14 +26,9 @@ import glob
 import os
 import sys
 import debmake.cat
-import debmake.changelog
 import debmake.control
 import debmake.copyright
-import debmake.local_options
-import debmake.readme_debian
-import debmake.rules
 import debmake.sed
-import debmake.watch
 #######################################################################
 def debian(para):
     ###################################################################
@@ -74,51 +69,63 @@ def debian(para):
         '@FULLNAME@': para['fullname'],
         '@EMAIL@': para['email'],
         '@SHORTDATE@': para['shortdate'],
+        '@DATE@': para['date'],
+        '@DEBMAKEVER@': para['program_version'],
         '@BINPACKAGE@': package,
     }
+    if para['native']:
+        substlist['@PKGFORMAT@'] = '3.0 (native)'
+        substlist['@VERREV@'] = para['version']
+    else:
+        substlist['@PKGFORMAT@'] = '3.0 (quilt)'
+        substlist['@VERREV@'] = para['version'] + '-' + para['revision']
     binlist = {'script', 'perl', 'python', 'python3', 'bin'}
     have_doc = False
     for deb in para['debs']:
         if deb['type'] == 'doc':
             have_doc = True
     ###################################################################
-    # must have files (level=0)
+    # 4 configuration files which must exist (level=0)
     ###################################################################
-    debmake.cat.cat('debian/changelog', debmake.changelog.changelog(para))
     debmake.cat.cat('debian/control', debmake.control.control(para))
     debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license']))
-    debmake.cat.cat('debian/rules', debmake.rules.rules(para))
+    confdir = para['base_path'] + '/share/debmake/extra0/'
+    debmake.sed.sed(confdir, 'debian/', substlist, package) # debian/changelog
+    if para['dh_with'] == set(): # no dh_with
+        substlist['@DHWITH@'] = '\tdh $@'
+    else:
+        substlist['@DHWITH@'] = '\tdh $@ --with "{}"'.format(','.join(para['dh_with']))
+    if 'python3' in para['dh_with']:
+        confdir = para['base_path'] + '/share/debmake/extra0python3/'
+    else:
+        confdir = para['base_path'] + '/share/debmake/extra0normal/'
+    debmake.sed.sed(confdir, 'debian/', substlist, package) # debian/rules
     os.chmod('debian/rules', 0o755)
     ###################################################################
-    # optional files which should be created for the new source (level=1)
-    # no interactive editting required.
+    # configuration files which should be created for the new source (level=1)
+    # no interactive editting required to work.
     ###################################################################
     if extra >= 1:
-        if para['native']:
-            debmake.cat.cat('debian/source/format', '3.0 (native)')
-        else:
-            debmake.cat.cat('debian/source/format', '3.0 (quilt)')
-        debmake.cat.cat('debian/compat', para['compat'])
-        debmake.cat.cat('debian/watch', debmake.watch.watch(para))
-        debmake.cat.cat('debian/source/local-options', debmake.local_options.local_options())
-        debmake.cat.cat('debian/README.Debian', debmake.readme_debian.readme_debian(para))
+        confdir = para['base_path'] + '/share/debmake/extra1/'
+        debmake.sed.sed(confdir, 'debian/', substlist, package)
+        confdir = para['base_path'] + '/share/debmake/extra1source/'
+        debmake.sed.sed(confdir, 'debian/source/', substlist, package)
     ###################################################################
-    # optional files which should be created for the new source (level=2)
-    # some interactive editting are desirable.
+    # optional files which is nice to be created for the new source (level=2)
+    # harmless but some interactive editting are desirable.
     # * create templates only for the first binary package:
     #   package.menu, package.docs, package.examples, package.manpages, 
     #   package.preinst, package.prerm, package.postinst, package.postrm
-    # * create for all binary packages:
-    #   package.install
+    # * create for all binary packages: package.install
+    # * create for lib package: package.symbol
     ###################################################################
     if extra >= 2:
-        srcdir = para['base_path'] + '/share/debmake/extra2/'
-        destdir = 'debian/'
-        debmake.sed.sed(srcdir, destdir, substlist, package)
         if len(para['debs']) == 1: # if single binary deb
-            srcdir = para['base_path'] + '/share/debmake/extra2single/'
-            debmake.sed.sed(srcdir, destdir, substlist, package)
+            confdir = para['base_path'] + '/share/debmake/extra2single/'
+            debmake.sed.sed(confdir, 'debian/', substlist, package)
         else: # if multi-binary debs
+            confdir = para['base_path'] + '/share/debmake/extra2multi/'
+            debmake.sed.sed(confdir, 'debian/', substlist, package)
             for deb in para['debs']:
                 substlist['@BINPACKAGE@'] = deb['package']
                 type = deb['type']
@@ -127,24 +134,23 @@ def debian(para):
                         type = 'bin'
                     else: # no -doc package
                         type = 'binall'
-                srcdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
-                debmake.sed.sed(srcdir, destdir, substlist, deb['package'])
+                confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
+                debmake.sed.sed(confdir, 'debian/', substlist, deb['package'])
     ###################################################################
     # rarely used optional files (level=3)
     # provided as the dh_make compatibilities. (files with ".ex" postfix)
     #     (create templates only for the first binary package)
     ###################################################################
+    substlist['@BINPACKAGE@'] = package # just in case
     if extra >= 3:
-        srcdir = para['base_path'] + '/share/debmake/extra3/'
-        destdir = 'debian/'
-        debmake.sed.sed(srcdir, destdir, substlist, package)
+        confdir = para['base_path'] + '/share/debmake/extra3/'
+        debmake.sed.sed(confdir, 'debian/', substlist, package)
     ###################################################################
     # copyright file examples (level=4)
     ###################################################################
     if extra >= 4:
-        srcdir = para['base_path'] + '/share/debmake/extra4/'
-        destdir = 'debian/license-examples/'
-        debmake.sed.sed(srcdir, destdir, substlist, package)
+        confdir = para['base_path'] + '/share/debmake/extra4/'
+        debmake.sed.sed(confdir, 'debian/license-examples/', substlist, package)
     else:
         print('I: run "debmake -x{}" to get more template files'.format(extra + 1), file=sys.stderr)
     return

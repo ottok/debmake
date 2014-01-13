@@ -1,10 +1,14 @@
-debmake (4.0.3-1) UNRELEASED; urgency=medium
+debmake (4.0.3-1) unstable; urgency=medium
 
-  * Fix typos.
-  * Fine tune template files.
-  * Improve control and package.install generations.
+  * -i added to create Debian binary files directly from debmake.
+  * Reorganize template files and source files.
+  * Improve control and package.install generations for multi 
+    binary packages.
+  * Adjust package dependency: python3-all:any
+  * Fix typos and update documentations.
+  * Improv DEBUG mode .
 
- -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 22:50:59 +0900
+ -- Osamu Aoki <osamu@debian.org>  Wed, 15 Jan 2014 01:12:17 +0900
 
 debmake (4.0.2-1) unstable; urgency=medium
 
@@ -19,7 +23,7 @@ debmake (4.0.2-1) unstable; urgency=medium
 debmake (4.0.1-1) unstable; urgency=low
 
   * -a option with path fixed.
-  * Use ${python3::Depends} for python3.
+  * Use ${python3:Depends} for python3.
   * Use anonscm.
   * -t option to make Upstream tarball without the debian directory
 

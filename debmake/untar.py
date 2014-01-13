@@ -30,33 +30,36 @@ import sys
 ###########################################################################
 # tarball   = package-version.tar.gz (or  package_version.orig.tar.gz)
 # targz     = tar.gz
-# basedir   = package-version
+# srcdir   = package-version
 # tar       = True if -t, False if -a or -d
 # dist      = True if -d, False if -a or -t
 # parent    = package (original VCS directory for -d)
 # yes       = True if -y, False as default
 ###########################################################################
-def untar(tarball, targz, basedir, dist, tar, parent, yes):
+def untar(tarball, targz, srcdir, dist, tar, parent, yes):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if not os.path.isfile(tarball):
         print('E: missing the "{}" file.'.format(tarball), file=sys.stderr)
         exit(1)
     if tar: # -t
-        if os.path.isdir(basedir):
-            print('I: use existing "{}".'.format(basedir), file=sys.stderr)
+        if os.path.isdir(srcdir):
+            print('I: use existing "{}".'.format(srcdir), file=sys.stderr)
         else:
-            print('E: fail to find "{}".'.format(basedir), file=sys.stderr)
+            print('E: fail to find "{}".'.format(srcdir), file=sys.stderr)
             exit(1)
     else: # -a -d
-        if os.path.isdir(basedir):
-            yn = input('?: remove "{}" directory? [Y/n]: '.format(basedir))
-            if yes or (yn == '') or (yn[0].lower() =='y'):
-                command = 'rm -rf ' + basedir
+        if os.path.isdir(srcdir):
+            if yes:
+                yn = 'y'
+            else:
+                yn = input('?: remove "{}" directory? [Y/n]: '.format(srcdir))
+            if (yn == '') or (yn[0].lower() =='y'):
+                command = 'rm -rf ' + srcdir
                 print('I: {}'.format(command), file=sys.stderr)
-                if subprocess.call(command, shell=True) == 1:
+                if subprocess.call(command, shell=True) != 0:
                     print('E: failed to rm.', file=sys.stderr)
                     exit(1)
-                print('I: removed {}.'.format(basedir), file=sys.stderr)
+                print('I: removed {}.'.format(srcdir), file=sys.stderr)
             else:
                 exit(1)
         # setup command line
@@ -71,25 +74,25 @@ def untar(tarball, targz, basedir, dist, tar, parent, yes):
             exit(1)
         command += tarball
         print('I: {}'.format(command), file=sys.stderr)
-        if subprocess.call(command, shell=True) == 1:
+        if subprocess.call(command, shell=True) != 0:
             print('E: failed to untar.', file=sys.stderr)
             exit(1)
         print('I: untared {}.'.format(tarball), file=sys.stderr)
     # copy debian/* for -d
     if dist and os.path.isdir(parent + '/debian'):
-        command = 'cp -drl ' + parent + '/debian ' + basedir + '/debian'
+        command = 'cp -drl ' + parent + '/debian ' + srcdir + '/debian'
         # execute command: copy debian tree (with hardlink)
         print('I: {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: cp -drl failed.', file=sys.stderr)
             exit(1)
-    # cd basedir
-    os.chdir(basedir)
+    # cd srcdir
+    os.chdir(srcdir)
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 
 if __name__ == '__main__':
-    # untar(tarball, targz, basedir, dist, tar, parent)
+    # untar(tarball, targz, srcdir, dist, tar, parent)
     # -a
     os.chdir('tarball')
     untar("example.tar.gz", "tar.gz", "example-1.0", False, False, "")

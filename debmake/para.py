@@ -160,6 +160,13 @@ Argument may need to be quoted to protect from the shell.
 #
 #   -h : used by argparse for --help
     p.add_argument(
+            '-i', 
+            '--invoke', 
+            default = '',
+            action = 'store', 
+            help = 'invoke package build tool',
+            metavar = '[debuild|pdebuild|...]')
+    p.add_argument(
             '-l', 
             '--license', 
             default = '',
@@ -223,6 +230,7 @@ Argument may need to be quoted to protect from the shell.
     para['email']           = args.email        # -e
     para['fullname']        = args.fullname     # -f
 #   para['gui']             = args.gui          # -g
+    para['invoke']          = args.invoke       # -i
     ############################################# -l
     # --license: args.license -> para['license'] as set
     if args.license == '':

@@ -41,13 +41,24 @@ def debug(msg, type=''):
     return
 
 def debug_para(msg, para):
-    debug('{}: "{}_{}.{}"'.format(
-            msg, 
-            para['package'], 
-            para['version'], 
-            para['targz']))
+    try:
+        DEBUG = os.environ["DEBUG"]
+    except KeyError:
+        pass
+    else:
+        if 'p' in DEBUG:
+            line = '{}: \n'.format(msg)
+            for x in para.keys():
+                line += 'para[{}] = "{}"\n'.format(x, para[x])
+            print(line, file=sys.stderr)
+        else:
+            print('{}: "{}_{}.{}"'.format(
+                msg, 
+                para['package'], 
+                para['version'], 
+                para['targz']),
+                file=sys.stderr)
     return
-
 
 #######################################################################
 # Test code

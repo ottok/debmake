@@ -7,9 +7,10 @@ command to make a Debian package from the upstream VCS/archive/source.
 Reminder
 --------
 
-Please do not forget that making of the package for the Debain distribution
-takes much more efforts than just compiling the source code into working
-set of installable binary files.  There are much more to it.
+Please do not forget that the creation of the real Debian package much more
+efforts than just compiling the source code into working set of installable
+binary files.  There are much more details to be addressed before uploading it
+to the Debian archive.
 
 Please read the basic Debian documentations and "Debian New Maintainers' Guide"
 as a starter and other important documents.
@@ -36,7 +37,7 @@ Typical use cases
  $ cd upstreampackage-1.0
  $ debuild
 
-3. execute in the upstream isource tree (usually in VCS)
+3. execute in the upstream source tree (usually in VCS)
 
  * upstream source tree supporting "make dist"
  
@@ -96,5 +97,12 @@ pdebuild run with the cowbuilder backend.
  * use "-x3" option to add specialized templates (dh_make compatibility)
 
  * use "-x4" option to add the typical copyright file examples.
+
+9. run debuild from debmake
+
+ $ cd upstreampackage-1.0
+ $ debmake -i debuild
+
+This is handy when used with -d, -t, or -a options.
 
  -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 07:21:13 +0000

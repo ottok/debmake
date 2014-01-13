@@ -32,11 +32,11 @@ import sys
 ###########################################################################
 # tarball   = package-version.tar.gz (or  package_version.orig.tar.gz)
 # targz     = tar.gz
-# basedir   = package-version
+# srcdir   = package-version
 # parent    = parent directory name
 # yes       = True if -y, False as default
 ###########################################################################
-def tar(tarball, targz, basedir, parent, yes):
+def tar(tarball, targz, srcdir, parent, yes):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     #######################################################################
     # make distribution tarball using tar excluding debian/ directory
@@ -44,28 +44,31 @@ def tar(tarball, targz, basedir, parent, yes):
     #######################################################################
     os.chdir('..')
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
-    if basedir == parent:
+    if srcdir == parent:
         print('I: -t (--tar) run in the versioned directory', file=sys.stderr)
     else:
-        if os.path.isdir(basedir):
-            yn = input('?: remove "{}" directory? [Y/n]: '.format(basedir))
-            if yes or (yn == '') or (yn[0].lower() == 'y'):
-                command = 'rm -rf ' + basedir
+        if os.path.isdir(srcdir):
+            if yes:
+                yn = 'y'
+            else:
+                yn = input('?: remove "{}" directory? [Y/n]: '.format(srcdir))
+            if (yn == '') or (yn[0].lower() == 'y'):
+                command = 'rm -rf ' + srcdir
                 print('I: {}'.format(command), file=sys.stderr)
                 if subprocess.call(command, shell=True) != 0:
                     print('E: rm -rf failed.', file=sys.stderr)
                     exit(1)
-                print('I: removed {}.'.format(basedir), file=sys.stderr)
+                print('I: removed {}.'.format(srcdir), file=sys.stderr)
             else:
                 exit(1)
-        # copy from parent to basedir using hardlinks (with debian/* data)
-        command = 'rsync -aCv --link-dest=' + os.getcwd() + '/' + parent + ' ' + parent + '/. ' + basedir
+        # copy from parent to srcdir using hardlinks (with debian/* data)
+        command = 'rsync -aCv --link-dest=' + os.getcwd() + '/' + parent + ' ' + parent + '/. ' + srcdir
         print('I: {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: rsync -aCv failed.', file=sys.stderr)
             exit(1)
     # tar while excluding VCS and debian directories
-    command = 'tar --exclude=\'' + basedir + '/debian\' --anchored --exclude-caches --exclude-vcs '
+    command = 'tar --exclude=\'' + srcdir + '/debian\' --anchored --exclude-caches --exclude-vcs '
     if targz == 'tar.gz':
         command += '-cvzf '
     elif targz == 'tar.bz2':
@@ -75,13 +78,13 @@ def tar(tarball, targz, basedir, parent, yes):
     else:
         print('E: Wrong file format "{}".'.format(targz), file=sys.stderr)
         exit(1)
-    command += tarball + ' ' + basedir
+    command += tarball + ' ' + srcdir
     print('I: {}'.format(command), file=sys.stderr)
     if subprocess.call(command, shell=True) != 0:
         print('E: tar failed {}.'.format(tarball), file=sys.stderr)
         exit(1)
     print('I: {} tarball made'.format(tarball), file=sys.stderr)
-    os.chdir(basedir)
+    os.chdir(srcdir)
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 

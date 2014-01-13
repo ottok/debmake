@@ -102,16 +102,16 @@ def sanity(para):
             print('E: changelog start with "{}"'.format(line), file=sys.stderr)
             exit(1)
     #######################################################################
-    # set parent/basedir/tarball/package/version/revision
+    # set parent/srcdir/tarball/package/version/revision
     para['parent'] = parent
     if para['archive']:
-        para['basedir'] = para['package'] + '-' + para['version']
+        para['srcdir'] = para['package'] + '-' + para['version']
     elif para['dist']: # -d
-        # differ version/tarball/basedir
+        # differ version/tarball/srcdir
         if para['package'] == '':
             para['package'] = parent
         para['version'] = ''
-        para['basedir'] = ''
+        para['srcdir'] = ''
         para['tarball'] = ''
     else: # -t or normal (native/non-native)
         pkgver = re.match('^([^_]+)-([^-_]+)$', parent)
@@ -130,7 +130,7 @@ def sanity(para):
             print('E: invalid parent directory: {}'.format(parent), file=sys.stderr)
             print('E: rename parent directory to "packagename-version".', file=sys.stderr)
             exit(1)
-        para['basedir'] = para['package'] + '-' + para['version']
+        para['srcdir'] = para['package'] + '-' + para['version']
         para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
     if para['revision'] == '':
         para['revision'] = '1'
