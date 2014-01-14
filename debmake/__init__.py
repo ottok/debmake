@@ -23,6 +23,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import os
+import subprocess
 import sys
 import time
 import debmake.analyze
@@ -41,7 +42,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.2'
+__version__         = '4.0.3'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -125,15 +126,8 @@ def main():
 #######################################################################
     if para['dist']:
         print('I: make the upstream tarball with "make dist" equivalents', file=sys.stderr)
-        version = debmake.dist.dist(para['package'], para['targz'], para['parent'])
-        if para['version'] == version:
-            pass
-        elif para['version'] == '': # differed until now
-            para['version'] = version
-        else:
-            print('E: (version(upstream build system)="{}") != (version(debian/changelog)="{}")'.format(version, para['version']), file=sys.stderr)
-            exit(1)
-        para['basedir'] = para['package'] + '-' + para['version']
+        para['version'] = debmake.dist.dist(para['package'], para['version'], para['targz'], para['parent'])
+        para['srcdir'] = para['package'] + '-' + para['version']
         para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
         debmake.debug.debug_para('D: post-dist', para)
 #######################################################################
@@ -141,26 +135,26 @@ def main():
 #######################################################################
     elif para['tar']:
         print('I: make the upstream tarball with "tar --exclude=debian"', file=sys.stderr)
-        debmake.tar.tar(para['tarball'], para['targz'], para['basedir'], para['parent'], para['yes'])
+        debmake.tar.tar(para['tarball'], para['targz'], para['srcdir'], para['parent'], para['yes'])
         debmake.debug.debug_para('D: post-tar', para)
 #######################################################################
 # -a, -d: extract archive from tarball (tar -xvzf)
 #######################################################################
     if para['archive'] or para['dist']:
         print('I: untar the upstream tarball', file=sys.stderr)
-        debmake.untar.untar(para['tarball'], para['targz'], para['basedir'], para['dist'], para['tar'], para['parent'], para['yes'])
+        debmake.untar.untar(para['tarball'], para['targz'], para['srcdir'], para['dist'], para['tar'], para['parent'], para['yes'])
         debmake.debug.debug_para('D: post-untar', para)
 #######################################################################
 # always: generate orig tarball if missing and non-native package
 #######################################################################
     para['parent'] = os.path.basename(os.getcwd()) # update !!!
     print('I: *** start packaging in "{}". ***'.format(para['parent']), file=sys.stderr)
-    if para['parent'] != para['basedir']:
-        print('E: parent dirtectory must be "{}"'.format(para['basedir']), file=sys.stderr)
+    if para['parent'] != para['srcdir']:
+        print('E: parent dirtectory must be "{}"'.format(para['srcdir']), file=sys.stderr)
         exit(1)
     if not para['native']:
         print('I: provide {}_{}.orig.tar.gz for non-native Debian package'.format(para['package'], para['version']), file=sys.stderr)
-        debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['basedir'])
+        debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['srcdir'])
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################
@@ -181,7 +175,20 @@ def main():
 #######################################################################
     print('I: make debian/* template files', file=sys.stderr)
     debmake.debian.debian(para)
-    if os.getcwd() != para['cwd']:
+#######################################################################
+# Make Debian package(s)
+#######################################################################
+    if para['invoke']:
+        print('I: {}'.format(para['invoke']), file=sys.stderr)
+        if subprocess.call(para['invoke'], shell=True) != 0:
+            print('E: failed to build Debian package(s).', file=sys.stderr)
+            exit(1)
+        if para['archive']:
+            print('I: please inspect the build results.'.format(os.getcwd()), file=sys.stderr)
+        else:
+            print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
+            print('I: please execute "cd .." and inspect the build results.'.format(os.getcwd()), file=sys.stderr)
+    elif os.getcwd() != para['cwd']:
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
         print('I: please execute "cd {0}"'.format(os.getcwd()), file=sys.stderr)
         print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)

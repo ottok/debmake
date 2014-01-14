@@ -28,13 +28,13 @@ import sys
 ###########################################################################
 # origtar: called from debmake.main()
 ###########################################################################
-def origtar(package, version, targz, tarball, basedir):
+def origtar(package, version, targz, tarball, srcdir):
     # cd ..
     os.chdir('..')
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     #######################################################################
     # make package_versdion.orig.tar.gz in the parent directory if not exist
-    # source is in basedir
+    # source is in srcdir
     #######################################################################
     origtargz = package + '_' + version + '.orig.' + targz
     if os.path.isfile(tarball):
@@ -49,7 +49,7 @@ def origtar(package, version, targz, tarball, basedir):
     else:
         print('E: missing "{}".'.format(tarball), file=sys.stderr)
         exit(1)
-    os.chdir(basedir) # calling side ensures this 
+    os.chdir(srcdir) # calling side ensures this 
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 

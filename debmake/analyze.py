@@ -109,12 +109,15 @@ def analyze(para):
         # update binary package dependency by package type etc.
         ###################################################################
         if t == 'perl':
-            #dh_with.update({'perl'})
+            #para['dh_with'].update({'perl'})
             print('W: no "dh -with perl" added.  Maybe default works OK.', file=sys.stderr)
+            r['depends'].update({'perl'})
         elif t == 'python':
-            dh_with.update({'python2'})
+            para['dh_with'].update({'python2'})
+            r['depends'].update({'python'})
         elif t == 'python3':
-            dh_with.update({'python3'})
+            para['dh_with'].update({'python3'})
+            r['depends'].update({'python3'})
         else:
             pass
     #######################################################################

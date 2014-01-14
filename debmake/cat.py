@@ -26,7 +26,7 @@ import os
 import sys
 #######################################################################
 # cat >file
-def cat(file, text, see=''):
+def cat(file, text, end=''):
     if os.path.isfile(file) and os.stat(file).st_size != 0:
         # skip if a file exists and non-zero content
         print('I: File already exits, skipping: {}'.format(file), file=sys.stderr)
@@ -35,13 +35,9 @@ def cat(file, text, see=''):
     if path:
         os.makedirs(path, exist_ok=True)
     with open(file, 'w') as f:
-        if text:
-            print(text, file=f)
-        if see:
-            print('# see ' + see, file=f) 
+        print(text, file=f, end=end)
         print('I: File written: {}'.format(file), file=sys.stderr)
     return
-
 
 #######################################################################
 # Test script

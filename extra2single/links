@@ -1,0 +1,6 @@
+# See dh_link(1)
+# http://www.debian.org/doc/manuals/maint-guide/dother.en.html#links
+# source can skip leading "debian/tmp"
+# destimation path will be created under debian/@PACKAGE@ for each package
+# list full paths in the installed system:
+# source/path  dest/path

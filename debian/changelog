@@ -1,6 +1,18 @@
+debmake (4.0.3-1) unstable; urgency=medium
+
+  * -i added to create Debian binary files directly from debmake.
+  * Reorganize template files and source files.
+  * Improve control and package.install generations for multi 
+    binary packages.
+  * Adjust package dependency: python3-all:any
+  * Fix typos and update documentations.
+  * Improv DEBUG mode .
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 15 Jan 2014 01:12:17 +0900
+
 debmake (4.0.2-1) unstable; urgency=medium
 
-  * split source files into smaller files.
+  * Split source files into smaller files.
     - copyright.py still needs to be worked on.
   * -x[01234] supported
   * -o dropped because we do not do it.
@@ -11,7 +23,7 @@ debmake (4.0.2-1) unstable; urgency=medium
 debmake (4.0.1-1) unstable; urgency=low
 
   * -a option with path fixed.
-  * use ${python3::Depends} for python3.
+  * Use ${python3:Depends} for python3.
   * Use anonscm.
   * -t option to make Upstream tarball without the debian directory
 
@@ -27,8 +39,8 @@ debmake (4.0.0-4) unstable; urgency=low
 debmake (4.0.0-3) unstable; urgency=low
 
   * Add lintian-override based on Bug#708138.
-  * make debian/rules executable.
-  * update package name only if it is null. 
+  * Make debian/rules executable.
+  * Update package name only if it is null. 
 
  -- Osamu Aoki <osamu@debian.org>  Fri, 17 May 2013 22:11:31 +0900
 
