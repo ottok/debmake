@@ -1,0 +1,55 @@
+Multi-binary feature of debmake
+------------------------------
+
+The multi-binary feature of debmake is described here and this may change in the
+future.
+
+Basics
+------
+
+ * Debmake is designed to make the multi-arch package as default.
+ * Non-multi-arch packages need to specify the -m option.
+ * Multi-arch "allowed" packages need to be manually generated.
+
+The option to create a set of multiple Debian binary packages from a single
+upstream source is the -b option and it is invoked as:
+
+ -b package[:type],... or --binaryspec package[:type],...
+
+Here:
+ * "package" specifies the binary package name to use.
+ * "type" specifies the binary package type (see below).
+
+    type    Architecture    Multi-arch  Use case description
+    bin     any             foreign     C/C++ compiled binary code package
+    script  all             foreign     Shell script package
+    perl    all             foreign     Perl script package
+    python  all             foreign     Python script package
+    python3 all             foreign     Python3 script package
+    lib     any             same        Library package (ELF binary)
+    dev     any             same        Library development package
+    dbg     any             same        Debug symbol package
+    doc     all             foreign     Documentation package
+    data    all             foreign     Data (fonts, graphics, ...) package
+
+In many cases, debmake will guess "type" from the binary package name and the
+source tree contents.  Also, following values are allowed.
+
+    type    Architecture    Multi-arch
+    all     all             foreign 
+    any     any             (auto set by heuristics)
+    foreign any             foreign
+    same    any             same
+
+If the -m option is set, the multi-arch value is unset.
+
+To prevent cluttering the debian/ directory, some template configuration files
+are created only for the first package.  You may need to create corresponding
+configuration files for other packages.
+
+For any further customization, you need to manually edit debian/control.
+Please remember, debmake only provides good template files.
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 14 Jan 2014 13:52:51 +0000
+
+vim: ts=4 sts=4 et:

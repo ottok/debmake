@@ -24,156 +24,218 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import sys
 ###########################################################################
+def match_prefix(name, prefix):
+    l = len(prefix)
+    return (len(name) > l) and (name[:l] == prefix)
+
+def match_suffix(name, suffix):
+    l = len(suffix)
+    return (len(name) > l) and (name[-l:] == suffix)
+###########################################################################
 # sanity: called from debmake.main()
 ###########################################################################
 def debs(binaryspec, package, monoarch, dh_with):
     #######################################################################
     # parse binary package names and their specification: binaryspec -> debs
     #######################################################################
-    debs = []
-    for x in binaryspec.split(','):
+    debs = [] # list
+    pset = set()
+    tset = set()
+    for x0 in binaryspec.split(','):
+        x = x0.strip()
+        ###################################################################
+        # split: y[0] = bin-package-name-marker y[1] = bin-package-type
+        ###################################################################
         y = x.split(':')
+        if len(y) >= 3:
+            print('E: -b does not support the 3rd argument yet: {}'.format(x), file=sys.stderr)
+            exit(1)
         ###################################################################
         # get real binary package name: p
         ###################################################################
-        if y[0] == '':
+        p = y[0].strip()
+        if p == '':
             p = package
-        elif y[0] == '-':
+        elif p == '-':
             p = package
-        elif y[0][0] == '-':
-            p = package + y[0]
-        else:
-            p = y[0]
+        elif p[0] == '-':
+            p = package + p
         # first default values and then override or update values
         a = 'any'       # arch
         m = 'foreign'   # muiti-arch
-        t = 'unknown'   # type
+        t = ''          # type
         dp = {'${misc:Depends}'}
-        pd = set([])
+        pd = set()
+        ###################################################################
         # Prefix names should come first to be overriden later
-        if len(y[0]) > 3 and y[0][:3] == 'lib':
+        ###################################################################
+        if match_prefix(p, 'lib'):
             a = 'any'
             m = 'same'
             t = 'lib'
-        elif len(y[0]) > 6 and y[0][6:] == 'fonts-':
+        elif match_prefix(p, 'fonts-'):
             a = 'all'
             m = 'foreign'
             t = 'data'
-        elif len(y[0]) > 7 and y[0][:7] == 'python-':
+        elif match_prefix(p, 'python-'):
             a = 'all'
             m = 'foreign'
             t = 'python'
-        elif len(y[0]) > 8 and y[0][:8] == 'python3-':
+        elif match_prefix(p, 'python3-'):
             a = 'all'
             m = 'foreign'
             t = 'python3'
         else:
             pass
         # Suffix names override
-        if len(y[0]) > 5 and y[0][-5:] == '-perl':
+        if match_suffix(p, '-perl'):
             a = 'all'
             m = 'foreign'
             t = 'perl'
-        elif len(y[0]) > 4 and y[0][-4:] == '-dev':
+        elif match_suffix(p, '-dev'):
             a = 'any'
             m = 'same'
             t = 'dev'
-        elif len(y[0]) > 4 and y[0][-4:] == '-dbg':
+        elif match_suffix(p, '-dbg'):
             a = 'any'
             m = 'same'
             t = 'dbg'
-        elif len(y[0]) > 4 and y[0][-4:] == '-bin':
+        elif match_suffix(p, '-bin') or \
+             match_suffix(p, 'tools') or \
+             match_suffix(p, 'utils'):
             a = 'any'
             m = 'foreign'
             t = 'bin'
-        elif len(y[0]) > 5 and y[0][-5:] == 'tools':
-            a = 'any'
-            m = 'foreign'
-            t = 'bin'
-        elif len(y[0]) > 5 and y[0][-5:] == 'utils':
-            a = 'any'
-            m = 'foreign'
-            t = 'bin'
-        elif len(y[0]) > 4 and y[0][-4:] == '-doc':
+        elif match_suffix(p, '-doc') or \
+             match_suffix(p, '-manual') or \
+             match_suffix(p, '-html'):
             a = 'all'
             m = 'foreign'
             t = 'doc'
-        elif len(y[0]) > 5 and y[0][-5:] == '-html':
+        elif match_suffix(p, '-common'):
             a = 'all'
             m = 'foreign'
-            t = 'doc'
-        elif len(y[0]) > 7 and y[0][-7:] == '-manual':
-            a = 'all'
-            m = 'foreign'
-            t = 'doc'
-        elif len(y[0]) > 7 and y[0][-7:] == '-common':
-            a = 'all'
-            m = 'foreign'
-            t = 'unknown'
+            t = 'data'
         else:
             pass
         ###################################################################
-        # if 2nd argument exists, e.g. all in foo:all
+        # override if explicit 2nd argument exists, e.g. all in foo:all
         ###################################################################
         if len(y) >= 2:
-            if y[1] == 'a' or y[1] == 'al' or y[1] == 'all':
-                a = 'all'
-                m = 'foreign'
-            elif y[1] == 'an' or y[1] == 'any':
+            t = y[1].strip()
+            if match_prefix(t, 'an') or \
+               match_prefix(t, 'f'): # any foreign
                 a = 'any'
                 m = 'foreign'
-            elif len(y[1]) >=1 and y[1][:1] == 'f':
-                a = 'any'
-                m = 'foreign'
-            elif len(y[1]) >=1 and y[1][:1] == 's':
-                a = 'any'
-                m = 'same'
-            elif y[1] == 'doc':
-                a = 'all'
-                m = 'foreign'
-                t = 'doc'
-            elif y[1] == 'data':
-                a = 'all'
-                m = 'foreign'
-                t = 'data'
-            elif y[1] == 'bin':
+                if t =='':
+                    t = 'bin'
+            if match_prefix(t, 'b'): # bin
                 a = 'any'
                 m = 'foreign'
                 t = 'bin'
-            elif y[1] == 'lib':
-                a = 'any'
-                m = 'same'
-                t = 'lib'
-            elif y[1] == 'dev':
-                a = 'any'
-                m = 'same'
-                t = 'dev'
-            elif y[1] == 'dbg':
+            elif match_prefix(t, 'da'): # data
+                a = 'all'
+                m = 'foreign'
+                t = 'data'
+            elif match_prefix(t, 'db'): # dbg
                 a = 'any'
                 m = 'same'
                 t = 'dbg'
-            elif y[1] == 'script':
+            elif match_prefix(t, 'de'): # dev
+                a = 'any'
+                m = 'same'
+                t = 'dev'
+            elif match_prefix(t, 'do'): # doc
                 a = 'all'
                 m = 'foreign'
-                t = 'shell'
-            elif y[1] == 'perl':
+                t = 'doc'
+            elif match_prefix(t, 'l'): # lib
+                a = 'any'
+                m = 'same'
+                t = 'lib'
+            elif match_prefix(t, 'pe'): # perl
                 a = 'all'
                 m = 'foreign'
                 t = 'perl'
-            elif y[1] == 'python':
+            elif match_prefix(t, 'py'): # python
                 a = 'all'
                 m = 'foreign'
                 t = 'python'
-            elif y[1] == 'python3':
+            elif match_prefix(t, 'python3') or \
+                 match_prefix(t, 'py3'): # python3
                 a = 'all'
                 m = 'foreign'
                 t = 'python3'
+            elif match_prefix(t, 'sc'): # script
+                a = 'all'
+                m = 'foreign'
+                t = 'script'
+            ###############################################################
+            # ambiguous type values (but clear about arch/multi-arch
+            ###############################################################
+            elif match_prefix(t, 'an') or \
+               match_prefix(t, 'f'): # any foreign
+                a = 'any'
+                m = 'foreign'
+                if t =='':
+                    t = 'bin'
+            elif match_prefix(t, 'a'): # all
+                a = 'all'
+                m = 'foreign'
+                if t =='':
+                    t = 'script'
+            elif match_prefix(t, 'sa'): # same
+                a = 'any'
+                m = 'same'
+                if t =='':
+                    t = 'lib'
             else:
-                print('E: -b: {} has unknown type: {}'.format(y[0], y[1]), file=sys.stderr)
+                print('E: -b: {} has undefined type: {}'.format(p, t), file=sys.stderr)
                 exit(1)
-        if len(y) >= 3:
-            print('E: -b does not support the 3rd argument yet: {}:{}:{}'.format(y[0], y[1],y[2]), file=sys.stderr)
-            exit(1)
+        ###################################################################
+        # update binary package type from dh_with and arch setting
+        ###################################################################
+        if t == '':
+            if 'perl_build' in dh_with:
+                a = 'all'
+                t = 'perl'
+            elif 'perl_makemaker' in dh_with:
+                a = 'all'
+                t = 'perl'
+            elif 'python2' in dh_with:
+                a = 'all'
+                t = 'python'
+            elif 'python3' in dh_with:
+                a = 'all'
+                t = 'python3'
+            else:
+                if a == 'any':
+                    t = 'bin'
+                else:
+                    t = 'script'
+        # t always have non NULL string value !
+        ###################################################################
+        # monoarch = non-multi-arch
+        ###################################################################
+        if monoarch:
+            m = ''
+        ###################################################################
+        # multi arch and library package
+        ###################################################################
+        if (not monoarch) and t == 'lib':
+            # set this only for M-A library packages
+            pd.update({'${misc:Pre-Depends}'})
+        ###################################################################
+        # update binary package dependency by package type etc.
+        ###################################################################
+        if t == 'perl': # dh_perl(1)
+            dp.update({'${perl:Depends}', 'perl'})
+        elif t == 'python': # dh_python2
+            dp.update({'${python:Depends}'})
+        elif t == 'python3': # dh_python3
+            dp.update({'${python3:Depends}'})
+        else:
+            pass
         ###################################################################
         # template text
         ###################################################################
@@ -188,33 +250,18 @@ def debs(binaryspec, package, monoarch, dh_with):
  package type is "{}".
 '''.format(t)
         ###################################################################
-        # monoarch = non-multi-arch
+        # loging and sanity check
         ###################################################################
-        if not monoarch:
-            pd.update({'${misc:Pre-Depends}'})
-        else:
-            m = ''
-        ###################################################################
-        # update binary package dependency by package type etc.
-        ###################################################################
-        if t == 'perl':
-            dp.update({'${perl:Depends}', 'perl'})
-            print('W: no dh perl build support.  Maybe OK.', file=sys.stderr)
-        elif t == 'python':
-            dp.update({'${python:Depends}'})
-        elif t == 'python3':
-            dp.update({'${python3:Depends}'})
-        elif t == 'unknown':
-            if 'perl_build' in dh_with:
-                dp.update({'${perl:Depends}', 'perl'})
-            if 'perl_makemaker' in dh_with:
-                dp.update({'${perl:Depends}', 'perl'})
-            if 'python2' in dh_with:
-                dp.update({'${python:Depends}'})
-            if 'python3' in dh_with:
-                dp.update({'${python3:Depends}'})
-        else:
-            pass
+        print('I: Binary package={}'.format(p), file=sys.stderr)
+        print('I:        Arch={} M-A={} Type={} set from -m "{}"'.format(a, m, t, x), file=sys.stderr)
+        if p in pset:
+            print('E: duplicate definition of package name "{}"'.format(p), file=sys.stderr)
+            exit(1)
+        pset.update({p})
+        if t in tset:
+            print('W: duplicate definition of package type "{}"'.format(t), file=sys.stderr)
+            print('W: *** manual modifiocation of debian/{}.install required ***'.format(p), file=sys.stderr)
+        tset.update({t})
         ###################################################################
         # append dictionary to a list
         ###################################################################
@@ -226,28 +273,21 @@ def debs(binaryspec, package, monoarch, dh_with):
                 'depends': dp, 
                 'pre-depends': pd,
                 'type': t})
+    ###################################################################
     return debs
 
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    para = {}
-    para['package'] = 'package'
-    para['section'] = 'misc'
-    para['priority'] = 'normal'
-    para['fullname'] = 'Osamu Aoki'
-    para['email'] = 'osamu@debian.org'
-    para['standard_version'] = '4.0.2'
-    para['build_depends'] = set()
-    para['homepage'] = 'http://www.debian.org'
-    para['vcsvcs'] = 'git:git.debian.org'
-    para['vcsbrowser'] = 'http://anonscm.debian.org'
-    para['debs'] = set()
-    para['dh_with'] = set({'python3'})
-    para['binaryspec'] = '-:python,-doc:doc'
-    para['monoarch'] = False
-    for deb in debs(para['binaryspec'], para['package'], para['monoarch'], para['dh_with']):
-        for p, v in deb.items():
-            print("deb['{}'] = \"{}\"".format(p,v))
-        print('*****************************************')
+    print('----- no dh_with')
+    dh_with = set()
+    binaryspec = '-,-doc:doc,libpackage1, libpackage-dev, libpackage1-dbg'
+    monoarch = False
+    debs(binaryspec, 'packagename', monoarch, dh_with)
+    print('----- dh_with python3')
+    dh_with = set({'python3'})
+    debs(binaryspec, 'packagename', monoarch, dh_with)
+    print('----- monoarch True dh_with python3')
+    monoarch = True
+    debs(binaryspec, 'packagename', monoarch, dh_with)

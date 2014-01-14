@@ -1,0 +1,9 @@
+# See dh_install(1)
+# http://www.debian.org/doc/manuals/maint-guide/dother.en.html#install
+bin
+etc
+sbin
+usr/bin
+usr/sbin
+usr/share/@BINPACKAGE@
+usr/share/doc/@BINPACKAGE@
