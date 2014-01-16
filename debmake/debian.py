@@ -72,6 +72,7 @@ def debian(para):
         '@DATE@': para['date'],
         '@DEBMAKEVER@': para['program_version'],
         '@BINPACKAGE@': package,
+        '@COMPAT@': para['compat'],
     }
     if para['native']:
         substlist['@PKGFORMAT@'] = '3.0 (native)'
@@ -102,17 +103,21 @@ def debian(para):
     debmake.sed.sed(confdir, 'debian/', substlist, package) # debian/rules
     os.chmod('debian/rules', 0o755)
     ###################################################################
-    # configuration files which should be created for the new source (level=1)
-    # no interactive editting required to work.
+    # These should be created for the new source (level=1)
+    # Basic configuration files for debhelper(7) etc.
+    # No interactive editting required to work.
     ###################################################################
     if extra >= 1:
         confdir = para['base_path'] + '/share/debmake/extra1/'
         debmake.sed.sed(confdir, 'debian/', substlist, package)
         confdir = para['base_path'] + '/share/debmake/extra1source/'
         debmake.sed.sed(confdir, 'debian/source/', substlist, package)
+        if not para['native']:
+            confdir = para['base_path'] + '/share/debmake/extra1patches/'
+            debmake.sed.sed(confdir, 'debian/patches/', substlist, package)
     ###################################################################
-    # optional files which is nice to be created for the new source (level=2)
-    # harmless but some interactive editting are desirable.
+    # Optional files which is nice to be created for the new source (level=2)
+    # Harmless but some interactive editting are desirable.
     # * create templates only for the first binary package:
     #   package.menu, package.docs, package.examples, package.manpages, 
     #   package.preinst, package.prerm, package.postinst, package.postrm
@@ -137,8 +142,8 @@ def debian(para):
                 confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
                 debmake.sed.sed(confdir, 'debian/', substlist, deb['package'])
     ###################################################################
-    # rarely used optional files (level=3)
-    # provided as the dh_make compatibilities. (files with ".ex" postfix)
+    # Rarely used optional files (level=3)
+    # Provided as the dh_make compatibilities. (files with ".ex" postfix)
     #     (create templates only for the first binary package)
     ###################################################################
     substlist['@BINPACKAGE@'] = package # just in case

@@ -1,3 +1,12 @@
+debmake (4.0.4-1) unstable; urgency=medium
+
+  * Fix regressions for compat, patches/series, default for -t/-d,
+    rules for -w python3, and s/local_options/local-options/.
+  * Add use case examples as examples.tar.gz.
+  * Lintian bug #733733 workaround.
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 18 Jan 2014 00:35:40 +0900
+
 debmake (4.0.3-1) unstable; urgency=medium
 
   * -i added to create Debian binary files directly from debmake.

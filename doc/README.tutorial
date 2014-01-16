@@ -105,4 +105,6 @@ pdebuild run with the cowbuilder backend.
 
 This is handy when used with -d, -t, or -a options.
 
+See contents of /usr/share/doc/debmake/examples.tar.gz.
+
  -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 07:21:13 +0000

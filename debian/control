@@ -11,10 +11,10 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/debmake.git
 Package: debmake
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends}, ${python3:Depends}, devscripts
+Depends: devscripts, rsync, ${misc:Depends}, ${python3:Depends}
 Description: helper script to make the Debian source package
  This package helps you to convert a upstream source package (or VCS contents)
- into the Debian package by adding files required for the Debian source 
+ into the Debian package by adding files required for the Debian source
  package.  The generated debian/rules file uses the new dh command syntax from
  the debhelper (>=9) package.
  .
