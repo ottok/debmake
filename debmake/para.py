@@ -27,6 +27,7 @@ import os
 import pwd
 import sys
 import time
+import debmake.read
 ###########################################################################
 # undefined environment variable -> ''
 def env(var):
@@ -54,14 +55,13 @@ def para(para):
 {0}: make Debian source package    Version: {1}
 {2}
 
-{0} builds the Debian package from the upstream source.  
+{0} helps to build the Debian package from the upstream source.  
 Normally, this is done as follows:
- * The upstream tarball is downloaded as the packagename-version.tar.gz file.
- * The packagename_version.orig.tar.gz symlink is generated pointing to the upstream tarball.
- * It is untared to create many files under the packagename-version/ directory.  
- * {0} is invoked in the packagename-version/ directory without any arguments.
- * Files in the packagename-version/debian/ directory are manually adjusted.
- * dpkg-buildpackage is invoked in the packagename-version/ directory to make debian packages.
+ * The upstream tarball is downloaded as the package-version.tar.gz file.
+ * It is untared to create many files under the package-version/ directory.  
+ * {0} is invoked in the package-version/ directory possibly without any arguments.
+ * Files in the package-version/debian/ directory are manually adjusted.
+ * dpkg-buildpackage (usually from its wrapper debuild or pdebuild) is invoked in the package-version/ directory to make debian packages.
 
 Argument may need to be quoted to protect from the shell.
 '''.format(
@@ -89,7 +89,7 @@ Argument may need to be quoted to protect from the shell.
             action = 'store', 
             default = '',
             help = 'use the upstream source tarball directly (-p, -u, -z: overridden)',
-            metavar = 'packagename-version.tar.gz')
+            metavar = 'package-version.tar.gz')
     sp.add_argument(
             '-d', 
             '--dist',
@@ -108,7 +108,7 @@ Argument may need to be quoted to protect from the shell.
             action = 'store', 
             default = '',
             help = 'set the Debian package name',
-            metavar = 'packagename')
+            metavar = 'package')
     p.add_argument(
             '-u', 
             '--upstreamversion', 
@@ -135,7 +135,7 @@ Argument may need to be quoted to protect from the shell.
              '--binaryspec', 
             action = 'store', 
             default = '',
-            help = 'set binary package specs as comma separated list, e.g., "foo:foreign,foo-doc:all,libfoo1:same".  Here, package=(-|-doc|-dev|-common|-bin|-dbg), type=(all|any|foreign|same).',
+            help = 'set binary package specs as comma separated list, e.g., in full form "foo:bin, foo-doc:doc, libfoo1:lib, libfoo1-dbg:dbg, libfoo-dev:dev" or in short form ", -doc, libfoo1, libfoo1-dbg, libfoo-dev".  Here, "type" is chosen from bin, data, dbg, dev, doc, lib, perl, python, python3, and script.',
             metavar = 'package[:type]')
     p.add_argument(
             '-e', 
@@ -159,13 +159,20 @@ Argument may need to be quoted to protect from the shell.
 #            help = 'run GUI configuration')
 #
 #   -h : used by argparse for --help
-    p.add_argument(
+    ep = p.add_mutually_exclusive_group()
+    ep.add_argument(
             '-i', 
             '--invoke', 
             default = '',
             action = 'store', 
             help = 'invoke package build tool',
             metavar = '[debuild|pdebuild|...]')
+    ep.add_argument(
+            '-j', 
+            '--judge',
+            action = 'store_true', 
+            default = False, 
+            help = 'run "dpkg-depcheck" to judge build dependencies and identify file paths')
     p.add_argument(
             '-l', 
             '--license', 
@@ -179,6 +186,13 @@ Argument may need to be quoted to protect from the shell.
             action = 'store_true', 
             default = False,
             help = 'force packages to be non-multiarch')
+    p.add_argument(
+            '-o', 
+            '--option', 
+            default = '',
+            action = 'store', 
+            help = 'read optional parameters from "file"',
+            metavar = '"file"')
     p.add_argument(
             '-q', 
             '--quitearly', 
@@ -231,6 +245,7 @@ Argument may need to be quoted to protect from the shell.
     para['fullname']        = args.fullname     # -f
 #   para['gui']             = args.gui          # -g
     para['invoke']          = args.invoke       # -i
+    para['judge']           = args.judge        # -j
     ############################################# -l
     # --license: args.license -> para['license'] as set
     if args.license == '':
@@ -242,6 +257,7 @@ Argument may need to be quoted to protect from the shell.
     para['monoarch']        = args.monoarch     # -m
     para['native']          = args.native       # -n
     para['package']         = args.package      # -p
+    #############################################
     para['quitearly']       = args.quitearly    # -q
     para['revision']        = args.revision     # -r
     para['tar']             = args.tar          # -t
@@ -257,6 +273,9 @@ Argument may need to be quoted to protect from the shell.
     para['extra']           = args.extra        # -x
     para['yes']             = args.yes          # -y
     para['targz']           = args.targz        # -z
+    ############################################# -o
+    if args.option:
+        exec(debmake.read.read(args.option))
     #######################################################################
     # return command line parameters
     #######################################################################

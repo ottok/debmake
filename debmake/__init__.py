@@ -42,7 +42,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.4'
+__version__         = '4.0.5'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -89,6 +89,8 @@ def main():
     para['standard_version'] = __debian_policy__    # Debian policy_
     para['compat'] = __debian_compat__              # debhelper
     para['build_depends']   = {'debhelper (>=' + para['compat'] +')'}
+    para['desc'] = ''
+    para['desc_long'] = ''
     # get prefix for install --user/ ,, --prefix/ ,, --home
     fullparent = os.path.dirname(sys.argv[0])
     if fullparent == '.':
@@ -112,7 +114,7 @@ def main():
 #######################################################################
     if para['copyright']:
         print('I: scan source for copyright+license text', file=sys.stderr)
-        print(debmake.copyright.copyright('packagename',set()))
+        print(debmake.copyright.copyright('package',set()))
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
@@ -178,7 +180,22 @@ def main():
 #######################################################################
 # Make Debian package(s)
 #######################################################################
-    if para['invoke']:
+    if para['judge']:
+        command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log'.format(para['package'])
+        print('I: {}'.format(command), file=sys.stderr)
+        if subprocess.call(command, shell=True) != 0:
+            print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
+            exit(1)
+        if len(para['debs']) > 1:
+            command = 'find debian/tmp -type f | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
+            print('I: {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
+                exit(1)
+        print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
+        print('I: please execute "cd {0}"'.format(os.getcwd()), file=sys.stderr)
+        print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
+    elif para['invoke']:
         print('I: {}'.format(para['invoke']), file=sys.stderr)
         if subprocess.call(para['invoke'], shell=True) != 0:
             print('E: failed to build Debian package(s).', file=sys.stderr)

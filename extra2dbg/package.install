@@ -1,4 +1,7 @@
-# See dh_install(1)
-# http://www.debian.org/doc/manuals/maint-guide/dother.en.html#install
-usr/lib/debug
-usr/share/doc/@BINPACKAGE@
+# See dh_strip(1)
+#
+# *** Please erase this file ***
+#
+# dh_strip --dbg-package=@BINPACKAGE@ puts files in /usr/lib/debug
+# of @BINPACKAGE@. So there is no need for @BINPACKAGE@.install file.
+#

@@ -89,18 +89,16 @@ def debian(para):
     # 4 configuration files which must exist (level=0)
     ###################################################################
     debmake.cat.cat('debian/control', debmake.control.control(para))
-    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license']))
-    confdir = para['base_path'] + '/share/debmake/extra0/'
-    debmake.sed.sed(confdir, 'debian/', substlist, package) # debian/changelog
+    # skip slow debmake.copyright.copyright if debian/copyright exists
+    if not os.path.isfile('debian/copyright'):
+        debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license']))
     if para['dh_with'] == set(): # no dh_with
         substlist['@DHWITH@'] = '\tdh $@'
     else:
         substlist['@DHWITH@'] = '\tdh $@ --with "{}"'.format(','.join(para['dh_with']))
-    if 'python3' in para['dh_with']:
-        confdir = para['base_path'] + '/share/debmake/extra0python3/'
-    else:
-        confdir = para['base_path'] + '/share/debmake/extra0normal/'
-    debmake.sed.sed(confdir, 'debian/', substlist, package) # debian/rules
+    substlist['@OVERRIDE@'] = para['override']
+    confdir = para['base_path'] + '/share/debmake/extra0/'
+    debmake.sed.sed(confdir, 'debian/', substlist, package) # changelog, rules
     os.chmod('debian/rules', 0o755)
     ###################################################################
     # These should be created for the new source (level=1)

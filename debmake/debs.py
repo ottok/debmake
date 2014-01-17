@@ -284,10 +284,10 @@ if __name__ == '__main__':
     dh_with = set()
     binaryspec = '-,-doc:doc,libpackage1, libpackage-dev, libpackage1-dbg'
     monoarch = False
-    debs(binaryspec, 'packagename', monoarch, dh_with)
+    debs(binaryspec, 'package', monoarch, dh_with)
     print('----- dh_with python3')
     dh_with = set({'python3'})
-    debs(binaryspec, 'packagename', monoarch, dh_with)
+    debs(binaryspec, 'package', monoarch, dh_with)
     print('----- monoarch True dh_with python3')
     monoarch = True
-    debs(binaryspec, 'packagename', monoarch, dh_with)
+    debs(binaryspec, 'package', monoarch, dh_with)
