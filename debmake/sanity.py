@@ -110,10 +110,21 @@ def sanity(para):
         # differ version/tarball/srcdir
         if para['package'] == '':
             para['package'] = parent
-        para['version'] = ''
-        para['srcdir'] = ''
-        para['tarball'] = ''
-    else: # -t or normal (native/non-native)
+    elif para['tar']: # -t
+        if para['package'] == '' or para['version'] == '':# missing
+            pkgver = re.match('^([^_]+)-([^-_]+)$', parent)
+            if pkgver:
+                if para['package'] == '':
+                    para['package'] = pkgver.group(1)
+                if para['version'] == '':
+                    para['version'] = pkgver.group(2)
+            else:
+                print('E: invalid parent directory for setting package/version: {}'.format(parent), file=sys.stderr)
+                print('E: rename parent directory to "packagename-version".', file=sys.stderr)
+                exit(1)
+        para['srcdir'] = para['package'] + '-' + para['version']
+        para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
+    else: # normal (native/non-native)
         pkgver = re.match('^([^_]+)-([^-_]+)$', parent)
         if pkgver:
             if para['package'] == '':

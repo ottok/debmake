@@ -41,7 +41,7 @@ def origtar(package, version, targz, tarball, srcdir):
         if tarball == origtargz:
             print('I: Use existing "{}" as upstream tarball'.format(tarball), file=sys.stderr)
         else:
-            command = 'ln -f ' + tarball + ' ' + origtargz
+            command = 'ln -sf ' + tarball + ' ' + origtargz
             print('I: {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to create hardlink.', file=sys.stderr)

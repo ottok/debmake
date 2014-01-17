@@ -41,13 +41,12 @@ def dist(package, version, targz, parent):
     # make distribution tarball using the Autotools
     #######################################################################
     if os.path.isfile('configure.ac') and os.path.isfile('Makefile.am'):
-        # FIXME: options for ./configure
-        command = 'autoreconf -i -v -f && ./configure && make distcheck'
+        command = 'autoreconf -ivf && ./configure --prefix "/usr" && make distcheck'
         print('I: {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: autotools failed.', file=sys.stderr)
             exit(1)
-        distdir = 'dist'
+        distdir = '.'
     #######################################################################
     # make distribution tarball using setup.py
     #######################################################################

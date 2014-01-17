@@ -27,15 +27,15 @@ override_dh_auto_clean:
 	-rm -rf build
 
 override_dh_auto_build:
-	set -ex; for python in $(PYTHON3); do \\
-	    $$python setup.py build; \\
+	set -ex; for python in $(PYTHON3); do \
+	    $$python setup.py build; \
 	done
 
 override_dh_auto_install:
-	set -ex; for python in $(PYTHON3); do \\
-	    $$python setup.py install \\
-	        --root={}\\
-	        --force\\
-	        --install-layout=deb; \\
+	set -ex; for python in $(PYTHON3); do \
+	    $$python setup.py install \
+	        --root={}\
+	        --force\
+	        --install-layout=deb; \
 	done
 
