@@ -1,3 +1,13 @@
+debmake (4.0.5-1) unstable; urgency=medium
+
+  * -o added to support reading parameters from an option file.
+  * -j added to support dpkg-depcheck etc.
+  * Support -dbg generation with override.
+  * Fix python3 override template code.
+  * Add package.info and updated Description contents in control.
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 24 Jan 2014 00:22:15 +0900
+
 debmake (4.0.4-1) unstable; urgency=medium
 
   * Fix regressions for compat, patches/series, default for -t/-d,

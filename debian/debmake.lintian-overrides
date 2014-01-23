@@ -3,8 +3,7 @@ debmake: extra-license-file usr/share/debmake/extra4/GPL-2.0+
 debmake: extra-license-file usr/share/debmake/extra4/GPL-3.0+
 debmake: extra-license-file usr/share/debmake/extra4/LGPL-2.1+
 debmake: extra-license-file usr/share/debmake/extra4/LGPL-3.0+
-debmake: script-not-executable usr/share/debmake/extra0normal/rules
-debmake: script-not-executable usr/share/debmake/extra0python3/rules
+debmake: script-not-executable usr/share/debmake/extra0/rules
 debmake: script-not-executable usr/share/debmake/extra2multi/package.postinst
 debmake: script-not-executable usr/share/debmake/extra2multi/package.postrm
 debmake: script-not-executable usr/share/debmake/extra2multi/package.preinst

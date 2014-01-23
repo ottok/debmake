@@ -120,7 +120,7 @@ def sanity(para):
                     para['version'] = pkgver.group(2)
             else:
                 print('E: invalid parent directory for setting package/version: {}'.format(parent), file=sys.stderr)
-                print('E: rename parent directory to "packagename-version".', file=sys.stderr)
+                print('E: rename parent directory to "package-version".', file=sys.stderr)
                 exit(1)
         para['srcdir'] = para['package'] + '-' + para['version']
         para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
@@ -139,7 +139,7 @@ def sanity(para):
                 exit(1)
         else:
             print('E: invalid parent directory: {}'.format(parent), file=sys.stderr)
-            print('E: rename parent directory to "packagename-version".', file=sys.stderr)
+            print('E: rename parent directory to "package-version".', file=sys.stderr)
             exit(1)
         para['srcdir'] = para['package'] + '-' + para['version']
         para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
