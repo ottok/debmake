@@ -26,6 +26,7 @@ import glob
 import os
 import re
 import sys
+import debmake.read
 ###########################################################################
 # analyze: called from debmake.main()
 ###########################################################################
@@ -101,27 +102,24 @@ def analyze(para):
     else:
         para['build_type']      = 'Unknown'
     #######################################################################
-    # binary package induced build dependency
+    # binary package type induced build dependency
     #######################################################################
-    for r in para['debs']:
-        t = r['type']
-        ###################################################################
+    for i, deb in enumerate(para['debs']):
         # update binary package dependency by package type etc.
-        ###################################################################
-        if t == 'perl':
+        if deb['type'] == 'perl':
             #para['dh_with'].update({'perl'})
             print('W: no "dh -with perl" added.  Maybe default works OK.', file=sys.stderr)
-            r['depends'].update({'perl'})
-        elif t == 'python':
+            deb[i]['depends'].update({'perl'})
+        elif deb['type'] == 'python':
             para['dh_with'].update({'python2'})
-            r['depends'].update({'python'})
-        elif t == 'python3':
+            deb[i]['depends'].update({'python'})
+        elif deb['type'] == 'python3':
             para['dh_with'].update({'python3'})
-            r['depends'].update({'python3'})
+            deb[i]['depends'].update({'python3'})
         else:
             pass
     #######################################################################
-    # extra build tools if requested via --with
+    # extra build depends if --with requests
     #######################################################################
     if 'python2' in para['dh_with']:
         para['build_depends'].update({'python-all'})
@@ -131,6 +129,21 @@ def analyze(para):
         para['build_depends'].update({'perl'})
     if 'perl_makemaker' in para['dh_with']:
         para['build_depends'].update({'perl'})
+    #######################################################################
+    # set override string
+    #######################################################################
+    para['override'] = ''
+    if len(para['debs']) == 1:
+        build_dir = 'debian/' + para['debs'][0]['package']
+    else:
+        build_dir = 'debian/tmp'
+    if 'python3' in para['dh_with']:
+        para['override'] += debmake.read.read(para['base_path'] + '/share/debmake/extra0override/python3').format(build_dir).rstrip() + '\n'
+    for deb in para['debs']:
+        if deb['type'] == 'dbg':
+            para['override'] += debmake.read.read(para['base_path'] + '/share/debmake/extra0override/dbg').format(deb['package']).rstrip() + '\n'
+            break
+    #######################################################################
     return para
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
 # See dh_makeshlibs(1)
 # http://www.debian.org/doc/manuals/maint-guide/advanced.en.html#librarysymbols
-# For C library, please fill this file ith pertinent data.
+# For C library, please fill this file with pertinent data.
 # For C++ library, you may remove this to use shlibs mechanism instead.

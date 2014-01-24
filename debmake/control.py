@@ -23,10 +23,21 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import re
+import debmake.read
 #######################################################################
 def control(para):
     msg = control_src(para)
+    if para['desc']:
+        desc = para['desc'].rstrip()
+    else:
+        desc = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc/_short').rstrip()
+    if para['desc_long']:
+        desc_long = para['desc_long'].rstrip() + '\n'
+    else:
+        desc_long = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long').rstrip() + '\n'
     for deb in para['debs']:
+        deb['desc'] = desc + debmake.read.read(para['base_path'] + '/share/debmake/extra0desc/' + deb['type']).rstrip()
+        deb['desc_long'] = desc_long + debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/' + deb['type']).rstrip() + '\n'
         msg += control_bin(para, deb)
     return msg
 

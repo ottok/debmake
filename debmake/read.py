@@ -22,45 +22,18 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-import glob
-import os
-import sys
-import debmake.cat
 #######################################################################
-def sed(confdir, destdir, substlist, package, mask='*'):
+def read(file):
     ###################################################################
-    # confdir:   configuration file directory with / at the end
-    # destdir:   destination directory with / at the end
-    # substlist: substitution dictionary
-    # package:   binary package name
-    # mask:      source file mask for glob. Usually, *
+    # file:      path to the file
     ###################################################################
-    lconfdir = len(confdir)
-    for file in glob.glob(confdir + mask):
-        with open(file, 'r') as f:
-            text = f.read()
-        for k in substlist.keys():
-            text = text.replace(k, substlist[k])
-        if file[lconfdir:lconfdir+7] == 'package':
-            newfile = destdir + package + file[lconfdir+7:]
-        else:
-            newfile = destdir + file[lconfdir:]
-        debmake.cat.cat(newfile, text)
-    return
+    with open(file, 'r') as f:
+        text = f.read()
+    return text
 
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    substlist = {
-        '@PACKAGE@': 'package',
-        '@UCPACKAGE@': 'package'.upper(),
-        '@YEAR@': '2014',
-        '@FULLNAME@': 'fullname',
-        '@EMAIL@': 'email@example.org',
-        '@SHORTDATE@': '11 Jan. 2013',
-    }
-    print(sed('/share/debmake/extra2/', 'debian/', substlist, 'package'))
-    print(sed('/share/debmake/extra3/', 'debian/', substlist), 'package')
-    print(sed('/share/debmake/extra4/', 'debian/copyright-example/', substlist, 'package'))
+    print(read('read.py'))
 
