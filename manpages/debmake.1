@@ -18,7 +18,7 @@
 debmake \- program to make the Debian source package
 .SH SYNOPSIS
 .B debmake 
-[\fB\-h\fP] [\fB\-c\fP] [\fB\-n\fP | \fB\-a\fP \fIpackage\-version.orig.tar.gz\fP | \fB\-d\fP | \fB\-t\fP ] [\fB\-p\fP \fIpackage\fP] [\fB\-u\fP \fIversion\fP] [\fB\-r\fP \fIrevision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP \fIpackage[:type]\fP] [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-i\fP \fIbuildtool\fP | \fB\-j\fP] [\fB\-l\fP \fIlicense_file\fP] [\fB\-m\fP] [\fB\-o\fP \fIfile\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-x\fP [01234]] [\fB\-y\fP] 
+[\fB\-h\fP] [\fB\-c\fP] [\fB\-n\fP | \fB\-a\fP \fIpackage\-version.orig.tar.gz\fP | \fB\-d\fP | \fB\-t\fP ] [\fB\-p\fP \fIpackage\fP] [\fB\-u\fP \fIversion\fP] [\fB\-r\fP \fIrevision\fP] [\fB\-z\fP \fIextension\fP] [\fB\-b\fP "\fIpackage[:type], ...\fP]" [\fB\-e\fP \fIfoo@example.org\fP] [\fB\-f\fP "\fIfirstname lastname\fP"] [\fB\-i\fP "\fIbuildtool\fP" | \fB\-j\fP] [\fB\-l\fP \fIlicense_file\fP] [\fB\-m\fP] [\fB\-o\fP \fIfile\fP] [\fB\-q\fP] [\fB\-v\fP] [\fB\-w\fP "\fIaddon, ...\fP"] [\fB\-x\fP [01234]] [\fB\-y\fP] 
 
 .SH DESCRIPTION
 \fBdebmake\fP helps to build the Debian package from the upstream source.
@@ -69,6 +69,8 @@ The functional multi\-binary package always requires some extra manual works. Th
 \fBdebmake\fP has the \fB\-a\fP option to make it work directly with the tarball.
 .PP
 \fBdebmake\fP has the \fB\-t\fP and \fB\-d\fP options to make it work well with the source files in VCS.  These options also allow to make the non\-native Debian package from the VCS source tree with the \fIpackage\-version\fP\fB/debian/\fP directory.  Please note, the non\-native Debian package is the normal Debian package.
+.PP
+Argument may need to be quoted to protect from the shell.
 
 .SS "optional arguments:"
 .TP
@@ -112,7 +114,7 @@ set the tarball type,
 .IP
 \fIextension\fP=(\fBtar.gz\fP|\fBtar.bz2\fP|\fBtar.xz\fP)
 .TP
-\fB\-b\fP \fIpackage[:type],...\fP, \fB\-\-binaryspec\fP \fIpackage[:type],...\fP
+\fB\-b\fP "\fIpackage[:type],...\fP", \fB\-\-binaryspec\fP "\fI'package[:type],...'\fP"
 set binary package specs as comma separated list, e.g., 
 in full form "\fBfoo:bin, foo\-doc:doc, libfoo1:lib, libfoo1\-dbg:dbg, libfoo\-dev:dev\fP" or 
 in short form "\fB, \-doc, libfoo1, libfoo1\-dbg, libfoo\-dev\fP".
@@ -149,8 +151,8 @@ set the fullname.
 .IP
 The default is taken from the value of the environment variable \fB$DEBFULLNAME\fP.  
 .TP
-\fB\-i\fP \fIbuildtool\fP, \fB\-\-invoke\fP \fIbuildtool\fP
-invoke \fIbuildtool\fP at the end of execution.  \fIbuildtool\fP may be \fBdpkg\-buildpackage\fP, \fBdebuild\fP, \fBpdebuild\fP, \fB"pdebuild  \-\-pbuilder cowbuilder"\fP, etc..
+\fB\-i\fP "\fIbuildtool\fP", \fB\-\-invoke\fP "\fIbuildtool\fP"
+invoke "\fIbuildtool\fP" at the end of execution.  "\fIbuildtool\fP" may be "\fBdpkg\-buildpackage\fP", "\fBdebuild\fP", "\fBpdebuild\fP", "\fB"pdebuild  \-\-pbuilder cowbuilder"\fP", etc..
 .IP
 The default is not to execute any program.
 .TP
@@ -169,7 +171,7 @@ The default is add \fBCOPYING\fP and \fBLICENSE\fP and \fIlicense_file\fP needs 
 \fB\-m\fP, \fB\-\-monoarch\fP
 force packages to be non\-mult\-iarch.
 .TP
-\fB\-o\fP \fIfile,...\fP, \fB\-\-option\fP \fIfile,...\fP
+\fB\-o\fP \fIfile\fP, \fB\-\-option\fP \fIfile\fP
 read optional parameters from \fIfile\fP.  (read as python code.  See README.option.)
 .TP
 \fB\-q\fP, \fB\-\-quitearly\fP
@@ -178,10 +180,10 @@ quit early before creating files in the \fBdebian/\fP directory.
 \fB\-v\fP, \fB\-\-version\fP
 show version information.
 .TP
-\fB\-w\fP \fIaddon,...\fP, \fB\-\-with\fP \fIaddon,...\fP
+\fB\-w\fP "\fIaddon,...\fP", \fB\-\-with\fP "\fIaddon,...\fP"
 add extra arguments to the \fB\-\-with\fP option of the \fBdh\fP(1) command as \fIaddon\fP in \fBdebian/rules\fP.
 .IP
-\fIaddon\fP values are listed all separated by "\fB,\fP", e.g., "\fB\-w python2,autoreconf\fP".
+\fIaddon\fP values are listed all separated by "\fB,\fP", e.g., \fB\-w "python2,autoreconf\fP".
 .IP
 For Autotools based packages, setting \fBautoreconf\fP as \fIaddon\fP forces to run "\fBautoreconf \-i \-v \-f\fP" for every package building.  Otherwise, \fBautotools\-dev\fP as \fIaddon\fP is used as default.
 .IP
