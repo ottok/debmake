@@ -110,37 +110,19 @@ def sanity(para):
         # differ version/tarball/srcdir
         if para['package'] == '':
             para['package'] = parent
-    elif para['tar']: # -t
-        if para['package'] == '' or para['version'] == '':# missing
+    else: # normal (native/non-native) or -t
+        if para['version'] == '':# both missing
             pkgver = re.match('^([^_]+)-([^-_]+)$', parent)
             if pkgver:
                 if para['package'] == '':
                     para['package'] = pkgver.group(1)
-                if para['version'] == '':
-                    para['version'] = pkgver.group(2)
+                para['version'] = pkgver.group(2)
             else:
                 print('E: invalid parent directory for setting package/version: {}'.format(parent), file=sys.stderr)
                 print('E: rename parent directory to "package-version".', file=sys.stderr)
                 exit(1)
-        para['srcdir'] = para['package'] + '-' + para['version']
-        para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
-    else: # normal (native/non-native)
-        pkgver = re.match('^([^_]+)-([^-_]+)$', parent)
-        if pkgver:
-            if para['package'] == '':
-                para['package'] = pkgver.group(1)
-            elif para['package'] != pkgver.group(1):
-                print('E: -p "{}" != changelog "{}"'.format(para['package'], pkgver.group(1)), file=sys.stderr)
-                exit(1)
-            if para['version'] == '':
-                para['version'] = pkgver.group(2)
-            elif para['version'] != pkgver.group(2):
-                print('E: -u "{}" != changelog "{}"'.format(para['version'], pkgver.group(2)), file=sys.stderr)
-                exit(1)
-        else:
-            print('E: invalid parent directory: {}'.format(parent), file=sys.stderr)
-            print('E: rename parent directory to "package-version".', file=sys.stderr)
-            exit(1)
+        elif para['package'] == '':
+            para['package'] = parent
         para['srcdir'] = para['package'] + '-' + para['version']
         para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
     if para['revision'] == '':
