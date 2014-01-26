@@ -19,5 +19,12 @@
 # debmake generated override targets
 @OVERRIDE@
 
-# Customize this by adding more override scripts (see dh(1))
+# Customize this further by adding more override scripts (see dh(1))
+#
+# For example, set multiarch library install file path.  
+# See dpkg-architecture(1)
+#DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+#override_dh_auto_configure:
+#	cmake -DCMAKE_INSTALL_PREFIX=/usr \
+#             -DLIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 
