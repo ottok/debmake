@@ -42,7 +42,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.5'
+__version__         = '4.0.6'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -152,11 +152,10 @@ def main():
     para['parent'] = os.path.basename(os.getcwd()) # update !!!
     print('I: *** start packaging in "{}". ***'.format(para['parent']), file=sys.stderr)
     if para['parent'] != para['srcdir']:
-        print('E: parent dirtectory must be "{}"'.format(para['srcdir']), file=sys.stderr)
-        exit(1)
+        print('W: parent dirtectory should be "{}".  (If you use pbuilder, this may be OK.)'.format(para['srcdir']), file=sys.stderr)
     if not para['native']:
         print('I: provide {}_{}.orig.tar.gz for non-native Debian package'.format(para['package'], para['version']), file=sys.stderr)
-        debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['srcdir'])
+        debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['parent'])
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################
