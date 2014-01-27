@@ -2,6 +2,7 @@ debmake (4.0.7-1) UNRELEASED; urgency=medium
 
   * Cosmetic refinement. 
   * Fix package dependency update for perl, ... .
+  * Reduce doc related template generation cases.
 
  -- Osamu Aoki <osamu@debian.org>  Mon, 27 Jan 2014 22:42:32 +0900
 
