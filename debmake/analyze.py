@@ -109,13 +109,13 @@ def analyze(para):
         if deb['type'] == 'perl':
             #para['dh_with'].update({'perl'})
             print('W: no "dh -with perl" added.  Maybe default works OK.', file=sys.stderr)
-            deb[i]['depends'].update({'perl'})
+            para['debs'][i]['depends'].update({'perl'})
         elif deb['type'] == 'python':
             para['dh_with'].update({'python2'})
-            deb[i]['depends'].update({'python'})
+            para['debs'][i]['depends'].update({'python'})
         elif deb['type'] == 'python3':
             para['dh_with'].update({'python3'})
-            deb[i]['depends'].update({'python3'})
+            para['debs'][i]['depends'].update({'python3'})
         else:
             pass
     #######################################################################
