@@ -137,11 +137,18 @@ def analyze(para):
         build_dir = 'debian/' + para['debs'][0]['package']
     else:
         build_dir = 'debian/tmp'
+    #
+    override_dir = para['base_path'] + '/share/debmake/extra0override/'
+    #
     if 'python3' in para['dh_with']:
-        para['override'] += debmake.read.read(para['base_path'] + '/share/debmake/extra0override/python3').format(build_dir).rstrip() + '\n'
+        para['override'] += debmake.read.read(override_dir + 'python3').format(build_dir).rstrip() + '\n'
+    #
+    if not para['monoarch']:
+        para['override'] += debmake.read.read(override_dir + 'multiarch').format(build_dir).rstrip() + '\n'
+    #
     for deb in para['debs']:
         if deb['type'] == 'dbg':
-            para['override'] += debmake.read.read(para['base_path'] + '/share/debmake/extra0override/dbg').format(deb['package']).rstrip() + '\n'
+            para['override'] += debmake.read.read(override_dir + 'dbg').format(deb['package']).rstrip() + '\n'
             break
     #######################################################################
     return para
