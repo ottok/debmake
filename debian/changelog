@@ -2,6 +2,7 @@ debmake (4.0.7-1) UNRELEASED; urgency=medium
 
   * Cosmetic refinement. 
   * Fix package dependency update for perl, ... .
+  * Fix Pre-Depends: for library.
   * Reduce doc related template generation cases.
   * Reduce comments in rules for non-multiarch case.
 
