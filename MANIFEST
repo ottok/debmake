@@ -49,6 +49,7 @@ extra0desc_long/python
 extra0desc_long/python3
 extra0desc_long/script
 extra0override/dbg
+extra0override/multiarch
 extra0override/python3
 extra1/README.Debian
 extra1/compat
