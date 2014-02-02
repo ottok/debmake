@@ -237,23 +237,9 @@ def debs(binaryspec, package, monoarch, dh_with):
         else:
             pass
         ###################################################################
-        # template text
-        ###################################################################
-        desc = '<insert up to 60 chars description>'
-        desc_long = '''\
- <insert long description, indented with spaces>
- <continued long description lines ...>
- .
- <continued long description line after a line break indicated by " .">
- <continued long description lines ...>
- .
- package type is "{}".
-'''.format(t)
-        ###################################################################
         # loging and sanity check
         ###################################################################
-        print('I: Binary package={}'.format(p), file=sys.stderr)
-        print('I:        Arch={} M-A={} Type={} set from -m "{}"'.format(a, m, t, x), file=sys.stderr)
+        print('I: Binary package={} Type={} / Arch={} M-A={}'.format(p, t, a, m), file=sys.stderr)
         if p in pset:
             print('E: duplicate definition of package name "{}"'.format(p), file=sys.stderr)
             exit(1)
@@ -268,8 +254,6 @@ def debs(binaryspec, package, monoarch, dh_with):
         debs.append({'package': p, 
                 'arch': a, 
                 'multiarch': m, 
-                'desc': desc, 
-                'desc_long': desc_long, 
                 'depends': dp, 
                 'pre-depends': pd,
                 'type': t})

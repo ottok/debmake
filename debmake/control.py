@@ -121,7 +121,7 @@ def control_bin(para, deb):
     # M-A + lib (pre-depends line)
     elif deb['pre-depends']:
         multiarch = 'Multi-Arch: ' + deb['multiarch'] + '\n'
-        predepends = 'Pre-Depends; ' + ',\n\t'.join(deb['pre-depends']) + '\n'
+        predepends = 'Pre-Depends: ' + ',\n\t'.join(deb['pre-depends']) + '\n'
     # M-A + non-lib
     else:
         multiarch = 'Multi-Arch: ' + deb['multiarch'] + '\n'
