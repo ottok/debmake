@@ -80,11 +80,21 @@ def debian(para):
     else:
         substlist['@PKGFORMAT@'] = '3.0 (quilt)'
         substlist['@VERREV@'] = para['version'] + '-' + para['revision']
+    ###################################################################
+    # check which package have the documentation
+    ###################################################################
     binlist = {'script', 'perl', 'python', 'python3', 'bin'}
-    have_doc = False
+    docpackage = ''
     for deb in para['debs']:
         if deb['type'] == 'doc':
-            have_doc = True
+            docpackage = deb['package']
+    if docpackage == '':
+        for deb in para['debs']:
+            if deb['type'] in binlist:
+                docpackage = deb['package']
+                break
+    if docpackage == '':
+        docpackage = para['debs'][0]['package']
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################
@@ -133,10 +143,10 @@ def debian(para):
                 substlist['@BINPACKAGE@'] = deb['package']
                 type = deb['type']
                 if type in binlist:
-                    if have_doc:
-                        type = 'bin'
-                    else: # no -doc package
+                    if deb['package'] == docpackage:
                         type = 'binall'
+                    else:
+                        type = 'bin'
                 confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
                 debmake.sed.sed(confdir, 'debian/', substlist, deb['package'])
     ###################################################################

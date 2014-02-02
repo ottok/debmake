@@ -42,7 +42,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.6'
+__version__         = '4.0.7'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -165,7 +165,7 @@ def main():
 #######################################################################
 # Prep to create debian/* package files
 #######################################################################
-    print('I: parse binary package settings', file=sys.stderr)
+    print('I: parse binary package settings: {}'.format(para['binaryspec']), file=sys.stderr)
     para['debs'] = debmake.debs.debs(para['binaryspec'], para['package'], para['monoarch'], para['dh_with'])
     print('I: analyze the source tree', file=sys.stderr)
     para = debmake.analyze.analyze(para)

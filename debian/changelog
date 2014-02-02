@@ -1,3 +1,13 @@
+debmake (4.0.7-1) unstable; urgency=medium
+
+  * Cosmetic refinement. 
+  * Fix package dependency update for perl, ... .
+  * Fix Pre-Depends: for library.
+  * Reduce doc related template generation cases.
+  * Reduce comments in rules for non-multiarch case.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 02 Feb 2014 11:13:10 +0900
+
 debmake (4.0.6-1) unstable; urgency=medium
 
   * Relax upstream version huristics on the parent directory.

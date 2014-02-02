@@ -19,5 +19,4 @@
 # debmake generated override targets
 @OVERRIDE@
 
-# Customize this by adding more override scripts (see dh(1))
 
