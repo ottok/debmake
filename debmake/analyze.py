@@ -84,11 +84,11 @@ def analyze(para):
             exit(1)
     elif os.path.isfile('Build.PL'):
         # Prefered over Makefile.PL after debhelper v8
-        para['dh_with'].update({'perl_build'})
+        #para['dh_with'].update({'perl_build'})
         para['build_type']      = 'Perl Module::Build'
         para['build_depends'].update({'perl'})
     elif os.path.isfile('Makefile.PL'):
-        para['dh_with'].update({'perl_makemaker'})
+        #para['dh_with'].update({'perl_makemaker'})
         para['build_type']      = 'Perl ExtUtils::MakeMaker'
         para['build_depends'].update({'perl'})
     elif os.path.isfile('build.xml'):
@@ -125,10 +125,6 @@ def analyze(para):
         para['build_depends'].update({'python-all'})
     if 'python3' in para['dh_with']:
         para['build_depends'].update({'python3-all'})
-    if 'perl_build' in para['dh_with']:
-        para['build_depends'].update({'perl'})
-    if 'perl_makemaker' in para['dh_with']:
-        para['build_depends'].update({'perl'})
     #######################################################################
     # set override string
     #######################################################################
