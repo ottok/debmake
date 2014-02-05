@@ -30,12 +30,7 @@ import sys
 ###########################################################################
 # dist: called from debmake.main()
 ###########################################################################
-# package   = package
-# version   = version (if quasi-native or -u used)
-# targz     = tar.gz
-# parent    = parent directory name
-###########################################################################
-def dist(package, version, targz, parent):
+def dist(para):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     #######################################################################
     # make distribution tarball using the Autotools
@@ -101,30 +96,36 @@ def dist(package, version, targz, parent):
     #######################################################################
     # set version by the tarball name
     #######################################################################
-    pre = distdir + '/' + package + '-'
-    post = '.' + targz
-    distpackage = pre + '*' + post
-    somepackage = distdir + '/*.[gx]z*'
-    files1 = glob.glob(distpackage)
-    files2 = glob.glob(somepackage)
-    if files1:
-        packageversion = files1[0][len(pre):-len(post)]
-        if version =='':
-            version = packageversion
-        elif version == packageversion:
-            pass
+    somepackage1 = distdir + '/*.tar.xz'
+    somepackage2 = distdir + '/*.tar.gz'
+    somepackage3 = distdir + '/*.tar.bz2'
+    files = glob.glob(somepackage1) + glob.glob(somepackage2) + glob.glob(somepackage3)
+    if files:
+        for file in files:
+            print('I: -> {} created'.format(file), file=sys.stderr)
+        para['tarball'] = files[0][len(distdir)+1:]
+        print('I: {} picked for packaging'.format(para['tarball']), file=sys.stderr)
+        matchtar = re.match(r'(?P<package>[^_]*)[-_](?P<version>[^-_]*)\.(?P<targz>tar\..{2,3})$', para['tarball'])
+        if matchtar:
+            if para['package'] == "":
+                if (len(para['parent']) <= len(matchtar.group('package'))):
+                    para['package'] = para['parent'].lower()
+                else:
+                    para['package'] = matchtar.group('package').lower()
+            if para['version'] =='':
+                para['version'] = matchtar.group('version')
+            elif para['version'] != matchtar.group('version'):
+                print('E: generated tarball version "{}".'.format(matchtar.group('version')), file=sys.stderr)
+                print('E: expected version "{}" (from -u option or debian/changelog).'.format(para['version']), file=sys.stderr)
+                print('E: update version number in places such as AC_INIT of configure.ac.', file=sys.stderr)
+                exit(1)
+            if para['targz'] =='':
+                para['targz'] = matchtar.group('targz')
+            elif para['targz'] != matchtar.group('targz'):
+                print('W: override -z "{}" by actual value "{}".'.format(para['targz'], matchtar.group('targz')), file=sys.stderr)
+                para['targz'] = matchtar.group('targz')
         else:
-            print('E: generated tarball version "{}" (in "{}").'.format(packageversion, distpackage), file=sys.stderr)
-            print('E: expected version  "{}" (specified by -u option or debian/changelog).'.format(version), file=sys.stderr)
-            exit(1) 
-        tarball = package + '-' + version + post
-        print('I: {} tarball made'.format(tarball), file=sys.stderr)
-    elif files2:
-        print('E: {} can not be found.'.format(distpackage), file=sys.stderr)
-        for file in files2:
-            print('E: {} created instead'.format(file), file=sys.stderr)
-        print('E: adjust by -u and -z options, or by changing the source', file=sys.stderr)
-        exit(1) 
+            print('W: {} can not be split into package-version.tar.gz style.'.format(para['tarball']), file=sys.stderr)
     else:
         print('E: {} can not be found.'.format(distpackage), file=sys.stderr)
         print('E: not even likely tarball found', file=sys.stderr)
@@ -135,13 +136,8 @@ def dist(package, version, targz, parent):
     # cd ..
     os.chdir('..')
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
-    # cp -f parent/dist/foo-1.0.tar.gz foo-1.0.tar.gz
-    command = 'cp -f ' + parent + '/' + distdir + '/' + tarball + ' ' + tarball
-    print('I: {}'.format(command), file=sys.stderr)
-    if subprocess.call(command, shell=True) != 0:
-        print('E: failed to copy', file=sys.stderr)
-        exit(1)
-    return version
+    para['srcdir'] = para['package'] + '-' + para['version']
+    return para
 
 if __name__ == '__main__':
     print('No test program')

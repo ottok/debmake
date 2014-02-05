@@ -128,10 +128,9 @@ def main():
 #######################################################################
     if para['dist']:
         print('I: make the upstream tarball with "make dist" equivalents', file=sys.stderr)
-        para['version'] = debmake.dist.dist(para['package'], para['version'], para['targz'], para['parent'])
-        para['srcdir'] = para['package'] + '-' + para['version']
-        para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
+        para = debmake.dist.dist(para)
         debmake.debug.debug_para('D: post-dist', para)
+        print('I: pkg="{}", ver="{}", rev="{}"'.format(para['package'], para['version'], para['revision']), file=sys.stderr)
 #######################################################################
 # -t: make tar (with "tar --exclude=debian" command)
 #######################################################################
@@ -155,7 +154,9 @@ def main():
         print('W: parent dirtectory should be "{}".  (If you use pbuilder, this may be OK.)'.format(para['srcdir']), file=sys.stderr)
     if not para['native']:
         print('I: provide {}_{}.orig.tar.gz for non-native Debian package'.format(para['package'], para['version']), file=sys.stderr)
+        # ln -sf parent/dist/Foo-1.0.tar.gz foo_1.0.orig.tar.gz
         debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['parent'])
+        para['tarball'] = para['package'] + '_' + para['version'] + '.orig.' + para['targz']
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################

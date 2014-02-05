@@ -256,7 +256,7 @@ Argument may need to be quoted to protect from the shell.
     #############################################
     para['monoarch']        = args.monoarch     # -m
     para['native']          = args.native       # -n
-    para['package']         = args.package      # -p
+    para['package']         = args.package.lower()  # -p
     #############################################
     para['quitearly']       = args.quitearly    # -q
     para['revision']        = args.revision     # -r
