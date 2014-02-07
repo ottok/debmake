@@ -189,7 +189,7 @@ add extra arguments to the \fB\-\-with\fP option of the \fBdh\fP(1) command as \
 .IP
 For Autotools based packages, setting \fBautoreconf\fP as \fIaddon\fP forces to run "\fBautoreconf \-i \-v \-f\fP" for every package building.  Otherwise, \fBautotools\-dev\fP as \fIaddon\fP is used as default.
 .IP
-For Autotools based packages, if they install Python programs, \fBpython2\fP as \fIaddon\fP is needed since this is non\-obvious.  But for \fBsetup.py\fP based packages, \fBpython2\fP as \fIaddon\fP is not needed since this is obvious and it is automatically set for the \fBdh\fP(1) command.
+For Autotools based packages, if they install Python programs, \fBpython2\fP as \fIaddon\fP is needed for packages with compat < 9 since this is non\-obvious.  But for \fBsetup.py\fP based packages, \fBpython2\fP as \fIaddon\fP is not needed since this is obvious and it is automatically set for the \fBdh\fP(1) command when it is required.
 .TP
 \fB\-x\fP \fIn\fP, \fB\-\-extra\fP \fIn\fP
 generate extra configuration files as templates.

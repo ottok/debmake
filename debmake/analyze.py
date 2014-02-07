@@ -27,6 +27,7 @@ import os
 import re
 import sys
 import debmake.read
+import debmake.compat
 ###########################################################################
 # analyze: called from debmake.main()
 ###########################################################################
@@ -76,7 +77,8 @@ def analyze(para):
             para['build_depends'].update({'python3-all'})
         elif re.search('python', line):
             # http://docs.python.org/2/distutils/
-            para['dh_with'].update({'python2'})
+            if debmake.compat.compat(para['compat']) < 9:
+                para['dh_with'].update({'python2'})
             para['build_type']      = 'Python distutils'
             para['build_depends'].update({'python-all'})
         else:
