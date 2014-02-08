@@ -32,6 +32,10 @@ def sanity(para):
     #######################################################################
     # Normalize para[] for each exclusive build case (-d -t -a)
     #######################################################################
+    package = ''
+    version = ''
+    revision = ''
+    targz = ''
     if para['archive']: # -a
         parent = ''
         if not os.path.isfile(para['tarball']):
@@ -41,23 +45,57 @@ def sanity(para):
         rebasetar = re.match(r'([^/]+)[-_]([^-/_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
         # tarball: package_version.orig.tar.gz
         reorigtar = re.match(r'([^/]+)_([^-/_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
-        if para['package'] and para['version'] and para['targz']:
-            pass # manual package/version/targz
+        if rebasetar:
+            package = rebasetar.group(1).lower()
+            version = rebasetar.group(2)
+            targz = rebasetar.group(3)
+        elif reorigtar:
+            package = reorigtar.group(1).lower()
+            version = reorigtar.group(2)
+            targz = reorigtar.group(3)
         else:
-            if rebasetar:
-                para['package'] = rebasetar.group(1)
-                para['version'] = rebasetar.group(2)
-                para['targz'] = rebasetar.group(3)
-            elif reorigtar:
-                para['package'] = reorigtar.group(1)
-                para['version'] = reorigtar.group(2)
-                para['targz'] = reorigtar.group(3)
-            else:
-                print('E: Non-supported tarball name {}'.format(para['tarball']), file=sys.stderr)
-                exit(1)
+            print('E: Non-supported tarball name {}'.format(para['tarball']), file=sys.stderr)
+            exit(1)
     #######################################################################
     if not para['archive']: # not -a
         parent = os.path.basename(os.getcwd())
+        # check changelog for package/version/revision (non-native package)
+        if not para['native'] and os.path.isfile('debian/changelog'):
+            with open('debian/changelog', 'r') as f:
+                line = f.readline()
+            pkgver = re.match('([^ \t]+)[ \t]+\(([^()]+)-([^-()]+)\)', line)
+            if pkgver:
+                package = pkgver.group(1).lower()
+                version = pkgver.group(2)
+                revision = pkgver.group(3)
+            else:
+                print('E: changelog start with "{}"'.format(line), file=sys.stderr)
+                exit(1)
+    #######################################################################
+    # set parent/srcdir/tarball/package/version/revision
+    para['parent'] = parent
+    if para['package'] == '':
+        para['package'] = package
+    elif para['package'] != package:
+        print('W: -p "{}" != auto set value "{}"'.format(para['package'], package), file=sys.stderr)
+    if para['version'] == '':
+        para['version'] = version
+    elif para['version'] != version:
+        print('W: -u "{}" != auto set value "{}"'.format(para['version'], version), file=sys.stderr)
+    #######################################################################
+    if not para['archive']: # not -a
+        if para['revision'] == '':
+            para['revision'] = revision
+        elif para['revision'] != revision:
+            print('W: -r "{}" != auto set value "{}"'.format(para['revision'], revision), file=sys.stderr)
+    #######################################################################
+    if para['archive']: # -a
+        if para['targz'] == '':
+            para['targz'] = targz
+        elif para['targz'] != targz:
+            print('W: -r "{}" != auto set value "{}"'.format(para['targz'], targz), file=sys.stderr)
+    #######################################################################
+    if not para['archive']: # not -a
         # set para['targz']
         if para['targz'] == '':
             para['targz'] = 'tar.gz'
@@ -77,54 +115,27 @@ def sanity(para):
             print('E: --targz (-z) value is invalid: {}'.format(para['targz']), file=sys.stderr)
             exit(1)
     #######################################################################
-    # check changelog for package/version/revision (non-native package)
-    if not para['native'] and os.path.isfile('debian/changelog'):
-        with open('debian/changelog', 'r') as f:
-            line = f.readline()
-        pkgver = re.match('([^ \t]+)[ \t]+\(([^()]+)-([^-()]+)\)', line)
-        if pkgver:
-            if para['package'] == '':
-                para['package'] = pkgver.group(1)
-            elif para['package'] != pkgver.group(1):
-                print('E: -p "{}" != changelog "{}"'.format(para['package'], pkgver.group(1)), file=sys.stderr)
-                exit(1)
-            if para['version'] == '':
-                para['version'] = pkgver.group(2)
-            elif para['version'] != pkgver.group(2):
-                print('E: -u "{}" != changelog "{}"'.format(para['version'], pkgver.group(2)), file=sys.stderr)
-                exit(1)
-            if para['revision'] == '':
-                para['revision'] = pkgver.group(3)
-            elif para['revision'] != pkgver.group(3):
-                print('E: -r "{}" != changelog "{}"'.format(para['version'], pkgver.group(3)), file=sys.stderr)
-                exit(1)
-        else:
-            print('E: changelog start with "{}"'.format(line), file=sys.stderr)
-            exit(1)
-    #######################################################################
-    # set parent/srcdir/tarball/package/version/revision
-    para['parent'] = parent
     if para['archive']:
         para['srcdir'] = para['package'] + '-' + para['version']
+        # para['tar'] may be Foo-1.0.tar.xz and keep it so.
     elif para['dist']: # -d
-        # differ version/tarball/srcdir
-        if para['package'] == '':
-            para['package'] = parent
+        pass # differ package/version/tarball/srcdir
     else: # normal (native/non-native) or -t
         if para['version'] == '':# -u missing
             pkgver = re.match('^([^_]+)-([^-_]+)$', parent)
             if pkgver:
                 if para['package'] == '': # both -p and -u missing
-                    para['package'] = pkgver.group(1)
+                    para['package'] = pkgver.group(1).lower()
                 para['version'] = pkgver.group(2) # -u missing
             else:
                 print('E: invalid parent directory for setting package/version: {}'.format(parent), file=sys.stderr)
                 print('E: rename parent directory to "package-version".', file=sys.stderr)
                 exit(1)
         elif para['package'] == '': # -u set, -p missing
-            para['package'] = parent
+            para['package'] = parent.lower()
         para['srcdir'] = para['package'] + '-' + para['version']
         para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
+    #######################################################################
     if para['revision'] == '':
         para['revision'] = '1'
     #######################################################################

@@ -70,10 +70,11 @@ Typical use cases
  $ debuild
 
 6. make arch=any(foo) and all(foo-doc) packages (Autotool based, python code)
- $ debmake -w python2 -b"foo:any,foo-doc:all"
+ $ debmake -b"foo:any,foo-doc:all"
  $ debuild
 
  (Please note binary package name such as lib* will make them arch=same.)
+ (Additional "--with python2" is needed under compat=8 / pre-wheezy.)
 
 The debuild command used to make Debian binary packages from the source package
 in the above examples may be substituted by the equivalent commands such as

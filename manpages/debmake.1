@@ -23,20 +23,20 @@ debmake \- program to make the Debian source package
 .SH DESCRIPTION
 \fBdebmake\fP helps to build the Debian package from the upstream source.
 Normally, this is done as follows:
-.IP
-* The upstream tarball is downloaded as the \fIpackage\-version.tar.gz\fP file.
-.IP
-* It is untared to create many files under the \fIpackage\-version/\fP directory.
-.IP
-* \fBdebmake\fP is invoked in the \fIpackage\-version/\fP directory possibly without any arguments.
-.IP
-* \fBdebmake\fP generates the \fIpackagename_version.orig.tar.gz\fP symlink pointing to the upstream tarball.
-.IP
-* \fBdebmake\fP generates the template files in the \fIpackage\-version\fP\fB/debian/\fP directory.
-.IP
-* These template files should be manually adjusted to their perfection.
-.IP
-* \fBdpkg\-buildpackage\fP (usually from its wrapper \fBdebuild\fP or \fBpdebuild\fP) is invoked in the \fIpackage\-version/\fP directory to make debian packages.
+.IP \(bu 2
+The upstream tarball is downloaded as the \fIpackage\-version.tar.gz\fP file.
+.IP \(bu 2
+It is untared to create many files under the \fIpackage\-version/\fP directory.
+.IP \(bu 2
+\fBdebmake\fP is invoked in the \fIpackage\-version/\fP directory possibly without any arguments.
+.IP \(bu 2
+\fBdebmake\fP generates the \fIpackagename_version.orig.tar.gz\fP symlink pointing to the upstream tarball.
+.IP \(bu 2
+\fBdebmake\fP generates the template files in the \fIpackage\-version\fP\fB/debian/\fP directory.
+.IP \(bu 2
+These template files should be manually adjusted to their perfection.
+.IP \(bu 2
+\fBdpkg\-buildpackage\fP (usually from its wrapper \fBdebuild\fP or \fBpdebuild\fP) is invoked in the \fIpackage\-version/\fP directory to make debian packages.
 .PP
 \fBdebmake\fP always builds the source for the multi\-arch package, unless \fB\-m\fP option is explicitly specified.
 .PP
@@ -45,26 +45,26 @@ Normally, this is done as follows:
 Most of the obvious option states and values are automatically set by \fBdebmake\fP with good defaults by scanning the source code. 
 .PP
 The functional single\-binary package can be generated automatically without touching files in the \fIpackage\-version\fP\fB/debian/\fP directory.  The generated package can be used locally.
-.IP
-* To comply with the strict quality requirements of the Debian archive, these template files must be manually adjusted to their perfection before the upload.
-.IP
-* For example, you can get a Python module packaged by the Python distutils and make its Debian binary package by simply running "\fBdebmake \-d \-i debuild\fP" in its untared source tree.
+.IP \(bu 2
+To comply with the strict quality requirements of the Debian archive, these template files must be manually adjusted to their perfection before the upload.
+.IP \(bu 2
+For example, you can get a Python module packaged by the Python distutils and make its Debian binary package by simply running "\fBdebmake \-d \-i debuild\fP" in its untared source tree.
 .PP
 The functional multi\-binary package always requires some extra manual works. These works are done as follows:
-.IP
-* Invoke \fBdebmake\fP with the \fB\-b\fP'\fIpackage1:type1, ...\fP' and \fB\-j\fP options in the \fIpackage\-version/\fP directory.
-.IP
-* Check the last lines of \fIpackage\fP.\fBbuild\-dep.log\fP to judge build dependencies for \fBBuild\-Depends:\fP. (You do not need to list packages used by \fBdebhelper\fP, \fBperl\fP , or \fBfakeroot\fP explicitly in \fBBuild\-Depends:\fP.)
-.IP
-* Check the contents of \fIpackage\fP.\fBinstall.log\fP to identify file paths in \fBdebian/tmp\fP.
-.IP
-* Update \fBdebian/control\fP and \fBdebian\fP/\fIpackage\fP.\fBinstall\fP files using the above information.
-.IP
-* Update other \fBdebian/\fP\fI*\fP files as needed.
-.IP
-* Build binary packages with \fBdebuild\fP, \fBpdebuild\fP, etc.
-.IP
-* Files installed into \fBdebian/tmp\fP are split by \fBdebian\fP/\fIpackage\fP.\fBinstall\fP into each \fIpackage\fP_\fIversion\fP\-\fIrevision\fP_\fIarch\fP.\fBdeb\fP.
+.IP \(bu 2
+Invoke \fBdebmake\fP with the \fB\-b\fP'\fIpackage1:type1, ...\fP' and \fB\-j\fP options in the \fIpackage\-version/\fP directory.
+.IP \(bu 2
+Check the last lines of \fIpackage\fP.\fBbuild\-dep.log\fP to judge build dependencies for \fBBuild\-Depends:\fP. (You do not need to list packages used by \fBdebhelper\fP, \fBperl\fP , or \fBfakeroot\fP explicitly in \fBBuild\-Depends:\fP.)
+.IP \(bu 2
+Check the contents of \fIpackage\fP.\fBinstall.log\fP to identify file paths in \fBdebian/tmp\fP.
+.IP \(bu 2
+Update \fBdebian/control\fP and \fBdebian\fP/\fIpackage\fP.\fBinstall\fP files using the above information.
+.IP \(bu 2
+Update other \fBdebian/\fP\fI*\fP files as needed.
+.IP \(bu 2
+Build binary packages with \fBdebuild\fP, \fBpdebuild\fP, etc.
+.IP \(bu 2
+Files installed into \fBdebian/tmp\fP are split by \fBdebian\fP/\fIpackage\fP.\fBinstall\fP into each \fIpackage\fP_\fIversion\fP\-\fIrevision\fP_\fIarch\fP.\fBdeb\fP.
 .PP
 \fBdebmake\fP has the \fB\-a\fP option to make it work directly with the tarball.
 .PP
@@ -89,6 +89,8 @@ If you are thinking to package a Debian specific source tree with \fBdebian/\fP\
 use the upstream source tarball directly. (\fB\-p\fP, \fB\-u\fP, \fB\-z\fP: overridden)
 .IP
 The upstream tarball may be specified as \fIpackage\_version.orig.tar.gz\fP and; \fBtar.gz\fP for all cases may be \fBtar.bz2\fP, or \fBtar.xz\fP.
+.IP
+If the specified upstream tarball name contains uppercase letters, the Debian package name is generated by converting them to lowercase letters.
 .TP
 \fB\-d\fP, \fB\-\-dist\fP
 run "\fBmake dist\fP" equivalent first to generate upstream tarball and use it.
@@ -187,7 +189,7 @@ add extra arguments to the \fB\-\-with\fP option of the \fBdh\fP(1) command as \
 .IP
 For Autotools based packages, setting \fBautoreconf\fP as \fIaddon\fP forces to run "\fBautoreconf \-i \-v \-f\fP" for every package building.  Otherwise, \fBautotools\-dev\fP as \fIaddon\fP is used as default.
 .IP
-For Autotools based packages, if they install Python programs, \fBpython2\fP as \fIaddon\fP is needed since this is non\-obvious.  But for \fBsetup.py\fP based packages, \fBpython2\fP as \fIaddon\fP is not needed since this is obvious and it is automatically set for the \fBdh\fP(1) command.
+For Autotools based packages, if they install Python programs, \fBpython2\fP as \fIaddon\fP is needed for packages with compat < 9 since this is non\-obvious.  But for \fBsetup.py\fP based packages, \fBpython2\fP as \fIaddon\fP is not needed since this is obvious and it is automatically set for the \fBdh\fP(1) command when it is required.
 .TP
 \fB\-x\fP \fIn\fP, \fB\-\-extra\fP \fIn\fP
 generate extra configuration files as templates.
@@ -200,12 +202,52 @@ The number \fIn\fP changes which configuration templates are generated.
 .IP
 \fB\-x2\fP : ,, + interesting configuration files. (recommended for experts, multi\-binary aware)
 .IP
-\fB\-x3\fP : ,, + unusual configuration template files with the extra \fB.ex\fP suffix to ease their removal. (recommended for new users) To use these as configuration files, rename their file names into ones without the \fB.ex\fP suffix.
+\fB\-x3\fP : ,, + unusual configuration template files with the extra \fB.ex\fP suffix to ease their removal. (recommended for new users) To use these as configuration files, rename their file names into ones without the \fB.ex\fP suffix. 
 .IP
 \fB\-x4\fP : ,, + copyright file examples.
+.IP
+Existing configuration files are never overwritten.  If you wish to update some of the existing configuration files, please rename them before running the \fBdebmake\fP command and manually merge the generated configuration files with the old renamed ones.
 .TP
 \fB\-y\fP, \fB\-\-yes\fP
 force "yes" for all prompts.
+
+.SH EXAMPLES
+For a well behaving source, you can build a good\-for\-local\-use installable single Debian binary package easily with one command.  Test install of such a package generated in this way offers a good alternative to traditional "\fBmake install\fP" to the \fB/usr/local\fP directory since the Debian package can be removed cleanly by the "\fBdpkg \-P\fP \fI...\fP" command. Here are some examples of how to build such test packages. (These should work in most cases.  If the \fB\-d\fP does not work, try \fB\-t\fP instead.)
+.PP
+For a typical C program source tree packaged with autoconf/automake:
+.IP \(bu 2
+\fBdebmake \-d \-i debuild\fP
+.PP
+For a typical python module source tree:
+.IP \(bu 2
+\fBdebmake \-d \-b':python' \-i debuild\fP
+.PP
+For a typical python module in the \fIpackage\-version.tar.gz\fP archive:
+.IP \(bu 2
+\fBdebmake \-a \fIpackage\-version.tar.gz \fB\-b':python' \-i debuild\fP
+.PP
+For a typical perl module in the \fIPackage\-version.tar.gz\fP archive:
+.IP \(bu 2
+\fBdebmake \-a\fP \fIPackage\-version.tar.gz \fB\-b':perl' \-i debuild\fP
+
+.SH CAVEAT
+There are some limitations for what characters may be used as a part of the Debian package.  The most notable limitation is the prohibition of uppercase letters in the package name.  Here is the summary in the regular expression.
+.IP
+Upstream package name (\fB\-p\fP): [\-+.a\-z0\-9]{2,}
+.IP
+Binary package name (\fB\-b\fP): [\-+.a\-z0\-9]{2,}
+.IP
+Upstream version (\fB\-u\fP): [0-9][\-+.:~a\-z0\-9A\-Z]*
+.IP
+Debian revision (\fB\-r\fP): [0-9][+.~a\-z0\-9A\-Z]*
+.PP
+See the exact definition in "5.6.1 Source", "5.6.7 Package", and 
+"5.6.12 Version" of Debian Policy Manual.
+(http://www.debian.org/doc/debian-policy/ch-controlfields.html)
+.PP
+Please make sure to protect the option arguments of the \fB\-b\fP,
+\fB\-f\fP, \fB\-n\fP, and \fB\-w\fP options from the shell interference
+by quoting them properly. 
 
 .SH DEBUG
 The character set in the environ variable \fBDEBUG\fP determines the logging output level.

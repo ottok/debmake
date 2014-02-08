@@ -7,6 +7,7 @@ setup.py
 debmake/__init__.py
 debmake/analyze.py
 debmake/cat.py
+debmake/compat.py
 debmake/control.py
 debmake/copyright.py
 debmake/debian.py
