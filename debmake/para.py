@@ -199,6 +199,12 @@ Argument may need to be quoted to protect from the shell.
             action = 'store_true', 
             default = False, 
             help='quit early before creating files in the debian directory')
+#    p.add_argument(
+#            '-s', 
+#            '--spec',
+#            action = 'store_true', 
+#            default = False, 
+#            help = 'parse SPEC configuration')
     p.add_argument(
             '-v', 
             '--version', 
@@ -246,6 +252,7 @@ Argument may need to be quoted to protect from the shell.
 #   para['gui']             = args.gui          # -g
     para['invoke']          = args.invoke       # -i
     para['judge']           = args.judge        # -j
+    # ******************************************* -k
     ############################################# -l
     # --license: args.license -> para['license'] as set
     if args.license == '':
@@ -256,10 +263,11 @@ Argument may need to be quoted to protect from the shell.
     #############################################
     para['monoarch']        = args.monoarch     # -m
     para['native']          = args.native       # -n
-    para['package']         = args.package      # -p
+    para['package']         = args.package.lower()  # -p
     #############################################
     para['quitearly']       = args.quitearly    # -q
     para['revision']        = args.revision     # -r
+#   para['spec']            = args.spec         # -s
     para['tar']             = args.tar          # -t
     para['version']         = args.upstreamversion  # -u
     para['print_version']   = args.version      # -v

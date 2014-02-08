@@ -44,8 +44,10 @@ def origtar(package, version, targz, tarball, srcdir):
             command = 'ln -sf ' + tarball + ' ' + origtargz
             print('I: {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
-                print('E: failed to create hardlink.', file=sys.stderr)
+                print('E: failed to create symlink.', file=sys.stderr)
                 exit(1)
+    elif os.path.isfile(origtargz):
+        print('I: Use existing "{}" as upstream tarball'.format(origtargz), file=sys.stderr)
     else:
         print('E: missing "{}".'.format(tarball), file=sys.stderr)
         exit(1)

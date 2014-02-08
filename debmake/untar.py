@@ -30,7 +30,7 @@ import sys
 ###########################################################################
 # tarball   = package-version.tar.gz (or  package_version.orig.tar.gz)
 # targz     = tar.gz
-# srcdir   = package-version
+# srcdir    = package-version
 # tar       = True if -t, False if -a or -d
 # dist      = True if -d, False if -a or -t
 # parent    = package (original VCS directory for -d)
@@ -65,10 +65,13 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
         # setup command line
         if targz == 'tar.bz2':
             command = 'tar --bzip2 -xvf '
+            commandx = 'tar --bzip2 -tf '
         elif targz == 'tar.xz':
             command = 'tar --xz -xvf '
+            commandx = 'tar --xz -tf '
         elif targz == 'tar.gz':
             command = 'tar -xvzf '
+            commandx = 'tar -tzf '
         else:
             print('E: the extension "{}" not supported.'.format(targz), file=sys.stderr)
             exit(1)
@@ -78,6 +81,31 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
             print('E: failed to untar.', file=sys.stderr)
             exit(1)
         print('I: untared {}.'.format(tarball), file=sys.stderr)
+        # rename source directory
+        commandx += tarball + '|grep -v /.'
+        print('I: {}'.format(commandx), file=sys.stderr)
+        try:
+            tarsrcdirs = subprocess.check_output(commandx, shell=True, universal_newlines=True).strip().split('\n')
+        except CalledProcessError:
+            print('E: failed to list the stem directory of tar.', file=sys.stderr)
+            exit(1)
+        # tailing / may or may not exist.
+        if len(tarsrcdirs) > 1:
+            print('W: {} first level directories found.'.format(len(tarsrcdirs)), file=sys.stderr)
+        if tarsrcdirs[0] =="":
+            print('E: No first level directory found.', file=sys.stderr)
+            exit(1)
+        elif tarsrcdirs[0][-1:] == '/':
+            tarsrcdir = tarsrcdirs[0][:-1]
+        else:
+            tarsrcdir = tarsrcdirs[0]
+        if tarsrcdir != srcdir:
+            print('I: move source tree from {} to {}.'.format(tarsrcdir, srcdir), file=sys.stderr)
+            command = 'mv -f ' + tarsrcdir + ' ' + srcdir
+            print('I: {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: failed to move directory.', file=sys.stderr)
+                exit(1)
     # copy debian/* for -d
     if dist and os.path.isdir(parent + '/debian'):
         command = 'cp -drl ' + parent + '/debian ' + srcdir + '/debian'

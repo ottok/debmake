@@ -42,7 +42,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.7'
+__version__         = '4.0.8'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -65,7 +65,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
 __debian_policy__   = '3.9.5'   # debian policy version
-__debian_compat__   = '9'       # dpkg compatibility level in debian/comapt
+__debian_compat__   = '9'       # debhelper compatibility level in 
+                                # debian/comapt
+                                # Adjust this to 8 or less if 
+                                # backporting to pre-wheezy
 
 #######################################################################
 # main program
@@ -128,10 +131,9 @@ def main():
 #######################################################################
     if para['dist']:
         print('I: make the upstream tarball with "make dist" equivalents', file=sys.stderr)
-        para['version'] = debmake.dist.dist(para['package'], para['version'], para['targz'], para['parent'])
-        para['srcdir'] = para['package'] + '-' + para['version']
-        para['tarball'] = para['package'] + '-' + para['version'] + '.' + para['targz']
+        para = debmake.dist.dist(para)
         debmake.debug.debug_para('D: post-dist', para)
+        print('I: pkg="{}", ver="{}", rev="{}"'.format(para['package'], para['version'], para['revision']), file=sys.stderr)
 #######################################################################
 # -t: make tar (with "tar --exclude=debian" command)
 #######################################################################
@@ -155,7 +157,9 @@ def main():
         print('W: parent dirtectory should be "{}".  (If you use pbuilder, this may be OK.)'.format(para['srcdir']), file=sys.stderr)
     if not para['native']:
         print('I: provide {}_{}.orig.tar.gz for non-native Debian package'.format(para['package'], para['version']), file=sys.stderr)
+        # ln -sf parent/dist/Foo-1.0.tar.gz foo_1.0.orig.tar.gz
         debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['parent'])
+        para['tarball'] = para['package'] + '_' + para['version'] + '.orig.' + para['targz']
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################
