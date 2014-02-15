@@ -135,8 +135,8 @@ Argument may need to be quoted to protect from the shell.
              '--binaryspec', 
             action = 'store', 
             default = '',
-            help = 'set binary package specs as comma separated list, e.g., in full form "foo:bin, foo-doc:doc, libfoo1:lib, libfoo1-dbg:dbg, libfoo-dev:dev" or in short form ", -doc, libfoo1, libfoo1-dbg, libfoo-dev".  Here, "type" is chosen from bin, data, dbg, dev, doc, lib, perl, python, python3, and script.',
-            metavar = 'package[:type]')
+            help = 'set binary package specs as comma separated list of "binarypackage":"type" pairs, e.g., in full form "foo:bin,foo-doc:doc,libfoo1:lib,libfoo1-dbg:dbg,libfoo-dev:dev" or in short form ",-doc,libfoo1,libfoo1-dbg, libfoo-dev".  Here, "binarypackage" is the binary package name; and optional "type" is chosen from "bin", "data", "dbg", "dev", "doc", "lib", "perl", "python", "python3", "ruby", and "script". If "type" is not specified but obvious, it is set by "binarypackage".  Otherwise it is set to "bin" for the compiled ELF binary.',
+            metavar = 'binarypackage[:type]')
     p.add_argument(
             '-e', 
             '--email', 
@@ -229,8 +229,8 @@ Argument may need to be quoted to protect from the shell.
     p.add_argument(
             '-y', 
             '--yes',
-            action = 'store_true', 
-            default = False, 
+            action = 'count', 
+            default = 0, 
             help = 'force "yes" for all prompts')
     args = p.parse_args()
 #######################################################################
@@ -279,7 +279,8 @@ Argument may need to be quoted to protect from the shell.
         para['dh_with'] = set(args.withargs.split(','))
     #############################################
     para['extra']           = args.extra        # -x
-    para['yes']             = args.yes          # -y
+    para['yes']             = args.yes % 3      # -y
+                            # 0: ask, 1: yes, 2: no
     para['targz']           = args.targz        # -z
     ############################################# -o
     if args.option:

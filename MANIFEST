@@ -7,6 +7,7 @@ setup.py
 debmake/__init__.py
 debmake/analyze.py
 debmake/cat.py
+debmake/compat.py
 debmake/control.py
 debmake/copyright.py
 debmake/debian.py
@@ -17,9 +18,11 @@ debmake/origtar.py
 debmake/para.py
 debmake/read.py
 debmake/sanity.py
+debmake/scanfiles.py
 debmake/sed.py
 debmake/tar.py
 debmake/untar.py
+debmake/yn.py
 doc/README.multi
 doc/README.option
 doc/README.tutorial
@@ -36,6 +39,7 @@ extra0desc/lib
 extra0desc/perl
 extra0desc/python
 extra0desc/python3
+extra0desc/ruby
 extra0desc/script
 extra0desc_long/_long
 extra0desc_long/bin
@@ -47,8 +51,12 @@ extra0desc_long/lib
 extra0desc_long/perl
 extra0desc_long/python
 extra0desc_long/python3
+extra0desc_long/ruby
 extra0desc_long/script
+extra0export/compiler
+extra0export/java
 extra0override/dbg
+extra0override/java
 extra0override/multiarch
 extra0override/python3
 extra1/README.Debian

@@ -141,6 +141,8 @@ The meanings of \fItype\fP with (arch, multi-arch) values are as follows:
 .IP
 \fBpython3\fP: Python3 script package (all, foreign)
 .IP
+\fBruby\fP: Ruby script package (all, foreign)
+.IP
 \fBscript\fP: Shell script package (all, foreign)
 .TP
 \fB\-e\fP \fIfoo@example.org\fP, \fB\-\-email\fP \fIfoo@example.org\fP
@@ -231,6 +233,10 @@ For a typical perl module in the \fIPackage\-version.tar.gz\fP archive:
 \fBdebmake \-a\fP \fIPackage\-version.tar.gz \fB\-b':perl' \-i debuild\fP
 
 .SH CAVEAT
+\fBdebmake\fP focus on software packages with C/C++ (autoconf/automake) and Python (with distutils).
+.PP 
+\fBdebmake\fP supports to Ruby (with gem2deb) and Java (with javahelper) are not perfect.  
+.PP 
 There are some limitations for what characters may be used as a part of the Debian package.  The most notable limitation is the prohibition of uppercase letters in the package name.  Here is the summary in the regular expression.
 .IP
 Upstream package name (\fB\-p\fP): [\-+.a\-z0\-9]{2,}

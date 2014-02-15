@@ -1,7 +1,9 @@
-# For example, set multiarch library install file path.  
+# Set required multiarch library install path.
 # See dpkg-architecture(1)
 #DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+#
+# This is example for Cmake (See http://bugs.debian.org/641051 )
 #override_dh_auto_configure:
-#	cmake -DCMAKE_INSTALL_PREFIX=/usr \
-#             -DLIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)
+#	dh_auto_configure -- \
+#	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 

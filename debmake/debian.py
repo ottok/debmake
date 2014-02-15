@@ -83,7 +83,7 @@ def debian(para):
     ###################################################################
     # check which package have the documentation
     ###################################################################
-    binlist = {'script', 'perl', 'python', 'python3', 'bin'}
+    binlist = {'bin', 'perl', 'python', 'python3', 'ruby', 'script'}
     docpackage = ''
     for deb in para['debs']:
         if deb['type'] == 'doc':
@@ -95,18 +95,43 @@ def debian(para):
                 break
     if docpackage == '':
         docpackage = para['debs'][0]['package']
+    #######################################################################
+    # set export string
+    #######################################################################
+    export_dir = para['base_path'] + '/share/debmake/extra0export/'
+    substlist['@EXPORT@'] = ''
+    if 'compiler' in para['export']:
+        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'compiler').rstrip() + '\n'
+    if 'java' in para['export']:
+        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'java').rstrip() + '\n'
+
+    #######################################################################
+    # set override string
+    #######################################################################
+    override_dir = para['base_path'] + '/share/debmake/extra0override/'
+    substlist['@OVERRIDE@'] = ''
+    if len(para['debs']) == 1:
+        build_dir = 'debian/' + para['debs'][0]['package']
+    else:
+        build_dir = 'debian/tmp'
+    if 'dbg' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(build_dir).rstrip() + '\n'
+    if 'python3' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'python3').format(build_dir).strip() + '\n'
+    if 'multiarch' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n'
+    if 'java' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n'
+
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################
     debmake.cat.cat('debian/control', debmake.control.control(para))
-    # skip slow debmake.copyright.copyright if debian/copyright exists
-    if not os.path.isfile('debian/copyright'):
-        debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license']))
+    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['bdata'], para['binary_files'], para['huge_files']))
     if para['dh_with'] == set(): # no dh_with
-        substlist['@DHWITH@'] = '\tdh $@'
+        substlist['@DHWITH@'] = ''
     else:
-        substlist['@DHWITH@'] = '\tdh $@ --with "{}"'.format(','.join(para['dh_with']))
-    substlist['@OVERRIDE@'] = para['override']
+        substlist['@DHWITH@'] = '--with "{}"'.format(','.join(para['dh_with']))
     confdir = para['base_path'] + '/share/debmake/extra0/'
     debmake.sed.sed(confdir, 'debian/', substlist, package) # changelog, rules
     os.chmod('debian/rules', 0o755)

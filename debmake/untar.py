@@ -25,6 +25,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import subprocess
 import sys
+import debmake.yn
 ###########################################################################
 # untar: called from debmake.main()
 ###########################################################################
@@ -49,19 +50,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
             exit(1)
     else: # -a -d
         if os.path.isdir(srcdir):
-            if yes:
-                yn = 'y'
-            else:
-                yn = input('?: remove "{}" directory? [Y/n]: '.format(srcdir))
-            if (yn == '') or (yn[0].lower() =='y'):
-                command = 'rm -rf ' + srcdir
-                print('I: {}'.format(command), file=sys.stderr)
-                if subprocess.call(command, shell=True) != 0:
-                    print('E: failed to rm.', file=sys.stderr)
-                    exit(1)
-                print('I: removed {}.'.format(srcdir), file=sys.stderr)
-            else:
-                exit(1)
+            debmake.yn.yn('remove "{}" directory in untar'.format(srcdir), 'rm -rf ' + srcdir, yes)
         # setup command line
         if targz == 'tar.bz2':
             command = 'tar --bzip2 -xvf '

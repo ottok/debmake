@@ -35,6 +35,7 @@ import debmake.dist
 import debmake.origtar
 import debmake.para
 import debmake.sanity
+import debmake.scanfiles
 import debmake.tar
 import debmake.untar
 #######################################################################
@@ -42,7 +43,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.8'
+__version__         = '4.0.9'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -94,6 +95,8 @@ def main():
     para['build_depends']   = {'debhelper (>=' + para['compat'] +')'}
     para['desc'] = ''
     para['desc_long'] = ''
+    para['export'] = set()
+    para['override'] = set()
     # get prefix for install --user/ ,, --prefix/ ,, --home
     fullparent = os.path.dirname(sys.argv[0])
     if fullparent == '.':
@@ -116,8 +119,9 @@ def main():
 # -c: scan source for copyright+ license text, print and exit
 #######################################################################
     if para['copyright']:
-        print('I: scan source for copyright+license text', file=sys.stderr)
-        print(debmake.copyright.copyright('package',set()))
+        print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
+        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(check=True)
+        print(debmake.copyright.copyright('package', set(),bdata, binary_files, huge_files))
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
@@ -210,7 +214,7 @@ def main():
             print('I: please execute "cd .." and inspect the build results.'.format(os.getcwd()), file=sys.stderr)
     elif os.getcwd() != para['cwd']:
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
-        print('I: please execute "cd {0}"'.format(os.getcwd()), file=sys.stderr)
+        print('I: please execute "cd {}"'.format(os.getcwd()), file=sys.stderr)
         print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
     return
 
