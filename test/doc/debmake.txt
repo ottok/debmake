@@ -1,0 +1,39 @@
+= Debmake tutorial
+Osamu Aoki
+
+include::00-preface.txt[]
+
+== Quick guide
+
+include::01-quick.txt[]
+
+== Top down tutorial
+
+include::10-workflow.txt[]
+
+include::11-version.txt[]
+
+include::12-build.txt[]
+
+include::13-library.txt[]
+
+include::19-reminders.txt[]
+
+== Bottom up tutorial
+
+include::20-toolsetup.txt[]
+
+include::21-siglepkg.txt[]
+
+include::22-patchpkg.txt[]
+
+include::23-multipkg.txt[]
+
+include::24-autotools.txt[]
+
+include::25-python.txt[]
+
+== Appendix
+
+include::99-debmake-man.txt[]
+

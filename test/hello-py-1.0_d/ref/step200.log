@@ -1,0 +1,77 @@
+ $ cd vcsdir
+ $ debmake -s -b':python3' -p hello-py -u 1.0 -d
+I: set parameters
+I: sanity check of parameters
+W: -p "hello-py" != auto set value ""
+W: -u "1.0" != auto set value ""
+I: pkg="hello-py", ver="1.0", rev="1"
+I: make the upstream tarball with "make dist" equivalents
+I: pwd = "/path/to/vcsdir"
+I: $ python3 setup.py sdist
+running sdist
+running check
+warning: sdist: standard file not found: should have one of README, READ...
+
+reading manifest template 'MANIFEST.in'
+writing manifest file 'MANIFEST'
+creating hello-py-1.0
+creating hello-py-1.0/hello-py
+creating hello-py-1.0/scripts
+making hard links in hello-py-1.0...
+hard linking MANIFEST -> hello-py-1.0
+hard linking MANIFEST.in -> hello-py-1.0
+hard linking setup.py -> hello-py-1.0
+hard linking hello-py/__init__.py -> hello-py-1.0/hello-py
+hard linking scripts/hello -> hello-py-1.0/scripts
+creating dist
+Creating tar archive
+removing 'hello-py-1.0' (and everything under it)
+I: -> dist/hello-py-1.0.tar.gz created
+I: hello-py-1.0.tar.gz picked for packaging
+I: pwd = "/path/to"
+I: $ cp -f vcsdir/dist/hello-py-1.0.tar.gz hello-py-1.0.tar.gz
+I: pkg="hello-py", ver="1.0", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf hello-py-1.0.tar.gz
+hello-py-1.0/
+hello-py-1.0/hello-py/
+hello-py-1.0/hello-py/__init__.py
+hello-py-1.0/scripts/
+hello-py-1.0/scripts/hello
+hello-py-1.0/MANIFEST.in
+hello-py-1.0/PKG-INFO
+hello-py-1.0/setup.py
+hello-py-1.0/MANIFEST
+I: untared hello-py-1.0.tar.gz.
+I: tar -tzf hello-py-1.0.tar.gz|grep -v /.
+I: pwd = "/path/to/hello-py-1.0"
+I: *** start packaging in "hello-py-1.0". ***
+I: provide hello-py_1.0.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-py-1.0.tar.gz hello-py_1.0.orig.tar.gz
+I: pwd = "/path/to/hello-py-1.0"
+I: parse binary package settings: :python3
+I: binary package=hello-py Type=python3 / Arch=all M-A=foreign
+I: analyze the source tree
+I: build_type = Python3 distutils
+I:  67 %, ext = python
+I:  33 %, ext = in
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: upon return to the shell, current directory becomes /path/to/vcsdir
+I: please execute "cd /path/to/hello-py-1.0" before building the binary ...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

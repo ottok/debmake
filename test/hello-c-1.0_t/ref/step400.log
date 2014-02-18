@@ -1,0 +1,26 @@
+ $ cd ..
+ $ tree
+.
+|-- hello-c-1.0
+|   |-- debian
+|   |   |-- changelog
+|   |   |-- compat
+|   |   |-- control
+|   |   |-- copyright
+|   |   |-- patches
+|   |   |   `-- series
+|   |   |-- README.Debian
+|   |   |-- rules
+|   |   |-- source
+|   |   |   |-- format
+|   |   |   `-- local-options
+|   |   `-- watch
+|   |-- hello.c
+|   `-- Makefile
+|-- hello-c_1.0.orig.tar.gz -> hello-c-1.0.tar.gz
+|-- hello-c-1.0.tar.gz
+`-- vcsdir
+    |-- hello.c
+    `-- Makefile
+
+5 directories, 16 files

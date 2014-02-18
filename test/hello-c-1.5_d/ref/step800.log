@@ -1,0 +1,11 @@
+ $ cd vcsdir
+ $ git-import-dsc --color=no --pristine-tar ../hello-c_1.5-1.dsc
+gbp:info: Tag upstream/1.5 not found, importing Upstream tarball
+pristine-tar: committed hello-c_1.5.orig.tar.gz.delta to branch pristine...
+gbp:info: Version '1.5-1' imported under 'hello-c'
+ $ git branch
+  devel
+* master
+  pristine-tar
+  upstream
+ $ gitk --all

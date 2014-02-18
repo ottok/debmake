@@ -1,0 +1,19 @@
+ $ dquilt new 0001-destdir.patch
+Patch 0001-destdir.patch is now on top
+ $ dquilt add Makefile
+File Makefile added to patch 0001-destdir.patch
+ $ cat Makefile
+all: hello
+
+hello: hello.c
+        gcc -Wall -o hello hello.c
+
+install: hello
+        install -D hello /usr/local/bin/hello
+
+clean:
+        -rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean

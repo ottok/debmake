@@ -1,0 +1,38 @@
+ $ cd hello-1.1
+ $ tree
+.
+|-- debian
+|   |-- changelog
+|   |-- clean
+|   |-- compat
+|   |-- control
+|   |-- copyright
+|   |-- hello-c-dbg.install
+|   |-- hello-c.doc-base
+|   |-- hello-c.docs
+|   |-- hello-c.examples
+|   |-- hello-c.info
+|   |-- hello-c.install
+|   |-- hello-c.links
+|   |-- hello-c.manpages
+|   |-- hello-c.menu
+|   |-- hello-c.postinst
+|   |-- hello-c.postrm
+|   |-- hello-c.preinst
+|   |-- hello-c.prerm
+|   |-- hello-data.install
+|   |-- hello-sh.install
+|   |-- patches
+|   |   `-- series
+|   |-- README.Debian
+|   |-- rules
+|   |-- source
+|   |   |-- format
+|   |   `-- local-options
+|   `-- watch
+|-- hello.c
+|-- hello.data
+|-- hello-sh
+`-- Makefile
+
+3 directories, 30 files

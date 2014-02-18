@@ -1,0 +1,48 @@
+== Preface
+
+CAUTION: This manual is still not finished and quite rough.
+
+The *debmake* command is a helper script to generate Debian packaging files.
+
+The *debmake* command is intended to replace functions offered historically by *deb-make* footnote:[This new *debmake* package starts its version from *4.0* to avoid version overlaps with its predecessor provided the *deb-make* command.] and *dh_make* commands.  Its features include:
+
+* keep pre-existing Debian package configuration files untouched
+* use of *dh* syntax under the new *debhelper (> 9.0)* package
+** extensive check of copyright for *DEP-5* (with *licensecheck*(1) and more)
+** substvar supports for binary packages
+** support of compiler hardening options
+* easy packaging command line UI supporting
+** non-stop execution with clean results
+** direct operation on the tarball archive
+** direct operation on the source tree from VCS
+** the multiarch Debian package
+** the multi binary Debian package
+** the non-native Debian packages from the VCS snapshot
+** seamless work with *debuild*, *pdebuild*, etc.
+
+NOTE: I wrote this *debmake* command because there was no easy command like "*python setup.py bdist_deb*" to create the Debian binary package.  Now "*debmake -d -s -b":python" -i debuild*" does the job for me.
+
+I will describe the following to get you started with the *debmake* command.
+
+* Quick guide for the *debmake* command
+** This should be enough for you to get started with the *debmake* command, if you already know the similar *dh_make* command.
+** Just browse this section first and come back later, if you are new to the Debian packaging.
+* Top down view of the Debian packaging
+** A rewrite in progress of the ``Debian New Maintainers' Guide'' for the *debmake* command.
+* Bottom up tutorial for the Debian packaging
+** Step-by-step examples of various packaging cases using simple model packages.
+** The *examples.tar.xz* tarball has the sources of these and more.
+* Appendix: the *debmake*(1) manpage
+
+CAUTION: This document only explains how to make a working set of installable Debian binary packages from the upstream source.  Much more details need to be addressed before uploading the package to the Debian archive.
+
+Please read the basic Debian documentations together with this manual to generate perfect Debian packages.
+
+* ``Debian Policy Manual'' (http://www.debian.org/doc/devel-manuals#policy)
+* ``Debian Developer's Reference'' (http://www.debian.org/doc/devel-manuals#devref)
+* ``Debian New Maintainers' Guide'' (http://www.debian.org/doc/devel-manuals#maint-guide)
+* ``Introduction to Debian packaging'' (http://www.debian.org/doc/devel-manuals#packaging-tutorial)
+
+TIP: There is an old Latin saying: ``*fabricando fit faber*'' (``practice makes perfect'').  It is highly recommended to practice and experiment with all the steps of Debian packaging with simple packages while reading this tutorial.
+
+

@@ -1,0 +1,4 @@
+ $ debmake -b':perl' -a hello-perl-1.0.tar.gz -i debuild
+I: set parameters
+I: sanity check of parameters
+E: Non-existing tarball name hello-perl-1.0.tar.gz

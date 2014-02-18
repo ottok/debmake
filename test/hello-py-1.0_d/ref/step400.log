@@ -1,0 +1,40 @@
+ $ cd ..
+ $ tree
+.
+|-- hello-py-1.0
+|   |-- debian
+|   |   |-- changelog
+|   |   |-- compat
+|   |   |-- control
+|   |   |-- copyright
+|   |   |-- patches
+|   |   |   `-- series
+|   |   |-- README.Debian
+|   |   |-- rules
+|   |   |-- source
+|   |   |   |-- format
+|   |   |   `-- local-options
+|   |   `-- watch
+|   |-- hello-py
+|   |   `-- __init__.py
+|   |-- MANIFEST
+|   |-- MANIFEST.in
+|   |-- PKG-INFO
+|   |-- scripts
+|   |   `-- hello
+|   `-- setup.py
+|-- hello-py_1.0.orig.tar.gz -> hello-py-1.0.tar.gz
+|-- hello-py-1.0.tar.gz
+`-- vcsdir
+    |-- dist
+    |   `-- hello-py-1.0.tar.gz
+    |-- hello-py
+    |   `-- __init__.py
+    |-- MANIFEST
+    |-- MANIFEST.in
+    |-- PKG-INFO
+    |-- scripts
+    |   `-- hello
+    `-- setup.py
+
+10 directories, 25 files

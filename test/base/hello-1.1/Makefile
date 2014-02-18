@@ -1,0 +1,16 @@
+all: hello
+
+hello: hello.c
+	gcc -Wall -o hello hello.c
+
+install: hello hello.data
+	install -D hello $(DESTDIR)/usr/bin/hello
+	install -D hello-sh $(DESTDIR)/usr/bin/hello-sh
+	install -D hello.data $(DESTDIR)/usr/share/hello/hello.data
+
+clean:
+	-rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean

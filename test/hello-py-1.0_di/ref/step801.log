@@ -1,0 +1,16 @@
+ $ cat hello-py-1.0/debian/control
+Source: hello-py
+Section: unknown
+Priority: extra
+Maintainer: "Firstname Lastname" <email.address@example.org>
+Build-Depends: debhelper (>=9), python3-all
+Standards-Version: 3.9.5
+Homepage: <insert the upstream URL, if relevant>
+X-Python3-Version: >= 3.2
+
+Package: hello-py
+Architecture: all
+Multi-Arch: foreign
+Depends: python3, ${misc:Depends}, ${python3:Depends}
+Description: Hello Python
+ Hello Python program.

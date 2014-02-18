@@ -1,0 +1,4 @@
+ $ cat hello.install.log
+usr/bin/hello
+usr/bin/hello-sh
+usr/share/hello/hello.data

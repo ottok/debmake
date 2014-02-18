@@ -1,0 +1,7 @@
+ $ tree
+.
+`-- vcsdir
+    |-- hello.c
+    `-- Makefile
+
+1 directory, 2 files

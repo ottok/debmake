@@ -1,0 +1,58 @@
+ $ debmake -j -a hello-c-1.0.tar.gz -b',-dbg' -s
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello-c", ver="1.0", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf hello-c-1.0.tar.gz
+hello-c-1.0/
+hello-c-1.0/Makefile
+hello-c-1.0/hello.c
+I: untared hello-c-1.0.tar.gz.
+I: tar -tzf hello-c-1.0.tar.gz|grep -v /.
+I: pwd = "/path/to/hello-c-1.0"
+I: *** start packaging in "hello-c-1.0". ***
+I: provide hello-c_1.0.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-c-1.0.tar.gz hello-c_1.0.orig.tar.gz
+I: pwd = "/path/to/hello-c-1.0"
+I: parse binary package settings: ,-dbg
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: binary package=hello-c-dbg Type=dbg / Arch=any M-A=same
+I: analyze the source tree
+I: build_type = make
+I: 100 %, ext = c
+I: make debian/* template files
+I: multi binary packages: 2
+I: debmake -x "2" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: creating => debian/hello-c.postinst
+I: creating => debian/clean
+I: creating => debian/hello-c.postrm
+I: creating => debian/hello-c.preinst
+I: creating => debian/hello-c.menu
+I: creating => debian/hello-c.prerm
+I: creating => debian/hello-c.links
+I: creating => debian/hello-c.docs
+I: creating => debian/hello-c.info
+I: creating => debian/hello-c.examples
+I: creating => debian/hello-c.manpages
+I: creating => debian/hello-c.install
+I: creating => debian/hello-c.doc-base
+I: creating => debian/hello-c-dbg.install
+I: run "debmake -x3" to get more template files
+I: $ wrap-and-sort
+I: $ fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules insta...
+I: $ find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" >../hell...
+I: upon return to the shell, current directory becomes /path/to
+I: please execute "cd /path/to/hello-c-1.0" before building the binary p...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

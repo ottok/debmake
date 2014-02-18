@@ -1,0 +1,9 @@
+ $ tree -L 1
+.
+|-- hello-c-1.0
+|-- hello-c_1.0.orig.tar.gz -> hello-c-1.0.tar.gz
+|-- hello-c-1.0.tar.gz
+|-- hello-c.build-dep.log
+`-- hello-c.install.log
+
+1 directory, 4 files

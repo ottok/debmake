@@ -1,0 +1,46 @@
+ $ cd ..
+ $ tree
+.
+|-- hello-c-0.9
+|   |-- debian
+|   |   |-- changelog
+|   |   |-- compat
+|   |   |-- control
+|   |   |-- copyright
+|   |   |-- files
+|   |   |-- hello-c
+|   |   |   |-- DEBIAN
+|   |   |   |   |-- control
+|   |   |   |   `-- md5sums
+|   |   |   `-- usr
+|   |   |       |-- bin
+|   |   |       |   `-- hello
+|   |   |       `-- share
+|   |   |           `-- doc
+|   |   |               `-- hello-c
+|   |   |                   |-- changelog.Debian.gz
+|   |   |                   |-- copyright
+|   |   |                   `-- README.Debian
+|   |   |-- hello-c.debhelper.log
+|   |   |-- hello-c.substvars
+|   |   |-- patches
+|   |   |   |-- 0001-destdir.patch
+|   |   |   `-- series
+|   |   |-- README.Debian
+|   |   |-- rules
+|   |   |-- source
+|   |   |   |-- format
+|   |   |   `-- local-options
+|   |   `-- watch
+|   |-- hello
+|   |-- hello.c
+|   `-- Makefile
+|-- hello-c_0.9-1_amd64.build
+|-- hello-c_0.9-1_amd64.changes
+|-- hello-c_0.9-1_amd64.deb
+|-- hello-c_0.9-1.debian.tar.xz
+|-- hello-c_0.9-1.dsc
+|-- hello-c_0.9.orig.tar.gz -> hello-c-0.9.tar.gz
+`-- hello-c-0.9.tar.gz
+
+11 directories, 30 files

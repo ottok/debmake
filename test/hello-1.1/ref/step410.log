@@ -1,0 +1,64 @@
+ $ rm -rf hello-1.1
+ $ debmake -b'-c,-c-dbg,-data:data,-sh:script' -a hello-1.1.tar.gz
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello", ver="1.1", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf hello-1.1.tar.gz
+hello-1.1/
+hello-1.1/Makefile
+hello-1.1/hello.data
+hello-1.1/hello-sh
+hello-1.1/hello.c
+I: untared hello-1.1.tar.gz.
+I: tar -tzf hello-1.1.tar.gz|grep -v /.
+I: pwd = "/path/to/hello-1.1"
+I: *** start packaging in "hello-1.1". ***
+I: provide hello_1.1.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-1.1.tar.gz hello_1.1.orig.tar.gz
+I: pwd = "/path/to/hello-1.1"
+I: parse binary package settings: -c,-c-dbg,-data:data,-sh:script
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: binary package=hello-c-dbg Type=dbg / Arch=any M-A=same
+I: binary package=hello-data Type=data / Arch=all M-A=foreign
+I: binary package=hello-sh Type=script / Arch=all M-A=foreign
+I: analyze the source tree
+I: build_type = make
+I:  50 %, ext = c
+I:  50 %, ext = data
+I: make debian/* template files
+I: multi binary packages: 4
+I: debmake -x "2" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: creating => debian/hello-c.postinst
+I: creating => debian/clean
+I: creating => debian/hello-c.postrm
+I: creating => debian/hello-c.preinst
+I: creating => debian/hello-c.menu
+I: creating => debian/hello-c.prerm
+I: creating => debian/hello-c.links
+I: creating => debian/hello-c.docs
+I: creating => debian/hello-c.info
+I: creating => debian/hello-c.examples
+I: creating => debian/hello-c.manpages
+I: creating => debian/hello-c.install
+I: creating => debian/hello-c.doc-base
+I: creating => debian/hello-c-dbg.install
+I: creating => debian/hello-data.install
+I: creating => debian/hello-sh.install
+I: run "debmake -x3" to get more template files
+I: $ wrap-and-sort
+I: upon return to the shell, current directory becomes /path/to
+I: please execute "cd /path/to/hello-1.1" before building the binary pac...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

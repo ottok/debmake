@@ -1,0 +1,23 @@
+ $ tree
+.
+|-- hello-c-1.5
+|   |-- configure.ac
+|   |-- debian
+|   |   |-- changelog
+|   |   |-- compat
+|   |   |-- control
+|   |   |-- copyright
+|   |   |-- patches
+|   |   |   `-- series
+|   |   |-- README.Debian
+|   |   |-- rules
+|   |   |-- source
+|   |   |   |-- format
+|   |   |   `-- local-options
+|   |   `-- watch
+|   |-- hello.c
+|   `-- Makefile.am
+|-- hello-c_1.5.orig.tar.gz -> hello-c-1.5.tar.gz
+`-- hello-c-1.5.tar.gz
+
+4 directories, 15 files

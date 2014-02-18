@@ -1,0 +1,8 @@
+ $ tree -L 1
+.
+|-- debian
+|-- hello
+|-- hello.c
+`-- Makefile
+
+1 directory, 3 files

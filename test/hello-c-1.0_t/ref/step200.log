@@ -1,0 +1,50 @@
+ $ cd vcsdir
+ $ debmake -p hello-c -u 1.0 -t
+I: set parameters
+I: sanity check of parameters
+W: -p "hello-c" != auto set value ""
+W: -u "1.0" != auto set value ""
+I: pkg="hello-c", ver="1.0", rev="1"
+I: make the upstream tarball with "tar --exclude=debian"
+I: pwd = "/path/to/vcsdir"
+I: pwd = "/path/to"
+I: $ rsync -aCv --link-dest=/path/to/vcsdir vcsdir/. hello-c-1.0
+sending incremental file list
+created directory hello-c-1.0
+
+sent 95 bytes  received 46 bytes  282.00 bytes/sec
+total size is 288  speedup is 2.04
+I: $ tar --exclude='hello-c-1.0/debian' --anchored --exclude-caches --ex...
+hello-c-1.0/
+hello-c-1.0/Makefile
+hello-c-1.0/hello.c
+I: hello-c-1.0.tar.gz tarball made
+I: pwd = "/path/to/hello-c-1.0"
+I: *** start packaging in "hello-c-1.0". ***
+I: provide hello-c_1.0.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-c-1.0.tar.gz hello-c_1.0.orig.tar.gz
+I: pwd = "/path/to/hello-c-1.0"
+I: parse binary package settings:
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: analyze the source tree
+I: build_type = make
+I: 100 %, ext = c
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: upon return to the shell, current directory becomes /path/to/vcsdir
+I: please execute "cd /path/to/hello-c-1.0" before building the binary p...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

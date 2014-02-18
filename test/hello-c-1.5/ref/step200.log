@@ -1,0 +1,32 @@
+ $ cd hello-c-1.5
+ $ debmake
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello-c", ver="1.5", rev="1"
+I: *** start packaging in "hello-c-1.5". ***
+I: provide hello-c_1.5.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-c-1.5.tar.gz hello-c_1.5.orig.tar.gz
+I: pwd = "/path/to/hello-c-1.5"
+I: parse binary package settings:
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: analyze the source tree
+I: build_type = Autotools with autoreconf
+I:  33 %, ext = ac
+I:  33 %, ext = c
+I:  33 %, ext = am
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort

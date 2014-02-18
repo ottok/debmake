@@ -1,0 +1,31 @@
+ $ vim Makefile
+ ...
+ $ cat Makefile
+all: hello
+
+hello: hello.c
+        gcc -Wall -o hello hello.c
+
+install: hello
+        install -D hello $(DESTDIR)/usr/bin/hello
+
+clean:
+        -rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean
+ $ dquilt refresh
+Refreshed patch 0001-destdir.patch
+ $ cat debian/patches/0001-destdir.patch
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@
+        gcc -Wall -o hello hello.c
+
+ install: hello
+-       install -D hello /usr/local/bin/hello
++       install -D hello $(DESTDIR)/usr/bin/hello
+
+ clean:
+        -rm -f hello

@@ -1,0 +1,334 @@
+ $ debmake -b':perl' -a File-Tail-0.99.3.tar.gz -s -i debuild
+I: set parameters
+I: sanity check of parameters
+I: pkg="file-tail", ver="0.99.3", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf File-Tail-0.99.3.tar.gz
+File-Tail-0.99.3/
+File-Tail-0.99.3/META.yml
+File-Tail-0.99.3/t/
+File-Tail-0.99.3/t/20tail.t
+File-Tail-0.99.3/t/30name_change.t
+File-Tail-0.99.3/t/10open.t
+File-Tail-0.99.3/select_demo
+File-Tail-0.99.3/Tail.pm.debug
+File-Tail-0.99.3/Changes
+File-Tail-0.99.3/logwatch
+File-Tail-0.99.3/MANIFEST
+File-Tail-0.99.3/Tail.pm
+File-Tail-0.99.3/Makefile.PL
+File-Tail-0.99.3/README
+I: untared File-Tail-0.99.3.tar.gz.
+I: tar -tzf File-Tail-0.99.3.tar.gz|grep -v /.
+I: move source tree from File-Tail-0.99.3 to file-tail-0.99.3.
+I: $ mv -f File-Tail-0.99.3 file-tail-0.99.3
+I: pwd = "/path/to/file-tail-0.99.3"
+I: *** start packaging in "file-tail-0.99.3". ***
+I: provide file-tail_0.99.3.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf File-Tail-0.99.3.tar.gz file-tail_0.99.3.orig.tar.gz
+I: pwd = "/path/to/file-tail-0.99.3"
+I: parse binary package settings: :perl
+I: binary package=file-tail Type=perl / Arch=all M-A=foreign
+I: analyze the source tree
+I: build_type = Perl ExtUtils::MakeMaker
+I:  43 %, ext = t
+I:  29 %, ext = perl
+I:  14 %, ext = debug
+I:  14 %, ext = yml
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+dpkg-buildpackage: source package file-tail
+dpkg-buildpackage: source version 0.99.3-1
+dpkg-buildpackage: source distribution UNRELEASED
+dpkg-buildpackage: source changed by "Firstname Lastname" <email.address...
+ dpkg-source -I -i --before-build file-tail-0.99.3
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean
+   dh_testdir
+   dh_auto_clean
+   dh_clean
+ dpkg-source -I -i -b file-tail-0.99.3
+dpkg-source: info: using source format `3.0 (quilt)'
+dpkg-source: info: building file-tail using existing ./file-tail_0.99.3....
+dpkg-source: info: building file-tail in file-tail_0.99.3-1.debian.tar.x...
+dpkg-source: info: building file-tail in file-tail_0.99.3-1.dsc
+ debian/rules build
+dh build
+   dh_testdir
+   dh_auto_configure
+
+File::Tail will be installed without debugging information.
+This information isn't usefull unless you intend to tinker
+with the code. To install with debugging enabled, use:
+perl Makefile.PL LOGIT
+Checking if your kit is complete...
+Looks good
+Writing Makefile for File::Tail
+Writing MYMETA.yml and MYMETA.json
+   dh_auto_build
+make[1]: Entering directory `/path/to/file-tail-0.99.3'
+cp Tail.pm blib/lib/File/Tail.pm
+Manifying blib/man3/File::Tail.3pm
+make[1]: Leaving directory `/path/to/file-tail-0.99.3'
+   dh_auto_test
+make[1]: Entering directory `/path/to/file-tail-0.99.3'
+PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-e" "test_har...
+t/10open.t ......... ok
+t/20tail.t ......... ok
+t/30name_change.t .. ok
+All tests successful.
+Files=3, Tests=15, 66 wallclock secs ( 0.02 usr  0.00 sys +  0.10 cusr  ...
+Result: PASS
+make[1]: Leaving directory `/path/to/file-tail-0.99.3'
+ fakeroot debian/rules binary
+dh binary
+   dh_testroot
+   dh_prep
+   dh_auto_install
+make[1]: Entering directory `/path/to/file-tail-0.99.3'
+Manifying blib/man3/File::Tail.3pm
+Installing /path/to/file-tail-0.99.3/debian/file-tail/usr/share/perl5/Fi...
+Installing /path/to/file-tail-0.99.3/debian/file-tail/usr/share/man/man3...
+make[1]: Leaving directory `/path/to/file-tail-0.99.3'
+   dh_installdocs
+   dh_installchangelogs
+   dh_installman
+   dh_perl
+   dh_link
+   dh_compress
+   dh_fixperms
+   dh_installdeb
+   dh_gencontrol
+   dh_md5sums
+   dh_builddeb
+dpkg-deb: building package `file-tail' in `../file-tail_0.99.3-1_all.deb...
+ dpkg-genchanges  >../file-tail_0.99.3-1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -I -i --after-build file-tail-0.99.3
+dpkg-buildpackage: full upload (original source is included)
+Now running lintian...
+W: file-tail source: superfluous-clutter-in-homepage <insert the upstrea...
+N:
+N:    The "Homepage:" field in this package's control file contains
+N:    superfluous markup around the URL, like enclosing < and >. This is...
+N:    unnecessary and needlessly complicates using this information.
+N:
+N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for detail...
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: file-tail source: bad-homepage <insert the upstream URL, if relevant>...
+N:
+N:    The "Homepage:" field in this package's control file does not cont...
+N:    valid absolute URL. Most probably you forgot to specify the scheme...
+N:    http).
+N:
+N:    This tag is also triggered if the scheme is not known by Lintian.
+N:
+N:    Please file a bug against Lintian, if this tag is triggered for a ...
+N:    homepage URL.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: file-tail source: missing-license-paragraph-in-dep5-copyright no_lice...
+N:
+N:    The files paragraph in the machine readable copyright file referen...
+N:    license, for which no standalone license paragraph exists.
+N:
+N:    Refer to
+N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ ...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: file-tail: wrong-bug-number-in-closes l3:#nnnn
+N:
+N:    Bug numbers can only contain digits.
+N:
+N:    Refer to Debian Policy Manual section 4.4 (Debian changelog:
+N:    debian/changelog) for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: file-tail: new-package-should-close-itp-bug
+N:
+N:    This package appears to be the first packaging of a new upstream
+N:    software package (there is only one changelog entry and the Debian...
+N:    revision is 1), but it does not close any bugs. The initial upload...
+N:    new package should close the corresponding ITP bug for that packag...
+N:
+N:    This warning can be ignored if the package is not intended for Deb...
+N:    if it is a split of an existing Debian package.
+N:
+N:    Refer to Debian Developer's Reference section 5.1 (New packages) f...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+E: file-tail: changelog-is-dh_make-template
+N:
+N:    The changelog file has an instruction left by dh_make, which has n...
+N:    been removed. Example:
+N:
+N:      * Initial release (Closes: #nnnn)  <nnnn is the bug number of yo...
+N:
+N:    The "<... is the bug number ...>" part has not been removed from t...
+N:    changelog.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: file-tail: copyright-has-url-from-dh_make-boilerplate
+N:
+N:    There is "url://example.com" in your copyright file. This was most...
+N:    likely a remnant from the dh_make template.
+N:
+N:    Make sure you include the real location where you obtained the ups...
+N:    sources (if any).
+N:
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: file-tail: copyright-without-copyright-notice
+N:
+N:    The copyright file for this package does not appear to contain a
+N:    copyright notice. You should copy the copyright notice from the up...
+N:    source (or add one of your own for a native package). A copyright ...
+N:    must consist of Copyright, Copr., or the Unicode symbol of C in a ...
+N:    followed by the years and the copyright holder. A copyright notice...
+N:    not required for a work to be copyrighted, but Debian requires the...
+N:    copyright file include the authors and years of copyright, and inc...
+N:    a valid copyright notice is the best way to do that. Examples:
+N:
+N:      Copyright YYYY Firstname Lastname <address@example.com>
+N:      Copr. YYYY-YYYY Firstname Lastname <address@example.com>
+N:      © YYYY,YYYY Firstname Lastname <address@example.com>
+N:
+N:    If the package is in the public domain rather than copyrighted, be...
+N:    to mention "public domain" in the copyright file. Please be aware ...
+N:    this is very rare and not the same as a DFSG-free license. True pu...
+N:    domain software is generally limited to such special cases as a wo...
+N:    product of a United States government agency.
+N:
+N:    Refer to http://ftp-master.debian.org/REJECT-FAQ.html for details....
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: file-tail: extended-description-line-too-long
+N:
+N:    One or more lines in the extended part of the "Description:" field...
+N:    been found to contain more than 80 characters. For the benefit of ...
+N:    of 80x25 terminals, it is recommended that the lines do not exceed...
+N:    characters.
+N:
+N:    Refer to Debian Policy Manual section 3.4.1 (The single line synop...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: file-tail: using-first-person-in-description line 14: we
+N:
+N:    You should avoid the use of first person ("I will do this..." or "...
+N:    recommend..."). The computer is not a person and the description d...
+N:    not speak for the maintainer or maintainers. Instead, use a more n...
+N:    construction and try to rephrase into factual statements about the...
+N:    package.
+N:
+N:    For example, rather than saying "I don't recommend this package if...
+N:    are short on memory," say something like "this package is not suit...
+N:    for low-memory systems."
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: file-tail: capitalization-error-in-description GTK GTK+
+N:
+N:    Lintian found a possible capitalization error in the package
+N:    description. Lintian has a list of common capitalization errors,
+N:    primarily of upstream projects, that it looks for. It does not hav...
+N:    dictionary like a spelling checker does.
+N:
+N:    This is a particularly picky check of capitalization in package
+N:    descriptions, since they're very visible to end users, but it will...
+N:    false positives for project names used in a context where they sho...
+N:    lowercase, such as package names or executable names.
+N:
+N:    Severity: minor, Certainty: wild-guess
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: file-tail: capitalization-error-in-description Gnome GNOME
+E: file-tail: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unkn...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct sectio...
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: file-tail: superfluous-clutter-in-homepage <insert the upstream URL, ...
+W: file-tail: bad-homepage <insert the upstream URL, if relevant>
+I: file-tail: spelling-error-in-manpage usr/share/man/man3/File::Tail.3p...
+N:
+N:    Lintian found a spelling error in the manpage. Lintian has a list ...
+N:    common misspellings that it looks for. It does not have a dictiona...
+N:    like a spelling checker does.
+N:
+N:    If the string containing the spelling error is translated with the...
+N:    of gettext (with the help of po4a, for example) or a similar tool,...
+N:    please fix the error in the translations as well as the English te...
+N:    avoid making the translations fuzzy. With gettext, for example, th...
+N:    means you should also fix the spelling mistake in the correspondin...
+N:    msgids in the *.po files.
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: manpages, Type: binary
+N:
+I: file-tail: spelling-error-in-manpage usr/share/man/man3/File::Tail.3p...
+I: file-tail: spelling-error-in-manpage usr/share/man/man3/File::Tail.3p...
+I: file-tail: spelling-error-in-manpage usr/share/man/man3/File::Tail.3p...
+Finished running lintian.
+I: please inspect the build results.

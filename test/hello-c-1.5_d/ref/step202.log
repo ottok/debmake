@@ -1,0 +1,17 @@
+ $ git clean -d -f
+Removing .deps/
+Removing Makefile
+Removing Makefile.in
+Removing aclocal.m4
+Removing autom4te.cache/
+Removing compile
+Removing config.h
+Removing config.h.in
+Removing config.log
+Removing config.status
+Removing configure
+Removing depcomp
+Removing hello-c-1.5.tar.gz
+Removing install-sh
+Removing missing
+Removing stamp-h1

@@ -1,0 +1,322 @@
+ $ debmake -a hello-c-1.0.tar.gz -i debuild
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello-c", ver="1.0", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf hello-c-1.0.tar.gz
+hello-c-1.0/
+hello-c-1.0/Makefile
+hello-c-1.0/hello.c
+I: untared hello-c-1.0.tar.gz.
+I: tar -tzf hello-c-1.0.tar.gz|grep -v /.
+I: pwd = "/path/to/hello-c-1.0"
+I: *** start packaging in "hello-c-1.0". ***
+I: provide hello-c_1.0.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-c-1.0.tar.gz hello-c_1.0.orig.tar.gz
+I: pwd = "/path/to/hello-c-1.0"
+I: parse binary package settings:
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: analyze the source tree
+I: build_type = make
+I: 100 %, ext = c
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+dpkg-buildpackage: source package hello-c
+dpkg-buildpackage: source version 1.0-1
+dpkg-buildpackage: source distribution UNRELEASED
+dpkg-buildpackage: source changed by "Firstname Lastname" <email.address...
+ dpkg-source -I -i --before-build hello-c-1.0
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean
+   dh_testdir
+   dh_auto_clean
+make[1]: Entering directory `/path/to/hello-c-1.0'
+rm -f hello
+make[1]: Leaving directory `/path/to/hello-c-1.0'
+   dh_clean
+ dpkg-source -I -i -b hello-c-1.0
+dpkg-source: info: using source format `3.0 (quilt)'
+dpkg-source: info: building hello-c using existing ./hello-c_1.0.orig.ta...
+dpkg-source: info: building hello-c in hello-c_1.0-1.debian.tar.xz
+dpkg-source: info: building hello-c in hello-c_1.0-1.dsc
+ debian/rules build
+dh build
+   dh_testdir
+   dh_auto_configure
+   dh_auto_build
+make[1]: Entering directory `/path/to/hello-c-1.0'
+gcc -Wall -o hello hello.c
+make[1]: Leaving directory `/path/to/hello-c-1.0'
+   dh_auto_test
+ fakeroot debian/rules binary
+dh binary
+   dh_testroot
+   dh_prep
+   dh_auto_install
+make[1]: Entering directory `/path/to/hello-c-1.0'
+install -D hello /path/to/hello-c-1.0/debian/hello-c/usr/bin/hello
+make[1]: Leaving directory `/path/to/hello-c-1.0'
+   dh_installdocs
+   dh_installchangelogs
+   dh_perl
+   dh_link
+   dh_compress
+   dh_fixperms
+   dh_strip
+   dh_makeshlibs
+   dh_shlibdeps
+   dh_installdeb
+   dh_gencontrol
+   dh_md5sums
+   dh_builddeb
+dpkg-deb: building package `hello-c' in `../hello-c_1.0-1_amd64.deb'.
+ dpkg-genchanges  >../hello-c_1.0-1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -I -i --after-build hello-c-1.0
+dpkg-buildpackage: full upload (original source is included)
+Now running lintian...
+W: hello-c source: superfluous-clutter-in-homepage <insert the upstream ...
+N:
+N:    The "Homepage:" field in this package's control file contains
+N:    superfluous markup around the URL, like enclosing < and >. This is...
+N:    unnecessary and needlessly complicates using this information.
+N:
+N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for detail...
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c source: bad-homepage <insert the upstream URL, if relevant>
+N:
+N:    The "Homepage:" field in this package's control file does not cont...
+N:    valid absolute URL. Most probably you forgot to specify the scheme...
+N:    http).
+N:
+N:    This tag is also triggered if the scheme is not known by Lintian.
+N:
+N:    Please file a bug against Lintian, if this tag is triggered for a ...
+N:    homepage URL.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c source: missing-license-paragraph-in-dep5-copyright no_licens...
+N:
+N:    The files paragraph in the machine readable copyright file referen...
+N:    license, for which no standalone license paragraph exists.
+N:
+N:    Refer to
+N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ ...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: hello-c: hardening-no-relro usr/bin/hello
+N:
+N:    This package provides an ELF binary that lacks the "read-only
+N:    relocation" link flag. This package was likely not built with the
+N:    default Debian compiler flags defined by dpkg-buildflags. If built...
+N:    dpkg-buildflags directly, be sure to import LDFLAGS.
+N:
+N:    Refer to http://wiki.debian.org/Hardening for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
+N:
+N:    Bug numbers can only contain digits.
+N:
+N:    Refer to Debian Policy Manual section 4.4 (Debian changelog:
+N:    debian/changelog) for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: hello-c: new-package-should-close-itp-bug
+N:
+N:    This package appears to be the first packaging of a new upstream
+N:    software package (there is only one changelog entry and the Debian...
+N:    revision is 1), but it does not close any bugs. The initial upload...
+N:    new package should close the corresponding ITP bug for that packag...
+N:
+N:    This warning can be ignored if the package is not intended for Deb...
+N:    if it is a split of an existing Debian package.
+N:
+N:    Refer to Debian Developer's Reference section 5.1 (New packages) f...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+E: hello-c: changelog-is-dh_make-template
+N:
+N:    The changelog file has an instruction left by dh_make, which has n...
+N:    been removed. Example:
+N:
+N:      * Initial release (Closes: #nnnn)  <nnnn is the bug number of yo...
+N:
+N:    The "<... is the bug number ...>" part has not been removed from t...
+N:    changelog.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
+N:
+N:    There is "url://example.com" in your copyright file. This was most...
+N:    likely a remnant from the dh_make template.
+N:
+N:    Make sure you include the real location where you obtained the ups...
+N:    sources (if any).
+N:
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: hello-c: copyright-without-copyright-notice
+N:
+N:    The copyright file for this package does not appear to contain a
+N:    copyright notice. You should copy the copyright notice from the up...
+N:    source (or add one of your own for a native package). A copyright ...
+N:    must consist of Copyright, Copr., or the Unicode symbol of C in a ...
+N:    followed by the years and the copyright holder. A copyright notice...
+N:    not required for a work to be copyrighted, but Debian requires the...
+N:    copyright file include the authors and years of copyright, and inc...
+N:    a valid copyright notice is the best way to do that. Examples:
+N:
+N:      Copyright YYYY Firstname Lastname <address@example.com>
+N:      Copr. YYYY-YYYY Firstname Lastname <address@example.com>
+N:      © YYYY,YYYY Firstname Lastname <address@example.com>
+N:
+N:    If the package is in the public domain rather than copyrighted, be...
+N:    to mention "public domain" in the copyright file. Please be aware ...
+N:    this is very rare and not the same as a DFSG-free license. True pu...
+N:    domain software is generally limited to such special cases as a wo...
+N:    product of a United States government agency.
+N:
+N:    Refer to http://ftp-master.debian.org/REJECT-FAQ.html for details....
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: hello-c: extended-description-line-too-long
+N:
+N:    One or more lines in the extended part of the "Description:" field...
+N:    been found to contain more than 80 characters. For the benefit of ...
+N:    of 80x25 terminals, it is recommended that the lines do not exceed...
+N:    characters.
+N:
+N:    Refer to Debian Policy Manual section 3.4.1 (The single line synop...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: using-first-person-in-description line 14: we
+N:
+N:    You should avoid the use of first person ("I will do this..." or "...
+N:    recommend..."). The computer is not a person and the description d...
+N:    not speak for the maintainer or maintainers. Instead, use a more n...
+N:    construction and try to rephrase into factual statements about the...
+N:    package.
+N:
+N:    For example, rather than saying "I don't recommend this package if...
+N:    are short on memory," say something like "this package is not suit...
+N:    for low-memory systems."
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: capitalization-error-in-description GTK GTK+
+N:
+N:    Lintian found a possible capitalization error in the package
+N:    description. Lintian has a list of common capitalization errors,
+N:    primarily of upstream projects, that it looks for. It does not hav...
+N:    dictionary like a spelling checker does.
+N:
+N:    This is a particularly picky check of capitalization in package
+N:    descriptions, since they're very visible to end users, but it will...
+N:    false positives for project names used in a context where they sho...
+N:    lowercase, such as package names or executable names.
+N:
+N:    Severity: minor, Certainty: wild-guess
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: capitalization-error-in-description Gnome GNOME
+E: hello-c: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unkn...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct sectio...
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c: superfluous-clutter-in-homepage <insert the upstream URL, if...
+W: hello-c: bad-homepage <insert the upstream URL, if relevant>
+W: hello-c: binary-without-manpage usr/bin/hello
+N:
+N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games shou...
+N:    have a manual page
+N:
+N:    Note that though the man program has the capability to check for s...
+N:    program names in the NAMES section, each of these programs should ...
+N:    its own manual page (a symbolic link to the appropriate manual pag...
+N:    sufficient) because other manual page viewers such as xman or tkma...
+N:    don't support this.
+N:
+N:    If the name of the man page differs from the binary by case, man m...
+N:    able to find it anyway; however, it is still best practice to make...
+N:    case of the man page match the case of the binary.
+N:
+N:    If the man pages are provided by another package on which this pac...
+N:    depends, lintian may not be able to determine that man pages are
+N:    available. In this case, after confirming that all binaries do hav...
+N:    pages after this package and its dependencies are installed, pleas...
+N:    a lintian override.
+N:
+N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for deta...
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: manpages, Type: binary
+N:
+Finished running lintian.
+I: please inspect the build results.

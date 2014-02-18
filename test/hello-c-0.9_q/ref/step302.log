@@ -1,0 +1,31 @@
+ $ dquilt header -e
+ ...
+ $ cat debian/patches/0001-destdir.patch
+From: Foo Bar <foo@example.org>
+Description: make Makefile to support GNU coding standard
+ $DESTDIR: debian/hello-c
+ $prefix:  /usr/local -> /usr
+
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@
+        gcc -Wall -o hello hello.c
+
+ install: hello
+-       install -D hello /usr/local/bin/hello
++       install -D hello $(DESTDIR)/usr/bin/hello
+
+ clean:
+        -rm -f hello
+ $ dquilt pop -a
+Removing patch 0001-destdir.patch
+Restoring Makefile
+
+No patches applied
+ $ cat debian/patches/series
+# The patch files of the -p1 format included in the debian/patches direc...
+# are applied to the upstream source in the order listed below.
+# This is manually managed by users with dquilt (quilt(1) wrapper) etc.
+# See http://www.debian.org/doc/manuals/maint-guide/modify.en.html#quilt...
+# Also this may be updated by dpkg-source(1) when making a package.
+0001-destdir.patch

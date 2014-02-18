@@ -1,0 +1,256 @@
+ $ cd hello-world
+/home/user/src/debmake/debmake/test/bin/CD: line 4: cd: hello-world: No ...
+ $ debmake -s -b':ruby' -t -u 1.2.0 -i debuild
+I: set parameters
+I: sanity check of parameters
+W: -u "1.2.0" != auto set value ""
+I: pkg="hello-world", ver="1.2.0", rev="1"
+I: make the upstream tarball with "tar --exclude=debian"
+I: pwd = "/path/to/hello-world"
+I: pwd = "/path/to"
+I: $ rsync -aCv --link-dest=/path/to/hello-world hello-world/. hello-wor...
+sending incremental file list
+created directory hello-world-1.2.0
+
+sent 404 bytes  received 55 bytes  918.00 bytes/sec
+total size is 5,139  speedup is 11.20
+I: $ tar --exclude='hello-world-1.2.0/debian' --anchored --exclude-cache...
+hello-world-1.2.0/
+hello-world-1.2.0/hello-world.gemspec
+hello-world-1.2.0/LICENSE
+hello-world-1.2.0/Rakefile
+hello-world-1.2.0/README.rdoc
+hello-world-1.2.0/test/
+hello-world-1.2.0/test/helper.rb
+hello-world-1.2.0/test/test_hello-world.rb
+hello-world-1.2.0/VERSION
+hello-world-1.2.0/lib/
+hello-world-1.2.0/lib/hello-world.rb
+hello-world-1.2.0/bin/
+hello-world-1.2.0/bin/hello-world
+hello-world-1.2.0/.document
+I: hello-world-1.2.0.tar.gz tarball made
+I: pwd = "/path/to/hello-world-1.2.0"
+I: *** start packaging in "hello-world-1.2.0". ***
+I: provide hello-world_1.2.0.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-world-1.2.0.tar.gz hello-world_1.2.0.orig.tar.gz
+I: pwd = "/path/to/hello-world-1.2.0"
+I: parse binary package settings: :ruby
+I: binary package=hello-world Type=ruby / Arch=all M-A=foreign
+I: analyze the source tree
+I: build_type = Unknown
+I:  43 %, ext = ruby
+I:  14 %, ext = gitignore
+I:  14 %, ext = gemspec
+I:  14 %, ext = rdoc
+I:  14 %, ext = document
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+dpkg-buildpackage: source package hello-world
+dpkg-buildpackage: source version 1.2.0-1
+dpkg-buildpackage: source distribution UNRELEASED
+dpkg-buildpackage: source changed by "Firstname Lastname" <email.address...
+ dpkg-source -I -i --before-build hello-world-1.2.0
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean --with "ruby"
+   dh_testdir
+   dh_auto_clean
+   dh_clean
+ dpkg-source -I -i -b hello-world-1.2.0
+dpkg-source: info: using source format `3.0 (quilt)'
+dpkg-source: info: building hello-world using existing ./hello-world_1.2...
+dpkg-source: info: building hello-world in hello-world_1.2.0-1.debian.ta...
+dpkg-source: info: building hello-world in hello-world_1.2.0-1.dsc
+ debian/rules build
+dh build --with "ruby"
+   dh_testdir
+   dh_auto_configure
+   dh_auto_build
+   dh_auto_test
+ fakeroot debian/rules binary
+dh binary --with "ruby"
+   dh_testroot
+   dh_prep
+   dh_auto_install
+   dh_installdocs
+   dh_installchangelogs
+   dh_perl
+   dh_link
+   dh_compress -X.rb
+   dh_fixperms
+   dh_installdeb
+   dh_gencontrol
+dpkg-gencontrol: warning: Depends field of package hello-world: unknown ...
+   dh_md5sums
+   dh_builddeb
+dpkg-deb: building package `hello-world' in `../hello-world_1.2.0-1_all....
+ dpkg-genchanges  >../hello-world_1.2.0-1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -I -i --after-build hello-world-1.2.0
+dpkg-buildpackage: full upload (original source is included)
+Now running lintian...
+W: hello-world source: superfluous-clutter-in-homepage <insert the upstr...
+N:
+N:    The "Homepage:" field in this package's control file contains
+N:    superfluous markup around the URL, like enclosing < and >. This is...
+N:    unnecessary and needlessly complicates using this information.
+N:
+N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for detail...
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-world source: bad-homepage <insert the upstream URL, if relevan...
+N:
+N:    The "Homepage:" field in this package's control file does not cont...
+N:    valid absolute URL. Most probably you forgot to specify the scheme...
+N:    http).
+N:
+N:    This tag is also triggered if the scheme is not known by Lintian.
+N:
+N:    Please file a bug against Lintian, if this tag is triggered for a ...
+N:    homepage URL.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-world source: syntax-error-in-dep5-copyright line 37: Continuat...
+N:
+N:    The machine-readable copyright file didn't pass Debian control fil...
+N:    syntax check.
+N:
+N:    This issue may hide other issues as Lintian skips some checks on t...
+N:    file in this case.
+N:
+N:    Refer to
+N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ ...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: hello-world: wrong-bug-number-in-closes l3:#nnnn
+N:
+N:    Bug numbers can only contain digits.
+N:
+N:    Refer to Debian Policy Manual section 4.4 (Debian changelog:
+N:    debian/changelog) for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: hello-world: new-package-should-close-itp-bug
+N:
+N:    This package appears to be the first packaging of a new upstream
+N:    software package (there is only one changelog entry and the Debian...
+N:    revision is 1), but it does not close any bugs. The initial upload...
+N:    new package should close the corresponding ITP bug for that packag...
+N:
+N:    This warning can be ignored if the package is not intended for Deb...
+N:    if it is a split of an existing Debian package.
+N:
+N:    Refer to Debian Developer's Reference section 5.1 (New packages) f...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+E: hello-world: changelog-is-dh_make-template
+N:
+N:    The changelog file has an instruction left by dh_make, which has n...
+N:    been removed. Example:
+N:
+N:      * Initial release (Closes: #nnnn)  <nnnn is the bug number of yo...
+N:
+N:    The "<... is the bug number ...>" part has not been removed from t...
+N:    changelog.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: hello-world: copyright-has-url-from-dh_make-boilerplate
+N:
+N:    There is "url://example.com" in your copyright file. This was most...
+N:    likely a remnant from the dh_make template.
+N:
+N:    Make sure you include the real location where you obtained the ups...
+N:    sources (if any).
+N:
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+E: hello-world: description-synopsis-is-duplicated
+N:
+N:    The first line of the extended Description: should not repeat the
+N:    synopsis exactly. This indicates that either the synopsis is badly...
+N:    formed or that the extended description has been wrongly copied an...
+N:    pasted.
+N:
+N:    Refer to Debian Policy Manual section 3.4.2 (The extended descript...
+N:    for details.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-world: extended-description-is-probably-too-short
+N:
+N:    The extended description (the lines after the first line of the
+N:    "Description:" field) is only one or two lines long. The extended
+N:    description should provide a user with enough information to decid...
+N:    whether they want to install this package, what it contains, and h...
+N:    compares to similar packages. One or two lines is normally not eno...
+N:    do this.
+N:
+N:    Refer to Debian Developer's Reference section 6.2.1 (General guide...
+N:    for package descriptions) and Debian Developer's Reference section...
+N:    (The long description) for details.
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+E: hello-world: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unkn...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct sectio...
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-world: superfluous-clutter-in-homepage <insert the upstream URL...
+W: hello-world: bad-homepage <insert the upstream URL, if relevant>
+Finished running lintian.
+I: upon return to the shell, current directory becomes /path/to/hello-wo...
+I: please execute "cd .." and inspect the build results.

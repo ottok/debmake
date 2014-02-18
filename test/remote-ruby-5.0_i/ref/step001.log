@@ -1,0 +1,6 @@
+ $ git clone https://github.com/kuntoaji/hello-world.git
+Cloning into 'hello-world'...
+remote: Reusing existing pack: 59, done.
+remote: Total 59 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (59/59), done.
+Checking connectivity... done.

@@ -1,0 +1,3 @@
+ $ cat hello-1.1/hello-sh
+#!/bin/sh
+echo "Hello from the shell!"

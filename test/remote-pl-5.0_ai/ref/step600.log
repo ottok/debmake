@@ -1,0 +1,12 @@
+ $ tree -L 1
+.
+|-- acme-hello-0.05
+|-- acme-hello_0.05-1_all.deb
+|-- acme-hello_0.05-1_amd64.build
+|-- acme-hello_0.05-1_amd64.changes
+|-- acme-hello_0.05-1.debian.tar.xz
+|-- acme-hello_0.05-1.dsc
+|-- acme-hello_0.05.orig.tar.gz -> Acme-Hello-0.05.tar.gz
+`-- Acme-Hello-0.05.tar.gz
+
+1 directory, 7 files

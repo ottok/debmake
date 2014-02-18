@@ -1,0 +1,566 @@
+ $ cd vcsdir
+ $ debmake -p hello-c -u 1.5 -d -i debuild
+I: set parameters
+I: sanity check of parameters
+W: -p "hello-c" != auto set value ""
+W: -u "1.5" != auto set value ""
+I: pkg="hello-c", ver="1.5", rev="1"
+I: make the upstream tarball with "make dist" equivalents
+I: pwd = "/path/to/vcsdir"
+I: $ autoreconf -ivf && ./configure --prefix "/usr" && make distcheck
+autoreconf: Entering directory `.'
+autoreconf: configure.ac: not using Gettext
+autoreconf: running: aclocal --force
+autoreconf: configure.ac: tracing
+autoreconf: configure.ac: not using Libtool
+autoreconf: running: /usr/bin/autoconf --force
+autoreconf: running: /usr/bin/autoheader --force
+autoreconf: running: automake --add-missing --copy --force-missing
+configure.ac:10: installing './compile'
+configure.ac:8: installing './install-sh'
+configure.ac:8: installing './missing'
+Makefile.am: installing './depcomp'
+autoreconf: Leaving directory `.'
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+make[3]: Entering directory `/path/to/vcsdir'
+make  dist-gzip am__post_remove_distdir='@:'
+make[4]: Entering directory `/path/to/vcsdir'
+if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -...
+test -d "hello-c-1.5" || mkdir "hello-c-1.5"
+test -n "" \
+        || find "hello-c-1.5" -type d ! -perm -755 \
+                -exec chmod u+rwx,go+rx {} \; -o \
+          ! -type d ! -perm -444 -links 1 -exec chmod a+r {} \; -o \
+          ! -type d ! -perm -400 -exec chmod a+r {} \; -o \
+          ! -type d ! -perm -444 -exec /bin/bash /path/to/vcsdir/install...
+        || chmod -R a+r "hello-c-1.5"
+tardir=hello-c-1.5 && ${TAR-tar} chof - "$tardir" | GZIP=--best gzip -c ...
+make[4]: Leaving directory `/path/to/vcsdir'
+if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -...
+case 'hello-c-1.5.tar.gz' in \
+        *.tar.gz*) \
+          GZIP=--best gzip -dc hello-c-1.5.tar.gz | ${TAR-tar} xf - ;;\
+        *.tar.bz2*) \
+          bzip2 -dc hello-c-1.5.tar.bz2 | ${TAR-tar} xf - ;;\
+        *.tar.lz*) \
+          lzip -dc hello-c-1.5.tar.lz | ${TAR-tar} xf - ;;\
+        *.tar.xz*) \
+          xz -dc hello-c-1.5.tar.xz | ${TAR-tar} xf - ;;\
+        *.tar.Z*) \
+          uncompress -c hello-c-1.5.tar.Z | ${TAR-tar} xf - ;;\
+        *.shar.gz*) \
+          GZIP=--best gzip -dc hello-c-1.5.shar.gz | unshar ;;\
+        *.zip*) \
+          unzip hello-c-1.5.zip ;;\
+        esac
+chmod -R a-w hello-c-1.5
+chmod u+w hello-c-1.5
+mkdir hello-c-1.5/_build hello-c-1.5/_inst
+chmod a-w hello-c-1.5
+test -d hello-c-1.5/_build || exit 0; \
+        dc_install_base=`CDPATH="${ZSH_VERSION+.}:" && cd hello-c-1.5/_i...
+          && dc_destdir="${TMPDIR-/tmp}/am-dc-$$/" \
+          && am__cwd=`pwd` \
+          && CDPATH="${ZSH_VERSION+.}:" && cd hello-c-1.5/_build \
+          && ../configure \
+             \
+             \
+            --srcdir=.. --prefix="$dc_install_base" \
+          && make  \
+          && make  dvi \
+          && make  check \
+          && make  install \
+          && make  installcheck \
+          && make  uninstall \
+          && make  distuninstallcheck_dir="$dc_install_base" \
+                distuninstallcheck \
+          && chmod -R a-w "$dc_install_base" \
+          && ({ \
+               (cd ../.. && umask 077 && mkdir "$dc_destdir") \
+               && make  DESTDIR="$dc_destdir" install \
+               && make  DESTDIR="$dc_destdir" uninstall \
+               && make  DESTDIR="$dc_destdir" \
+                    distuninstallcheck_dir="$dc_destdir" distuninstallch...
+              } || { rm -rf "$dc_destdir"; exit 1; }) \
+          && rm -rf "$dc_destdir" \
+          && make  dist \
+          && rm -rf hello-c-1.5.tar.gz \
+          && make  distcleancheck \
+          && cd "$am__cwd" \
+          || exit 1
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make  all-am
+make[5]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+gcc -DHAVE_CONFIG_H -I. -I..     -g -O2 -MT hello.o -MD -MP -MF .deps/he...
+mv -f .deps/hello.Tpo .deps/hello.Po
+gcc  -g -O2   -o hello hello.o
+make[5]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Nothing to be done for `dvi'.
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[5]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+ /bin/mkdir -p '/path/to/vcsdir/hello-c-1.5/_inst/bin'
+  /usr/bin/install -c hello '/path/to/vcsdir/hello-c-1.5/_inst/bin'
+make[5]: Nothing to be done for `install-data-am'.
+make[5]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Nothing to be done for `installcheck'.
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+ ( cd '/path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f hello )
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[5]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+ /bin/mkdir -p '/tmp/am-dc-3466//path/to/vcsdir/hello-c-1.5/_inst/bin'
+  /usr/bin/install -c hello '/tmp/am-dc-3466//path/to/vcsdir/hello-c-1.5...
+make[5]: Nothing to be done for `install-data-am'.
+make[5]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+ ( cd '/tmp/am-dc-3466//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f h...
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+make  dist-gzip am__post_remove_distdir='@:'
+make[5]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -...
+test -d "hello-c-1.5" || mkdir "hello-c-1.5"
+test -n "" \
+        || find "hello-c-1.5" -type d ! -perm -755 \
+                -exec chmod u+rwx,go+rx {} \; -o \
+          ! -type d ! -perm -444 -links 1 -exec chmod a+r {} \; -o \
+          ! -type d ! -perm -400 -exec chmod a+r {} \; -o \
+          ! -type d ! -perm -444 -exec /bin/bash /path/to/vcsdir/hello-c...
+        || chmod -R a+r "hello-c-1.5"
+tardir=hello-c-1.5 && ${TAR-tar} chof - "$tardir" | GZIP=--best gzip -c ...
+make[5]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -...
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
+test -z "hello" || rm -f hello
+rm -f *.o
+rm -f *.tab.c
+test -z "" || rm -f
+test . = ".." || test -z "" || rm -f
+rm -f config.h stamp-h1
+rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
+rm -f cscope.out cscope.in.out cscope.po.out cscope.files
+rm -f config.status config.cache config.log configure.lineno config.stat...
+rm -rf ./.deps
+rm -f Makefile
+make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
+if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -...
+=============================================
+hello-c-1.5 archives ready for distribution:
+hello-c-1.5.tar.gz
+=============================================
+make[3]: Leaving directory `/path/to/vcsdir'
+I: -> ./hello-c-1.5.tar.gz created
+I: hello-c-1.5.tar.gz picked for packaging
+I: pwd = "/path/to"
+I: $ cp -f vcsdir/./hello-c-1.5.tar.gz hello-c-1.5.tar.gz
+I: pkg="hello-c", ver="1.5", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf hello-c-1.5.tar.gz
+hello-c-1.5/
+hello-c-1.5/install-sh
+hello-c-1.5/aclocal.m4
+hello-c-1.5/Makefile.am
+hello-c-1.5/depcomp
+hello-c-1.5/configure.ac
+hello-c-1.5/config.h.in
+hello-c-1.5/compile
+hello-c-1.5/Makefile.in
+hello-c-1.5/missing
+hello-c-1.5/configure
+hello-c-1.5/hello.c
+I: untared hello-c-1.5.tar.gz.
+I: tar -tzf hello-c-1.5.tar.gz|grep -v /.
+I: pwd = "/path/to/hello-c-1.5"
+I: *** start packaging in "hello-c-1.5". ***
+I: provide hello-c_1.5.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-c-1.5.tar.gz hello-c_1.5.orig.tar.gz
+I: pwd = "/path/to/hello-c-1.5"
+I: parse binary package settings:
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: analyze the source tree
+I: build_type = Autotools
+I:  33 %, ext = am
+I:  33 %, ext = c
+I:  33 %, ext = ac
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+dpkg-buildpackage: source package hello-c
+dpkg-buildpackage: source version 1.5-1
+dpkg-buildpackage: source distribution UNRELEASED
+dpkg-buildpackage: source changed by "Firstname Lastname" <email.address...
+ dpkg-source -I -i --before-build hello-c-1.5
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean --with "autotools-dev"
+   dh_testdir
+   dh_auto_clean
+   dh_autotools-dev_restoreconfig
+   dh_clean
+ dpkg-source -I -i -b hello-c-1.5
+dpkg-source: info: using source format `3.0 (quilt)'
+dpkg-source: info: building hello-c using existing ./hello-c_1.5.orig.ta...
+dpkg-source: info: building hello-c in hello-c_1.5-1.debian.tar.xz
+dpkg-source: info: building hello-c in hello-c_1.5-1.dsc
+ debian/rules build
+dh build --with "autotools-dev"
+   dh_testdir
+   dh_autotools-dev_updateconfig
+   dh_auto_configure
+configure: WARNING: unrecognized options: --disable-maintainer-mode
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking for style of include used by make... GNU
+checking dependency style of gcc... none
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+configure: WARNING: unrecognized options: --disable-maintainer-mode
+   dh_auto_build
+make[1]: Entering directory `/path/to/hello-c-1.5'
+make  all-am
+make[2]: Entering directory `/path/to/hello-c-1.5'
+gcc -DHAVE_CONFIG_H -I.   -D_FORTIFY_SOURCE=2  -g -O2 -fstack-protector ...
+gcc  -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror...
+make[2]: Leaving directory `/path/to/hello-c-1.5'
+make[1]: Leaving directory `/path/to/hello-c-1.5'
+   dh_auto_test
+make[1]: Entering directory `/path/to/hello-c-1.5'
+make[1]: Leaving directory `/path/to/hello-c-1.5'
+ fakeroot debian/rules binary
+dh binary --with "autotools-dev"
+   dh_testroot
+   dh_prep
+   dh_auto_install
+make[1]: Entering directory `/path/to/hello-c-1.5'
+make[2]: Entering directory `/path/to/hello-c-1.5'
+ /bin/mkdir -p '/path/to/hello-c-1.5/debian/hello-c/usr/bin'
+  /usr/bin/install -c hello '/path/to/hello-c-1.5/debian/hello-c/usr/bin...
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/path/to/hello-c-1.5'
+make[1]: Leaving directory `/path/to/hello-c-1.5'
+   dh_installdocs
+   dh_installchangelogs
+   dh_perl
+   dh_link
+   dh_compress
+   dh_fixperms
+   dh_strip
+   dh_makeshlibs
+   dh_shlibdeps
+   dh_installdeb
+   dh_gencontrol
+   dh_md5sums
+   dh_builddeb
+dpkg-deb: building package `hello-c' in `../hello-c_1.5-1_amd64.deb'.
+ dpkg-genchanges  >../hello-c_1.5-1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -I -i --after-build hello-c-1.5
+dpkg-buildpackage: full upload (original source is included)
+Now running lintian...
+W: hello-c source: superfluous-clutter-in-homepage <insert the upstream ...
+N:
+N:    The "Homepage:" field in this package's control file contains
+N:    superfluous markup around the URL, like enclosing < and >. This is...
+N:    unnecessary and needlessly complicates using this information.
+N:
+N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for detail...
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c source: bad-homepage <insert the upstream URL, if relevant>
+N:
+N:    The "Homepage:" field in this package's control file does not cont...
+N:    valid absolute URL. Most probably you forgot to specify the scheme...
+N:    http).
+N:
+N:    This tag is also triggered if the scheme is not known by Lintian.
+N:
+N:    Please file a bug against Lintian, if this tag is triggered for a ...
+N:    homepage URL.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c source: missing-license-paragraph-in-dep5-copyright no_licens...
+N:
+N:    The files paragraph in the machine readable copyright file referen...
+N:    license, for which no standalone license paragraph exists.
+N:
+N:    Refer to
+N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ ...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
+N:
+N:    Bug numbers can only contain digits.
+N:
+N:    Refer to Debian Policy Manual section 4.4 (Debian changelog:
+N:    debian/changelog) for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: hello-c: new-package-should-close-itp-bug
+N:
+N:    This package appears to be the first packaging of a new upstream
+N:    software package (there is only one changelog entry and the Debian...
+N:    revision is 1), but it does not close any bugs. The initial upload...
+N:    new package should close the corresponding ITP bug for that packag...
+N:
+N:    This warning can be ignored if the package is not intended for Deb...
+N:    if it is a split of an existing Debian package.
+N:
+N:    Refer to Debian Developer's Reference section 5.1 (New packages) f...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+E: hello-c: changelog-is-dh_make-template
+N:
+N:    The changelog file has an instruction left by dh_make, which has n...
+N:    been removed. Example:
+N:
+N:      * Initial release (Closes: #nnnn)  <nnnn is the bug number of yo...
+N:
+N:    The "<... is the bug number ...>" part has not been removed from t...
+N:    changelog.
+N:
+N:    Severity: important, Certainty: certain
+N:
+N:    Check: changelog-file, Type: binary
+N:
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
+N:
+N:    There is "url://example.com" in your copyright file. This was most...
+N:    likely a remnant from the dh_make template.
+N:
+N:    Make sure you include the real location where you obtained the ups...
+N:    sources (if any).
+N:
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
+N:    details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: hello-c: copyright-without-copyright-notice
+N:
+N:    The copyright file for this package does not appear to contain a
+N:    copyright notice. You should copy the copyright notice from the up...
+N:    source (or add one of your own for a native package). A copyright ...
+N:    must consist of Copyright, Copr., or the Unicode symbol of C in a ...
+N:    followed by the years and the copyright holder. A copyright notice...
+N:    not required for a work to be copyrighted, but Debian requires the...
+N:    copyright file include the authors and years of copyright, and inc...
+N:    a valid copyright notice is the best way to do that. Examples:
+N:
+N:      Copyright YYYY Firstname Lastname <address@example.com>
+N:      Copr. YYYY-YYYY Firstname Lastname <address@example.com>
+N:      © YYYY,YYYY Firstname Lastname <address@example.com>
+N:
+N:    If the package is in the public domain rather than copyrighted, be...
+N:    to mention "public domain" in the copyright file. Please be aware ...
+N:    this is very rare and not the same as a DFSG-free license. True pu...
+N:    domain software is generally limited to such special cases as a wo...
+N:    product of a United States government agency.
+N:
+N:    Refer to http://ftp-master.debian.org/REJECT-FAQ.html for details....
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: copyright-file, Type: binary
+N:
+W: hello-c: extended-description-line-too-long
+N:
+N:    One or more lines in the extended part of the "Description:" field...
+N:    been found to contain more than 80 characters. For the benefit of ...
+N:    of 80x25 terminals, it is recommended that the lines do not exceed...
+N:    characters.
+N:
+N:    Refer to Debian Policy Manual section 3.4.1 (The single line synop...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: using-first-person-in-description line 14: we
+N:
+N:    You should avoid the use of first person ("I will do this..." or "...
+N:    recommend..."). The computer is not a person and the description d...
+N:    not speak for the maintainer or maintainers. Instead, use a more n...
+N:    construction and try to rephrase into factual statements about the...
+N:    package.
+N:
+N:    For example, rather than saying "I don't recommend this package if...
+N:    are short on memory," say something like "this package is not suit...
+N:    for low-memory systems."
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: capitalization-error-in-description GTK GTK+
+N:
+N:    Lintian found a possible capitalization error in the package
+N:    description. Lintian has a list of common capitalization errors,
+N:    primarily of upstream projects, that it looks for. It does not hav...
+N:    dictionary like a spelling checker does.
+N:
+N:    This is a particularly picky check of capitalization in package
+N:    descriptions, since they're very visible to end users, but it will...
+N:    false positives for project names used in a context where they sho...
+N:    lowercase, such as package names or executable names.
+N:
+N:    Severity: minor, Certainty: wild-guess
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: capitalization-error-in-description Gnome GNOME
+E: hello-c: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unkn...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct sectio...
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c: superfluous-clutter-in-homepage <insert the upstream URL, if...
+W: hello-c: bad-homepage <insert the upstream URL, if relevant>
+W: hello-c: binary-without-manpage usr/bin/hello
+N:
+N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games shou...
+N:    have a manual page
+N:
+N:    Note that though the man program has the capability to check for s...
+N:    program names in the NAMES section, each of these programs should ...
+N:    its own manual page (a symbolic link to the appropriate manual pag...
+N:    sufficient) because other manual page viewers such as xman or tkma...
+N:    don't support this.
+N:
+N:    If the name of the man page differs from the binary by case, man m...
+N:    able to find it anyway; however, it is still best practice to make...
+N:    case of the man page match the case of the binary.
+N:
+N:    If the man pages are provided by another package on which this pac...
+N:    depends, lintian may not be able to determine that man pages are
+N:    available. In this case, after confirming that all binaries do hav...
+N:    pages after this package and its dependencies are installed, pleas...
+N:    a lintian override.
+N:
+N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for deta...
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: manpages, Type: binary
+N:
+Finished running lintian.
+I: upon return to the shell, current directory becomes /path/to/vcsdir
+I: please execute "cd .." and inspect the build results.

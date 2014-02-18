@@ -1,0 +1,4 @@
+ $ cd ./debian
+ $ rm -f *.do* *.examples *.info *.links *.m*  *.p*
+ $ rm hello-c-dbg.install
+ $ echo usr/bin/hello > hello-c.install

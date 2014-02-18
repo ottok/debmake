@@ -1,0 +1,120 @@
+=== Basic tool setups
+
+Although these are not nessasary the requirement, basic tool setups are described as below for us to share the common baseline working environment.
+
+==== Setting up *bash*
+
+Various Debian maintenance tools offered by the *devscripts* package and *debmake* recognize your email address and name to use by the shell environment variables *$DEBEMAIL* and *$DEBFULLNAME*.
+
+Let's set up these by adding the following lines to *~/.bashrc* foornote[This assumes you are using Bash as your login shell. If you use some other login shell such as Z shell, use their corresponding configuration files instead of *~/.bashrc*.].
+
+----
+DEBEMAIL="your.email.address@example.org"
+DEBFULLNAME="Firstname Lastname"
+export DEBEMAIL DEBFULLNAME
+----
+
+==== Setting up *quilt*
+
+The program *quilt* offers a basic method for recording modifications to the upstream source for the Debian packaging. It's useful to have a slightly customized default suitable for the Debian packaging to avoid changing the behavior of the *quilt* command itself.
+
+Let's create an alias *dquilt* for the Debian packaging by adding the following lines to the *~/.bashrc* file. The second line provides the same shell completion feature of the *quilt* command to the *dquilt* command.
+
+----
+alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
+complete -F _quilt_completion $_quilt_complete_opt dquilt
+----
+
+Then let's create *~/.quiltrc-dpkg* as follows.
+
+----
+d=. ; while [ ! -d $d/debian -a `readlink -e $d` != / ]; do d=$d/..; done
+if [ -d $d/debian ] && [ -z $QUILT_PATCHES ]; then
+    # if in Debian packaging tree with unset $QUILT_PATCHES
+    QUILT_PATCHES="debian/patches"
+    QUILT_PATCH_OPTS="--reject-format=unified"
+    QUILT_DIFF_ARGS="-p ab --no-timestamps --no-index --color=auto"
+    QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
+    QUILT_COLORS="diff_hdr=1;32:diff_add=1;34:diff_rem=1;31:diff_hunk=1;33:diff_ctx=35:diff_cctx=33"
+    if ! [ -d $d/debian/patches ]; then mkdir $d/debian/patches; fi
+fi
+----
+
+See *quilt*(1) and */usr/share/doc/quilt/quilt.pdf.gz* on how to use the *quilt* command.
+
+==== Setting up *devscripts*
+
+The *debuild* command runs the *dpkg-buildpackage* and *lintian* commands under the current build environment with the sanitized environment variables to create all the files necessary for uploading a Debian package.
+
+Let's create *~/.devscripts* as follows.
+
+----
+DEBSIGN_KEYID='Your_GPG_keyID'
+DEBUILD_LINTIAN_OPTS=-i -I --show-overrides
+----
+
+With these, packages are signed by your specified GPG key ID (good for sponsoring packages) and checked in detail by the *lintian* command.
+
+==== Setting up *pbuilder* + *cowbuilder*
+
+The *pbuilder* package provides the clean room (*chroot*) build environment. The *cowbuilder* package boosts its processing speed. Let's customize these packages to make the *pdebuild* command to run with the *cowbuilder and *lintian* commands.
+
+Let's create *~/.pbuilderrc* as follows.
+
+----
+AUTO_DEBSIGN=${AUTO_DEBSIGN:-no}
+HOOKDIR=/var/cache/pbuilder/hooks
+PDEBUILD_PBUILDER=cowbuilder
+BUILDRESULT=../
+-----
+
+Let's create a hook script */var/cache/pbuilder/hooks/B90lintian* as follows.
+
+----
+#!/bin/sh
+set -e
+apt-get -y --force-yes install lintian
+echo "+++ lintian output +++"
+su -c "lintian -i -I --show-overrides /tmp/buildd/*.changes; :" -l pbuilder
+echo "+++ end of lintian output +++"
+----
+
+==== Setting up *git*
+
+You may wish to set several global configuration in *~/.gitconfig* such as your name and email address used by Git by the following.
+
+----
+$ git config --global user.name "Name Surname"
+$ git config --global user.email yourname@example.com
+----
+If you are too used to CVS or Subversion commands, you may wish to set several command aliases by the following.
+
+----
+$ git config --global alias.ci "commit -a"
+$ git config --global alias.co checkout
+----
+
+You can check your global configuration by the following.
+
+----
+$ git config --global --list
+----
+
+TIP: It is essential to use the *gitk* command for Git repository.
+
+==== Setting up *git-buildpackage*
+
+You may wish to set several global configuration in *~/.gbp.conf*
+
+----
+# Configuration file for "gbp <command>"
+
+[DEFAULT]
+# the default build command:
+builder = git-pbuilder -i -I -us -uc
+# use pristine-tar:
+pristine-tar = True
+# Use color when on a terminal, alternatives: on/true, off/false or auto
+color = auto
+----
+

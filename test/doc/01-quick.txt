@@ -1,0 +1,154 @@
+
+A quick guide for the *debmake* command is presented here for simple use cases.
+
+This should be enough for you to get started with the *debmake* command, if you already know the similar *dh_make* command.
+
+If you are new to the Debian packaging, do not worry about the details and get the big picture instead.  The more detailed tutorial follows this section.  There is also the *debmake* manpage which explains all the command options and included here in the appendix. 
+
+NOTE: The *debmake* command only provides good template files. You need to manually edit them to the perfection.
+
+=== The basics
+
+The *debmake* command produces files required for generating the Debian package using the *debuild* command. (The *debmake* command can be used in the same way as the *dh_make* command.)
+
+----
+ $ tar -xvzf upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debmake
+ $ debuild
+----
+
+TIP: The *debmake* command provides good default values and requires less input than its predecessors.
+
+TIP: The *debuild* command used to make Debian binary packages from the source package
+in examples may be substituted by the equivalent commands such as
+*pdebuild* run with the *cowbuilder* backend.
+
+=== The extras
+
+==== Open the upstream tarball
+
+The *debmake* command can open the upstream tarball before its normal operation when used with the *-a* option.
+
+----
+ $ debmake -a upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debuild
+----
+
+TIP: URL such as "'http://www.example.org/DL/package-1.0.tar.gz'" may be used for the *-a* option.
+
+==== Build the binary package
+
+The *debmake* command can build the source tree after its normal operation when used with the "*-i debuild*" option.
+
+----
+ $ debmake -a upstreampackage-1.0.tar.gz -i debuild
+----
+
+TIP: The functioning single binary package may be generated automatically without manual modifications to the upstream source.
+
+==== Make the upstream tarball
+
+The *debmake* command can generate the upstream tarball with the "*make dist*" equivalent before its normal operation when used with the *-d* option.  This can be used to produce the upstream tarball snapshot from the upstream source tree in VCS.
+
+----
+ $ cd /path/to/upstream-vcs
+ $ debmake -d
+ $ cd ../upstreampackage-1.0
+ $ debuild
+----
+
+Alternatively, the *debmake* command can generate the upstream tarball with the *tar* command before its normal operation when used with the *-t* option.  This can be used to produce the upstream tarball snapshot from the upstream source tree in VCS.
+
+----
+ $ cd /path/to/upstream-vcs
+ $ debmake -t
+ $ debuild
+----
+
+The *-d* and *-t* options combined with the *-i* option also ease making of non-native Debian packages from the VCS snapshot by allowing to have the *debian/* directory contents in the same VCS branch as the upstream development one.
+ 
+----
+ $ cd /path/to/upstream-vcs
+ $ vim
+   ... hack upstream source
+ $ dch
+   ... update debian/changelog
+ $ git commit -a
+ $ debmake -t -i debuild
+----
+
+I call this Debian *non-native* binary package building scheme using the "*debmake -t -i debuild*" command as the *quasi-native* Debain package scheme since it looks like the Debian *native* binary package building scheme by the *debuild* command without the upstream tarball.
+
+Use of the *non-native* Debain package helps to ease communication with the downstream distros such as Ubuntu for bug fixes etc.
+
+==== Check copyright
+
+The the *debmake* command can make a summary report of the copyright and license for the entire source tree using the *licensecheck* command.
+
+----
+ $ tar -xvzf upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debmake -c | less
+----
+
+=== The binary package
+
+The *-b* option of the *debmake* command provides intuitive and flexible methods to customize packaging parameters for each binary package. It has no equivalence in *dh_make*.
+
+==== The *-b* optiopn syntax
+
+Let's quote the pertinent part from the manpage here.
+
+*****
+include::binary.txt[]
+*****
+
+The default type is the *bin* type which means the compiled ELF binary executables.  This is why above examples do not specify *-b* option.
+
+For programs written in other compiler languages, you may need to add its run-time library package as the dependency of the resulting binary package by adjusting *debian/control*.
+
+==== Python package example
+
+You can generate a single binary Debian package directly from the Python module package offered as a tarball.  The package type *python* needs to be specified with the *-b* option.
+
+----
+ $ debmake -b":python" -s -a upstreampackage-1.0.tar.gz -i debuild
+----
+
+For programs written in other interpreter languages, specify *script* as the package type instead of the default *bin* and add the interpreter package as the dependency of the resulting binary package by adjusting *debian/control*.
+
+The *-s* option makes the *debmake* command to copy the package description from the upstream Python package to the generated Debian package.
+
+==== Multi binary package example
+
+Let's make a following set of binary packages from the upstream tarball *foo-1.0.tar.gz*.
+
+* *foo*: compiled ELF executable binaries from the C program
+* *foo-doc*: accompanying documentations for *foo*
+* *foo-dbg*: accompanying debug symbols for *foo*
+* *perl-foo*: accompanying perl programs for *foo*
+
+----
+ $ debmake -j -b",-doc,-dbg,perl-foo" -a foo-1.0.tar.gz
+ $ less foo.build-dep.log
+ $ less foo.install.log
+ $ rm -rf foo-1.0
+ $ debmake -b",-doc,-dbg,perl-foo" -a foo-1.0.tar.gz
+ $ cd foo-1.0
+ $ vim debian/foo.install
+ $ vim debian/foo-doc.install
+ $ vim debian/perl-foo.install
+ $ vim debian/control
+ $ debuild
+----
+
+TIP: See *dh_install*(1) for how to write *debian/*'binarypackage'*.install* files.
+
+The first invocation of "*debmake*" is used to identify install paths of files and build dependencies.
+
+The second invocation of "*debmake*" provides us with the clean build tree.
+
+TIP: The binary package name starting with a "*-*" (hyphen) is treated as the abbreviated name and the real binary package name is generated by attaching it to the source package name.
+

@@ -1,0 +1,8 @@
+ $ git clone http://ruderich.org/simon/blhc/blhc.git
+Cloning into 'blhc'...
+remote: Counting objects: 1392, done.
+remote: Compressing objects: 100% (388/388), done.
+remote:nTotale1392 (delta8817),9reused.1392i(delta.817)iB/s
+Receiving objects: 100% (1392/1392),5160.99KKiB||994.00KKiB/s, done.
+Resolving deltas: 100% (817/817), done.
+Checking connectivity... done.
