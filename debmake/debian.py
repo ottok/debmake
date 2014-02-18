@@ -63,8 +63,8 @@ def debian(para):
     ###################################################################
     package = para['debs'][0]['package']    # the first binary package name
     substlist = {
-        '@PACKAGE@': package,
-        '@UCPACKAGE@': package.upper(),
+        '@PACKAGE@': para['package'],
+        '@UCPACKAGE@': para['package'].upper(),
         '@YEAR@': para['year'],
         '@FULLNAME@': para['fullname'],
         '@EMAIL@': para['email'],
@@ -115,14 +115,19 @@ def debian(para):
     else:
         build_dir = 'debian/tmp'
     if 'dbg' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(build_dir).rstrip() + '\n'
+        if len(para['dbg']) == 1:
+            substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg1').format(para['dbg'][0]).rstrip() + '\n'
+        elif len(para['dbg']) > 1:
+            substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg2').format(para['dbg']).rstrip() + '\n'
+        else:
+            print('E: no -dbg package but wondered in here.', file=sys.stderr)
+            exit(1)
     if 'python3' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'python3').format(build_dir).strip() + '\n'
     if 'multiarch' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n'
     if 'java' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n'
-
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################

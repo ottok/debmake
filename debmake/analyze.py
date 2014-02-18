@@ -26,27 +26,62 @@ import glob
 import os
 import re
 import sys
+import subprocess
 import debmake.read
 import debmake.compat
 import debmake.scanfiles
 import debmake.yn
 ###########################################################################
-# interpreter: warn binary dependency etc. if they are top 3 popular files
+# popular: warn binary dependency etc. if they are top 3 popular files
 ###########################################################################
-def popular(type, msg, debs, extcount, yes):
-    n = 3 # check files with the top 3 popular extensions
-    if type in dict(extcount[0:n]).keys():
+def popular(exttype, msg, debs, extcount, yes):
+    n = 3 # check files with the top 3 popular extension types
+    if exttype in dict(extcount[0:n]).keys():
         settype = False
         for deb in debs:
-            if deb['type'] == type:
+            type = deb['type'] # -b (python3 also reports python)
+            if type == exttype:
+                settype = True
+                break
+            if exttype == 'python' and type == 'python3':
                 settype = True
                 break
         if not settype:
-            print('W: many ext = "{}" programs without -b set with "{}".'.format(type, deb['type']), file=sys.stderr)
-            pass
-            #
-            debmake.yn.yn('do you continue packaging', 'pass', yes)
+            print('W: many ext = "{}" type extension programs without matching -b set.'.format(exttype, type), file=sys.stderr)
+            debmake.yn.yn(msg, '', yes)
     return
+###########################################################################
+# description: read from the upstream packaging system
+###########################################################################
+def description(type, base_path):
+    text = ''
+    command = base_path + '/lib/debmake/' + type + '.short'
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    for line in p.stdout.readlines():
+        text += line.decode('utf-8').strip() + ' '
+    if p.wait() != 0:
+        print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
+        exit(1)
+    return text.strip()
+###########################################################################
+# description_long: read from the upstream packaging system
+###########################################################################
+def description_long(type, base_path):
+    text = ''
+    command = base_path + '/lib/debmake/' + type + '.long'
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    for line in p.stdout.readlines():
+        l = line.decode('utf-8').rstrip()
+        if l:
+            text += ' ' + l + '\n'
+        else:
+            text += ' .\n'
+    if p.wait() != 0:
+        print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
+        exit(1)
+    if text == ' .\n':
+        text = ''
+    return text
 ###########################################################################
 # analyze: called from debmake.main()
 ###########################################################################
@@ -56,21 +91,21 @@ def analyze(para):
     #######################################################################
     setcompiler = False # for export
     setmultiarch = False # for override
+    para['dbg'] = [] # list of dbg package names for override
     for i, deb in enumerate(para['debs']):
         # update binary package dependency by package type etc.
         # interpreters
         if deb['type'] == 'perl':
-            para['debs'][i]['depends'].update({'perl'})
+            para['debs'][i]['depends'].update({'perl'}) # may not be needed
         elif deb['type'] == 'python':
-            para['dh_with'].update({'python2'})
+            para['dh_with'].update({'python2'}) # may not be needed
             para['debs'][i]['depends'].update({'python'})
         elif deb['type'] == 'python3':
             para['dh_with'].update({'python3'})
             para['debs'][i]['depends'].update({'python3'})
             para['override'].update({'python3'})
         elif deb['type'] == 'ruby':
-            # XXX FIXME XXX what to set
-            #para['dh_with'].update({'ruby'})
+            para['dh_with'].update({'ruby'}) # may not be needed
             para['debs'][i]['depends'].update({'ruby'})
         elif deb['type'] == 'script':
             pass
@@ -82,11 +117,15 @@ def analyze(para):
         elif deb['type'] == 'bin':
             setcompiler = True
             if len(para['debs']) == 1:
+                # it may contain library for the single binary case
                 setmultiarch = True
         elif deb['type'] == 'lib':
             setcompiler = True
             setmultiarch = True
-        else: # -dev -dbg
+        elif deb['type'] == 'dbg':
+            para['override'].update({'dbg'})
+            para['dbg'].append(deb['package'])
+        else: # -dev
             pass
     if setcompiler:
         para['export'].update({'compiler'})
@@ -102,6 +141,12 @@ def analyze(para):
         pro = pro[0]
     else:
         pro = ''
+    # check if '*.spec.in' for RPM
+    specs = glob.glob('*.spec.in')
+    if specs:
+        spec = specs[0]
+    else:
+        spec = ''
     # GNU coding standard with autotools = autoconf+automake
     if os.path.isfile('configure.ac') and \
             os.path.isfile('Makefile.am') and \
@@ -158,12 +203,22 @@ def analyze(para):
             para['build_type']      = 'Python3 distutils'
             para['build_depends'].update({'python3-all'})
             para['override'].update({'python3'})
+            if para['spec']:
+                if para['desc'] == '':
+                    para['desc'] = description('python3', para['base_path'])
+                if para['desc_long'] =='':
+                    para['desc_long'] = description_long('python3', para['base_path'])
         elif re.search('python', line):
             # http://docs.python.org/2/distutils/
             if debmake.compat.compat(para['compat']) < 9:
                 para['dh_with'].update({'python2'})
             para['build_type']      = 'Python distutils'
             para['build_depends'].update({'python-all'})
+            if para['spec']:
+                if para['desc'] == '':
+                    para['desc'] = description('python', para['base_path'])
+                if para['desc_long'] =='':
+                    para['desc_long'] = description_long('python', para['base_path'])
         else:
             print('E: unknown python version.  check setup.py.', file=sys.stderr)
             exit(1)
@@ -202,6 +257,17 @@ def analyze(para):
         if setmultiarch:
             para['override'].update({'multiarch'})
     print('I: build_type = {}'.format(para['build_type']), file=sys.stderr)
+    #######################################################################
+    # high priority spec source, first
+    if para['spec']:
+        if para['desc'] == '' and os.path.isfile('META.yml'):
+            para['desc'] = description('META.yml', para['base_path'])
+        if para['desc'] == '' and os.path.isfile('Rakefile'):
+            para['desc'] = description('Rakefile', para['base_path'])
+        if para['desc'] == '' and spec:
+            para['desc'] = description('spec', para['base_path'])
+        if para['desc_long'] =='' and spec:
+            para['desc_long'] = description_long('spec', para['base_path'])
     #######################################################################
     # analize copyright+license content + file extensions
     # copyright, control: build/binary dependency, rules export/override

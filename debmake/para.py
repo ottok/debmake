@@ -199,12 +199,12 @@ Argument may need to be quoted to protect from the shell.
             action = 'store_true', 
             default = False, 
             help='quit early before creating files in the debian directory')
-#    p.add_argument(
-#            '-s', 
-#            '--spec',
-#            action = 'store_true', 
-#            default = False, 
-#            help = 'parse SPEC configuration')
+    p.add_argument(
+            '-s', 
+            '--spec',
+            action = 'store_true', 
+            default = False, 
+            help = 'use upstream spec')
     p.add_argument(
             '-v', 
             '--version', 
@@ -267,7 +267,7 @@ Argument may need to be quoted to protect from the shell.
     #############################################
     para['quitearly']       = args.quitearly    # -q
     para['revision']        = args.revision     # -r
-#   para['spec']            = args.spec         # -s
+    para['spec']            = args.spec         # -s
     para['tar']             = args.tar          # -t
     para['version']         = args.upstreamversion  # -u
     para['print_version']   = args.version      # -v

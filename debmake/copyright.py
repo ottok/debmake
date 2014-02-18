@@ -625,7 +625,7 @@ Source: <url://example.com>
         for line in p.stdout.readlines():
             text += '# licensecheck(1): ' + line.decode('utf-8').strip() + '\n'
         if p.wait() != 0:
-            print('E: "{}" returns "{}"'.format(command, retval), file=sys.stderr)
+            print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
             exit(1)
         # License:
         if bd[3] == []:
