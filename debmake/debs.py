@@ -232,7 +232,11 @@ def debs(binaryspec, package, monoarch, dh_with):
         ###################################################################
         # update binary package dependency by package type etc.
         ###################################################################
-        if t == 'perl': # dh_perl(1)
+        if t == 'bin': # executable
+            dp.update({'${shlibs:Depends}'})
+        elif t == 'lib': # library
+            dp.update({'${shlibs:Depends}'})
+        elif t == 'perl': # dh_perl(1)
             dp.update({'${perl:Depends}', 'perl'})
         elif t == 'python': # dh_python2
             dp.update({'${python:Depends}'})

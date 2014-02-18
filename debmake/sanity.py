@@ -37,6 +37,22 @@ def sanity(para):
     revision = ''
     targz = ''
     if para['archive']: # -a
+        # remote URL
+        reurl = re.match(r'(http:://|https://|ftp://).*/([^/]+)$', para['tarball'])
+        if reurl:
+            url = para['tarball']
+            para['tarball'] = reurl.group(2)
+            if os.path.isfile('/usr/bin/wget'):
+                command = '/usr/bin/wget ' + url
+            elif os.path.isfile('/usr/bin/curl'):
+                command = '/usr/bin/curl ' + url
+            else: 
+                print('E: please install wget or curl.', file=sys.stderr)
+                exit(1)
+            print('I: {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: wget/curl failed.', file=sys.stderr)
+                exit(1)
         parent = ''
         if not os.path.isfile(para['tarball']):
             print('E: Non-existing tarball name {}'.format(para['tarball']), file=sys.stderr)
