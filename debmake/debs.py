@@ -121,10 +121,11 @@ def debs(binaryspec, package, monoarch, dh_with):
         ###################################################################
         # override if explicit 2nd argument exists, e.g. all in foo:all
         ###################################################################
+        # The shorter match comes after the longer match
         if len(y) >= 2:
             t = y[1].strip()
             if match_prefix(t, 'an') or \
-               match_prefix(t, 'f'): # any foreign
+               match_prefix(t, 'f'): # any foreign (deprecated)
                 a = 'any'
                 m = 'foreign'
                 if t =='':
@@ -153,24 +154,23 @@ def debs(binaryspec, package, monoarch, dh_with):
                 a = 'any'
                 m = 'same'
                 t = 'lib'
-            elif match_prefix(t, 'pe'): # perl
+            elif match_prefix(t, 'pe') or (t == 'pl'): # perl
                 a = 'all'
                 m = 'foreign'
                 t = 'perl'
+            elif match_prefix(t, 'python3') or (t == 'py3'): # python3
+                a = 'all'
+                m = 'foreign'
+                t = 'python3'
             elif match_prefix(t, 'py'): # python
                 a = 'all'
                 m = 'foreign'
                 t = 'python'
-            elif match_prefix(t, 'python3') or \
-                 match_prefix(t, 'py3'): # python3
-                a = 'all'
-                m = 'foreign'
-                t = 'python3'
-            elif match_prefix(t, 'ruby'): # ruby
+            elif match_prefix(t, 'ruby') or (t == 'rb'): # ruby
                 a = 'all'
                 m = 'foreign'
                 t = 'ruby'
-            elif match_prefix(t, 'sc'): # script
+            elif match_prefix(t, 'sc') or (t == 'sh'): # script
                 a = 'all'
                 m = 'foreign'
                 t = 'script'
