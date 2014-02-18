@@ -1,9 +1,18 @@
-debmake (4.0.9-1) UNRELEASED; urgency=medium
+debmake (4.0.9-1) unstable; urgency=medium
 
-  * javahelper 
-  * configure.in 
+  * Fix regression of 4.0.8 for -d and add safegurd of VCS for untar.
+    Closes: #739692
+  * Introduce javahelper and gem2deb support.
+  * Support configure.in.
+  * -yy is always no.
+  * Add ${shlibs:Depends} for bin and lib
+  * Support URL for -a
+  * Support package description from the upstream -s
+  * Update package dependency.
+  * Clean up generated files.
+  * Add HTML documentation (not finished but useful).
 
- -- Osamu Aoki <osamu@debian.org>  Mon, 10 Feb 2014 00:45:21 +0900
+ -- Osamu Aoki <osamu@debian.org>  Tue, 25 Feb 2014 01:09:15 +0900
 
 debmake (4.0.8-1) unstable; urgency=medium
 
