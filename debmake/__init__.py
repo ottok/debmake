@@ -164,6 +164,7 @@ def main():
         # ln -sf parent/dist/Foo-1.0.tar.gz foo_1.0.orig.tar.gz
         debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['parent'])
         para['tarball'] = para['package'] + '_' + para['version'] + '.orig.' + para['targz']
+        debmake.debug.debug_para('D: post-origtar', para)
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################
@@ -175,8 +176,10 @@ def main():
 #######################################################################
     print('I: parse binary package settings: {}'.format(para['binaryspec']), file=sys.stderr)
     para['debs'] = debmake.debs.debs(para['binaryspec'], para['package'], para['monoarch'], para['dh_with'])
+    debmake.debug.debug_debs('D: post-debs', para['debs'])
     print('I: analyze the source tree', file=sys.stderr)
     para = debmake.analyze.analyze(para)
+    debmake.debug.debug_para('D: post-analyze', para)
     #debmake.gui()          # GUI setting
     #debmake.debug.debug_para('D: post-gui', para)
 #######################################################################

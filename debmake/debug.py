@@ -60,6 +60,19 @@ def debug_para(msg, para):
                 file=sys.stderr)
     return
 
+def debug_debs(msg, debs):
+    try:
+        DEBUG = os.environ["DEBUG"]
+    except KeyError:
+        pass
+    else:
+        if 'd' in DEBUG:
+            line = '{}: \n'.format(msg)
+            for deb in debs:
+                line += 'package: {}, arch: {}, M-A: {}, Depends: {}, Pre-Depends: {}, Type: {}\n'.format(deb['package'], deb['arch'], deb['multiarch'], deb['depends'], deb['pre-depends'], deb['type'])
+            print(line, file=sys.stderr)
+    return
+
 #######################################################################
 # Test code
 #######################################################################
