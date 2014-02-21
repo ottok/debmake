@@ -24,6 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import glob
 import os
+import subprocess
 import sys
 import debmake.cat
 import debmake.control
@@ -196,6 +197,14 @@ def debian(para):
         debmake.sed.sed(confdir, 'debian/license-examples/', substlist, package)
     else:
         print('I: run "debmake -x{}" to get more template files'.format(extra + 1), file=sys.stderr)
+    ###################################################################
+    # wrap-and-sort
+    ###################################################################
+    command = 'wrap-and-sort'
+    print('I: {}'.format(command), file=sys.stderr)
+    if subprocess.call(command, shell=True) != 0:
+        print('E: failed to run wrap-and-sort.', file=sys.stderr)
+        exit(1)
     return
 
 #######################################################################
