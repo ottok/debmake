@@ -57,18 +57,18 @@ def sanity(para):
         if not os.path.isfile(para['tarball']):
             print('E: Non-existing tarball name {}'.format(para['tarball']), file=sys.stderr)
             exit(1)
-        # tarball: package-version.tar.gz or package_version.tar.gz
-        rebasetar = re.match(r'([^/]+)[-_]([^-/_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
         # tarball: package_version.orig.tar.gz
         reorigtar = re.match(r'([^/]+)_([^-/_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
-        if rebasetar:
-            package = rebasetar.group(1).lower()
-            version = rebasetar.group(2)
-            targz = rebasetar.group(3)
-        elif reorigtar:
+        # tarball: package-version.tar.gz or package_version.tar.gz
+        rebasetar = re.match(r'([^/]+)[-_]([^-/_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
+        if reorigtar:
             package = reorigtar.group(1).lower()
             version = reorigtar.group(2)
             targz = reorigtar.group(3)
+        elif rebasetar:
+            package = rebasetar.group(1).lower()
+            version = rebasetar.group(2)
+            targz = rebasetar.group(3)
         else:
             print('E: Non-supported tarball name {}'.format(para['tarball']), file=sys.stderr)
             exit(1)
