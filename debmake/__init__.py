@@ -191,13 +191,13 @@ def main():
 # Make Debian package(s)
 #######################################################################
     if para['judge']:
-        command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log'.format(para['package'])
+        command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log 2>&1'.format(para['package'])
         print('I: {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
             exit(1)
         if len(para['debs']) > 1:
-            command = 'find debian/tmp -type f | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
+            command = 'find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
             print('I: {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
