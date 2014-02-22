@@ -52,7 +52,7 @@ def tar(tarball, targz, srcdir, parent, yes):
             debmake.yn.yn('remove "{}" directory in tar'.format(srcdir), 'rm -rf ' + srcdir, yes)
         # copy from parent to srcdir using hardlinks (with debian/* data)
         command = 'rsync -aCv --link-dest=' + os.getcwd() + '/' + parent + ' ' + parent + '/. ' + srcdir
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: rsync -aCv failed.', file=sys.stderr)
             exit(1)
@@ -68,7 +68,7 @@ def tar(tarball, targz, srcdir, parent, yes):
         print('E: Wrong file format "{}".'.format(targz), file=sys.stderr)
         exit(1)
     command += tarball + ' ' + srcdir
-    print('I: {}'.format(command), file=sys.stderr)
+    print('I: $ {}'.format(command), file=sys.stderr)
     if subprocess.call(command, shell=True) != 0:
         print('E: tar failed {}.'.format(tarball), file=sys.stderr)
         exit(1)

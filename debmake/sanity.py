@@ -49,7 +49,7 @@ def sanity(para):
             else: 
                 print('E: please install wget or curl.', file=sys.stderr)
                 exit(1)
-            print('I: {}'.format(command), file=sys.stderr)
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: wget/curl failed.', file=sys.stderr)
                 exit(1)

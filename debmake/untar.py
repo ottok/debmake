@@ -65,7 +65,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
             print('E: the extension "{}" not supported.'.format(targz), file=sys.stderr)
             exit(1)
         command += tarball
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: failed to untar.', file=sys.stderr)
             exit(1)
@@ -91,7 +91,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
         if tarsrcdir != srcdir:
             print('I: move source tree from {} to {}.'.format(tarsrcdir, srcdir), file=sys.stderr)
             command = 'mv -f ' + tarsrcdir + ' ' + srcdir
-            print('I: {}'.format(command), file=sys.stderr)
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to move directory.', file=sys.stderr)
                 exit(1)
@@ -99,7 +99,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
     if dist and os.path.isdir(parent + '/debian'):
         command = 'cp -drl ' + parent + '/debian ' + srcdir + '/debian'
         # execute command: copy debian tree (with hardlink)
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: cp -drl failed.', file=sys.stderr)
             exit(1)

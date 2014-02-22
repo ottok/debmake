@@ -201,7 +201,7 @@ def debian(para):
     # wrap-and-sort
     ###################################################################
     command = 'wrap-and-sort'
-    print('I: {}'.format(command), file=sys.stderr)
+    print('I: $ {}'.format(command), file=sys.stderr)
     if subprocess.call(command, shell=True) != 0:
         print('E: failed to run wrap-and-sort.', file=sys.stderr)
         exit(1)

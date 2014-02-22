@@ -41,7 +41,7 @@ def yn(mes, command, yes):
             yn = yn[0].lower()
     if (yn =='y'):
         if command:
-            print('I: {}'.format(command), file=sys.stderr)
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to run command.', file=sys.stderr)
                 exit(1)

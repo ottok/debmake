@@ -192,19 +192,19 @@ def main():
 #######################################################################
     if para['judge']:
         command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log 2>&1'.format(para['package'])
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
             exit(1)
         if len(para['debs']) > 1:
             command = 'find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
-            print('I: {}'.format(command), file=sys.stderr)
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
                 exit(1)
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
-        print('I: please execute "cd {0}"'.format(os.getcwd()), file=sys.stderr)
-        print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
+        print('I: please execute "cd {0}" before building the binary package'.format(os.getcwd()), file=sys.stderr)
+        print('I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
     elif para['invoke']:
         print('I: {}'.format(para['invoke']), file=sys.stderr)
         if subprocess.call(para['invoke'], shell=True) != 0:
@@ -217,8 +217,8 @@ def main():
             print('I: please execute "cd .." and inspect the build results.'.format(os.getcwd()), file=sys.stderr)
     elif os.getcwd() != para['cwd']:
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
-        print('I: please execute "cd {}"'.format(os.getcwd()), file=sys.stderr)
-        print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
+        print('I: please execute "cd {0}" before building the binary package'.format(os.getcwd()), file=sys.stderr)
+        print('I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
     return
 
 #######################################################################
