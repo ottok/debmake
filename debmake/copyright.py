@@ -30,37 +30,6 @@ import subprocess
 import sys
 import debmake.debug
 ###################################################################
-# Define constants
-###################################################################
-MAX_FILE_SIZE = 100*1024 # 100 KB
-SKIP_FILES = [
-        'COPYING',
-        'LICENSE',
-        'INSTALL',
-        'README',
-        'README.txt',
-        'README.Debian',
-        'ChangeLog',
-        'changelog',
-        'Makefile.in',
-        'aclocal.m4',
-        'compile',
-        'config.guess',
-        'config.h.in',
-        'config.sub',
-        'configure',
-        'depcomp',
-        'install-sh',
-        'ltconfig',
-        'ltmain.sh',
-        'missing',
-        'mkinstalldirs',
-        'py-compile'
-]       # Skip these files for scanning
-
-# First 2 are specified by --license
-
-###################################################################
 # Emulate C's enum by function enums
 ###################################################################
 def enums(**enums):
@@ -198,16 +167,6 @@ re_copyright = re.compile(r'''Copyright|\(C\)|©''',
 re_year = re.compile(r'\d\d+')
 
 re_year_section = re.compile(r'((\d\d+)[ ,-]*)')
-
-###################################################################
-# Check if binary file
-###################################################################
-def istextfile(file, blocksize=4048):
-    buff = open(file, 'rb').read(blocksize)
-    if b'\x00' in buff:
-        return False
-    else:
-        return True
 
 ###################################################################
 # Check a line for copyright and license and
@@ -604,54 +563,6 @@ def format_license(lines):
             xlines.append(' ' + line + '\n')
     return ''.join(xlines)
 
-###################################################################
-# Get all files to be analyzed under dir
-###################################################################
-def get_all_files(dir):
-    nonlink_files = []
-    binary_files = []
-    huge_files = []
-    if not os.path.isdir(dir):
-        print('E: get_all_files(dir) should have existing dir', file=sys.stderr)
-        exit(1)
-    for dir, subdirs, files in os.walk(dir):
-        for file in files:
-            filepath = os.path.join(dir, file)
-            if os.path.islink(filepath):
-                pass # skip symlink (both for file and dir)
-            elif file in SKIP_FILES:
-                pass # skip automatically generated files
-            elif os.path.getsize(filepath) > MAX_FILE_SIZE:
-                huge_files.append(filepath)
-            elif istextfile(filepath):
-                nonlink_files.append(filepath)
-            else:
-                binary_files.append(filepath)
-        # do not decend to VCS dirs
-        for vcs in ['CVS', '.svn', '.pc', '.git', '.hg', '.bzr']:
-            if vcs in subdirs:
-                subdirs.remove(vcs)  # skip VCS
-        # do not decend to symlink dirs
-        symlinks = []
-        for subdir in subdirs:
-            dirpath = os.path.join(dir, subdir)
-            if os.path.islink(dirpath):
-                symlinks.append(subdir)
-        # do not change subdirs inside looping over subdirs
-        for symlink in symlinks:
-            subdirs.remove(symlink)  # skip symlinks
-            print('W: get_all_files(dir) skip symlink dir', file=sys.stderr)
-    return (nonlink_files, binary_files, huge_files)
-
-#######################################################################
-# complete scan_copyright_data
-#######################################################################
-def scan_copyright_data():
-    (nonlink_files, binary_files, huge_files) = get_all_files('.')
-    data = check_all_license(nonlink_files)
-    bdata = bunch_licence(data)
-    return (bdata, nonlink_files, binary_files, huge_files)
-
 #######################################################################
 # license text files (glob files specified by --license)
 #######################################################################
@@ -682,9 +593,7 @@ def license_text(file, encoding='utf-8'):
 #######################################################################
 # main program
 #######################################################################
-def copyright(package_name, license_file_masks):
-    # get scan result of copyright
-    (bdata, nonlink_files, binary_files, huge_files) = scan_copyright_data()
+def copyright(package_name, license_file_masks, bdata, binary_files, huge_files):
     # make text to print
     text = '''\
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
@@ -716,7 +625,7 @@ Source: <url://example.com>
         for line in p.stdout.readlines():
             text += '# licensecheck(1): ' + line.decode('utf-8').strip() + '\n'
         if p.wait() != 0:
-            print('E: "{}" returns "{}"'.format(command, retval), file=sys.stderr)
+            print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
             exit(1)
         # License:
         if bd[3] == []:
@@ -726,14 +635,14 @@ Source: <url://example.com>
         # add comments
         if bd[4] != '':
             text += '#............................................................................\n'
-            text += '# Gray hits with matching text of "copyright":\n'
+            text += '# gray hits with matching text of "copyright":\n'
             text += bd[4]
     if binary_files != []:
         text += '#----------------------------------------------------------------------------\n'
-        text += '# Binary files (skipped):\n# {}\n\n'.format('\n# '.join(binary_files))
+        text += '# binary files (skipped):\n# {}\n\n'.format('\n# '.join(binary_files))
     if huge_files != []:
         text += '#----------------------------------------------------------------------------\n'
-        text += '# Huge files   (skipped):\n# {}\n\n'.format('\n# '.join(huge_files))
+        text += '# huge files   (skipped):\n# {}\n\n'.format('\n# '.join(huge_files))
     text += '''\
 #----------------------------------------------------------------------------
 # This is meant only as a template example.
@@ -763,4 +672,4 @@ Source: <url://example.com>
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    print(copyright('foo', {'LICENSE*', 'COPYRIGHT'}))
+    print(copyright('foo', {'LICENSE*', 'COPYRIGHT'}, [], ['binary1.file', 'binary2.file'], ['huge.file1', 'huge.file2']))

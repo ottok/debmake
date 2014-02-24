@@ -35,6 +35,7 @@ import debmake.dist
 import debmake.origtar
 import debmake.para
 import debmake.sanity
+import debmake.scanfiles
 import debmake.tar
 import debmake.untar
 #######################################################################
@@ -42,7 +43,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.8'
+__version__         = '4.0.9'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -94,6 +95,8 @@ def main():
     para['build_depends']   = {'debhelper (>=' + para['compat'] +')'}
     para['desc'] = ''
     para['desc_long'] = ''
+    para['export'] = set()
+    para['override'] = set()
     # get prefix for install --user/ ,, --prefix/ ,, --home
     fullparent = os.path.dirname(sys.argv[0])
     if fullparent == '.':
@@ -116,8 +119,9 @@ def main():
 # -c: scan source for copyright+ license text, print and exit
 #######################################################################
     if para['copyright']:
-        print('I: scan source for copyright+license text', file=sys.stderr)
-        print(debmake.copyright.copyright('package',set()))
+        print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
+        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(check=True)
+        print(debmake.copyright.copyright('package', set(),bdata, binary_files, huge_files))
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
@@ -160,6 +164,7 @@ def main():
         # ln -sf parent/dist/Foo-1.0.tar.gz foo_1.0.orig.tar.gz
         debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['parent'])
         para['tarball'] = para['package'] + '_' + para['version'] + '.orig.' + para['targz']
+        debmake.debug.debug_para('D: post-origtar', para)
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################
@@ -171,8 +176,10 @@ def main():
 #######################################################################
     print('I: parse binary package settings: {}'.format(para['binaryspec']), file=sys.stderr)
     para['debs'] = debmake.debs.debs(para['binaryspec'], para['package'], para['monoarch'], para['dh_with'])
+    debmake.debug.debug_debs('D: post-debs', para['debs'])
     print('I: analyze the source tree', file=sys.stderr)
     para = debmake.analyze.analyze(para)
+    debmake.debug.debug_para('D: post-analyze', para)
     #debmake.gui()          # GUI setting
     #debmake.debug.debug_para('D: post-gui', para)
 #######################################################################
@@ -184,20 +191,20 @@ def main():
 # Make Debian package(s)
 #######################################################################
     if para['judge']:
-        command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log'.format(para['package'])
-        print('I: {}'.format(command), file=sys.stderr)
+        command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log 2>&1'.format(para['package'])
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
             exit(1)
         if len(para['debs']) > 1:
-            command = 'find debian/tmp -type f | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
-            print('I: {}'.format(command), file=sys.stderr)
+            command = 'find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
                 exit(1)
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
-        print('I: please execute "cd {0}"'.format(os.getcwd()), file=sys.stderr)
-        print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
+        print('I: please execute "cd {0}" before building the binary package'.format(os.getcwd()), file=sys.stderr)
+        print('I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
     elif para['invoke']:
         print('I: {}'.format(para['invoke']), file=sys.stderr)
         if subprocess.call(para['invoke'], shell=True) != 0:
@@ -210,8 +217,8 @@ def main():
             print('I: please execute "cd .." and inspect the build results.'.format(os.getcwd()), file=sys.stderr)
     elif os.getcwd() != para['cwd']:
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
-        print('I: please execute "cd {0}"'.format(os.getcwd()), file=sys.stderr)
-        print('I: before building binary package with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
+        print('I: please execute "cd {0}" before building the binary package'.format(os.getcwd()), file=sys.stderr)
+        print('I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)
     return
 
 #######################################################################

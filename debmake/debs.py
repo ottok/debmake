@@ -26,11 +26,11 @@ import sys
 ###########################################################################
 def match_prefix(name, prefix):
     l = len(prefix)
-    return (len(name) > l) and (name[:l] == prefix)
+    return (len(name) > 1) and (name[:l] == prefix)
 
 def match_suffix(name, suffix):
     l = len(suffix)
-    return (len(name) > l) and (name[-l:] == suffix)
+    return (len(name) > 1) and (name[-l:] == suffix)
 ###########################################################################
 # sanity: called from debmake.main()
 ###########################################################################
@@ -121,10 +121,11 @@ def debs(binaryspec, package, monoarch, dh_with):
         ###################################################################
         # override if explicit 2nd argument exists, e.g. all in foo:all
         ###################################################################
+        # The shorter match comes after the longer match
         if len(y) >= 2:
             t = y[1].strip()
             if match_prefix(t, 'an') or \
-               match_prefix(t, 'f'): # any foreign
+               match_prefix(t, 'f'): # any foreign (deprecated)
                 a = 'any'
                 m = 'foreign'
                 if t =='':
@@ -153,20 +154,23 @@ def debs(binaryspec, package, monoarch, dh_with):
                 a = 'any'
                 m = 'same'
                 t = 'lib'
-            elif match_prefix(t, 'pe'): # perl
+            elif match_prefix(t, 'pe') or (t == 'pl'): # perl
                 a = 'all'
                 m = 'foreign'
                 t = 'perl'
+            elif match_prefix(t, 'python3') or (t == 'py3'): # python3
+                a = 'all'
+                m = 'foreign'
+                t = 'python3'
             elif match_prefix(t, 'py'): # python
                 a = 'all'
                 m = 'foreign'
                 t = 'python'
-            elif match_prefix(t, 'python3') or \
-                 match_prefix(t, 'py3'): # python3
+            elif match_prefix(t, 'ruby') or (t == 'rb'): # ruby
                 a = 'all'
                 m = 'foreign'
-                t = 'python3'
-            elif match_prefix(t, 'sc'): # script
+                t = 'ruby'
+            elif match_prefix(t, 'sc') or (t == 'sh'): # script
                 a = 'all'
                 m = 'foreign'
                 t = 'script'
@@ -228,18 +232,24 @@ def debs(binaryspec, package, monoarch, dh_with):
         ###################################################################
         # update binary package dependency by package type etc.
         ###################################################################
-        if t == 'perl': # dh_perl(1)
+        if t == 'bin': # executable
+            dp.update({'${shlibs:Depends}'})
+        elif t == 'lib': # library
+            dp.update({'${shlibs:Depends}'})
+        elif t == 'perl': # dh_perl(1)
             dp.update({'${perl:Depends}', 'perl'})
         elif t == 'python': # dh_python2
             dp.update({'${python:Depends}'})
         elif t == 'python3': # dh_python3
             dp.update({'${python3:Depends}'})
+        elif t == 'ruby': # gem2deb ??? XXXX FIXME XXXX
+            dp.update({'${ruby:Depends}'})
         else:
             pass
         ###################################################################
         # loging and sanity check
         ###################################################################
-        print('I: Binary package={} Type={} / Arch={} M-A={}'.format(p, t, a, m), file=sys.stderr)
+        print('I: binary package={} Type={} / Arch={} M-A={}'.format(p, t, a, m), file=sys.stderr)
         if p in pset:
             print('E: duplicate definition of package name "{}"'.format(p), file=sys.stderr)
             exit(1)
@@ -258,20 +268,47 @@ def debs(binaryspec, package, monoarch, dh_with):
                 'pre-depends': pd,
                 'type': t})
     ###################################################################
+    # sanity check
+    ###################################################################
+    binorlib = False
+    dev = False
+    dbg = False
+    for deb in debs:
+        if deb['type'] == 'bin':
+            binorlib = True
+        elif deb['type'] == 'lib':
+            binorlib = True
+        elif deb['type'] == 'dev':
+            dev = True
+        elif deb['type'] == 'dbg':
+            dbg = True
+    if binorlib == False:
+        if dev == True:
+            print('E: "dev" without "bin" or "lib" does not make sense.', file=sys.stderr)
+            exit(1)
+        if dbg == True:
+            print('E: "dbg" without "bin" or "lib" does not make sense.', file=sys.stderr)
+            exit(1)
+    ###################################################################
     return debs
 
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
+    print(match_prefix('deb', 'deb'))
+    if match_prefix('deb', 'deb'):
+        print('deb match deb')
+    else:
+        print('deb not match deb')
     print('----- no dh_with')
-    dh_with = set()
-    binaryspec = '-,-doc:doc,libpackage1, libpackage-dev, libpackage1-dbg'
-    monoarch = False
-    debs(binaryspec, 'package', monoarch, dh_with)
-    print('----- dh_with python3')
-    dh_with = set({'python3'})
-    debs(binaryspec, 'package', monoarch, dh_with)
-    print('----- monoarch True dh_with python3')
-    monoarch = True
-    debs(binaryspec, 'package', monoarch, dh_with)
+#    dh_with = set()
+#    binaryspec = '-,-doc:doc,libpackage1, libpackage-dev, libpackage1-dbg'
+#    monoarch = False
+#    debs(binaryspec, 'package', monoarch, dh_with)
+#    print('----- dh_with python3')
+#    dh_with = set({'python3'})
+#    debs(binaryspec, 'package', monoarch, dh_with)
+#    print('----- monoarch True dh_with python3')
+#    monoarch = True
+#    debs(binaryspec, 'package', monoarch, dh_with)

@@ -26,18 +26,63 @@ import re
 import debmake.read
 #######################################################################
 def control(para):
-    msg = control_src(para)
-    if para['desc']:
-        desc = para['desc'].rstrip()
-    else:
-        desc = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc/_short').rstrip()
-    if para['desc_long']:
-        desc_long = para['desc_long'].rstrip() + '\n'
-    else:
-        desc_long = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long').rstrip() + '\n'
+    ndebs = len(para['debs'])
+    types = set()
     for deb in para['debs']:
-        deb['desc'] = desc + debmake.read.read(para['base_path'] + '/share/debmake/extra0desc/' + deb['type']).rstrip()
-        deb['desc_long'] = desc_long + debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/' + deb['type']).rstrip() + '\n'
+        types.add(deb['type'])
+    ntypes = len(types)
+    #
+    msg = control_src(para)
+    if para['desc'].strip():
+        desc = para['desc'].strip()
+    else:
+        desc = 'auto-generated package by debmake'
+    #
+    if para['desc_long'].rstrip():
+        desc_long = para['desc_long'].rstrip()
+    elif para['desc'].strip():
+        desc_long = ' ' + para['desc'].strip()
+    else:
+        desc_long = ''
+    if desc_long:
+        desc_long_xtra = ''
+    else:
+        desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long').rstrip()
+    for i, deb in enumerate(para['debs']):
+        desc_long_type = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/' + deb['type']).rstrip() 
+        if ndebs == 1: # single binary
+            deb['desc'] = desc
+        elif ndebs == ntypes: # all uniq *type* -> no index 
+            deb['desc'] = desc + ': {}'.format(deb['type'])
+        else:
+            deb['desc'] = desc + ': {} #{}'.format(deb['type'], i)
+        if ndebs == 1: # single binary
+            if desc_long:
+                deb['desc_long'] = desc_long + '\n'
+            else:
+                deb['desc_long'] = desc_long_xtra + '\n'
+        elif ndebs == ntypes: # all uniq *type* -> no index
+            if i == 0:
+                if desc_long:
+                    deb['desc_long'] = desc_long_type + '\n .\n' + desc_long + '\n'
+                else:
+                    deb['desc_long'] = desc_long_type + '\n .\n' + desc_long_xtra + '\n'
+            else:
+                if desc_long:
+                    deb['desc_long'] = desc_long_type + '\n .\n' + desc_long + '\n'
+                else:
+                    deb['desc_long'] = desc_long_type + '\n'
+        else:
+            if i == 0:
+                if desc_long:
+                    deb['desc_long'] = desc_long_type + ': #{}\n .\n'.format(i) + desc_long + '\n'
+                else:
+                    deb['desc_long'] = desc_long_type + ': #{}\n .\n'.format(i) + desc_long_xtra + '\n'
+            else:
+                if desc_long:
+                    deb['desc_long'] = desc_long_type + ': #{}\n .\n'.format(i) + desc_long + '\n'
+                else:
+                    deb['desc_long'] = desc_long_type + ': #{}\n'.format(i)
         msg += control_bin(para, deb)
     return msg
 
@@ -77,38 +122,38 @@ Homepage: {7}
 #######################################################################
 def guess_vcsvcs(vcsvcs):
     if re.search('\.git$', vcsvcs):
-        return 'Vcs-Git'
+        return '#Vcs-Git'
     elif re.search('\.hg$', vcsvcs):
-        return 'Vcs-Hg'
+        return '#Vcs-Hg'
     elif re.search('^:pserver:', vcsvcs):
         # CVS :pserver:anonymous@anonscm.debian.org:/cvs/webwml
-        return 'Vcs-Cvs'
+        return '#Vcs-Cvs'
     elif re.search('^:ext:', vcsvcs):
         # CVS :ext:username@cvs.debian.org:/cvs/webwml
-        return 'Vcs-Cvs'
+        return '#Vcs-Cvs'
     elif re.search('^svn[:+]', vcsvcs):
         # SVN svn://svn.debian.org/ddp/manuals/trunk manuals
         # SVN svn+ssh://svn.debian.org/svn/ddp/manuals/trunk
-        return 'Vcs-Svn'
+        return '#Vcs-Svn'
     else:
         return '#Vcs-Git'
 
 #######################################################################
 def guess_vcsbrowser(vcsbrowser):
     if re.search('\.git$', vcsbrowser):
-        return 'Vcs-Browser'
+        return '#Vcs-Browser'
     elif re.search('\.hg$', vcsbrowser):
-        return 'Vcs-Browser'
+        return '#Vcs-Browser'
     elif re.search('^:pserver:', vcsbrowser):
         # CVS :pserver:anonymous@anonscm.debian.org:/cvs/webwml
-        return 'Vcs-Browser'
+        return '#Vcs-Browser'
     elif re.search('^:ext:', vcsbrowser):
         # CVS :ext:username@cvs.debian.org:/cvs/webwml
-        return 'Vcs-Browser'
+        return '#Vcs-Browser'
     elif re.search('^svn[:+]', vcsbrowser):
         # SVN svn://svn.debian.org/ddp/manuals/trunk manuals
         # SVN svn+ssh://svn.debian.org/svn/ddp/manuals/trunk
-        return 'Vcs-Browser'
+        return '#Vcs-Browser'
     else:
         return '#Vcs-Browser'
 

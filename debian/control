@@ -2,7 +2,7 @@ Source: debmake
 Section: devel
 Priority: extra
 Maintainer: Osamu Aoki <osamu@debian.org>
-Build-Depends: debhelper (>=9), python3-all:any
+Build-Depends: debhelper (>=9), python3
 Standards-Version: 3.9.5
 Homepage: http://anonscm.debian.org/gitweb/?p=collab-maint/debmake.git
 Vcs-Git: git://anonscm.debian.org/collab-maint/debmake.git
@@ -11,7 +11,9 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/debmake.git
 Package: debmake
 Architecture: all
 Multi-Arch: foreign
-Depends: devscripts, rsync, ${misc:Depends}, ${python3:Depends}
+Depends: devscripts, dpkg-dev, rsync, ${misc:Depends}, ${python3:Depends}
+Recommends: build-essential, wget | curl
+Suggests: autotools-dev, cmake, dh-autoreconf, gem2deb, javahelper
 Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source
