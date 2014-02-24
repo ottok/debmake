@@ -1,4 +1,4 @@
-# save debug symbols
+# save debug symbols to a single -dbg package
 override_dh_strip:
 	dh_strip --dbg-package={}
 

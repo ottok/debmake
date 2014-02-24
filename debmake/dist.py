@@ -37,7 +37,7 @@ def dist(para):
     #######################################################################
     if os.path.isfile('configure.ac') and os.path.isfile('Makefile.am'):
         command = 'autoreconf -ivf && ./configure --prefix "/usr" && make distcheck'
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: autotools failed.', file=sys.stderr)
             exit(1)
@@ -55,7 +55,7 @@ def dist(para):
         else:
             # http://docs.python.org/2/distutils/
             command = 'python setup.py sdist'
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: setup.py failed.', file=sys.stderr)
             exit(1)
@@ -66,7 +66,7 @@ def dist(para):
     elif os.path.isfile('Build.PL'):
         # perl Build.PL
         command = 'perl Build.PL && ./Build distcheck && ./Build disttest && ./Build dist'
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: perl Build.PL failed.', file=sys.stderr)
             exit(1)
@@ -77,7 +77,7 @@ def dist(para):
     elif os.path.isfile('Makefile.PL'):
         # perl Makefile.PL
         command = 'perl Makefile.PL && make dist'
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: perl Makefile.PL failed.', file=sys.stderr)
             exit(1)
@@ -89,10 +89,11 @@ def dist(para):
         if os.path.isfile('CMakeLists.txt'):
             # CMake source tree
             print('E: CMake. Use --tar (-t).', file=sys.stderr)
+            exit(1)
         else:
             # Non standard source tree
             print('E: unsupported for --dist (-d). Use --tar (-t).', file=sys.stderr)
-        exit(1)
+            exit(1)
     #######################################################################
     # set version by the tarball name
     #######################################################################
@@ -136,7 +137,18 @@ def dist(para):
     # cd ..
     os.chdir('..')
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
+    # cp -f parent/dist/foo-1.0.tar.gz foo-1.0.tar.gz
+    command = 'cp -f ' + para['parent'] + '/' + distdir + '/' + para['tarball'] + ' ' + para['tarball']
+    print('I: $ {}'.format(command), file=sys.stderr)
+    if subprocess.call(command, shell=True) != 0:
+        print('E: failed to copy', file=sys.stderr)
+        exit(1)
     para['srcdir'] = para['package'] + '-' + para['version']
+    if para['srcdir'] == para['parent']:
+        # avoid erasing VCS in untar process.
+        print('E: the parent directory should be like {} (never {}).'.format(para['package'], para['srcdir']), file=sys.stderr)
+        print('E: terminate to protect the VCS data possibly in the original directory.', file=sys.stderr)
+        exit(1)
     return para
 
 if __name__ == '__main__':

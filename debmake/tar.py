@@ -27,6 +27,7 @@ import os
 import re
 import subprocess
 import sys
+import debmake.yn
 ###########################################################################
 # tar: called from debmake.main()
 ###########################################################################
@@ -45,25 +46,13 @@ def tar(tarball, targz, srcdir, parent, yes):
     os.chdir('..')
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if srcdir == parent:
-        print('I: -t (--tar) run in the versioned directory', file=sys.stderr)
+        print('I: good, -t (--tar) run in the versioned directory', file=sys.stderr)
     else:
         if os.path.isdir(srcdir):
-            if yes:
-                yn = 'y'
-            else:
-                yn = input('?: remove "{}" directory? [Y/n]: '.format(srcdir))
-            if (yn == '') or (yn[0].lower() == 'y'):
-                command = 'rm -rf ' + srcdir
-                print('I: {}'.format(command), file=sys.stderr)
-                if subprocess.call(command, shell=True) != 0:
-                    print('E: rm -rf failed.', file=sys.stderr)
-                    exit(1)
-                print('I: removed {}.'.format(srcdir), file=sys.stderr)
-            else:
-                exit(1)
+            debmake.yn.yn('remove "{}" directory in tar'.format(srcdir), 'rm -rf ' + srcdir, yes)
         # copy from parent to srcdir using hardlinks (with debian/* data)
         command = 'rsync -aCv --link-dest=' + os.getcwd() + '/' + parent + ' ' + parent + '/. ' + srcdir
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: rsync -aCv failed.', file=sys.stderr)
             exit(1)
@@ -79,7 +68,7 @@ def tar(tarball, targz, srcdir, parent, yes):
         print('E: Wrong file format "{}".'.format(targz), file=sys.stderr)
         exit(1)
     command += tarball + ' ' + srcdir
-    print('I: {}'.format(command), file=sys.stderr)
+    print('I: $ {}'.format(command), file=sys.stderr)
     if subprocess.call(command, shell=True) != 0:
         print('E: tar failed {}.'.format(tarball), file=sys.stderr)
         exit(1)

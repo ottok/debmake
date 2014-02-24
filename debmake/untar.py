@@ -25,6 +25,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import subprocess
 import sys
+import debmake.yn
 ###########################################################################
 # untar: called from debmake.main()
 ###########################################################################
@@ -49,19 +50,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
             exit(1)
     else: # -a -d
         if os.path.isdir(srcdir):
-            if yes:
-                yn = 'y'
-            else:
-                yn = input('?: remove "{}" directory? [Y/n]: '.format(srcdir))
-            if (yn == '') or (yn[0].lower() =='y'):
-                command = 'rm -rf ' + srcdir
-                print('I: {}'.format(command), file=sys.stderr)
-                if subprocess.call(command, shell=True) != 0:
-                    print('E: failed to rm.', file=sys.stderr)
-                    exit(1)
-                print('I: removed {}.'.format(srcdir), file=sys.stderr)
-            else:
-                exit(1)
+            debmake.yn.yn('remove "{}" directory in untar'.format(srcdir), 'rm -rf ' + srcdir, yes)
         # setup command line
         if targz == 'tar.bz2':
             command = 'tar --bzip2 -xvf '
@@ -76,7 +65,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
             print('E: the extension "{}" not supported.'.format(targz), file=sys.stderr)
             exit(1)
         command += tarball
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: failed to untar.', file=sys.stderr)
             exit(1)
@@ -102,7 +91,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
         if tarsrcdir != srcdir:
             print('I: move source tree from {} to {}.'.format(tarsrcdir, srcdir), file=sys.stderr)
             command = 'mv -f ' + tarsrcdir + ' ' + srcdir
-            print('I: {}'.format(command), file=sys.stderr)
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to move directory.', file=sys.stderr)
                 exit(1)
@@ -110,7 +99,7 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
     if dist and os.path.isdir(parent + '/debian'):
         command = 'cp -drl ' + parent + '/debian ' + srcdir + '/debian'
         # execute command: copy debian tree (with hardlink)
-        print('I: {}'.format(command), file=sys.stderr)
+        print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: cp -drl failed.', file=sys.stderr)
             exit(1)

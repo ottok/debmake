@@ -23,25 +23,39 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import os
+import subprocess
 import sys
-#######################################################################
-# cat >file
-def cat(file, text, end=''):
-    if os.path.isfile(file) and os.stat(file).st_size != 0:
-        # skip if a file exists and non-zero content
-        print('I: skipping :: {} (file exists)'.format(file), file=sys.stderr)
-        return
-    path = os.path.dirname(file)
-    if path:
-        os.makedirs(path, exist_ok=True)
-    with open(file, 'w') as f:
-        print(text, file=f, end=end)
-        print('I: creating => {}'.format(file), file=sys.stderr)
+###########################################################################
+# yn: ask mes and execute command
+###########################################################################
+def yn(mes, command, yes):
+    if yes == 1:
+        yn = 'y'
+    elif yes == 2:
+        yn = 'n'
+    else:
+        yn = input('?: {} [Y/n]: '.format(mes))
+        if yn == '':
+            yn = 'y'
+        else:
+            yn = yn[0].lower()
+    if (yn =='y'):
+        if command:
+            print('I: $ {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: failed to run command.', file=sys.stderr)
+                exit(1)
+    else:
+        print('E: terminating since "n" chosen at Y/n question.', file=sys.stderr)
+        exit(1)
+    print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 
-#######################################################################
-# Test script
-#######################################################################
 if __name__ == '__main__':
-    print('no test')
+    print('I: ask', file=sys.stderr)
+    yn("list current directory (ask)", "ls -la", 0)
+    print('I: always yes', file=sys.stderr)
+    yn("list current directory (always yes)", "ls -la", 1)
+    print('I: never yes', file=sys.stderr)
+    yn("list current directory (never yes)", "ls -la", 2)
 

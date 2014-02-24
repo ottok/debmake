@@ -1,0 +1,4450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Debmake tutorial</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 16em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0;
+    overflow: auto;
+    border-right: 3px solid #f8f8f8;
+    background-color: white;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Debmake tutorial</h1>
+<span id="author">Osamu Aoki</span><br />
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_preface">Preface</h2>
+<div class="sectionbody">
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">This manual is still not finished and quite rough.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The <strong>debmake</strong> command is a helper script to generate Debian packaging files.</p></div>
+<div class="paragraph"><p>The <strong>debmake</strong> command is intended to replace functions offered historically by <strong>deb-make</strong> <span class="footnote"><br />[This new <strong>debmake</strong> package starts its version from <strong>4.0</strong> to avoid version overlaps with its predecessor provided the <strong>deb-make</strong> command.]<br /></span> and <strong>dh_make</strong> commands.  Its features include:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+keep pre-existing Debian package configuration files untouched
+</p>
+</li>
+<li>
+<p>
+use of <strong>dh</strong> syntax under the new <strong>debhelper (&gt; 9.0)</strong> package
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+extensive check of copyright for <strong>DEP-5</strong> (with <strong>licensecheck</strong>(1) and more)
+</p>
+</li>
+<li>
+<p>
+substvar supports for binary packages
+</p>
+</li>
+<li>
+<p>
+support of compiler hardening options
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+easy packaging command line UI supporting
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+non-stop execution with clean results
+</p>
+</li>
+<li>
+<p>
+direct operation on the tarball archive
+</p>
+</li>
+<li>
+<p>
+direct operation on the source tree from VCS
+</p>
+</li>
+<li>
+<p>
+the multiarch Debian package
+</p>
+</li>
+<li>
+<p>
+the multi binary Debian package
+</p>
+</li>
+<li>
+<p>
+the non-native Debian packages from the VCS snapshot
+</p>
+</li>
+<li>
+<p>
+seamless work with <strong>debuild</strong>, <strong>pdebuild</strong>, etc.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">I wrote this <strong>debmake</strong> command because there was no easy command like "<strong>python setup.py bdist_deb</strong>" to create the Debian binary package.  Now "<strong>debmake -d -s -b":python" -i debuild</strong>" does the job for me.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>I will describe the following to get you started with the <strong>debmake</strong> command.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Quick guide for the <strong>debmake</strong> command
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This should be enough for you to get started with the <strong>debmake</strong> command, if you already know the similar <strong>dh_make</strong> command.
+</p>
+</li>
+<li>
+<p>
+Just browse this section first and come back later, if you are new to the Debian packaging.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Top down view of the Debian packaging
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+A rewrite in progress of the &#8220;Debian New Maintainers' Guide&#8221; for the <strong>debmake</strong> command.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Bottom up tutorial for the Debian packaging
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Step-by-step examples of various packaging cases using simple model packages.
+</p>
+</li>
+<li>
+<p>
+The <strong>examples.tar.xz</strong> tarball has the sources of these and more.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Appendix: the <strong>debmake</strong>(1) manpage
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">This document only explains how to make a working set of installable Debian binary packages from the upstream source.  Much more details need to be addressed before uploading the package to the Debian archive.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Please read the basic Debian documentations together with this manual to generate perfect Debian packages.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8220;Debian Policy Manual&#8221; (<a href="http://www.debian.org/doc/devel-manuals#policy">http://www.debian.org/doc/devel-manuals#policy</a>)
+</p>
+</li>
+<li>
+<p>
+&#8220;Debian Developer&#8217;s Reference&#8221; (<a href="http://www.debian.org/doc/devel-manuals#devref">http://www.debian.org/doc/devel-manuals#devref</a>)
+</p>
+</li>
+<li>
+<p>
+&#8220;Debian New Maintainers' Guide&#8221; (<a href="http://www.debian.org/doc/devel-manuals#maint-guide">http://www.debian.org/doc/devel-manuals#maint-guide</a>)
+</p>
+</li>
+<li>
+<p>
+&#8220;Introduction to Debian packaging&#8221; (<a href="http://www.debian.org/doc/devel-manuals#packaging-tutorial">http://www.debian.org/doc/devel-manuals#packaging-tutorial</a>)
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">There is an old Latin saying: &#8220;<strong>fabricando fit faber</strong>&#8221; (&#8220;practice makes perfect&#8221;).  It is highly recommended to practice and experiment with all the steps of Debian packaging with simple packages while reading this tutorial.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_guide">Quick guide</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A quick guide for the <strong>debmake</strong> command is presented here for simple use cases.</p></div>
+<div class="paragraph"><p>This should be enough for you to get started with the <strong>debmake</strong> command, if you already know the similar <strong>dh_make</strong> command.</p></div>
+<div class="paragraph"><p>If you are new to the Debian packaging, do not worry about the details and get the big picture instead.  The more detailed tutorial follows this section.  There is also the <strong>debmake</strong> manpage which explains all the command options and included here in the appendix.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">The <strong>debmake</strong> command only provides good template files. You need to manually edit them to the perfection.</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_the_basics">The basics</h3>
+<div class="paragraph"><p>The <strong>debmake</strong> command produces files required for generating the Debian package using the <strong>debuild</strong> command. (The <strong>debmake</strong> command can be used in the same way as the <strong>dh_make</strong> command.)</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tar -xvzf upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debmake
+ $ debuild</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">The <strong>debmake</strong> command provides good default values and requires less input than its predecessors.</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">The <strong>debuild</strong> command used to make Debian binary packages from the source package
+in examples may be substituted by the equivalent commands such as
+<strong>pdebuild</strong> run with the <strong>cowbuilder</strong> backend.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_extras">The extras</h3>
+<div class="sect3">
+<h4 id="_open_the_upstream_tarball">Open the upstream tarball</h4>
+<div class="paragraph"><p>The <strong>debmake</strong> command can open the upstream tarball before its normal operation when used with the <strong>-a</strong> option.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ debmake -a upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debuild</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">URL such as "<em>http://www.example.org/DL/package-1.0.tar.gz</em>" may be used for the <strong>-a</strong> option.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_build_the_binary_package">Build the binary package</h4>
+<div class="paragraph"><p>The <strong>debmake</strong> command can build the source tree after its normal operation when used with the "<strong>-i debuild</strong>" option.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ debmake -a upstreampackage-1.0.tar.gz -i debuild</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">The functioning single binary package may be generated automatically without manual modifications to the upstream source.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_make_the_upstream_tarball">Make the upstream tarball</h4>
+<div class="paragraph"><p>The <strong>debmake</strong> command can generate the upstream tarball with the "<strong>make dist</strong>" equivalent before its normal operation when used with the <strong>-d</strong> option.  This can be used to produce the upstream tarball snapshot from the upstream source tree in VCS.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd /path/to/upstream-vcs
+ $ debmake -d
+ $ cd ../upstreampackage-1.0
+ $ debuild</code></pre>
+</div></div>
+<div class="paragraph"><p>Alternatively, the <strong>debmake</strong> command can generate the upstream tarball with the <strong>tar</strong> command before its normal operation when used with the <strong>-t</strong> option.  This can be used to produce the upstream tarball snapshot from the upstream source tree in VCS.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd /path/to/upstream-vcs
+ $ debmake -t
+ $ debuild</code></pre>
+</div></div>
+<div class="paragraph"><p>The <strong>-d</strong> and <strong>-t</strong> options combined with the <strong>-i</strong> option also ease making of non-native Debian packages from the VCS snapshot by allowing to have the <strong>debian/</strong> directory contents in the same VCS branch as the upstream development one.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd /path/to/upstream-vcs
+ $ vim
+   ... hack upstream source
+ $ dch
+   ... update debian/changelog
+ $ git commit -a
+ $ debmake -t -i debuild</code></pre>
+</div></div>
+<div class="paragraph"><p>I call this Debian <strong>non-native</strong> binary package building scheme using the "<strong>debmake -t -i debuild</strong>" command as the <strong>quasi-native</strong> Debain package scheme since it looks like the Debian <strong>native</strong> binary package building scheme by the <strong>debuild</strong> command without the upstream tarball.</p></div>
+<div class="paragraph"><p>Use of the <strong>non-native</strong> Debain package helps to ease communication with the downstream distros such as Ubuntu for bug fixes etc.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_check_copyright">Check copyright</h4>
+<div class="paragraph"><p>The the <strong>debmake</strong> command can make a summary report of the copyright and license for the entire source tree using the <strong>licensecheck</strong> command.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tar -xvzf upstreampackage-1.0.tar.gz
+ $ cd upstreampackage-1.0
+ $ debmake -c | less</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_binary_package">The binary package</h3>
+<div class="paragraph"><p>The <strong>-b</strong> option of the <strong>debmake</strong> command provides intuitive and flexible methods to customize packaging parameters for each binary package. It has no equivalence in <strong>dh_make</strong>.</p></div>
+<div class="sect3">
+<h4 id="_the_strong_b_strong_optiopn_syntax">The <strong>-b</strong> optiopn syntax</h4>
+<div class="paragraph"><p>Let&#8217;s quote the pertinent part from the manpage here.</p></div>
+<div class="sidebarblock">
+<div class="content">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-b</strong> "<em>binarypackage</em><em><span class=":__type__">,&#8230;</span></em>", <strong>--binaryspec</strong> "<em>binarypackage</em><em><span class=":__type__">,&#8230;</span></em>"
+</dt>
+<dd>
+<p>
+    set binary package specs as comma separated list of <em>binarypackage</em>:'type' pairs, e.g., in full form "<strong>foo:bin,foo-doc:doc,libfoo1:lib,libfoo1-dbg:dbg,libfoo-dev:dev</strong>" or in short form "<strong>,-doc,libfoo1,libfoo1-dbg, libfoo-dev</strong>".
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Here, <em>binarypackage</em> is the binary package name; and optional <em>type</em> is chosen from the following <em>type</em> values:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>bin</strong>: C/C++ compiled ELF binary code package (any, foreign) (default, alias: <strong>""</strong>, i.e., <em>null-string</em>)
+</p>
+</li>
+<li>
+<p>
+<strong>data</strong>: Data (fonts, graphics, &#8230;) package (all, foreign) (alias: <strong>da</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>dbg</strong>: Debug symbol package (any, same) (alias: <strong>db</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>dev</strong>: Library development package (any, same) (alias: <strong>de</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>doc</strong>: Documentation package (all, foreign) (alias: <strong>do</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>lib</strong>: Library package (any, same) (alias: <strong>l</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>perl</strong>: Perl script package (all, foreign) (alias: <strong>pl</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>python</strong>: Python script package (all, foreign) (alias: <strong>py</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>python3</strong>: Python3 script package (all, foreign) (alias: <strong>py3</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>ruby</strong>: Ruby script package (all, foreign) (alias: <strong>rb</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>script</strong>: Shell script package (all, foreign) (alias: <strong>sh</strong>)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The pair values in the parentheses, such as (any, foreign), are the <strong>Architecture</strong> and <strong>Multi-Arch</strong> stanza values set in the <strong>debian/control</strong> file.</p></div>
+<div class="paragraph"><p>In many cases, the <strong>debmake</strong> command makes good guess for <em>type</em> from <em>binarypackage</em>.  If <em>type</em> is not obvious, <em>type</em> is set to <strong>bin</strong>.  For example, <strong>libfoo</strong> sets <em>type</em> to <strong>lib</strong>, and <strong>font-bar</strong> sets <em>type</em> to <strong>data</strong>, &#8230;</p></div>
+<div class="paragraph"><p>If the source tree contents does not match settings for <em>type</em>, <strong>debmake</strong> warns you.</p></div>
+</div></div>
+<div class="paragraph"><p>The default type is the <strong>bin</strong> type which means the compiled ELF binary executables.  This is why above examples do not specify <strong>-b</strong> option.</p></div>
+<div class="paragraph"><p>For programs written in other compiler languages, you may need to add its run-time library package as the dependency of the resulting binary package by adjusting <strong>debian/control</strong>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_python_package_example">Python package example</h4>
+<div class="paragraph"><p>You can generate a single binary Debian package directly from the Python module package offered as a tarball.  The package type <strong>python</strong> needs to be specified with the <strong>-b</strong> option.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ debmake -b":python" -s -a upstreampackage-1.0.tar.gz -i debuild</code></pre>
+</div></div>
+<div class="paragraph"><p>For programs written in other interpreter languages, specify <strong>script</strong> as the package type instead of the default <strong>bin</strong> and add the interpreter package as the dependency of the resulting binary package by adjusting <strong>debian/control</strong>.</p></div>
+<div class="paragraph"><p>The <strong>-s</strong> option makes the <strong>debmake</strong> command to copy the package description from the upstream Python package to the generated Debian package.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_multi_binary_package_example">Multi binary package example</h4>
+<div class="paragraph"><p>Let&#8217;s make a following set of binary packages from the upstream tarball <strong>foo-1.0.tar.gz</strong>.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>foo</strong>: compiled ELF executable binaries from the C program
+</p>
+</li>
+<li>
+<p>
+<strong>foo-doc</strong>: accompanying documentations for <strong>foo</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>foo-dbg</strong>: accompanying debug symbols for <strong>foo</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>perl-foo</strong>: accompanying perl programs for <strong>foo</strong>
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ debmake -j -b",-doc,-dbg,perl-foo" -a foo-1.0.tar.gz
+ $ less foo.build-dep.log
+ $ less foo.install.log
+ $ rm -rf foo-1.0
+ $ debmake -b",-doc,-dbg,perl-foo" -a foo-1.0.tar.gz
+ $ cd foo-1.0
+ $ vim debian/foo.install
+ $ vim debian/foo-doc.install
+ $ vim debian/perl-foo.install
+ $ vim debian/control
+ $ debuild</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">See <strong>dh_install</strong>(1) for how to write <strong>debian/</strong><em>binarypackage</em><strong>.install</strong> files.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The first invocation of "<strong>debmake</strong>" is used to identify install paths of files and build dependencies.</p></div>
+<div class="paragraph"><p>The second invocation of "<strong>debmake</strong>" provides us with the clean build tree.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">The binary package name starting with a "<strong>-</strong>" (hyphen) is treated as the abbreviated name and the real binary package name is generated by attaching it to the source package name.</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_top_down_tutorial">Top down tutorial</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_debian_packaging_work_flow">Debian packaging work flow</h3>
+<div class="paragraph"><p>The Debian packaging work flow to create the Debian binary package involves generating several specifically named files as defined in the &#8220;Debian Policy Manual&#8221;.</p></div>
+<div class="paragraph"><p>It can be summarized in 5 steps as follows.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+The upstream tarball is downloaded as the <em>package-version</em><strong>.tar.gz</strong> file.
+</p>
+</li>
+<li>
+<p>
+The upstream tarball is untared to create many files under the <em>package-version</em><strong>/</strong> directory.
+</p>
+</li>
+<li>
+<p>
+The upstream tarball is copied (or symlinked) to the particular filename <em>packagename_version</em><strong>.orig.tar.gz</strong>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+the character separating <em>package</em> and <em>version</em> is changed from <strong>-</strong> (hyphen) to <strong>_</strong> (underscore)
+</p>
+</li>
+<li>
+<p>
+<strong>.orig</strong> is added in the file extension.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The Debian package specification files are added to the upstream source under the <em>package-version</em><strong>/debian/</strong> directory.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The <strong>debmake</strong> command invoked in the <em>package-version/</em> directory helps this by providing template files.
+</p>
+</li>
+<li>
+<p>
+<strong>debian/rules</strong> (This is <strong>makefile</strong>.  Use of <strong>dh</strong> and <strong>debhelper</strong>(8) is the current best practice.)
+</p>
+</li>
+<li>
+<p>
+<strong>debian/control</strong> (This defines the binary package names and package dependency.)
+</p>
+</li>
+<li>
+<p>
+<strong>debian/changelog</strong> (This is required.)
+</p>
+</li>
+<li>
+<p>
+<strong>debian/copyright</strong> (This is required.)
+</p>
+</li>
+<li>
+<p>
+&#8230; (edit these files manually to their perfection according toy the &#8220;Debian Policy Manual&#8221;)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The <strong>dpkg-buildpackage</strong> command (usually from its wrapper <strong>debuild</strong> or <strong>pdebuild</strong>) is invoked in the <em>package-version/</em> directory to make the Debian source and binary package by invoking the <strong>debian/rules</strong> script.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Create the Debian source package in "<strong>3.0 (quilt)</strong>" format using <strong>dpkg-source</strong>(1)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>package_version</em>.<strong>orig.tar.gz</strong> (copy or symlink of <em>package-version</em>.<strong>tar.gz</strong>)
+</p>
+</li>
+<li>
+<p>
+<em>package_version-revision</em>.<strong>debian.tar.xz</strong> (tarball of <em>package-version</em>/<strong>debian/</strong>*)
+</p>
+</li>
+<li>
+<p>
+<em>package_version-revision</em>.<strong>dsc</strong>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Build the source using "<strong>debian/rules build</strong>" into <strong>$(DESTDIR)</strong>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>DESTDIR=debian</strong>/<em>binarypackage/</em> (single binary package)
+</p>
+</li>
+<li>
+<p>
+<strong>DESTDIR=debian/tmp/</strong> (multi binary package)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Create the Debian binary package using <strong>dpkg-deb</strong>(1), and <strong>dpkg-genchanges</strong>(1).
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>binarypackage_version-revision_arch</em>.<strong>deb</strong>
+</p>
+</li>
+<li>
+<p>
+&#8230; (There may be multiple Debian binary package files.)
+</p>
+</li>
+<li>
+<p>
+<em>package_version-revision_arch</em>.<strong>changes</strong>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ol></div>
+<div class="paragraph"><p>Here, please replace each part of the filename as:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+the <em>package</em> part with the Debian source package name
+</p>
+</li>
+<li>
+<p>
+the <em>binarypackage</em> part with the Debian binary package name
+</p>
+</li>
+<li>
+<p>
+the <em>version</em> part with the upstream version
+</p>
+</li>
+<li>
+<p>
+the <em>revision</em> part with the Debian revision
+</p>
+</li>
+<li>
+<p>
+the <em>arch</em> part with the package architecture
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_the_strong_debmake_strong_command">The <strong>debmake</strong> command</h3>
+<div class="paragraph"><p>The <strong>debmake</strong> command is the helper script <span class="footnote"><br />[I am prejudiced.]<br /></span> for the Debian packaging.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+It makes template files for the step 4 just as <strong>dh_make</strong> does.
+</p>
+</li>
+<li>
+<p>
+It always sets most of the obvious option states and values to reasonable defaults.
+</p>
+</li>
+<li>
+<p>
+It delegates most of the heavy lifting to its back-end packages: <strong>debhelper</strong>, <strong>dpkg-dev</strong>, <strong>devscripts</strong>, etc.
+</p>
+</li>
+<li>
+<p>
+It always prepares to build the source for the multiarch package, unless <strong>-m</strong> option is explicitly specified.
+</p>
+</li>
+<li>
+<p>
+It always prepares to build the non-native Debian package with the "<strong>3.0 (quilt)</strong>" format, unless <strong>-n</strong> option is explicitly specified.
+</p>
+</li>
+<li>
+<p>
+It can function as a wrapper script integrating all the steps 1-5.
+</p>
+</li>
+<li>
+<p>
+It has the <strong>-a</strong> option to make it work directly with the tarball.
+</p>
+</li>
+<li>
+<p>
+It has  the  <strong>-t</strong> and <strong>-d</strong> options to make it work well with the source files in VCS.  These options also allow to make the non-native Debian package from the VCS source tree with the <em>package-version</em><strong>/debian/</strong> directory.  Please note, the non-native Debian package is the normal Debian package.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>A functional single binary package can be generated automatically without touching files in the <em>package-version</em><strong>/debian/</strong> directory generated by the <strong>debmake</strong> command.  Such a package can be used locally.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+To comply with the strict quality requirements of the Debian archive, these template files must be manually adjusted to their perfection before the upload.
+</p>
+</li>
+<li>
+<p>
+For  example, you can get a Python module packaged by the Python distutils and make its Debian binary package by simply running "<strong>debmake -d -i debuild</strong>" in its
+  untared source tree.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The functional multi binary package always requires some extra manual works. These works are done as follows:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Invoke <strong>debmake</strong> with the <strong>-b"</strong><em>package1:type1, &#8230;</em>" and <strong>-j</strong> options in the <em>package-version/</em> directory.
+</p>
+</li>
+<li>
+<p>
+Check the last lines of <em>package</em><strong>.build-dep.log</strong> to judge build dependencies for <strong>Build-Depends</strong>. (You do not need to list packages used by <strong>debhelper</strong>, <strong>perl</strong>, or <strong>fakeroot</strong> explicitly in <strong>Build-Depends</strong>.)
+</p>
+</li>
+<li>
+<p>
+Check the contents of <em>package</em><strong>.install.log</strong> to identify file paths in <strong>debian/tmp</strong>.
+</p>
+</li>
+<li>
+<p>
+Update <strong>debian/control</strong> and <strong>debian/</strong><em>binarypackage</em><strong>.install</strong> files using the above information.
+</p>
+</li>
+<li>
+<p>
+Update other <strong>debian/</strong>* files as needed.
+</p>
+</li>
+<li>
+<p>
+Build binary packages with <strong>debuild</strong>, <strong>pdebuild</strong>, etc.
+</p>
+</li>
+<li>
+<p>
+Files installed into <strong>debian/tmp</strong> are split by <strong>debian/</strong><em>binarypackage</em><strong>.install</strong> into each <em>binarypackage_version-revision_arch</em><strong>.deb</strong>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">Make sure to protect the arguments of the <strong>-b</strong>, <strong>-f</strong>, <strong>-n</strong>, and <strong>-w</strong> options from the shell interference by quoting them properly.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_package_name_and_version">Package name and version</h3>
+<div class="paragraph"><p>If the upstream source comes as <strong>hello-0.9.12.tar.gz</strong>, you can take <strong>hello</strong> as the upstream source package name and <strong>0.9.12</strong> as the upstream version.</p></div>
+<div class="paragraph"><p>There  are some limitations for what characters may be used as a part of the Debian package.  The most notable limitation is the prohibition of uppercase letters in
+the package name.  Here is the summary in the regular expression.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Upstream package name (<strong>-p</strong>): [-+.a-z0-9]{2,}
+</p>
+</li>
+<li>
+<p>
+Binary package name (<strong>-b</strong>): [-+.a-z0-9]{2,}
+</p>
+</li>
+<li>
+<p>
+Upstream version (<strong>-u</strong>): [0-9][-+.:~a-z0-9A-Z]*
+</p>
+</li>
+<li>
+<p>
+Debian revision (<strong>-r</strong>): [0-9][+.~a-z0-9A-Z]*
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>See the exact definition in &#8220;5.6.1 Source&#8221;, &#8220;5.6.7 Package&#8221;, and &#8220;5.6.12  Version&#8221; of &#8220;Debian Policy Manual&#8221;.   (<a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html">http://www.debian.org/doc/debian-policy/ch-controlfields.html</a>)</p></div>
+<div class="paragraph"><p>You must adjust the package name and upstream version accordingly for the Debian packaging.</p></div>
+<div class="paragraph"><p>If upstream does not use a normal versioning scheme such as <strong>2.30.32</strong> but uses some kind of date such as <strong>11Apr29</strong>, a random codename string, or a VCS hash value as part of the version, make sure to remove them from the upstream version. Such information can be recorded in the <strong>debian/changelog</strong> file. If you need to invent a version string, use the <strong>YYYYMMDD</strong> format such as <strong>20110429</strong> as upstream version. This ensures that dpkg interprets later versions correctly as upgrades. If you need to ensure smooth transition to the normal version scheme such as <strong>0.1</strong> in future, use the <strong>0~YYMMDD</strong> format such as <strong>0~110429</strong> as upstream version, instead.</p></div>
+<div class="paragraph"><p>Version strings can be compared using <strong>dpkg</strong>(1) as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ dpkg --compare-versions ver1 op ver2</code></pre>
+</div></div>
+<div class="paragraph"><p>The version comparison rule can be summarized as:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Strings are compared from the head to the tail.
+</p>
+</li>
+<li>
+<p>
+Letters are larger than digits.
+</p>
+</li>
+<li>
+<p>
+Numbers are compared as integers.
+</p>
+</li>
+<li>
+<p>
+Letters are compared in ASCII code order.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>There are special rules for period (<strong>.</strong>), plus (<strong>+</strong>), and tilde (<strong>~</strong>) characters, as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>0.0 &lt; 0.5 &lt; 0.10 &lt; 0.99 &lt; 1 &lt; 1.0~rc1 &lt; 1.0 &lt; 1.0+b1 &lt; 1.0+nmu1 &lt; 1.1 &lt; 2.0</code></pre>
+</div></div>
+<div class="paragraph"><p>One tricky case occurs when upstream releases <strong>hello-0.9.12-ReleaseCandidate-99.tar.gz</strong> as the pre-release of <strong>hello-0.9.12.tar.gz</strong>. You need to make sure that the upgrade works properly by renaming the upstream source to <strong>hello-0.9.12~rc99.tar.gz</strong>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_debian_packaging_script">Debian packaging script</h3>
+<div class="paragraph"><p>The Debian packaging script re-targets the build systems to install files in the <strong>$(DESTDIR)</strong> and creates the archive file of the generated files as the <strong>deb</strong> file.  This <strong>deb</strong> file is used for the binary distribution and installed to the system using the <strong>dpkg</strong> command.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>$(DESTDIR)=debian/</strong><em>binarypackage</em> : when building a single binary package, <em>binarypackage</em>.
+</p>
+</li>
+<li>
+<p>
+<strong>$(DESTDIR)=debian/tmp</strong> : when building multiple binary packages.
+</p>
+</li>
+</ul></div>
+<div class="sect3">
+<h4 id="_the_strong_dh_strong_command">The <strong>dh</strong> command</h4>
+<div class="paragraph"><p>The <strong>dh</strong> command from the <strong>debhelper</strong> package with the help from its associated packages functions as the wrapper to the typical build systems and offers us with the uniform access to them by supporting all the Debian policy stipulated  targets of the <strong>debian/rules</strong> file.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>dh clean</strong> : clean files in the source tree.
+</p>
+</li>
+<li>
+<p>
+<strong>dh build</strong> : build the source tree
+</p>
+</li>
+<li>
+<p>
+<strong>dh build-arch</strong> : build the source tree for architecture dependent packages
+</p>
+</li>
+<li>
+<p>
+<strong>dh build-indep</strong> : build the source tree for architecture independent packages
+</p>
+</li>
+<li>
+<p>
+<strong>dh install</strong> : install the binary files to <strong>$(DESTDIR)</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>dh install-arch</strong> : install the binary files to <strong>$(DESTDIR)</strong> for architecture dependent packages
+</p>
+</li>
+<li>
+<p>
+<strong>dh install-indep</strong> : install the binary files to <strong>$(DESTDIR)</strong> for architecture independent packages
+</p>
+</li>
+<li>
+<p>
+<strong>dh binary</strong> : generate the <strong>deb</strong> file
+</p>
+</li>
+<li>
+<p>
+<strong>dh binary-arch</strong> : generate the <strong>deb</strong> file for architecture dependent packages
+</p>
+</li>
+<li>
+<p>
+<strong>dh binary-indep</strong> : generate the <strong>deb</strong> file for architecture independent packages
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Thanks to this abstraction of the <strong>dh</strong> command <span class="footnote"><br />[This simplicity is available since the <strong>debhelper</strong> version 7.  This document assumes that the <strong>debhelper</strong> version 9 or newer is used.]<br /></span>, the Debian policy compliant <strong>debian/rules</strong> file supporting all the required targets can be written as simple as:</p></div>
+<div class="listingblock">
+<div class="title">Simple <strong>debian/rules</strong>:</div>
+<div class="content">
+<pre><code>%:
+        dh $@</code></pre>
+</div></div>
+<div class="paragraph"><p>Essentially, this <strong>dh</strong> command calls all required <strong>dh_</strong>* commands at the right moment.</p></div>
+<div class="paragraph"><p>The <strong>debmake</strong> command takes full advantage of this simple package building process enabled by the <strong>debhelper</strong> package for normal cases.</p></div>
+<div class="paragraph"><p>You still need to know how underlying build systems well for fixing bugs and making workarounds.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_package_customization">Package customization</h3>
+<div class="paragraph"><p>There are some upstream sources which does not behave well and you may need to add customization to the build system of those upstream sources.</p></div>
+<div class="paragraph"><p>You have two approaches to customize the build system here:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Apply modifications to the upstream source before building it.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Set up <strong>debian/patches/</strong>* with <strong>-p1</strong> patches and specify their sequence in <strong>debian/series</strong>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Add customization to the Debian package build system.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Set up "<strong>debian/rules</strong>" with appropriate <strong>override_dh_</strong>* targets.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Whenever some special operation is required for a certain <strong>dh_</strong><em>foo</em> command, any automatic execution of it can be overridden by adding the makefile target <strong>override_dh_</strong><em>foo</em> in the <strong>debian/rules</strong> file.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Add configuration files for the <strong>debhelper</strong> package in the <strong>debian/</strong> directory.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>debian/</strong><em>binarypackage</em><strong>.install</strong>, <strong>debian/</strong><em>binarypackage</em><strong>.link</strong>, <strong>debian/</strong><em>binarypackage</em><strong>.manpages</strong>, <strong>debian/</strong><em>binarypackage</em><strong>.docs</strong>, &#8230;
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_splitting_the_package">Splitting the package</h3>
+<div class="paragraph"><p>Sometimes, it is better to split the generated binary package into small ones.  This can be easily realized:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+by creating binary package entries for all binary packages in the <strong>debian/control</strong> file, and
+</p>
+</li>
+<li>
+<p>
+by listing all file paths (relative to <strong>debian/tmp</strong>) in the <strong>debian/</strong><em>binarypackage</em><strong>.install</strong> files.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>See <strong>dh_install</strong>(1).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_upstream_build_systems">Upstream build systems</h3>
+<div class="paragraph"><p>upstream build systems go through several steps to install generated binary files to the system from the source distribution.</p></div>
+<div class="sect3">
+<h4 id="_autotools">Autotools</h4>
+<div class="paragraph"><p>Autotools (<strong>autoconf</strong> + <strong>automake</strong>) has 4 steps.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+setup the build system ("<strong>vim configure.ac Makefile.am</strong>" and "<strong>autoreconf -ivf</strong>")
+</p>
+</li>
+<li>
+<p>
+configure the build system ("<strong>./configure</strong>")
+</p>
+</li>
+<li>
+<p>
+build the source tree ("<strong>make</strong>")
+</p>
+</li>
+<li>
+<p>
+install the binary files ("<strong>make install</strong>")
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>The upstream usually performs the step 1 and builds the upstream tarball for distribution using the "<strong>make dist</strong>" command.</p></div>
+<div class="paragraph"><p>The package maintainer needs to take care step 2 to 4 at least.  This is realized by the "<strong>dh $@ --with autotools-dev</strong>" command used in the <strong>debian/rules</strong> file.</p></div>
+<div class="paragraph"><p>The package maintainer wishes to take care step 1 to 4.  This is realized by the "<strong>dh $@ --with autoreconf</strong>" command used in the <strong>debian/rules</strong> file.  This rebuilds all auto-generated files to the latest version and provides better porting supports.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_python_distutils">Python distutils</h4>
+<div class="paragraph"><p>Python distutils has 3 steps.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+setup and configure the build system ("<strong>vim setup.py</strong>")
+</p>
+</li>
+<li>
+<p>
+build the source tree ("<strong>python setup.py build</strong>")
+</p>
+</li>
+<li>
+<p>
+install the binary files ("<strong>python setup.py install</strong>")
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>The upstream usually performs the step 1 and builds the upstream tarball for distribution using the "<strong>python setup.py sdist</strong>" command.</p></div>
+<div class="paragraph"><p>The package maintainer needs to take care step 2.  This is realized simply by the "<strong>dh $@</strong>" command used in the <strong>debian/rules</strong> file, after <strong>jessie</strong>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shared_library">Shared library</h3>
+<div class="sect3">
+<h4 id="_basics_of_the_shared_library">Basics of the shared library</h4>
+<div class="paragraph"><p>Before packaging shared libraries, you should read the following primary references in detail.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8220;Debian Policy Manual, 8 Shared libraries&#8221;
+</p>
+</li>
+<li>
+<p>
+&#8220;Debian Policy Manual, 9.1.1 File System Structure&#8221;
+</p>
+</li>
+<li>
+<p>
+&#8220;Debian Policy Manual, 10.2 Libraries&#8221;
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Here are some oversimplified hints for you to get started.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Shared libraries are ELF object files containing compiled code.
+</p>
+</li>
+<li>
+<p>
+Shared libraries are distributed as <strong>*.so</strong> files. (Neither <strong>*.a</strong> files nor <strong>*.la</strong> files)
+</p>
+</li>
+<li>
+<p>
+Shared libraries are mainly used to share common codes among multiple executables with the <strong>ld</strong> mechanism.
+</p>
+</li>
+<li>
+<p>
+Shared libraries are sometimes used to provide multiple plugins to an executable with the <strong>dlopen</strong> mechanism.
+</p>
+</li>
+<li>
+<p>
+Shared libraries export symbols which represent compiled objects such as variables, functions, and classes; and enables access to them from the linked executables.
+</p>
+</li>
+<li>
+<p>
+The SONAME of a shared library <em>libfoo</em><strong>.so.i</strong><em>1</em>: "<strong>objdump -p</strong> <em>libfoo</em><strong>.so.</strong><em>1</em> <strong>| grep SONAME</strong>"
+</p>
+</li>
+<li>
+<p>
+The SONAME of a shared library usually matches the library file name (but not always).
+</p>
+</li>
+<li>
+<p>
+The SONAME of shared libraries linked to <strong>/usr/bin/</strong><em>foo</em>: "<strong>objdump -p /usr/bin/</strong><em>foo</em> <strong>| grep NEEDED</strong>"
+</p>
+</li>
+<li>
+<p>
+<em>libfoo1</em>: the library package for the shared library <em>libfoo</em><strong>.so.</strong><em>1</em> with the SONAME ABI version <em>1</em>.
+</p>
+</li>
+<li>
+<p>
+The package maintainer scripts of the library package must call ldconfig under the specific circumstances to create the necessary symbolic links for the SONAME.
+</p>
+</li>
+<li>
+<p>
+<em>libfoo1</em><strong>-dbg</strong>: the debugging symbols package which contains the debugging symbols for the shared library package <em>libfoo1</em>.
+</p>
+</li>
+<li>
+<p>
+<em>libfoo</em><strong>-dev</strong>: the development package which contains the header files etc. for the shared library <strong>libfoo.so.1</strong>.
+</p>
+</li>
+<li>
+<p>
+Debian package should not contain *.la Libtool archive files in general.
+</p>
+</li>
+<li>
+<p>
+Debian package should not use RPATH in general.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">The "<strong>readelf -d</strong>" command may be used in place for the "<strong>objdump -p</strong>" command.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Although it is somewhat outdated and is only a secondary reference, &#8220;Debian Library Packaging Guide&#8221; may still be useful.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_shared_library_example">Shared library example</h4>
+<div class="paragraph"><p>When packaging the shared library package, one needs to be careful to accommodate the future major library upgrades.  Its corresponding debug package may contain the major library version as a part of the package name while other corresponding packages should not contain them.  For example:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>libfoo-1.0.tar.gz</strong> : the upstream source package tarball
+</p>
+</li>
+<li>
+<p>
+<strong>libfoo</strong> : the upstream source package name
+</p>
+</li>
+<li>
+<p>
+<strong>libfoo1</strong> : the library binary package name
+</p>
+</li>
+<li>
+<p>
+<strong>libfoo1-dbg</strong> : the debug symbol binary package name
+</p>
+</li>
+<li>
+<p>
+<strong>libfoo-dev</strong> :  the development binary package
+</p>
+</li>
+<li>
+<p>
+<strong>libfoo-doc</strong> : the documentation binary package
+</p>
+</li>
+<li>
+<p>
+<strong>libfoo-utils</strong> : the executable binary package
+</p>
+</li>
+<li>
+<p>
+&#8230;
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_strong_debian_strong_em_package_em_strong_symbols_strong"><strong>debian/</strong><em>package</em><strong>.symbols</strong></h3>
+<div class="paragraph"><p>When you package a shared library <em>libfoo1</em>, you should create <strong>debian/</strong><em>libfoo1</em><strong>.symbols</strong> file to manage the minimal version associated to each symbol for backward-compatible ABI changes under the same SONAME of the library for the same shared library package name.  You should read the following primary references in detail.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8220;Debian Policy Manual, 8.6.3 The symbols system&#8221;
+</p>
+</li>
+<li>
+<p>
+<strong>dh_makeshlibs</strong>(1)
+</p>
+</li>
+<li>
+<p>
+<strong>dpkg-gensymbols</strong>(1)
+</p>
+</li>
+<li>
+<p>
+<strong>dpkg-shlibdeps</strong>(1)
+</p>
+</li>
+<li>
+<p>
+<strong>deb-symbols</strong>(5)
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">For C++ libraries and other cases where tracking individual symbols is too difficult, follow the &#8220;Debian Policy Manual, 8.6.4 The shlibs system&#8221;, instead.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Here is a rough example to create the <em>libfoo1</em> package to the upstream version 1.3 with the proper <strong>debian/</strong><em>libfoo1</em><strong>.symbols</strong> file.</p></div>
+<div class="paragraph"><p>Prepare the skeleton debianized source tree using the upstream &#8216;libfoo-1.3&#8217;<strong>.tar.gz</strong> file.</p></div>
+<div class="paragraph"><p>If this is the first packaging of the <em>libfoo1</em> package, create the <strong>debian/</strong><em>libfoo1</em><strong>.symbols</strong> file with empty content.</p></div>
+<div class="paragraph"><p>If the previous upstream version 1.2 was packaged as the libfoo1 package with the proper <strong>debian/</strong><em>libfoo1</em><strong>.symbols</strong> in its source package, use it again.</p></div>
+<div class="paragraph"><p>If the previous upstream version 1.2 was not packaged with the <strong>debian/</strong><em>libfoo1</em><strong>.symbols</strong>, create it as the symbols file from all available binary packages of the same shared library package name containing the same SONAME of the library, for example, versions 1.1-1 and 1.2-1. <span class="footnote"><br />[All previous versions of Debian packages are available at <a href="http://snapshot.debian.org/">http://snapshot.debian.org/</a>. The Debian revision is dropped from the version to make it easier to backport the package: 1.1 << 1.1-1~bpo70+1 << 1.1-1 and 1.2 << 1.2-1~bpo70+1 << 1.2-1]<br /></span></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ dpkg-deb -x libfoo1_1.1-1.deb libfoo1_1.1-1
+ $ dpkg-deb -x libfoo1_1.2-1.deb libfoo1_1.2-1
+ $ : &gt; symbols
+ $ dpkg-gensymbols -v1.1 -plibfoo1 -Plibfoo1_1.1-1 -Osymbols
+ $ dpkg-gensymbols -v1.2 -plibfoo1 -Plibfoo1_1.2-1 -Osymbols</code></pre>
+</div></div>
+<div class="paragraph"><p>Make trial builds of the source tree with tools such as <strong>debuild</strong> and <strong>pdebuild</strong>. (If this fails due to missing symbols etc., there were some backward-incompatible ABI changes which require you to bump the shared library package name to something like <em>libfoo2</em> and you should start over again.)</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd libfoo-1.3
+ $ debuild
+ ...
+dpkg-gensymbols: warning: some new symbols appeared in the symbols file: ...
+ see diff output below
+--- debian/libfoo1.symbols (libfoo1_1.3-1_amd64)
++++ dpkg-gensymbolsFE5gzx        2012-11-11 02:24:53.609667389 +0900
+@@ -127,6 +127,7 @@
+  foo_get_name@Base 1.1
+  foo_get_longname@Base 1.2
+  foo_get_type@Base 1.1
++ foo_get_longtype@Base 1.3-1
+  foo_get_symbol@Base 1.1
+  foo_get_rank@Base 1.1
+  foo_new@Base 1.1
+...</code></pre>
+</div></div>
+<div class="paragraph"><p>If you see the <strong>diff</strong> printed by the <strong>dpkg-gensymbols</strong> as above, extract the updated proper symbols file from the generated binary package of the shared library. Here, the Debian revision is dropped from the version to make it easier to backport the package: 1.3 << 1.3-1~bpo70+1 << 1.3-1</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ cd ..
+$ dpkg-deb -R  libfoo1_1.3_amd64.deb libfoo1-tmp
+$ sed -e 's/1\.3-1/1\.3/' libfoo1-tmp/DEBIAN/symbols \
+        &gt;libfoo-1.3/debian/libfoo1.symbols</code></pre>
+</div></div>
+<div class="paragraph"><p>Build release packages with tools such as <strong>debuild</strong> and <strong>pdebuild</strong>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ cd libfoo-1.3
+$ debuild clean
+$ debuild
+...</code></pre>
+</div></div>
+<div class="paragraph"><p>In addition to the above examples, we need to check the ABI compatibility further and bump versions for some symbols manually as needed.</p></div>
+<div class="paragraph"><p>Although it is only a secondary reference, Debian wiki UsingSymbolsFiles and its linked web pages may be useful.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_multiarch">Multiarch</h3>
+<div class="paragraph"><p>The multiarch feature introduced to Debian wheezy integrates support for cross-architecture installation of binary packages (particularly i386<->amd64, but also other combinations) in dpkg and apt. You should read the following references in detail.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Ubuntu wiki MultiarchSpec (upstream)
+</p>
+</li>
+<li>
+<p>
+Debian wiki Multiarch/Implementation (Debian situation)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>It uses the triplet such as <strong>i386-linux-gnu</strong> and <strong>x86_64-linux-gnu</strong> for the install path of shared libraries. The actual triplet path is dynamically set into <strong>$(DEB_HOST_MULTIARCH)</strong> value by <strong>dpkg-architecture</strong> for each build. For example, the path to install multiarch libraries are changed as follows. (Old special purpose library paths such as <strong>/lib32/</strong> and <strong>/lib64/</strong> are not used any more.)</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Old path</p></td>
+<td align="left" valign="top"><p class="table">i386 multiarch path</p></td>
+<td align="left" valign="top"><p class="table">amd64 multiarch path</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">/lib/</p></td>
+<td align="left" valign="top"><p class="table">/lib/i386-linux-gnu/</p></td>
+<td align="left" valign="top"><p class="table">/lib/x86_64-linux-gnu/</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">/usr/lib/</p></td>
+<td align="left" valign="top"><p class="table">/usr/lib/i386-linux-gnu/</p></td>
+<td align="left" valign="top"><p class="table">/usr/lib/x86_64-linux-gnu/</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>Here are some typical multiarch package split scenario examples for the followings:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+a library source <em>libfoo-1</em><strong>.tar.gz</strong>
+</p>
+</li>
+<li>
+<p>
+a tool source <em>bar-1</em><strong>.tar.gz</strong> written in a compiled language
+</p>
+</li>
+<li>
+<p>
+a tool source <em>baz-1</em><strong>.tar.gz</strong> written in an interpreted language
+</p>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Package</p></td>
+<td align="left" valign="top"><p class="table">Architecture:</p></td>
+<td align="left" valign="top"><p class="table">Multi-Arch:</p></td>
+<td align="left" valign="top"><p class="table">Package content</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">libfoo1</p></td>
+<td align="left" valign="top"><p class="table">any</p></td>
+<td align="left" valign="top"><p class="table">same</p></td>
+<td align="left" valign="top"><p class="table">the shared library, co-installable</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">libfoo1-dbg</p></td>
+<td align="left" valign="top"><p class="table">any</p></td>
+<td align="left" valign="top"><p class="table">same</p></td>
+<td align="left" valign="top"><p class="table">the shared library debug symbols, co-installable</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">libfoo-dev</p></td>
+<td align="left" valign="top"><p class="table">any</p></td>
+<td align="left" valign="top"><p class="table">same</p></td>
+<td align="left" valign="top"><p class="table">the shared library header files etc., co-installable</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">libfoo-tools</p></td>
+<td align="left" valign="top"><p class="table">any</p></td>
+<td align="left" valign="top"><p class="table">foreign</p></td>
+<td align="left" valign="top"><p class="table">the run-time support programs, not co-installable</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">libfoo-doc</p></td>
+<td align="left" valign="top"><p class="table">all</p></td>
+<td align="left" valign="top"><p class="table">foreign</p></td>
+<td align="left" valign="top"><p class="table">the shared library documentation files</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">bar</p></td>
+<td align="left" valign="top"><p class="table">any</p></td>
+<td align="left" valign="top"><p class="table">foreign</p></td>
+<td align="left" valign="top"><p class="table">the compiled program files, not co-installable</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">bar-doc</p></td>
+<td align="left" valign="top"><p class="table">all</p></td>
+<td align="left" valign="top"><p class="table">foreign</p></td>
+<td align="left" valign="top"><p class="table">the documentation files for the program</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">baz</p></td>
+<td align="left" valign="top"><p class="table">all</p></td>
+<td align="left" valign="top"><p class="table">foreign</p></td>
+<td align="left" valign="top"><p class="table">the interpreted program files</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>Please note that the development package should contain a symlink for the associated shared library without a version number. E.g.: <strong>/usr/lib/x86_64-linux-gnu/</strong><em>libfoo</em><strong>.so</strong> &#8594; <em>libfoo</em><strong>.so.</strong><em>1</em></p></div>
+</div>
+<div class="sect2">
+<h3 id="_building_a_shared_library_package">Building a shared library package</h3>
+<div class="paragraph"><p>You can build a Debian library package enabling the multiarch support using <strong>dh</strong> as follows.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Update <strong>debian/control</strong>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Add "<strong>Build-Depends: debhelper (&gt;=9)</strong>" for the source package section.
+</p>
+</li>
+<li>
+<p>
+Add "<strong>Pre-Depends: ${misc:Pre-Depends}</strong>" for each shared library binary package.
+</p>
+</li>
+<li>
+<p>
+Add <strong>Multi-Arch:</strong> stanza for each binary package section.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Set <strong>debian/compat</strong> to "<strong>9</strong>".
+</p>
+</li>
+<li>
+<p>
+Adjust the path from the normal <strong>/usr/lib/</strong> to the multiarch <strong>/usr/lib/$(DEB_HOST_MULTIARCH)/</strong> for all packaging scripts.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Call "<strong>DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)</strong>" in <strong>debian/rules</strong> to set <strong>DEB_HOST_MULTIARCH</strong> variable, first.
+</p>
+</li>
+<li>
+<p>
+Replace <strong>/usr/lib/</strong> with <strong>/usr/lib/$(DEB_HOST_MULTIARCH)/</strong> in <strong>debian/rules</strong>.
+</p>
+</li>
+<li>
+<p>
+If <strong>./configure</strong> is used in the part of <strong>override_dh_auto_configure</strong> target in <strong>debian/rules</strong>, make sure to replace it with "<strong>dh_auto_configure --</strong>" .
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Replace all occurrences of <strong>/usr/lib/</strong> with <strong>/usr/lib/\</strong>/* in <strong>debian/</strong><em>foo</em><strong>.install</strong> files.
+</p>
+</li>
+<li>
+<p>
+Generate files like <strong>debian/</strong><em>foo</em><strong>.links</strong> from <strong>debian/</strong><em>foo</em><strong>.links.in</strong> dynamically by adding a script to <strong>override_dh_auto_configure</strong> target in <strong>debian/rules</strong>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>override_dh_auto_configure:
+        dh_auto_configure
+        sed 's/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' \
+                debian/foo.links.in &gt; debian/foo.links</code></pre>
+</div></div>
+<div class="paragraph"><p>Please make sure to verify that the shared library package contains only the expected files, and that your <strong>-dev</strong> package still works.</p></div>
+<div class="paragraph"><p>All files installed simultaneously as the multiarch package to the same file path should have exactly the same file content. You must be careful on differences generated by the data byte order and by the compression algorithm.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">As fot <strong>./configure</strong>, you can add <strong>--libdir={prefix}/lib/$(DEB_HOST_MULTIARCH)</strong> arguments to <strong>./configure</strong>. Please note that <strong>--libexecdir</strong> specifies the default path to install executable programs run by other programs rather than by users. Its Autotools default is <strong>/usr/libexec/</strong> but its Debian default is <strong>/usr/lib/</strong>.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_debian_package_building_reminders">Debian package building reminders</h3>
+<div class="paragraph"><p>Here are some reminders for the Debian package building.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <strong>debmake</strong> command aims to address typical packaging situation only.
+</p>
+</li>
+<li>
+<p>
+The Debian package generated by the above package building work flow is in the <strong>non-native</strong> package format.
+</p>
+</li>
+<li>
+<p>
+The Debian source package means the set of input files used to build the Debian binary package building and is not a single file.
+</p>
+</li>
+<li>
+<p>
+A single Debian source package may generate multiple Debian binary packages defined in the <strong>debian/control</strong> file.
+</p>
+</li>
+<li>
+<p>
+The <strong>debian/rules</strong> file is a makefile.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The <strong>debian/rules</strong> file may be crafted primarily by a single "<strong>dh $@</strong>" command while using <strong>dh_</strong>* commands as its back-end. (recommended approach by this author)
+</p>
+</li>
+<li>
+<p>
+The <strong>debian/rules</strong> file can be customized by optional "<strong>override_dh_</strong>:*" targets.
+</p>
+</li>
+<li>
+<p>
+Both <strong>dh</strong> and <strong>dh_</strong>* commands are a part of the <strong>debhelper</strong> package (see <strong>debhelper</strong>(8)).
+</p>
+</li>
+<li>
+<p>
+The <strong>debhelper</strong> package works best if the build system of the upstream tarball is made to support the <strong>$(DESTDIR)</strong> feature (a part of GNU coding standard).
+</p>
+</li>
+<li>
+<p>
+The <strong>$(DESTDIR)</strong> feature is supported by many build systems such as Autotools, CMake, Python Distutils, etc.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The <strong>dpkg-buildpackage</strong>(1) command is usually invoked by a wrapper script which sets up the proper build environments.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>debuild</strong>(1)
+</p>
+</li>
+<li>
+<p>
+<strong>pdebuild</strong>(1) (optionally with <strong>cowbuilder</strong>(8))
+</p>
+</li>
+<li>
+<p>
+<strong>gbp-buildpackage</strong>(1) (use <strong>git-pbuilder</strong>(1) and <strong>cowbuilder</strong>(8) as a part of its back-end)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The <strong>debmake</strong>(1) command helps to generate packaging template files and automating the sequence of associated routine tasks.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Use <strong>script</strong> type and customize the <strong>debian/control</strong> file if any other interpreter is used.
+</p>
+</li>
+<li>
+<p>
+Use <strong>bin</strong> type and customize the <strong>debian/control</strong> file if any other compiler is used.
+</p>
+</li>
+<li>
+<p>
+The <strong>debmake</strong> command is designed to make the <strong>multiarch</strong> package as default.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The <strong>-m</strong> option needs to be specified to make the <strong>non-multiarch</strong> package.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Fancy multiarch "<strong>allowed</strong>" packages etc. need to be manually set in the <strong>debian/control</strong> file.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Some people promote to package even programs which have been written especially for Debian in the non-native package format with the above workflow while generating the required tarball without <strong>debian/</strong>* files by oneself in advance. They claim that the use of non-native package format eases communication with the downstream distributions.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bottom_up_tutorial">Bottom up tutorial</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_basic_tool_setups">Basic tool setups</h3>
+<div class="paragraph"><p>Although these are not nessasary the requirement, basic tool setups are described as below for us to share the common baseline working environment.</p></div>
+<div class="sect3">
+<h4 id="_setting_up_strong_bash_strong">Setting up <strong>bash</strong></h4>
+<div class="paragraph"><p>Various Debian maintenance tools offered by the <strong>devscripts</strong> package and <strong>debmake</strong> recognize your email address and name to use by the shell environment variables <strong>$DEBEMAIL</strong> and <strong>$DEBFULLNAME</strong>.</p></div>
+<div class="paragraph"><p>Let&#8217;s set up these by adding the following lines to <strong><sub>/.bashrc</strong> foornote[This assumes you are using Bash as your login shell. If you use some other login shell such as Z shell, use their corresponding configuration files instead of <strong></sub>/.bashrc</strong>.].</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>DEBEMAIL="your.email.address@example.org"
+DEBFULLNAME="Firstname Lastname"
+export DEBEMAIL DEBFULLNAME</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_strong_quilt_strong">Setting up <strong>quilt</strong></h4>
+<div class="paragraph"><p>The program <strong>quilt</strong> offers a basic method for recording modifications to the upstream source for the Debian packaging. It&#8217;s useful to have a slightly customized default suitable for the Debian packaging to avoid changing the behavior of the <strong>quilt</strong> command itself.</p></div>
+<div class="paragraph"><p>Let&#8217;s create an alias <strong>dquilt</strong> for the Debian packaging by adding the following lines to the <strong>~/.bashrc</strong> file. The second line provides the same shell completion feature of the <strong>quilt</strong> command to the <strong>dquilt</strong> command.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
+complete -F _quilt_completion $_quilt_complete_opt dquilt</code></pre>
+</div></div>
+<div class="paragraph"><p>Then let&#8217;s create <strong>~/.quiltrc-dpkg</strong> as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>d=. ; while [ ! -d $d/debian -a `readlink -e $d` != / ]; do d=$d/..; done
+if [ -d $d/debian ] &amp;&amp; [ -z $QUILT_PATCHES ]; then
+    # if in Debian packaging tree with unset $QUILT_PATCHES
+    QUILT_PATCHES="debian/patches"
+    QUILT_PATCH_OPTS="--reject-format=unified"
+    QUILT_DIFF_ARGS="-p ab --no-timestamps --no-index --color=auto"
+    QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
+    QUILT_COLORS="diff_hdr=1;32:diff_add=1;34:diff_rem=1;31:diff_hunk=1;33:diff_ctx=35:diff_cctx=33"
+    if ! [ -d $d/debian/patches ]; then mkdir $d/debian/patches; fi
+fi</code></pre>
+</div></div>
+<div class="paragraph"><p>See <strong>quilt</strong>(1) and <strong>/usr/share/doc/quilt/quilt.pdf.gz</strong> on how to use the <strong>quilt</strong> command.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_strong_devscripts_strong">Setting up <strong>devscripts</strong></h4>
+<div class="paragraph"><p>The <strong>debuild</strong> command runs the <strong>dpkg-buildpackage</strong> and <strong>lintian</strong> commands under the current build environment with the sanitized environment variables to create all the files necessary for uploading a Debian package.</p></div>
+<div class="paragraph"><p>Let&#8217;s create <strong>~/.devscripts</strong> as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>DEBSIGN_KEYID='Your_GPG_keyID'
+DEBUILD_LINTIAN_OPTS=-i -I --show-overrides</code></pre>
+</div></div>
+<div class="paragraph"><p>With these, packages are signed by your specified GPG key ID (good for sponsoring packages) and checked in detail by the <strong>lintian</strong> command.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_strong_pbuilder_strong_strong_cowbuilder_strong">Setting up <strong>pbuilder</strong> + <strong>cowbuilder</strong></h4>
+<div class="paragraph"><p>The <strong>pbuilder</strong> package provides the clean room (<strong>chroot</strong>) build environment. The <strong>cowbuilder</strong> package boosts its processing speed. Let&#8217;s customize these packages to make the <strong>pdebuild</strong> command to run with the <strong>cowbuilder and *lintian</strong> commands.</p></div>
+<div class="paragraph"><p>Let&#8217;s create <strong>~/.pbuilderrc</strong> as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>AUTO_DEBSIGN=${AUTO_DEBSIGN:-no}
+HOOKDIR=/var/cache/pbuilder/hooks
+PDEBUILD_PBUILDER=cowbuilder
+BUILDRESULT=../</code></pre>
+</div></div>
+<div class="paragraph"><p>Let&#8217;s create a hook script <strong>/var/cache/pbuilder/hooks/B90lintian</strong> as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>#!/bin/sh
+set -e
+apt-get -y --force-yes install lintian
+echo "+++ lintian output +++"
+su -c "lintian -i -I --show-overrides /tmp/buildd/*.changes; :" -l pbuilder
+echo "+++ end of lintian output +++"</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_strong_git_strong">Setting up <strong>git</strong></h4>
+<div class="paragraph"><p>You may wish to set several global configuration in <strong>~/.gitconfig</strong> such as your name and email address used by Git by the following.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ git config --global user.name "Name Surname"
+$ git config --global user.email yourname@example.com</code></pre>
+</div></div>
+<div class="paragraph"><p>If you are too used to CVS or Subversion commands, you may wish to set several command aliases by the following.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ git config --global alias.ci "commit -a"
+$ git config --global alias.co checkout</code></pre>
+</div></div>
+<div class="paragraph"><p>You can check your global configuration by the following.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ git config --global --list</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">It is essential to use the <strong>gitk</strong> command for Git repository.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_strong_git_buildpackage_strong">Setting up <strong>git-buildpackage</strong></h4>
+<div class="paragraph"><p>You may wish to set several global configuration in <strong>~/.gbp.conf</strong></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code># Configuration file for "gbp &lt;command&gt;"
+
+[DEFAULT]
+# the default build command:
+builder = git-pbuilder -i -I -us -uc
+# use pristine-tar:
+pristine-tar = True
+# Use color when on a terminal, alternatives: on/true, off/false or auto
+color = auto</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_basic_single_binary_package">Basic single binary package</h3>
+<div class="paragraph"><p>For the case of creating a single binary Debian package from the <strong>$(DESTDIR)</strong> and Filesystem Hierarchy Standard (FHS) supporting source, the packaging process can be practically automatic if you only wish to make it for your local use and do not worry about details of the Debian Policy.</p></div>
+<div class="paragraph"><p>Let&#8217;s assume you have a simple upstream source tarball <strong>hello-c-1.0.tar.gz</strong>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ wget http://www.example.org/download/hello-c-1.0.tar.gz
+ ...</code></pre>
+</div></div>
+<div class="paragraph"><p>Let&#8217;s untar it.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tar -xvzmf hello-c-1.0.tar.gz
+hello-c-1.0/
+hello-c-1.0/Makefile
+hello-c-1.0/hello.c</code></pre>
+</div></div>
+<div class="paragraph"><p>Let&#8217;s inspect files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tree
+.
+|-- hello-c-1.0
+|   |-- hello.c
+|   `-- Makefile
+`-- hello-c-1.0.tar.gz
+
+1 directory, 3 files</code></pre>
+</div></div>
+<div class="paragraph"><p><strong>Makefile</strong> supports <strong>$(DESTDIR)</strong>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cat hello-c-1.0/Makefile
+all: hello
+
+hello: hello.c
+        gcc -Wall -o hello hello.c
+
+install: hello
+        install -D hello $(DESTDIR)/usr/bin/hello
+
+clean:
+        -rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean</code></pre>
+</div></div>
+<div class="paragraph"><p>The C source <strong>hello.c</strong> is a very simple one.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cat hello-c-1.0/hello.c
+#include &lt;stdio.h&gt;
+int
+main()
+{
+        printf("Hello, Debian packager!\n");
+        return 0;
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>You create a non-native Debian package source tree from this upstream example using the <strong>debmake</strong> command.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd hello-c-1.0
+ $ debmake
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello-c", ver="1.0", rev="1"
+I: *** start packaging in "hello-c-1.0". ***
+I: provide hello-c_1.0.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf hello-c-1.0.tar.gz hello-c_1.0.orig.tar.gz
+I: pwd = "/path/to/hello-c-1.0"
+I: parse binary package settings:
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: analyze the source tree
+I: build_type = make
+I: 100 %, ext = c
+I: make debian/* template files
+I: single binary package
+I: debmake -x "1" ...
+I: creating =&gt; debian/control
+I: creating =&gt; debian/copyright
+I: creating =&gt; debian/changelog
+I: creating =&gt; debian/rules
+I: creating =&gt; debian/compat
+I: creating =&gt; debian/watch
+I: creating =&gt; debian/README.Debian
+I: creating =&gt; debian/source/format
+I: creating =&gt; debian/source/local-options
+I: creating =&gt; debian/patches/series
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect generated template files.</p></div>
+<div class="listingblock">
+<div class="title"><strong>debian/rules</strong>:</div>
+<div class="content">
+<pre><code> $ cat debian/rules
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#DH_VERBOSE = 1
+
+# harden via compile options
+# see FEATURE AREAS in dpkg-buildflags(1))
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+# see ENVIRONMENT in dpkg-buildflags(1))
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# main packaging script based on dh7 syntax
+%:
+        dh $@
+
+# debmake generated override targets
+# Set required multiarch library install path.
+# See dpkg-architecture(1)
+#DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+#
+# This is example for Cmake (See http://bugs.debian.org/641051 )
+#override_dh_auto_configure:
+#       dh_auto_configure -- \
+#       -DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)</code></pre>
+</div></div>
+<div class="paragraph"><p>This is essentialy the standard <strong>debian/rules</strong> file with the <strong>dh</strong> command. (There are some commented out contens for you to customize it.)</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">Configuration files used by the <strong>debhelper</strong> command usually treat <strong>#</strong> as the start of the comment line.</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="title"><strong>debian/control</strong>:</div>
+<div class="content">
+<pre><code> $ cat debian/control
+Source: hello-c
+Section: unknown
+Priority: extra
+Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
+Build-Depends: debhelper (&gt;=9)
+Standards-Version: 3.9.5
+Homepage: &lt;insert the upstream URL, if relevant&gt;
+
+Package: hello-c
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: auto-generated package by debmake
+ This Debian binary package was auto-generated by the
+ debmake(1) command provided by the debmake package.
+ .
+ ===== This comes from the unmodified template file =====
+ .
+ Please edit this template file (debian/control) and other package files...
+ (debian/*) to make them meet all the requirements of the Debian Policy
+ before uploading this package to the Debian archive.
+ .
+ See
+  * http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control
+  * http://www.debian.org/doc/manuals/developers-reference/best-pkging-p...
+ .
+ The synopsis description at the top should be about 60 characters and
+ written as a phrase.  No extra capital letters or a final period.  No
+ articles — "a", "an", or "the".
+ .
+ The package description for general-purpose applications should be
+ written for a less technical user.  This means that we should avoid
+ jargon.  GNOME or KDE is fine but GTK+ is probably not.
+ .
+ Use the canonical forms of words:
+  * Use X Window System, X11, or X; not X Windows, X-Windows, or X Windo...
+  * Use GTK+, not GTK or gtk.
+  * Use GNOME, not Gnome.
+  * Use PostScript, not Postscript or postscript.</code></pre>
+</div></div>
+<div class="paragraph"><p>Please note that the <strong>debmake</strong> command is run with the <strong>-x21</strong> option as the default for the new single binary package.</p></div>
+<div class="paragraph"><p>Since this is the ELF binary executable package (<em>type</em>=<strong>bin</strong>), it is set to "<strong>Architecture: any</strong>" and "<strong>Multi-Arch: foreign</strong>".  Also, required <strong>substvar</strong> parameters are set as "<strong>Depends: ${shlibs:Depends}, ${misc:Depends}</strong>" by the <strong>debmake</strong> command.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Please note this <strong>debian/control</strong> file uses the RFC-822 style as documented in the &#8220;Debian Policy Manual: 5.2 Source package control files&#8201;&#8212;&#8201;debian/control&#8221;. The use of the empty line and the leading space are significant.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>There are several other template files under the <strong>debian/</strong> directory.</p></div>
+<div class="listingblock">
+<div class="title">The source tree after the basic <strong>debmake</strong> execution.</div>
+<div class="content">
+<pre><code> $ cd ..
+ $ tree
+.
+|-- hello-c-1.0
+|   |-- debian
+|   |   |-- changelog
+|   |   |-- compat
+|   |   |-- control
+|   |   |-- copyright
+|   |   |-- patches
+|   |   |   `-- series
+|   |   |-- README.Debian
+|   |   |-- rules
+|   |   |-- source
+|   |   |   |-- format
+|   |   |   `-- local-options
+|   |   `-- watch
+|   |-- hello.c
+|   `-- Makefile
+|-- hello-c_1.0.orig.tar.gz -&gt; hello-c-1.0.tar.gz
+`-- hello-c-1.0.tar.gz
+
+4 directories, 14 files</code></pre>
+</div></div>
+<div class="paragraph"><p>For the proper packaging, you are required to make further modification here.</p></div>
+<div class="paragraph"><p>For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalents) in this source tree.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd hello-c-1.0
+ $ debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ ...
+ fakeroot debian/rules clean
+dh clean
+ ...
+ debian/rules build
+dh build
+ ...
+ fakeroot debian/rules binary
+dh binary
+ ...
+Finished running lintian.</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect the result.</p></div>
+<div class="listingblock">
+<div class="title">The generated files of version 1.0 by the <strong>debuild</strong> command:</div>
+<div class="content">
+<pre><code> $ cd ..
+ $ tree -L 1
+.
+|-- hello-c-1.0
+|-- hello-c_1.0-1_amd64.build
+|-- hello-c_1.0-1_amd64.changes
+|-- hello-c_1.0-1_amd64.deb
+|-- hello-c_1.0-1.debian.tar.xz
+|-- hello-c_1.0-1.dsc
+|-- hello-c_1.0.orig.tar.gz -&gt; hello-c-1.0.tar.gz
+`-- hello-c-1.0.tar.gz
+
+1 directory, 7 files</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The source package contents of version 1.0:</div>
+<div class="content">
+<pre><code> $ tar -tJf hello-c_1.0-1.debian.tar.xz
+debian/
+debian/compat
+debian/changelog
+debian/watch
+debian/control
+debian/copyright
+debian/README.Debian
+debian/rules
+debian/source/
+debian/source/format
+debian/patches/
+debian/patches/series
+ $ tar -tzf hello-c-1.0.tar.gz
+hello-c-1.0/
+hello-c-1.0/Makefile
+hello-c-1.0/hello.c</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The binary package contents of version 1.0:</div>
+<div class="content">
+<pre><code> $ dpkg -c hello-c_1.0-1_amd64.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_modifications_to_the_upstream">Modifications to the upstream</h3>
+<div class="paragraph"><p>Let&#8217;s assume we have an older upstream source tarball <strong>hello-c-0.9.tar.gz</strong>.  The <strong>Makefile</strong> of version 0.9 installs its binary to the fixed location <strong>/usr/local/bin/hello</strong> and does not support <strong>$(DESTDIR)</strong> like the one in the upstream source tarball <strong>hello-c-1.0.tar.gz</strong>.</p></div>
+<div class="paragraph"><p>There are several methods to prepare the <strong>-p1</strong> patch needed for applying modifications to this <strong>0.9</strong> upstream source.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <strong>diff</strong> command
+</p>
+</li>
+<li>
+<p>
+The <strong>dquilt</strong> command (alias of the <strong>quilt</strong> command)
+</p>
+</li>
+<li>
+<p>
+The <strong>git</strong> comamnd with the <strong>--format-paches</strong> option.
+</p>
+</li>
+<li>
+<p>
+The <strong>git-dpm</strong> comamnd.
+</p>
+</li>
+<li>
+<p>
+&#8230;
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Here we show the method with the <strong>dquilt</strong> command.</p></div>
+<div class="paragraph"><p>The packaging procedure is the same as that of version 1.0 up to running the <strong>debmake</strong> command.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd hello-c-0.9
+ $ debmake
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello-c", ver="0.9", rev="1"
+ ...
+ ... (snip)
+ ...
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort</code></pre>
+</div></div>
+<div class="paragraph"><p>The "<strong>dquilt new</strong> &#8230;" command sets the name of the patch.</p></div>
+<div class="paragraph"><p>The "<strong>dquilt add</strong> &#8230;" command sets the files to be modified.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ dquilt new 0001-destdir.patch
+Patch 0001-destdir.patch is now on top
+ $ dquilt add Makefile
+File Makefile added to patch 0001-destdir.patch
+ $ cat Makefile
+all: hello
+
+hello: hello.c
+        gcc -Wall -o hello hello.c
+
+install: hello
+        install -D hello /usr/local/bin/hello
+
+clean:
+        -rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean</code></pre>
+</div></div>
+<div class="paragraph"><p>The <strong>vim</strong> command edits the <strong>Makefile</strong> to be modified to support <strong>$(DESTDIR)</strong>..</p></div>
+<div class="paragraph"><p>The "<strong>dquilt refresh</strong> &#8230;" command records the modification as the <strong>-p1</strong> patch in the <strong>debian/patches/</strong> directory.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ vim Makefile
+ ...
+ $ cat Makefile
+all: hello
+
+hello: hello.c
+        gcc -Wall -o hello hello.c
+
+install: hello
+        install -D hello $(DESTDIR)/usr/bin/hello
+
+clean:
+        -rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean
+ $ dquilt refresh
+Refreshed patch 0001-destdir.patch
+ $ cat debian/patches/0001-destdir.patch
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@
+        gcc -Wall -o hello hello.c
+
+ install: hello
+-       install -D hello /usr/local/bin/hello
++       install -D hello $(DESTDIR)/usr/bin/hello
+
+ clean:
+        -rm -f hello</code></pre>
+</div></div>
+<div class="paragraph"><p>The "<strong>dquilt header -e</strong> &#8230;" command adds the <a href="http://dep.debian.net/deps/dep3/">DEP-3: Patch Tagging Guidelines</a> compatible patch header.</p></div>
+<div class="paragraph"><p>The "<strong>dquilt pop -a</strong>" command removes all applied patches from the source.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ dquilt header -e
+ ...
+ $ cat debian/patches/0001-destdir.patch
+From: Foo Bar &lt;foo@example.org&gt;
+Description: make Makefile to support GNU coding standard
+ $DESTDIR: debian/hello-c
+ $prefix:  /usr/local -&gt; /usr
+
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@
+        gcc -Wall -o hello hello.c
+
+ install: hello
+-       install -D hello /usr/local/bin/hello
++       install -D hello $(DESTDIR)/usr/bin/hello
+
+ clean:
+        -rm -f hello
+ $ dquilt pop -a
+Removing patch 0001-destdir.patch
+Restoring Makefile
+
+No patches applied
+ $ cat debian/patches/series
+# The patch files of the -p1 format included in the debian/patches direc...
+# are applied to the upstream source in the order listed below.
+# This is manually managed by users with dquilt (quilt(1) wrapper) etc.
+# See http://www.debian.org/doc/manuals/maint-guide/modify.en.html#quilt...
+# Also this may be updated by dpkg-source(1) when making a package.
+0001-destdir.patch</code></pre>
+</div></div>
+<div class="paragraph"><p>For the proper packaging, you are required to make further modification here.</p></div>
+<div class="paragraph"><p>For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalents) in this source tree.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd hello-c-0.9
+ $ debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ ...
+dpkg-source: info: applying 0001-destdir.patch
+ fakeroot debian/rules clean
+dh clean
+ ...
+ debian/rules build
+dh build
+ ...
+ fakeroot debian/rules binary
+dh binary
+ ...
+Finished running lintian.</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect files.</p></div>
+<div class="listingblock">
+<div class="title">The generated files of version 0.9 by the debuild command:</div>
+<div class="content">
+<pre><code> $ cd ..
+ $ tree -L 1
+.
+|-- hello-c-0.9
+|-- hello-c_0.9-1_amd64.build
+|-- hello-c_0.9-1_amd64.changes
+|-- hello-c_0.9-1_amd64.deb
+|-- hello-c_0.9-1.debian.tar.xz
+|-- hello-c_0.9-1.dsc
+|-- hello-c_0.9.orig.tar.gz -&gt; hello-c-0.9.tar.gz
+`-- hello-c-0.9.tar.gz
+
+1 directory, 7 files</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The source package contents of version 0.9:</div>
+<div class="content">
+<pre><code> $ dpkg -c hello-c_0.9-1_amd64.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The binary package contents of version 0.9:</div>
+<div class="content">
+<pre><code> $ tar -tJf hello-c_0.9-1.debian.tar.xz
+debian/
+debian/compat
+debian/changelog
+debian/watch
+debian/control
+debian/copyright
+debian/README.Debian
+debian/rules
+debian/source/
+debian/source/format
+debian/patches/
+debian/patches/0001-destdir.patch
+debian/patches/series
+ $ tar -tzf hello-c-0.9.tar.gz
+hello-c-0.9/
+hello-c-0.9/Makefile
+hello-c-0.9/hello.c</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_basic_multi_binary_package">Basic multi binary package</h3>
+<div class="paragraph"><p>Let&#8217;s consider an upstream package <strong>hello-1.1.tar.gz</strong> and untar it to inspect files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tree
+.
+|-- hello-1.1
+|   |-- hello.c
+|   |-- hello.data
+|   |-- hello-sh
+|   `-- Makefile
+`-- hello-1.1.tar.gz
+
+1 directory, 5 files</code></pre>
+</div></div>
+<div class="paragraph"><p>This is similar to the previously shown <strong>hello-c-1.0.tar.gz</strong>  but with a few additional files and changes.</p></div>
+<div class="paragraph"><p>The C source <strong>hello.c</strong> is the same one.</p></div>
+<div class="paragraph"><p><strong>Makefile</strong> is updated to support <strong>$(DESTDIR)</strong> for all files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cat hello-1.1/Makefile
+all: hello
+
+hello: hello.c
+        gcc -Wall -o hello hello.c
+
+install: hello hello.data
+        install -D hello $(DESTDIR)/usr/bin/hello
+        install -D hello-sh $(DESTDIR)/usr/bin/hello-sh
+        install -D hello.data $(DESTDIR)/usr/share/hello/hello.data
+
+clean:
+        -rm -f hello
+
+distclean: clean
+
+.PHONY: all install clean distclean</code></pre>
+</div></div>
+<div class="paragraph"><p>There is an additional simple shell script <strong>hello-sh</strong>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cat hello-1.1/hello-sh
+#!/bin/sh
+echo "Hello from the shell!"</code></pre>
+</div></div>
+<div class="paragraph"><p>The <strong>hello.data</strong> file is a dummy data for this training.</p></div>
+<div class="paragraph"><p>Let&#8217;s create a set of the following non-native binary Debian packages.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>hello-c</strong> : <em>type</em>=<strong>bin</strong>, This package contains an ELF executable <strong>hello</strong> file compiled the source file <strong>hello.c</strong>.
+</p>
+</li>
+<li>
+<p>
+<strong>hello-c-dbg</strong> : <em>type</em>=<strong>dbg</strong>, This package contains debug symbols data of the ELF executable file <strong>hello</strong>.
+</p>
+</li>
+<li>
+<p>
+<strong>hello-sh</strong> : <em>type</em>=<strong>script</strong>, This contains the shell script <strong>hello-sh</strong>.
+</p>
+</li>
+<li>
+<p>
+<strong>hello-data</strong> : <em>type</em>=<strong>data</strong>, This contains the data file <strong>hello.data</strong>.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Since we are splitting the generated files into multiple packages, we package this in two steps.  The first step is the "<strong>debmake -j</strong> &#8230;" command.</p></div>
+<div class="listingblock">
+<div class="title">The <strong>debmake</strong> execution (1st stage)</div>
+<div class="content">
+<pre><code> $ cd hello-1.1
+ ...
+ ... (snip)
+ ...
+I: $ fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules insta...
+I: $ find debian/tmp -type f 2&gt;&amp;1 | sed -e "s/^debian\/tmp\///" &gt;../hell...
+I: upon return to the shell, current directory becomes /path/to/hello-1....
+I: please execute "cd /path/to/hello-1.1" before building the binary pac...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The parent directory after the "<strong>debmake -j</strong> &#8230;" execution.</div>
+<div class="content">
+<pre><code> $ cd ..
+ $ tree -L 1
+.
+|-- hello-1.1
+|-- hello_1.1.orig.tar.gz -&gt; hello-1.1.tar.gz
+|-- hello-1.1.tar.gz
+|-- hello.build-dep.log
+`-- hello.install.log
+
+1 directory, 4 files</code></pre>
+</div></div>
+<div class="paragraph"><p>There are 2 log files in the parent directory.</p></div>
+<div class="listingblock">
+<div class="title"><strong>hello.build-dep.log</strong> generated by the <strong>dpkg-depcheck</strong> command</div>
+<div class="content">
+<pre><code> $ cat hello.build-dep.log
+ ...
+ ... (snip)
+ ...
+Packages needed:
+  perl-modules
+  libgdbm3:amd64
+  libfakeroot:amd64
+  perl
+  locales-all
+  liblocale-gettext-perl
+  dpkg-dev
+  libtimedate-perl
+  man-db
+  libdpkg-perl
+  debhelper
+  libpipeline1:amd64
+  locales</code></pre>
+</div></div>
+<div class="paragraph"><p>Since the buiid dependency to the <strong>debhelper</strong> package is always implemented by the <strong>debamke</strong> command and other packages are installed by the dependencies of the <strong>build-essential</strong> package, there is no additional package required be listed as the build dependency.</p></div>
+<div class="listingblock">
+<div class="title"><strong>hello.install.log</strong> listing files under the <strong>debian/tmp</strong> directory</div>
+<div class="content">
+<pre><code> $ cat hello.install.log
+usr/bin/hello
+usr/bin/hello-sh
+usr/share/hello/hello.data</code></pre>
+</div></div>
+<div class="paragraph"><p>Now we know what files are generated in the <strong>debian/tmp</strong> directory.</p></div>
+<div class="paragraph"><p>Let&#8217;s start with the fresh source tree and build package from there.</p></div>
+<div class="listingblock">
+<div class="title">The <strong>debmake</strong> execution (2nd stage)</div>
+<div class="content">
+<pre><code> $ rm -rf hello-1.1
+ $ debmake -b'-c,-c-dbg,-data:data,-sh:script' -a hello-1.1.tar.gz
+I: set parameters
+I: sanity check of parameters
+I: pkg="hello", ver="1.1", rev="1"
+ ...
+I: parse binary package settings: -c,-c-dbg,-data:data,-sh:script
+I: binary package=hello-c Type=bin / Arch=any M-A=foreign
+I: binary package=hello-c-dbg Type=dbg / Arch=any M-A=same
+I: binary package=hello-data Type=data / Arch=all M-A=foreign
+I: binary package=hello-sh Type=script / Arch=all M-A=foreign
+ ...
+I: debmake -x "2" ...
+ ...
+I: $ wrap-and-sort
+I: upon return to the shell, current directory becomes /path/to
+I: please execute "cd /path/to/hello-1.1" before building the binary pac...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
+</div></div>
+<div class="paragraph"><p>Please note that the <strong>debmake</strong> command is run with the <strong>-x2</strong> option as the default for the new multi binary packages.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd hello-1.1
+ $ tree
+.
+|-- debian
+|   |-- changelog
+|   |-- clean
+|   |-- compat
+|   |-- control
+|   |-- copyright
+|   |-- hello-c-dbg.install
+|   |-- hello-c.doc-base
+|   |-- hello-c.docs
+|   |-- hello-c.examples
+|   |-- hello-c.info
+|   |-- hello-c.install
+|   |-- hello-c.links
+|   |-- hello-c.manpages
+|   |-- hello-c.menu
+|   |-- hello-c.postinst
+|   |-- hello-c.postrm
+|   |-- hello-c.preinst
+|   |-- hello-c.prerm
+|   |-- hello-data.install
+|   |-- hello-sh.install
+|   |-- patches
+|   |   `-- series
+|   |-- README.Debian
+|   |-- rules
+|   |-- source
+|   |   |-- format
+|   |   `-- local-options
+|   `-- watch
+|-- hello.c
+|-- hello.data
+|-- hello-sh
+`-- Makefile
+
+3 directories, 30 files</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect generated template files.</p></div>
+<div class="listingblock">
+<div class="title"><strong>debian/rules</strong>:</div>
+<div class="content">
+<pre><code> $ cat debian/rules
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#DH_VERBOSE = 1
+
+# harden via compile options
+# see FEATURE AREAS in dpkg-buildflags(1))
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+# see ENVIRONMENT in dpkg-buildflags(1))
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# main packaging script based on dh7 syntax
+%:
+        dh $@
+
+# debmake generated override targets
+# save debug symbols to a single -dbg package
+override_dh_strip:
+        dh_strip --dbg-package=hello-c-dbg</code></pre>
+</div></div>
+<div class="paragraph"><p>This is essentialy the standard <strong>debian/rules</strong> file with the <strong>dh</strong> command with <strong>override_dh_strip</strong> to create a debug package. (There are some commented out contents for you to customize it.)</p></div>
+<div class="listingblock">
+<div class="title"><strong>debian/control</strong>:</div>
+<div class="content">
+<pre><code> $ cat debian/control
+Source: hello
+Section: unknown
+Priority: extra
+Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
+Build-Depends: debhelper (&gt;=9)
+Standards-Version: 3.9.5
+Homepage: &lt;insert the upstream URL, if relevant&gt;
+
+Package: hello-c
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: auto-generated package by debmake: bin
+ This package contains the compiled binary executable.
+ ...
+ ... (snip)
+ ...
+
+Package: hello-c-dbg
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}
+Description: auto-generated package by debmake: dbg
+ This package contains the debugging symbols.
+
+Package: hello-data
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: auto-generated package by debmake: data
+ This package contains the architecture independent data.
+
+Package: hello-sh
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: auto-generated package by debmake: script
+ This package contains the script program.</code></pre>
+</div></div>
+<div class="paragraph"><p>Nice to see thse templates are generated with reasonable contents.</p></div>
+<div class="paragraph"><p>There are several template files under the <strong>debian/</strong> directory.  Let&#8217;s customize them and erase unnecessary ones. (Here, we are skipping details required by the best practice.)</p></div>
+<div class="listingblock">
+<div class="title">Manual adjustments of <strong>debian/</strong>*</div>
+<div class="content">
+<pre><code> $ cd ./debian
+ $ rm -f *.do* *.examples *.info *.links *.m*  *.p*
+ $ rm hello-c-dbg.install
+ $ echo usr/bin/hello &gt; hello-c.install
+ $ echo usr/share/hello/hello.data &gt; hello-data.install
+ $ echo usr/bin/hello-sh &gt; hello-sh.install</code></pre>
+</div></div>
+<div class="paragraph"><p>You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalents) in this source tree.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd ..
+ $ debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ ...
+dpkg-buildpackage: host architecture amd64
+ fakeroot debian/rules clean
+dh clean
+ ...
+ debian/rules build
+dh build
+ ...
+ fakeroot debian/rules binary
+dh binary
+ ...
+Finished running lintian.</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect the result.</p></div>
+<div class="listingblock">
+<div class="title">The generated files of version 1.0 by the <strong>debuild</strong> command:</div>
+<div class="content">
+<pre><code> $ cd ..
+ $ tree -L 1
+.
+|-- hello-1.1
+|-- hello_1.1-1_amd64.build
+|-- hello_1.1-1_amd64.changes
+|-- hello_1.1-1.debian.tar.xz
+|-- hello_1.1-1.dsc
+|-- hello_1.1.orig.tar.gz -&gt; hello-1.1.tar.gz
+|-- hello-1.1.tar.gz
+|-- hello.build-dep.log
+|-- hello-c_1.1-1_amd64.deb
+|-- hello-c-dbg_1.1-1_amd64.deb
+|-- hello-data_1.1-1_all.deb
+|-- hello.install.log
+`-- hello-sh_1.1-1_all.deb
+
+1 directory, 12 files</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The source package contents of version 1.0:</div>
+<div class="content">
+<pre><code> $ tar -tJf hello_1.1-1.debian.tar.xz
+debian/
+debian/compat
+debian/clean
+debian/changelog
+debian/watch
+debian/hello-sh.install
+debian/hello-c.install
+debian/control
+debian/copyright
+debian/README.Debian
+debian/rules
+debian/source/
+debian/source/format
+debian/patches/
+debian/patches/series
+debian/hello-data.install
+ $ tar -tzf hello-1.1.tar.gz
+hello-1.1/
+hello-1.1/Makefile
+hello-1.1/hello.data
+hello-1.1/hello-sh
+hello-1.1/hello.c</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">The binary package contents of version 1.0:</div>
+<div class="content">
+<pre><code> $ dpkg -c hello-c_1.1-1_amd64.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz
+ $ dpkg -c hello-c-dbg_1.1-1_amd64.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/lib/
+drwxr-xr-x root/root ...  ./usr/lib/debug/
+drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/
+drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/de/
+-rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/de/316ffc70f35adbe1d...
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-c-dbg/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/changelog.Debian.g...
+ $ dpkg -c hello-data_1.1-1_all.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-data/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-data/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-data/changelog.Debian.gz...
+drwxr-xr-x root/root ...  ./usr/share/hello/
+-rwxr-xr-x root/root ...  ./usr/share/hello/hello.data
+ $ dpkg -c hello-sh_1.1-1_all.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello-sh
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-sh/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-sh/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-sh/changelog.Debian.gz</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_snapshot_from_vcs_1">Snapshot from VCS (1)</h3>
+<div class="paragraph"><p>Let&#8217;s consider an upstream source in the VCS and make a snapshot package from it.</p></div>
+<div class="paragraph"><p>Let&#8217;s make this more fun to use the Autotools (=Autoconf + Automake) its build system. where the upstream VCS does not contain auto-generated files while the distributed tarball has many auto-generated files.</p></div>
+<div class="paragraph"><p>Let&#8217;s inspect files.</p></div>
+<div class="listingblock">
+<div class="title">VCS source tree</div>
+<div class="content">
+<pre><code> $ tree
+.
+`-- vcsdir
+    |-- configure.ac
+    |-- hello.c
+    `-- Makefile.am
+
+1 directory, 3 files</code></pre>
+</div></div>
+<div class="paragraph"><p>There are minimalistic configuration files for Autotools.</p></div>
+<div class="listingblock">
+<div class="title"><strong>configure.ac</strong>:</div>
+<div class="content">
+<pre><code> $ cat vcsdir/configure.ac
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+AC_PREREQ([2.69])
+AC_INIT([hello-c], [1.5], [foo@example.org])
+AC_CONFIG_SRCDIR([hello.c])
+AC_CONFIG_HEADERS([config.h])
+# Manually added
+AM_INIT_AUTOMAKE([foreign])
+# Checks for programs.
+AC_PROG_CC
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title"><strong>Makefile.am</strong>:</div>
+<div class="content">
+<pre><code> $ cat vcsdir/Makefile.am
+bin_PROGRAMS = hello
+hello_SOURCES = hello.c</code></pre>
+</div></div>
+<div class="paragraph"><p>The C source <strong>hello.c</strong> is the same one as before.</p></div>
+<div class="paragraph"><p>You create a non-native Debian package source tree from the above upstream example using the <strong>debmake</strong>(1) command.</p></div>
+<div class="listingblock">
+<div class="title"><strong>git</strong> and <strong>debmake</strong></div>
+<div class="content">
+<pre><code> $ cd vcsdir
+ $ git init
+Initialized empty Git repository in /path/to/vcsdir/.git/
+ $ git add .
+ $ git commit -m "initial commit"
+[master (root-commit) 455cd85] initial commit
+ 3 files changed, 21 insertions(+)
+ create mode 100644 Makefile.am
+ create mode 100644 configure.ac
+ create mode 100644 hello.c
+ $ git branch devel
+ $ git branch upstream
+ $ git branch
+  devel
+* master
+  upstream
+ $ debmake -p hello-c -u 1.5 -d
+I: set parameters
+I: sanity check of parameters
+W: -p "hello-c" != auto set value ""
+W: -u "1.5" != auto set value ""
+I: pkg="hello-c", ver="1.5", rev="1"
+I: make the upstream tarball with "make dist" equivalents
+I: pwd = "/path/to/vcsdir"
+I: $ autoreconf -ivf &amp;&amp; ./configure --prefix "/usr" &amp;&amp; make distcheck
+ ...
+I: debmake -x "1" ...
+ ...
+I: run "debmake -x2" to get more template files
+I: $ wrap-and-sort
+I: upon return to the shell, current directory becomes /path/to/vcsdir
+I: please execute "cd /path/to/hello-c-1.5" before building the binary p...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
+</div></div>
+<div class="paragraph"><p>Let&#8217;s clean <strong>vcsdir/</strong> since it has so many Autotools generated files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ git clean -d -f
+Removing .deps/
+Removing Makefile
+Removing Makefile.in
+Removing aclocal.m4
+Removing autom4te.cache/
+Removing compile
+Removing config.h
+Removing config.h.in
+Removing config.log
+Removing config.status
+Removing configure
+Removing depcomp
+Removing hello-c-1.5.tar.gz
+Removing install-sh
+Removing missing
+Removing stamp-h1</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd ..
+ $ tree
+.
+|-- hello-c-1.5
+|   |-- aclocal.m4
+|   |-- compile
+|   |-- config.h.in
+|   |-- configure
+|   |-- configure.ac
+|   |-- debian
+|   |   |-- changelog
+|   |   |-- compat
+|   |   |-- control
+|   |   |-- copyright
+|   |   |-- patches
+|   |   |   `-- series
+|   |   |-- README.Debian
+|   |   |-- rules
+|   |   |-- source
+|   |   |   |-- format
+|   |   |   `-- local-options
+|   |   `-- watch
+|   |-- depcomp
+|   |-- hello.c
+|   |-- install-sh
+|   |-- Makefile.am
+|   |-- Makefile.in
+|   `-- missing
+|-- hello-c_1.5.orig.tar.gz -&gt; hello-c-1.5.tar.gz
+|-- hello-c-1.5.tar.gz
+`-- vcsdir
+    |-- configure.ac
+    |-- hello.c
+    `-- Makefile.am
+
+5 directories, 26 files</code></pre>
+</div></div>
+<div class="paragraph"><p>There are many files:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+the snapshot upstream tarball: <strong>hello-1.5.tar.gz</strong> (<strong>hello-c_1.5.orig.tar.gz</strong>)
+</p>
+</li>
+<li>
+<p>
+the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-1.5/</strong>*
+</p>
+</li>
+<li>
+<p>
+the cleaned VCS directory: <strong>vcsdir/</strong>*
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-1.5/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd hello-c-1.5
+ $ debuild
+ dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ ...
+ fakeroot debian/rules clean
+dh clean --with "autotools-dev"
+ ...
+ debian/rules build
+dh build --with "autotools-dev"
+ ...
+ fakeroot debian/rules binary
+dh binary --with "autotools-dev"
+ ...
+Finished running lintian.</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect the result.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd ..
+ $ tree -L 1
+.
+|-- hello-c-1.5
+|-- hello-c_1.5-1_amd64.build
+|-- hello-c_1.5-1_amd64.changes
+|-- hello-c_1.5-1_amd64.deb
+|-- hello-c_1.5-1.debian.tar.xz
+|-- hello-c_1.5-1.dsc
+|-- hello-c_1.5.orig.tar.gz -&gt; hello-c-1.5.tar.gz
+|-- hello-c-1.5.tar.gz
+`-- vcsdir
+
+2 directories, 7 files</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ dpkg -c hello-c_1.5-1_amd64.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tar -tJf hello-c_1.5-1.debian.tar.xz
+debian/
+debian/compat
+debian/changelog
+debian/watch
+debian/control
+debian/copyright
+debian/README.Debian
+debian/rules
+debian/source/
+debian/source/format
+debian/patches/
+debian/patches/series
+ $ tar -tzf hello-c-1.5.tar.gz
+hello-c-1.5/
+hello-c-1.5/install-sh
+hello-c-1.5/aclocal.m4
+hello-c-1.5/Makefile.am
+hello-c-1.5/depcomp
+hello-c-1.5/configure.ac
+hello-c-1.5/config.h.in
+hello-c-1.5/compile
+hello-c-1.5/Makefile.in
+hello-c-1.5/missing
+hello-c-1.5/configure
+hello-c-1.5/hello.c</code></pre>
+</div></div>
+<div class="paragraph"><p>Your development branch holding the real upstream source tree is the <strong>devel</strong> branch.</p></div>
+<div class="paragraph"><p>The following will import generated Debian packages to <strong>master</strong>, <strong>upstream</strong>, and <strong>pristine-tar</strong> branches.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd vcsdir
+ $ git-import-dsc --color=no --pristine-tar ../hello-c_1.5-1.dsc
+gbp:info: Tag upstream/1.5 not found, importing Upstream tarball
+pristine-tar: committed hello-c_1.5.orig.tar.gz.delta to branch pristine...
+gbp:info: Version '1.5-1' imported under 'hello-c'
+ $ git branch
+  devel
+* master
+  pristine-tar
+  upstream
+ $ gitk --all</code></pre>
+</div></div>
+<div class="paragraph"><p>See the history.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_snapshot_from_vcs_2">Snapshot from VCS (2)</h3>
+<div class="paragraph"><p>Let&#8217;s consider another upstream source in the VCS and make a snapshot package from it.  Let&#8217;s assume this is a Python3 source package in distutils.</p></div>
+<div class="paragraph"><p>Let&#8217;s inspect files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tree
+.
+`-- vcsdir
+    |-- hello-py
+    |   `-- __init__.py
+    |-- MANIFEST
+    |-- MANIFEST.in
+    |-- PKG-INFO
+    |-- scripts
+    |   `-- hello
+    `-- setup.py
+
+3 directories, 6 files</code></pre>
+</div></div>
+<div class="paragraph"><p>There are minimalistic configuration files for Autotools.</p></div>
+<div class="paragraph"><p><strong>setup.py</strong>:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cat vcsdir/setup.py
+#!/usr/bin/python3
+# vi:se ts=4 sts=4 et ai:
+from distutils.core import setup
+
+setup(name='hello-py',
+    version='1.0',
+    description='Hello Python',
+    long_description='Hello Python program.',
+    author='Osamu Aoki',
+    author_email='user@debian.org',
+    url='http://people.debian.org/~user/',
+    packages=['hello-py'],
+    package_dir={'hello-py': 'hello-py'},
+    scripts=['scripts/hello'],
+    classifiers = ['Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3',
+        'Topic :: Utilities',
+    ],
+    platforms   = 'POSIX',
+    license     = 'MIT License'
+)</code></pre>
+</div></div>
+<div class="paragraph"><p>The Python program code is as follows.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cat vcsdir/scripts/hello
+#!/usr/bin/python3
+# vim:se tw=0 sts=4 ts=4 et si:
+"""
+Copyright © 2014 Osamu Aoki
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"...
+to deal in the Software without restriction, including without limitatio...
+the rights to use, copy, modify, merge, publish, distribute, sublicense,...
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""
+
+import hello-py
+
+if __name__ == '__main__':
+    hello.main()
+
+ $ cat vcsdir/hello-py/__init__.py
+#!/usr/bin/python3
+# vim:se tw=0 sts=4 ts=4 et ai:
+
+def main():
+    print('Hello Python3!')
+    return
+
+if __name__ == '__main__':
+    main()</code></pre>
+</div></div>
+<div class="paragraph"><p>You create a non-native Debian package source tree from the above upstream example using the <strong>debmake</strong>(1) command.  Here package description is copied from the upstream <strong>setup.py</strong> content by the <strong>-s</strong> option.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd vcsdir
+ $ git init
+Initialized empty Git repository in /path/to/vcsdir/.git/
+ $ git add .
+ $ git commit -m "initial commit"
+[master (root-commit) 525e40b] initial commit
+ 6 files changed, 93 insertions(+)
+ create mode 100644 MANIFEST
+ create mode 100644 MANIFEST.in
+ create mode 100644 PKG-INFO
+ create mode 100755 hello-py/__init__.py
+ create mode 100755 scripts/hello
+ create mode 100755 setup.py
+ $ git branch devel
+ $ git branch upstream
+ $ git branch
+  devel
+* master
+  upstream
+ $ debmake -s -b':python3' -p hello-py -u 1.0 -d -i debuild
+ ...
+I: debmake -x "1" ...
+ ...
+Finished running lintian.
+I: upon return to the shell, current directory becomes /path/to/vcsdir
+I: please execute "cd .." and inspect the build results.
+ $ git clean -d -f
+Removing dist/</code></pre>
+</div></div>
+<div class="paragraph"><p>Let’s inspect the result.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ cd ..
+ $ tree -L 1
+.
+|-- hello-py-1.0
+|-- hello-py_1.0-1_all.deb
+|-- hello-py_1.0-1_amd64.build
+|-- hello-py_1.0-1_amd64.changes
+|-- hello-py_1.0-1.debian.tar.xz
+|-- hello-py_1.0-1.dsc
+|-- hello-py_1.0.orig.tar.gz -&gt; hello-py-1.0.tar.gz
+|-- hello-py-1.0.tar.gz
+`-- vcsdir
+
+2 directories, 7 files</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ dpkg -c hello-py_1.0-1_all.deb
+drwxr-xr-x root/root ...  ./
+drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/lib/
+drwxr-xr-x root/root ...  ./usr/lib/python3/
+drwxr-xr-x root/root ...  ./usr/lib/python3/dist-packages/
+-rw-r--r-- root/root ...  ./usr/lib/python3/dist-packages/hello_py-1.0.e...
+drwxr-xr-x root/root ...  ./usr/lib/python3/dist-packages/hello-py/
+-rw-r--r-- root/root ...  ./usr/lib/python3/dist-packages/hello-py/__ini...
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-py/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-py/copyright
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-py/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-py/changelog.Debian.gz</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ tar -tJf hello-py_1.0-1.debian.tar.xz
+debian/
+debian/compat
+debian/changelog
+debian/watch
+debian/control
+debian/copyright
+debian/README.Debian
+debian/rules
+debian/source/
+debian/source/format
+debian/patches/
+debian/patches/series
+ $ tar -tzf hello-py-1.0.tar.gz
+hello-py-1.0/
+hello-py-1.0/hello-py/
+hello-py-1.0/hello-py/__init__.py
+hello-py-1.0/scripts/
+hello-py-1.0/scripts/hello
+hello-py-1.0/MANIFEST.in
+hello-py-1.0/PKG-INFO
+hello-py-1.0/setup.py
+hello-py-1.0/MANIFEST</code></pre>
+</div></div>
+<div class="paragraph"><p>Let&#8217;s check the generated control file content.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> $ dpkg -e hello-py_1.0-1_all.deb
+ $ tree DEBIAN
+DEBIAN
+|-- control
+|-- md5sums
+|-- postinst
+`-- prerm
+
+0 directories, 4 files</code></pre>
+</div></div>
+<div class="paragraph"><p>Let&#8217;s compare how packaging deals with <strong>substvar</strong> etc.</p></div>
+<div class="listingblock">
+<div class="title"><strong>debian/control</strong> in the source package</div>
+<div class="content">
+<pre><code> $ cat hello-py-1.0/debian/control
+Source: hello-py
+Section: unknown
+Priority: extra
+Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
+Build-Depends: debhelper (&gt;=9), python3-all
+Standards-Version: 3.9.5
+Homepage: &lt;insert the upstream URL, if relevant&gt;
+X-Python3-Version: &gt;= 3.2
+
+Package: hello-py
+Architecture: all
+Multi-Arch: foreign
+Depends: python3, ${misc:Depends}, ${python3:Depends}
+Description: Hello Python
+ Hello Python program.</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title"><strong>DEBIAN/control</strong> in the binary package</div>
+<div class="content">
+<pre><code> $ cat DEBIAN/control
+Package: hello-py
+Version: 1.0-1
+Architecture: all
+Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
+Installed-Size: 50
+Depends: python3, python3:any (&gt;= 3.3.2-2~)
+Section: unknown
+Priority: extra
+Multi-Arch: foreign
+Homepage: &lt;insert the upstream URL, if relevant&gt;
+Description: Hello Python
+ Hello Python program.</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_appendix">Appendix</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_the_strong_debmake_strong_1_manpage">The <strong>debmake</strong>(1) manpage</h3>
+<div class="sect3">
+<h4 id="_name">NAME</h4>
+<div class="paragraph"><p>debmake - program to make the Debian source package</p></div>
+</div>
+<div class="sect3">
+<h4 id="_synopsis">SYNOPSIS</h4>
+<div class="paragraph"><p><strong>debmake</strong>  [<strong>-h</strong>]  [<strong>-c</strong>] [<strong>-n</strong> | <strong>-a</strong> <em>package-version</em><strong>.orig.tar.gz</strong> | <strong>-d</strong> | <strong>-t</strong> ] [<strong>-p</strong> <em>package</em>] [<strong>-u</strong> <em>version</em>] [<strong>-r</strong> <em>revision</em>] [<strong>-z</strong> <em>extension</em>] [<strong>-b</strong> "<em>binarypackage</em><em><span class=":__type__">, &#8230;</span></em>]" [<strong>-e</strong> <em>foo@example.org</em>] [<strong>-f</strong> "<em>firstname lastname</em>"] [<strong>-i</strong> "<em>buildtool</em>" | <strong>-j</strong>] [<strong>-l</strong> <em>license_file</em>] [<strong>-m</strong>] [<strong>-o</strong> <em>file</em>] [<strong>-q</strong>] [<strong>-s</strong>] [<strong>-v</strong>] [<strong>-w</strong> "<em>addon, &#8230;</em>"] [<strong>-x</strong> [01234]] [<strong>-y</strong>]</p></div>
+</div>
+<div class="sect3">
+<h4 id="_description">DESCRIPTION</h4>
+<div class="paragraph"><p><strong>debmake</strong> helps to build the Debian package from the upstream source.  Normally, this is done as follows:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The upstream tarball is downloaded as the <em>package-version</em><strong>.tar.gz</strong> file.
+</p>
+</li>
+<li>
+<p>
+It is untared to create many files under the <em>package-version/</em> directory.
+</p>
+</li>
+<li>
+<p>
+debmake is invoked in the <em>package-version/</em> directory possibly without any arguments.
+</p>
+</li>
+<li>
+<p>
+Files in the <em>package-version</em><strong>/debian/</strong> directory are manually adjusted.
+</p>
+</li>
+<li>
+<p>
+<strong>dpkg-buildpackage</strong> (usually from its wrapper <strong>debuild</strong> or <strong>pdebuild</strong>) is invoked in the <em>package-version/</em> directory to make debian packages.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Make sure to protect the arguments of the <strong>-b</strong>, <strong>-f</strong>, <strong>-n</strong>, and <strong>-w</strong> options from the shell interference by quoting them properly.</p></div>
+<div class="sect4">
+<h5 id="_optional_arguments">optional arguments:</h5>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-h</strong>, <strong>--help</strong>
+</dt>
+<dd>
+<p>
+    show this help message and exit.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-c</strong>, <strong>--copyright</strong>
+</dt>
+<dd>
+<p>
+    scan source for copyright+license text and exit.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-n</strong>, <strong>--native</strong>
+</dt>
+<dd>
+<p>
+    make a native Debian source package without <strong>.orig.tar.gz</strong>.  This makes the "<strong>3.0 (native)</strong>" format package.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>If you are thinking to package a Debian specific source tree with <strong>debian/</strong>* in it into a native Debian package, please think otherwise.  You can use  "<strong>debmake -d  -i debuild</strong>" or "<strong>debmake -t -i debuild</strong>" to make the "<strong>3.0 (quilt)</strong>" format non-native Debian package.  The only difference is that the <strong>debian/changelog</strong> file must use the  non-native version scheme: <em>version-revision</em>.  The non-native package is more friendly to the downstream distributions.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-a</strong> <em>package-version</em><strong>.tar.gz</strong>, <strong>--archive</strong> <em>package-version</em><strong>.tar.gz</strong>
+</dt>
+<dd>
+<p>
+    use the upstream source tarball directly. (<strong>-p</strong>, <strong>-u</strong>, <strong>-z</strong>: overridden)
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The upstream tarball may be specified as <em>package_version</em><strong>.orig.tar.gz</strong> and <strong>tar.gz</strong> for all cases may be <strong>tar.bz2</strong>, or <strong>tar.xz</strong>.</p></div>
+<div class="paragraph"><p>If the specified upstream tarball name contains uppercase letters, the Debian package name is generated by converting them to lowercase letters.</p></div>
+<div class="paragraph"><p>If the specified argument is the URL (http://, https://, or ftp://) to the upstream tarball, the upstream tarball is downloaded from the URL using <strong>wget</strong> or <strong>curl</strong>.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-d</strong>, <strong>--dist</strong>
+</dt>
+<dd>
+<p>
+    run "make dist" equivalent first to generate upstream tarball and use it.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>"<strong>debmake -d</strong>" is designed to run in the <em>package/</em> directory hosting the upstream VCS with the build system supporting "<strong>make dist</strong>" equivalents.  (automake/autoconf, Python distutils, &#8230;)</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-t</strong>, <strong>--tar</strong>
+</dt>
+<dd>
+<p>
+    run "<strong>tar</strong>" to generate upstream tarball and use it
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>"<strong>debmake  -t</strong>" is designed to run in the <em>package/</em> directory hosting the upstream VCS.  Unless there is the <strong>debian/changelog</strong> file, you need to provide the upstream version with the <strong>-u</strong> option.  The generated tarball excludes the <strong>debian/</strong> directory. (It also excludes typical VCS directories: <strong>.git/ .hg/ .svn/ .CVS/</strong>)</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-p</strong> <em>package</em>, <strong>--package</strong> <em>package</em>
+</dt>
+<dd>
+<p>
+    set the Debian package name.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-u</strong> <em>version</em>, <strong>--upstreamversion</strong> <em>version</em>
+</dt>
+<dd>
+<p>
+    set the upstream package version.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-r</strong> <em>revision</em>, <strong>--revision</strong> <em>revision</em>
+</dt>
+<dd>
+<p>
+    set the Debian package revision.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-z</strong> <em>extension</em>, <strong>--targz</strong> <em>extension</em>
+</dt>
+<dd>
+<p>
+    set the tarball type, <em>extension</em>=(<strong>tar.gz</strong>|<strong>tar.bz2</strong>|<strong>tar.xz</strong>) (alias: <strong>z</strong>, <strong>b</strong>, <strong>x</strong>)
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-b</strong> "<em>binarypackage</em><em><span class=":__type__">,&#8230;</span></em>", <strong>--binaryspec</strong> "<em>binarypackage</em><em><span class=":__type__">,&#8230;</span></em>"
+</dt>
+<dd>
+<p>
+    set binary package specs as comma separated list of <em>binarypackage</em>:'type' pairs, e.g., in full form "<strong>foo:bin,foo-doc:doc,libfoo1:lib,libfoo1-dbg:dbg,libfoo-dev:dev</strong>" or in short form "<strong>,-doc,libfoo1,libfoo1-dbg, libfoo-dev</strong>".
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Here, <em>binarypackage</em> is the binary package name; and optional <em>type</em> is chosen from the following <em>type</em> values:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>bin</strong>: C/C++ compiled ELF binary code package (any, foreign) (default, alias: <strong>""</strong>, i.e., <em>null-string</em>)
+</p>
+</li>
+<li>
+<p>
+<strong>data</strong>: Data (fonts, graphics, &#8230;) package (all, foreign) (alias: <strong>da</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>dbg</strong>: Debug symbol package (any, same) (alias: <strong>db</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>dev</strong>: Library development package (any, same) (alias: <strong>de</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>doc</strong>: Documentation package (all, foreign) (alias: <strong>do</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>lib</strong>: Library package (any, same) (alias: <strong>l</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>perl</strong>: Perl script package (all, foreign) (alias: <strong>pl</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>python</strong>: Python script package (all, foreign) (alias: <strong>py</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>python3</strong>: Python3 script package (all, foreign) (alias: <strong>py3</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>ruby</strong>: Ruby script package (all, foreign) (alias: <strong>rb</strong>)
+</p>
+</li>
+<li>
+<p>
+<strong>script</strong>: Shell script package (all, foreign) (alias: <strong>sh</strong>)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The pair values in the parentheses, such as (any, foreign), are the <strong>Architecture</strong> and <strong>Multi-Arch</strong> stanza values set in the <strong>debian/control</strong> file.</p></div>
+<div class="paragraph"><p>In many cases, the <strong>debmake</strong> command makes good guess for <em>type</em> from <em>binarypackage</em>.  If <em>type</em> is not obvious, <em>type</em> is set to <strong>bin</strong>.  For example, <strong>libfoo</strong> sets <em>type</em> to <strong>lib</strong>, and <strong>font-bar</strong> sets <em>type</em> to <strong>data</strong>, &#8230;</p></div>
+<div class="paragraph"><p>If the source tree contents does not match settings for <em>type</em>, <strong>debmake</strong> warns you.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-e</strong> <em>foo@example.org</em>, <strong>--email</strong> <em>foo@example.org</em>
+</dt>
+<dd>
+<p>
+    set e-mail address.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The default is taken from the value of the environment variable <strong>$DEBEMAIL</strong>.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-f</strong> "<em>firstname lastname</em>", <strong>--fullname</strong> "<em>firstname lastname</em>"
+</dt>
+<dd>
+<p>
+    set the fullname.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The default is taken from the value of the environment variable <strong>$DEBFULLNAME</strong>.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-i</strong> "<em>buildtool</em>", <strong>--invoke</strong> "<em>buildtool</em>"
+</dt>
+<dd>
+<p>
+    invoke "<em>buildtool</em>" at the end of execution.  "<em>buildtool</em>" may be "<strong>dpkg-buildpackage</strong>", "<strong>debuild</strong>", "<strong>pdebuild</strong>", "<strong>pdebuild  --pbuilder cowbuilder</strong>", etc..
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The default is not to execute any program.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-j</strong>, <strong>--judge</strong>
+</dt>
+<dd>
+<p>
+    run <strong>dpkg-depcheck</strong> to judge build dependencies and identify file paths.  Log files are in the parent directory.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>package</em><strong>.build-dep.log</strong>: Log file for <strong>dpkg-depcheck</strong>.
+</p>
+</li>
+<li>
+<p>
+<em>package</em><strong>.install.log</strong>: Log file recording files in the <strong>debian/tmp</strong> directory.
+</p>
+</li>
+</ul></div>
+</dd>
+<dt class="hdlist1">
+<strong>-l</strong> <em>license_file,&#8230;</em>, <strong>--license</strong> <em>license_file,&#8230;</em>
+</dt>
+<dd>
+<p>
+    add formatted license text to the end of the <strong>debian/copyright</strong> file holding license scan results
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The default is add <strong>COPYING</strong> and <strong>LICENSE</strong> and <em>license_file</em> needs to list only the additional file names all separated by "<strong>,</strong>".</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-m</strong>, <strong>--monoarch</strong>
+</dt>
+<dd>
+<p>
+    force packages to be non-multiarch.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-o</strong> <em>file</em>, <strong>--option</strong> <em>file</em>
+</dt>
+<dd>
+<p>
+    read optional parameters from file. (This is not for everyday use.)
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The <em>file</em> is sourced as the Python3 code at the end of <strong>para.py</strong>.  For example, the package description can be specified by the following file.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>para['desc'] = 'program short description'
+para['desc_long'] = '''\
+ program long description which you wish to include.
+ .
+ Empty line is space + .
+ You keep going on ...
+'''</code></pre>
+</div></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-q</strong>, <strong>--quitearly</strong>
+</dt>
+<dd>
+<p>
+    quit early before creating files in the <strong>debian/</strong> directory.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-s</strong>, <strong>--spec</strong>
+</dt>
+<dd>
+<p>
+    use upstream spec (setup.py for Python, etc.) for the package description.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-v</strong>, <strong>--version</strong>
+</dt>
+<dd>
+<p>
+    show version information.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-w</strong> "<em>addon,&#8230;</em>", <strong>--with</strong> "<em>addon,&#8230;</em>"
+</dt>
+<dd>
+<p>
+    add extra arguments to the <strong>--with</strong> option of the <strong>dh</strong>(1) command as <em>addon</em> in <strong>debian/rules</strong>.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p><em>addon</em> values are listed all separated by "<strong>,</strong>", e.g., <strong>-w "python2,autoreconf"</strong>.</p></div>
+<div class="paragraph"><p>For  Autotools based packages, setting <strong>autoreconf</strong> as <em>addon</em> forces to run "<strong>autoreconf -i -v -f</strong>" for every package building.  Otherwise, <strong>autotools-dev</strong> as <em>addon</em> is used as default.</p></div>
+<div class="paragraph"><p>For Autotools based packages, if they install Python programs, <strong>python2</strong> as addon is needed for packages with <strong>compat &lt; 9</strong> since this is non-obvious.   But for <strong>setup.py</strong> based packages, <strong>python2</strong> as <em>addon</em> is not needed since this is obvious and it is automatically set for the <strong>dh</strong>(1) command by the <strong>debmake</strong> command when it is required.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-x</strong> <em>n</em>, <strong>--extra</strong> <em>n</em>
+</dt>
+<dd>
+<p>
+    generate extra configuration files as templates.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The number <em>n</em> changes which configuration templates are generated.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>-x0</strong>: bare minimum configuration files. (default if these files exist already)
+</p>
+</li>
+<li>
+<p>
+<strong>-x1</strong>: ,, + desirable configuration files. (default for new packages)
+</p>
+</li>
+<li>
+<p>
+<strong>-x2</strong>: ,, + interesting configuration files. (recommended for experts, multi binary aware)
+</p>
+</li>
+<li>
+<p>
+<strong>-x3</strong>:  ,,  + unusual configuration template files with the extra <strong>.ex</strong> suffix to ease their removal. (recommended for new users) To use these as configuration files, rename their file names into ones without the <strong>.ex</strong> suffix.
+</p>
+</li>
+<li>
+<p>
+<strong>-x4</strong>: ,, + copyright file examples.
+</p>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-y</strong>, <strong>--yes</strong>
+</dt>
+<dd>
+<p>
+    force "yes" for all prompts. (without option: "ask [Y/n]"; doubled option: force "no")
+</p>
+</dd>
+</dl></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_examples">EXAMPLES</h4>
+<div class="paragraph"><p>For  a  well  behaving  source, you can build a good-for-local-use installable single Debian binary package easily with one command.  Test install of such a package
+generated in this way offers a good alternative to traditional "<strong>make install</strong>" to the <strong>/usr/local</strong> directory since the Debian package can be  removed  cleanly  by  the
+"<strong>dpkg -P</strong> <em>&#8230;</em>" command. Here are some examples of how to build such test packages. (These should work in most cases.  If the <strong>-d</strong> does not work, try <strong>-t</strong> instead.)</p></div>
+<div class="paragraph"><p>For a typical C program source tree packaged with autoconf/automake:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>debmake -d -i debuild</strong>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For a typical python module source tree:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>debmake -d -b":python" -i debuild</strong>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For a typical python module in the <em>package-version</em><strong>.tar.gz</strong> archive:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>debmake -a <em>package-version</em>.tar.gz -b":python" -i debuild</strong>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For a typical perl module in the <em>Package-version</em><strong>.tar.gz</strong> archive:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>debmake -a <em>Package-version</em>.tar.gz -b":perl" -i debuild</strong>
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_helper_packages">HELPER PACKAGES</h4>
+<div class="paragraph"><p>Packaging may require installation of some additional speciality helper packages.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Python3 program may require the <strong>dh-python</strong> package.
+</p>
+</li>
+<li>
+<p>
+Autotools (Autoconf + Automake) build system may require <strong>autotools-dev</strong> or <strong>dh-autoreconf</strong> package.
+</p>
+</li>
+<li>
+<p>
+Ruby program may require the <strong>gem2deb</strong> package.
+</p>
+</li>
+<li>
+<p>
+Java program may require the <strong>javahelper</strong> package.
+</p>
+</li>
+<li>
+<p>
+Gnome programs may require the <strong>gobject-introspection</strong> package.
+</p>
+</li>
+<li>
+<p>
+etc.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_caveat">CAVEAT</h4>
+<div class="paragraph"><p>There  are some limitations for what characters may be used as a part of the Debian package.  The most notable limitation is the prohibition of uppercase letters in
+the package name.  Here is the summary in the regular expression.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Upstream package name (<strong>-p</strong>): [-+.a-z0-9]{2,}
+</p>
+</li>
+<li>
+<p>
+Binary package name (<strong>-b</strong>): [-+.a-z0-9]{2,}
+</p>
+</li>
+<li>
+<p>
+Upstream version (<strong>-u</strong>): [0-9][-+.:~a-z0-9A-Z]*
+</p>
+</li>
+<li>
+<p>
+Debian revision (<strong>-r</strong>): [0-9][+.~a-z0-9A-Z]*
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>See the exact definition in &#8220;5.6.1 Source&#8221;, &#8220;5.6.7 Package&#8221;, and &#8220;5.6.12  Version&#8221; of &#8220;Debian Policy Manual&#8221;.   (<a href="http://www.debian.org/doc/debian-policy/ch-controlfields.html">http://www.debian.org/doc/debian-policy/ch-controlfields.html</a>)</p></div>
+</div>
+<div class="sect3">
+<h4 id="_debug">DEBUG</h4>
+<div class="paragraph"><p>The character set in the environ variable <strong>$DEBUG</strong> determines the logging output level.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>p</strong>: list all parameters
+</p>
+</li>
+<li>
+<p>
+<strong>d</strong>: list all binary package parameters
+</p>
+</li>
+<li>
+<p>
+<strong>f</strong>: copyright scanner input filename
+</p>
+</li>
+<li>
+<p>
+<strong>i</strong>: copyright scanner input line
+</p>
+</li>
+<li>
+<p>
+<strong>o</strong>: line outside of the copyright and license sections
+</p>
+</li>
+<li>
+<p>
+<strong>c</strong>: line inside of the copyright section
+</p>
+</li>
+<li>
+<p>
+<strong>l</strong>: line inside of the license section
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_author">AUTHOR</h4>
+<div class="paragraph"><p>Copyright © 2013 Osamu Aoki &lt;<a href="mailto:osamu@debian.org">osamu@debian.org</a>&gt;</p></div>
+</div>
+<div class="sect3">
+<h4 id="_license">LICENSE</h4>
+<div class="paragraph"><p>MIT License</p></div>
+</div>
+<div class="sect3">
+<h4 id="_see_also">SEE ALSO</h4>
+<div class="paragraph"><p>See also <strong>debhelper</strong>(7), <strong>dpkg-buildpackage</strong>(1) <strong>debuild</strong>(1) and <strong>pdebuild</strong>(1) manpages and files in /usr/share/doc/debmake/.</p></div>
+<div class="paragraph"><p>Learn basics of Debian packaging with the &#8220;Debian New Maintainers' Guide&#8221; at <a href="http://www.debian.org/doc/manuals/maint-guide/">http://www.debian.org/doc/manuals/maint-guide/</a> or with the <strong>maint-guide</strong> package.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2014-02-24 22:46:30 JST
+</div>
+</div>
+</body>
+</html>

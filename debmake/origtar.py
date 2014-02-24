@@ -42,7 +42,7 @@ def origtar(package, version, targz, tarball, srcdir):
             print('I: Use existing "{}" as upstream tarball'.format(tarball), file=sys.stderr)
         else:
             command = 'ln -sf ' + tarball + ' ' + origtargz
-            print('I: {}'.format(command), file=sys.stderr)
+            print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
                 print('E: failed to create symlink.', file=sys.stderr)
                 exit(1)
