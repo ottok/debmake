@@ -1,6 +1,2 @@
-# See dh_install(1)
-# http://www.debian.org/doc/manuals/maint-guide/dother.en.html#install
-# run rules/install to find out which file should be copied from debian/tmp
-# to the binary packages.
-# For this package, files in the following directory may be the candidates.
+# Candidates as below and see dh_install(1).
 #usr/share/@BINPACKAGE@

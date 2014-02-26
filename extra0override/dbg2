@@ -1,5 +1,0 @@
-# save debug symbols under usr/lib/debug/
-# split these using {}.install files.
-override_dh_strip:
-	dh_strip --keep-debug
-

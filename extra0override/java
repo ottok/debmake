@@ -1,3 +1,2 @@
-# For java program, set debian/javabuild as described in 
-# /usr/share/doc/javahelper/tutorial.html
+# Set debian/javabuild as /usr/share/doc/javahelper/tutorial.html
 
