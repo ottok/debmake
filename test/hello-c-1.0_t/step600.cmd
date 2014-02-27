@@ -1,3 +1,3 @@
 CD ..
 cd ..
-L "tree"
+L "tree -L 1"

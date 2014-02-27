@@ -1,0 +1,7 @@
+ $ rm -f clean
+ $ rm -f libkkc2.examples
+ $ rm -f libkkc2.info
+ $ rm -f libkkc2.postinst
+ $ rm -f libkkc2.postrm
+ $ rm -f libkkc2.preinst
+ $ rm -f libkkc2.prerm

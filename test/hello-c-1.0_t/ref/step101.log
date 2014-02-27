@@ -1,6 +1,6 @@
  $ tree
 .
-`-- vcsdir
+`-- hello-c
     |-- hello.c
     `-- Makefile
 

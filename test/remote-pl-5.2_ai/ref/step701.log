@@ -1,0 +1,27 @@
+ $ tar -tJf perl-tutorial_0.001-1.debian.tar.xz
+debian/
+debian/compat
+debian/changelog
+debian/watch
+debian/control
+debian/copyright
+debian/README.Debian
+debian/rules
+debian/source/
+debian/source/format
+debian/patches/
+debian/patches/series
+ $ tar -tzf Perl-Tutorial-0.001.tar.gz
+Perl-Tutorial-0.001
+Perl-Tutorial-0.001/README
+Perl-Tutorial-0.001/LICENSE
+Perl-Tutorial-0.001/dist.ini
+Perl-Tutorial-0.001/META.yml
+Perl-Tutorial-0.001/MANIFEST
+Perl-Tutorial-0.001/Makefile.PL
+Perl-Tutorial-0.001/lib/Perl
+Perl-Tutorial-0.001/lib/Perl/Tutorial.pm
+Perl-Tutorial-0.001/t
+Perl-Tutorial-0.001/t/release-pod-syntax.t
+Perl-Tutorial-0.001/lib/Perl/Tutorial
+Perl-Tutorial-0.001/lib/Perl/Tutorial/HelloWorld.pod

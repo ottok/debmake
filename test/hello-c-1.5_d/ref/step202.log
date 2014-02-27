@@ -1,4 +1,4 @@
- $ git clean -d -f
+ $ git clean -d -f -x
 Removing .deps/
 Removing Makefile
 Removing Makefile.in

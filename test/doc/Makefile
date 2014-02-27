@@ -10,18 +10,18 @@ new:
 html: debmake.html
 
 debmake.html: $(wildcard *.txt)
-	sed -e 's/^= DEBMAKE(1)$$/= The *debmake*(1) manpage/' -e 's/^=/===/' debmake.1.txt >99-debmake-man.txt
-	sed -n -e '/^\*-b\*/,$$p' debmake.1.txt | sed -e '/^\*-e\*/,$$d'>binary.txt
-	sed -e '1,/^== CAVEAT/d' debmake.1.txt | sed -e '/^== DEBUG/,$$d'>caveat.txt
+	sed -e 's/^= DEBMAKE(1)$$/= *debmake*(1)/' -e 's/^=/===/' XX-manpage.txt >99-manpage.txt
+	sed -n -e '/^\*-b\*/,$$p' XX-manpage.txt | sed -e '/^\*-e\*/,$$d'>binary.txt
+	sed -e '1,/^== CAVEAT/d' XX-manpage.txt | sed -e '/^== DEBUG/,$$d'>caveat.txt
 	asciidoc -atoc2 debmake.txt
 
 man: debmake.1
 
-debmake.1: debmake.1.txt
-	a2x --doctype manpage --format manpage debmake.1.txt
+debmake.1: XX-manpage.txt
+	a2x --doctype manpage --format manpage XX-manpage.txt
 
 clean:
-	-rm -f debmake.1 debmake.html 99-debmake-man.txt binary.txt caveat.txt examples.html
+	-rm -f debmake.1 *.html binary.txt caveat.txt 99-manpage.txt
 
 
 .PHONY: all html man clean new

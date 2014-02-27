@@ -42,17 +42,18 @@ I: creating => debian/hello-c.preinst
 I: creating => debian/hello-c.menu
 I: creating => debian/hello-c.prerm
 I: creating => debian/hello-c.links
+I: creating => debian/hello-c.install
 I: creating => debian/hello-c.docs
 I: creating => debian/hello-c.info
 I: creating => debian/hello-c.examples
 I: creating => debian/hello-c.manpages
-I: creating => debian/hello-c.install
+I: skipping :: debian/hello-c.install (file exists)
 I: creating => debian/hello-c.doc-base
-I: creating => debian/hello-c-dbg.install
 I: run "debmake -x3" to get more template files
 I: $ wrap-and-sort
-I: $ fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules insta...
-I: $ find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" >../hell...
+I: $ fakeroot dpkg-depcheck -m -C -o ../hello-c.depcheck.log -f -catch-a...
+I: $ LANG=C ; sed -e "1d" < ../hello-c.depcheck.log | sort >../hello-c.b...
+I: $ LANG=C; find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" ...
 I: upon return to the shell, current directory becomes /path/to
 I: please execute "cd /path/to/hello-c-1.0" before building the binary p...
 I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

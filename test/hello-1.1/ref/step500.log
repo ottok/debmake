@@ -92,24 +92,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: hello source: dbg-package-missing-depends hello-c-dbg
-N:
-N:    The given binary package has a name of the form of "X-dbg", indica...
-N:    it contains detached debugging symbols for the package X. If so, i...
-N:    should depend on the corresponding package, generally with (=
-N:    ${binary:Version}) since the debugging symbols are only useful wit...
-N:    binaries created by the same build.
-N:
-N:    If this package provides debugging symbols for multiple other pack...
-N:    it should normally depend on all of those packages as alternatives...
-N:    other words, pkga (= ${binary:Version}) | pkgb (= ${binary:Version...
-N:    so forth.
-N:
-N:    Severity: normal, Certainty: certain
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
-W: hello source: missing-license-paragraph-in-dep5-copyright no_license_...
+W: hello source: missing-license-paragraph-in-dep5-copyright unknown (pa...
 N:
 N:    The files paragraph in the machine readable copyright file referen...
 N:    license, for which no standalone license paragraph exists.
@@ -122,7 +105,20 @@ N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
 N:
-W: hello-sh: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c: hardening-no-relro usr/bin/hello
+N:
+N:    This package provides an ELF binary that lacks the "read-only
+N:    relocation" link flag. This package was likely not built with the
+N:    default Debian compiler flags defined by dpkg-buildflags. If built...
+N:    dpkg-buildflags directly, be sure to import LDFLAGS.
+N:
+N:    Refer to http://wiki.debian.org/Hardening for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
 N:
 N:    Bug numbers can only contain digits.
 N:
@@ -133,7 +129,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-sh: new-package-should-close-itp-bug
+W: hello-c: new-package-should-close-itp-bug
 N:
 N:    This package appears to be the first packaging of a new upstream
 N:    software package (there is only one changelog entry and the Debian...
@@ -150,7 +146,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-E: hello-sh: changelog-is-dh_make-template
+E: hello-c: changelog-is-dh_make-template
 N:
 N:    The changelog file has an instruction left by dh_make, which has n...
 N:    been removed. Example:
@@ -164,7 +160,7 @@ N:    Severity: important, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-sh: copyright-has-url-from-dh_make-boilerplate
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
 N:
 N:    There is "url://example.com" in your copyright file. This was most...
 N:    likely a remnant from the dh_make template.
@@ -179,7 +175,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-W: hello-sh: copyright-without-copyright-notice
+W: hello-c: copyright-without-copyright-notice
 N:
 N:    The copyright file for this package does not appear to contain a
 N:    copyright notice. You should copy the copyright notice from the up...
@@ -206,139 +202,6 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-I: hello-sh: extended-description-is-probably-too-short
-N:
-N:    The extended description (the lines after the first line of the
-N:    "Description:" field) is only one or two lines long. The extended
-N:    description should provide a user with enough information to decid...
-N:    whether they want to install this package, what it contains, and h...
-N:    compares to similar packages. One or two lines is normally not eno...
-N:    do this.
-N:
-N:    Refer to Debian Developer's Reference section 6.2.1 (General guide...
-N:    for package descriptions) and Debian Developer's Reference section...
-N:    (The long description) for details.
-N:
-N:    Severity: minor, Certainty: possible
-N:
-N:    Check: description, Type: binary, udeb
-N:
-E: hello-sh: section-is-dh_make-template
-N:
-N:    The "Section:" field in this package's control file is set to unkn...
-N:    This is not a valid section, and usually means a dh_make template
-N:    control file was used and never modified to set the correct sectio...
-N:
-N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
-N:
-N:    Severity: serious, Certainty: certain
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
-W: hello-sh: superfluous-clutter-in-homepage <insert the upstream URL, i...
-W: hello-sh: bad-homepage <insert the upstream URL, if relevant>
-W: hello-sh: binary-without-manpage usr/bin/hello-sh
-N:
-N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games shou...
-N:    have a manual page
-N:
-N:    Note that though the man program has the capability to check for s...
-N:    program names in the NAMES section, each of these programs should ...
-N:    its own manual page (a symbolic link to the appropriate manual pag...
-N:    sufficient) because other manual page viewers such as xman or tkma...
-N:    don't support this.
-N:
-N:    If the name of the man page differs from the binary by case, man m...
-N:    able to find it anyway; however, it is still best practice to make...
-N:    case of the man page match the case of the binary.
-N:
-N:    If the man pages are provided by another package on which this pac...
-N:    depends, lintian may not be able to determine that man pages are
-N:    available. In this case, after confirming that all binaries do hav...
-N:    pages after this package and its dependencies are installed, pleas...
-N:    a lintian override.
-N:
-N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for deta...
-N:
-N:    Severity: normal, Certainty: possible
-N:
-N:    Check: manpages, Type: binary
-N:
-W: hello-data: wrong-bug-number-in-closes l3:#nnnn
-W: hello-data: new-package-should-close-itp-bug
-E: hello-data: changelog-is-dh_make-template
-W: hello-data: copyright-has-url-from-dh_make-boilerplate
-W: hello-data: copyright-without-copyright-notice
-I: hello-data: extended-description-is-probably-too-short
-E: hello-data: section-is-dh_make-template
-W: hello-data: superfluous-clutter-in-homepage <insert the upstream URL,...
-W: hello-data: bad-homepage <insert the upstream URL, if relevant>
-W: hello-data: executable-not-elf-or-script usr/share/hello/hello.data
-N:
-N:    This executable file is not an ELF format binary, and does not sta...
-N:    with the #! sequence that marks interpreted scripts. It might be a...
-N:    script that fails to name /bin/sh as its shell, or it may be incor...
-N:    marked as executable. Sometimes upstream files developed on Window...
-N:    marked unnecessarily as executable on other systems.
-N:
-N:    If you are using debhelper to build your package, running dh_fixpe...
-N:    will often correct this problem for you.
-N:
-N:    Refer to Debian Policy Manual section 10.4 (Scripts) for details.
-N:
-N:    Severity: normal, Certainty: certain
-N:
-N:    Check: scripts, Type: binary
-N:
-W: hello-c-dbg: debug-file-with-no-debug-symbols usr/lib/debug/.build-id...
-N:
-N:    The binary is installed as a detached "debug symbols" ELF file, bu...
-N:    does not appear to have debug information associated with it.
-N:
-N:    Implementation detail: Lintian currently checks for the ".debug_li...
-N:    section, which is a part of the DWARF standard.
-N:
-N:    Refer to http://bugs.debian.org/668437 for details.
-N:
-N:    Severity: normal, Certainty: possible
-N:
-N:    Check: binaries, Type: binary, udeb
-N:
-W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
-W: hello-c-dbg: new-package-should-close-itp-bug
-E: hello-c-dbg: changelog-is-dh_make-template
-W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
-W: hello-c-dbg: copyright-without-copyright-notice
-E: hello-c-dbg: section-is-dh_make-template
-W: hello-c-dbg: wrong-section-according-to-package-name hello-c-dbg => d...
-N:
-N:    This package has a name suggesting that it belongs to a section ot...
-N:    than the one it is currently categorized in.
-N:
-N:    Severity: normal, Certainty: possible
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
-W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL...
-W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
-W: hello-c: hardening-no-relro usr/bin/hello
-N:
-N:    This package provides an ELF binary that lacks the "read-only
-N:    relocation" link flag. This package was likely not built with the
-N:    default Debian compiler flags defined by dpkg-buildflags. If built...
-N:    dpkg-buildflags directly, be sure to import LDFLAGS.
-N:
-N:    Refer to http://wiki.debian.org/Hardening for details.
-N:
-N:    Severity: normal, Certainty: certain
-N:
-N:    Check: binaries, Type: binary, udeb
-N:
-W: hello-c: wrong-bug-number-in-closes l3:#nnnn
-W: hello-c: new-package-should-close-itp-bug
-E: hello-c: changelog-is-dh_make-template
-W: hello-c: copyright-has-url-from-dh_make-boilerplate
-W: hello-c: copyright-without-copyright-notice
 W: hello-c: extended-description-line-too-long
 N:
 N:    One or more lines in the extended part of the "Description:" field...
@@ -387,7 +250,117 @@ N:    Check: description, Type: binary, udeb
 N:
 I: hello-c: capitalization-error-in-description Gnome GNOME
 E: hello-c: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unkn...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct sectio...
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
 W: hello-c: superfluous-clutter-in-homepage <insert the upstream URL, if...
 W: hello-c: bad-homepage <insert the upstream URL, if relevant>
 W: hello-c: binary-without-manpage usr/bin/hello
+N:
+N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games shou...
+N:    have a manual page
+N:
+N:    Note that though the man program has the capability to check for s...
+N:    program names in the NAMES section, each of these programs should ...
+N:    its own manual page (a symbolic link to the appropriate manual pag...
+N:    sufficient) because other manual page viewers such as xman or tkma...
+N:    don't support this.
+N:
+N:    If the name of the man page differs from the binary by case, man m...
+N:    able to find it anyway; however, it is still best practice to make...
+N:    case of the man page match the case of the binary.
+N:
+N:    If the man pages are provided by another package on which this pac...
+N:    depends, lintian may not be able to determine that man pages are
+N:    available. In this case, after confirming that all binaries do hav...
+N:    pages after this package and its dependencies are installed, pleas...
+N:    a lintian override.
+N:
+N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for deta...
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: manpages, Type: binary
+N:
+W: hello-data: wrong-bug-number-in-closes l3:#nnnn
+W: hello-data: new-package-should-close-itp-bug
+E: hello-data: changelog-is-dh_make-template
+W: hello-data: copyright-has-url-from-dh_make-boilerplate
+W: hello-data: copyright-without-copyright-notice
+I: hello-data: extended-description-is-probably-too-short
+N:
+N:    The extended description (the lines after the first line of the
+N:    "Description:" field) is only one or two lines long. The extended
+N:    description should provide a user with enough information to decid...
+N:    whether they want to install this package, what it contains, and h...
+N:    compares to similar packages. One or two lines is normally not eno...
+N:    do this.
+N:
+N:    Refer to Debian Developer's Reference section 6.2.1 (General guide...
+N:    for package descriptions) and Debian Developer's Reference section...
+N:    (The long description) for details.
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+E: hello-data: section-is-dh_make-template
+W: hello-data: superfluous-clutter-in-homepage <insert the upstream URL,...
+W: hello-data: bad-homepage <insert the upstream URL, if relevant>
+W: hello-data: executable-not-elf-or-script usr/share/hello/hello.data
+N:
+N:    This executable file is not an ELF format binary, and does not sta...
+N:    with the #! sequence that marks interpreted scripts. It might be a...
+N:    script that fails to name /bin/sh as its shell, or it may be incor...
+N:    marked as executable. Sometimes upstream files developed on Window...
+N:    marked unnecessarily as executable on other systems.
+N:
+N:    If you are using debhelper to build your package, running dh_fixpe...
+N:    will often correct this problem for you.
+N:
+N:    Refer to Debian Policy Manual section 10.4 (Scripts) for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: scripts, Type: binary
+N:
+W: hello-sh: wrong-bug-number-in-closes l3:#nnnn
+W: hello-sh: new-package-should-close-itp-bug
+E: hello-sh: changelog-is-dh_make-template
+W: hello-sh: copyright-has-url-from-dh_make-boilerplate
+W: hello-sh: copyright-without-copyright-notice
+I: hello-sh: extended-description-is-probably-too-short
+E: hello-sh: section-is-dh_make-template
+W: hello-sh: superfluous-clutter-in-homepage <insert the upstream URL, i...
+W: hello-sh: bad-homepage <insert the upstream URL, if relevant>
+W: hello-sh: binary-without-manpage usr/bin/hello-sh
+W: hello-c-dbg: debug-file-with-no-debug-symbols usr/lib/debug/.build-id...
+N:
+N:    The binary is installed as a detached "debug symbols" ELF file, bu...
+N:    does not appear to have debug information associated with it.
+N:
+N:    Implementation detail: Lintian currently checks for the ".debug_li...
+N:    section, which is a part of the DWARF standard.
+N:
+N:    Refer to http://bugs.debian.org/668437 for details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c-dbg: new-package-should-close-itp-bug
+E: hello-c-dbg: changelog-is-dh_make-template
+W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
+W: hello-c-dbg: copyright-without-copyright-notice
+W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL...
+W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
 Finished running lintian.

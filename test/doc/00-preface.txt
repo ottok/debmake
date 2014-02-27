@@ -1,6 +1,5 @@
+[[preface]]
 == Preface
-
-CAUTION: This manual is still not finished and quite rough.
 
 The *debmake* command is a helper script to generate Debian packaging files.
 
@@ -31,17 +30,18 @@ I will describe the following to get you started with the *debmake* command.
 ** A rewrite in progress of the ``Debian New Maintainers' Guide'' for the *debmake* command.
 * Bottom up tutorial for the Debian packaging
 ** Step-by-step examples of various packaging cases using simple model packages.
-** The *examples.tar.xz* tarball has the sources of these and more.
-* Appendix: the *debmake*(1) manpage
+* Appendix: the *debmake*(1) manpage.
 
-CAUTION: This document only explains how to make a working set of installable Debian binary packages from the upstream source.  Much more details need to be addressed before uploading the package to the Debian archive.
+The */usr/share/doc/debmake/examples.tar.xz* tarball has the sources used for testing the *debmake* command and creating the examples in this document.
+
+CAUTION: This document focuses to explain how to make a working set of installable Debian binary packages from the upstream source.  Much more details need to be addressed before uploading the package to the Debian archive.
 
 Please read the basic Debian documentations together with this manual to generate perfect Debian packages.
 
-* ``Debian Policy Manual'' (http://www.debian.org/doc/devel-manuals#policy)
-* ``Debian Developer's Reference'' (http://www.debian.org/doc/devel-manuals#devref)
-* ``Debian New Maintainers' Guide'' (http://www.debian.org/doc/devel-manuals#maint-guide)
-* ``Introduction to Debian packaging'' (http://www.debian.org/doc/devel-manuals#packaging-tutorial)
+* ``Debian Policy Manual'' -- "must follow" documentation (http://www.debian.org/doc/devel-manuals#policy)
+* ``Debian Developer's Reference'' -- "best practice" documentation (http://www.debian.org/doc/devel-manuals#devref)
+* ``Debian New Maintainers' Guide'' -- "tutorial" documentation (http://www.debian.org/doc/devel-manuals#maint-guide)
+* ``Introduction to Debian packaging'' -- "tutorial" documentation (http://www.debian.org/doc/devel-manuals#packaging-tutorial)
 
 TIP: There is an old Latin saying: ``*fabricando fit faber*'' (``practice makes perfect'').  It is highly recommended to practice and experiment with all the steps of Debian packaging with simple packages while reading this tutorial.
 

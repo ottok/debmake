@@ -1,0 +1,605 @@
+ $ debmake -b'libkkc2,-utils,libkkc2-dbg,-utils-dbg,-dev,-common:data'\
+            -s -a libkkc-0.3.2.tar.gz
+I: set parameters
+I: sanity check of parameters
+I: pkg="libkkc", ver="0.3.2", rev="1"
+I: untar the upstream tarball
+I: pwd = "/path/to"
+I: $ tar -xvzf libkkc-0.3.2.tar.gz
+libkkc-0.3.2/
+libkkc-0.3.2/missing
+libkkc-0.3.2/tools/
+libkkc-0.3.2/tools/kkc_vala.stamp
+libkkc-0.3.2/tools/kkc.vala
+libkkc-0.3.2/tools/Makefile.in
+libkkc-0.3.2/tools/kkc-package-data.in
+libkkc-0.3.2/tools/Makefile.am
+libkkc-0.3.2/tools/kkc.c
+libkkc-0.3.2/NEWS
+libkkc-0.3.2/aclocal.m4
+libkkc-0.3.2/compile
+libkkc-0.3.2/test-driver
+libkkc-0.3.2/README
+libkkc-0.3.2/config.h.in
+libkkc-0.3.2/Makefile.in
+libkkc-0.3.2/configure
+libkkc-0.3.2/tests/
+libkkc-0.3.2/tests/system-segment-dictionary-bad1
+libkkc-0.3.2/tests/metadata-file.c
+libkkc-0.3.2/tests/user-rule.c
+libkkc-0.3.2/tests/rom_kana_vala.stamp
+libkkc-0.3.2/tests/conversions-sentence.json
+libkkc-0.3.2/tests/segment.vala
+libkkc-0.3.2/tests/system-dictionary.c
+libkkc-0.3.2/tests/system-segment-dictionary-bad2
+libkkc-0.3.2/tests/keymap.c
+libkkc-0.3.2/tests/segment-list.vala
+libkkc-0.3.2/tests/keymap.vala
+libkkc-0.3.2/tests/template.c
+libkkc-0.3.2/tests/expression.c
+libkkc-0.3.2/tests/key-event.vala
+libkkc-0.3.2/tests/conversions-user-dictionary.json
+libkkc-0.3.2/tests/user-sentence-dictionary-bad2
+libkkc-0.3.2/tests/dictionary-list.vala
+libkkc-0.3.2/tests/decoder.vala
+libkkc-0.3.2/tests/segment_vala.stamp
+libkkc-0.3.2/tests/template_vala.stamp
+libkkc-0.3.2/tests/system_dictionary_vala.stamp
+libkkc-0.3.2/tests/encoding.c
+libkkc-0.3.2/tests/user-segment-dictionary-bad2
+libkkc-0.3.2/tests/user-sentence-dictionary-bad1
+libkkc-0.3.2/tests/language-model.vala
+libkkc-0.3.2/tests/candidate.c
+libkkc-0.3.2/tests/system-dictionary.vala
+libkkc-0.3.2/tests/system-segment-dictionary
+libkkc-0.3.2/tests/context_vala.stamp
+libkkc-0.3.2/tests/decoder_vala.stamp
+libkkc-0.3.2/tests/user_dictionary_vala.stamp
+libkkc-0.3.2/tests/trellis-node.vala
+libkkc-0.3.2/tests/rom-kana.c
+libkkc-0.3.2/tests/user_rule_vala.stamp
+libkkc-0.3.2/tests/language-model-metadata-bad2.json
+libkkc-0.3.2/tests/candidate-list.vala
+libkkc-0.3.2/tests/conversions-segment.json
+libkkc-0.3.2/tests/dictionary_list_vala.stamp
+libkkc-0.3.2/tests/user-segment-dictionary-good
+libkkc-0.3.2/tests/language_model_vala.stamp
+libkkc-0.3.2/tests/template.vala
+libkkc-0.3.2/tests/key_event_vala.stamp
+libkkc-0.3.2/tests/Makefile.in
+libkkc-0.3.2/tests/segment.c
+libkkc-0.3.2/tests/metadata.json
+libkkc-0.3.2/tests/key-event.c
+libkkc-0.3.2/tests/candidate.vala
+libkkc-0.3.2/tests/data/
+libkkc-0.3.2/tests/data/rules/
+libkkc-0.3.2/tests/data/rules/test-bad3/
+libkkc-0.3.2/tests/data/rules/test-bad3/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad3/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad3/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad3/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad3/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad6/
+libkkc-0.3.2/tests/data/rules/test-bad6/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad6/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad6/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad6/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad6/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad7/
+libkkc-0.3.2/tests/data/rules/test-bad7/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad7/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad7/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad7/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad7/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad10/
+libkkc-0.3.2/tests/data/rules/test-bad10/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad10/rom-kana/default.json
+libkkc-0.3.2/tests/data/rules/test-bad10/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad10/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad10/keymap/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad5/
+libkkc-0.3.2/tests/data/rules/test-bad5/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad5/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad5/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad5/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad5/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad9/
+libkkc-0.3.2/tests/data/rules/test-bad9/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad9/rom-kana/default.json
+libkkc-0.3.2/tests/data/rules/test-bad9/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad9/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad9/keymap/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-empty/
+libkkc-0.3.2/tests/data/rules/test-empty/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-empty/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-empty/metadata.json
+libkkc-0.3.2/tests/data/rules/test-empty/keymap/
+libkkc-0.3.2/tests/data/rules/test-empty/keymap/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad1/
+libkkc-0.3.2/tests/data/rules/test-bad1/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad1/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad1/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad1/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad1/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad4/
+libkkc-0.3.2/tests/data/rules/test-bad4/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad4/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad4/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad4/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad4/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad2/
+libkkc-0.3.2/tests/data/rules/test-bad2/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad2/rom-kana/.gitkeep
+libkkc-0.3.2/tests/data/rules/test-bad2/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad2/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad2/keymap/hiragana.json
+libkkc-0.3.2/tests/data/rules/test-bad8/
+libkkc-0.3.2/tests/data/rules/test-bad8/rom-kana/
+libkkc-0.3.2/tests/data/rules/test-bad8/rom-kana/default.json
+libkkc-0.3.2/tests/data/rules/test-bad8/metadata.json
+libkkc-0.3.2/tests/data/rules/test-bad8/keymap/
+libkkc-0.3.2/tests/data/rules/test-bad8/keymap/.gitkeep
+libkkc-0.3.2/tests/data/models/
+libkkc-0.3.2/tests/data/models/sorted3/
+libkkc-0.3.2/tests/data/models/sorted3/metadata.json
+libkkc-0.3.2/tests/data/models/text3/
+libkkc-0.3.2/tests/data/models/text3/metadata.json
+libkkc-0.3.2/tests/data/models/text3/data.arpa
+libkkc-0.3.2/tests/data/models/text2/
+libkkc-0.3.2/tests/data/models/text2/metadata.json
+libkkc-0.3.2/tests/data/models/text2/data.arpa
+libkkc-0.3.2/tests/data/models/sorted2/
+libkkc-0.3.2/tests/data/models/sorted2/metadata.json
+libkkc-0.3.2/tests/state.vala
+libkkc-0.3.2/tests/candidate_vala.stamp
+libkkc-0.3.2/tests/metadata-bad4.json
+libkkc-0.3.2/tests/candidate_list_vala.stamp
+libkkc-0.3.2/tests/metadata-file.vala
+libkkc-0.3.2/tests/language-model-metadata-bad1.json
+libkkc-0.3.2/tests/trellis_node_vala.stamp
+libkkc-0.3.2/tests/metadata_file_vala.stamp
+libkkc-0.3.2/tests/expression.vala
+libkkc-0.3.2/tests/rule_vala.stamp
+libkkc-0.3.2/tests/keymap_vala.stamp
+libkkc-0.3.2/tests/user-segment-dictionary-bad1
+libkkc-0.3.2/tests/metadata-bad2.json
+libkkc-0.3.2/tests/lib/
+libkkc-0.3.2/tests/lib/test-utils.vala
+libkkc-0.3.2/tests/lib/test-case.c
+libkkc-0.3.2/tests/lib/test-case.vala
+libkkc-0.3.2/tests/lib/kkc-test.vapi
+libkkc-0.3.2/tests/lib/libkkc-test.h
+libkkc-0.3.2/tests/lib/libkkc_test_la_vala.stamp
+libkkc-0.3.2/tests/lib/Makefile.in
+libkkc-0.3.2/tests/lib/Makefile.am
+libkkc-0.3.2/tests/lib/test-utils.c
+libkkc-0.3.2/tests/context.vala
+libkkc-0.3.2/tests/user-dictionary.vala
+libkkc-0.3.2/tests/state.c
+libkkc-0.3.2/tests/rule.vala
+libkkc-0.3.2/tests/rule.c
+libkkc-0.3.2/tests/state_vala.stamp
+libkkc-0.3.2/tests/system-segment-dictionary-bad3
+libkkc-0.3.2/tests/user-rule.vala
+libkkc-0.3.2/tests/Makefile.am
+libkkc-0.3.2/tests/decoder.c
+libkkc-0.3.2/tests/user-dictionary.c
+libkkc-0.3.2/tests/candidate-list.c
+libkkc-0.3.2/tests/context.c
+libkkc-0.3.2/tests/language-model.c
+libkkc-0.3.2/tests/dictionary-list.c
+libkkc-0.3.2/tests/segment_list_vala.stamp
+libkkc-0.3.2/tests/expression_vala.stamp
+libkkc-0.3.2/tests/conversions-user-dictionary-phrase.json
+libkkc-0.3.2/tests/encoding.vala
+libkkc-0.3.2/tests/encoding_vala.stamp
+libkkc-0.3.2/tests/segment-list.c
+libkkc-0.3.2/tests/trellis-node.c
+libkkc-0.3.2/tests/conversions-initial.json
+libkkc-0.3.2/tests/user-sentence-dictionary-good
+libkkc-0.3.2/tests/rom-kana.vala
+libkkc-0.3.2/tests/metadata-bad3.json
+libkkc-0.3.2/tests/rule-metadata-bad.json
+libkkc-0.3.2/tests/metadata-bad1.json
+libkkc-0.3.2/INSTALL
+libkkc-0.3.2/data/
+libkkc-0.3.2/data/Makefile.in
+libkkc-0.3.2/data/rules/
+libkkc-0.3.2/data/rules/tutcode/
+libkkc-0.3.2/data/rules/tutcode/rom-kana/
+libkkc-0.3.2/data/rules/tutcode/rom-kana/default.json
+libkkc-0.3.2/data/rules/tutcode/metadata.json.in
+libkkc-0.3.2/data/rules/tutcode/Makefile.in
+libkkc-0.3.2/data/rules/tutcode/keymap/
+libkkc-0.3.2/data/rules/tutcode/keymap/latin.json
+libkkc-0.3.2/data/rules/tutcode/keymap/katakana.json
+libkkc-0.3.2/data/rules/tutcode/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/tutcode/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/tutcode/keymap/hiragana.json
+libkkc-0.3.2/data/rules/tutcode/Makefile.am
+libkkc-0.3.2/data/rules/azik/
+libkkc-0.3.2/data/rules/azik/rom-kana/
+libkkc-0.3.2/data/rules/azik/rom-kana/default.json
+libkkc-0.3.2/data/rules/azik/metadata.json.in
+libkkc-0.3.2/data/rules/azik/Makefile.in
+libkkc-0.3.2/data/rules/azik/keymap/
+libkkc-0.3.2/data/rules/azik/keymap/latin.json
+libkkc-0.3.2/data/rules/azik/keymap/katakana.json
+libkkc-0.3.2/data/rules/azik/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/azik/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/azik/keymap/hiragana.json
+libkkc-0.3.2/data/rules/azik/keymap/default.json
+libkkc-0.3.2/data/rules/azik/Makefile.am
+libkkc-0.3.2/data/rules/trycode/
+libkkc-0.3.2/data/rules/trycode/rom-kana/
+libkkc-0.3.2/data/rules/trycode/rom-kana/default.json
+libkkc-0.3.2/data/rules/trycode/metadata.json.in
+libkkc-0.3.2/data/rules/trycode/Makefile.in
+libkkc-0.3.2/data/rules/trycode/keymap/
+libkkc-0.3.2/data/rules/trycode/keymap/latin.json
+libkkc-0.3.2/data/rules/trycode/keymap/katakana.json
+libkkc-0.3.2/data/rules/trycode/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/trycode/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/trycode/keymap/hiragana.json
+libkkc-0.3.2/data/rules/trycode/Makefile.am
+libkkc-0.3.2/data/rules/default/
+libkkc-0.3.2/data/rules/default/rom-kana/
+libkkc-0.3.2/data/rules/default/rom-kana/default.json
+libkkc-0.3.2/data/rules/default/metadata.json.in
+libkkc-0.3.2/data/rules/default/Makefile.in
+libkkc-0.3.2/data/rules/default/keymap/
+libkkc-0.3.2/data/rules/default/keymap/latin.json
+libkkc-0.3.2/data/rules/default/keymap/katakana.json
+libkkc-0.3.2/data/rules/default/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/default/keymap/direct.json
+libkkc-0.3.2/data/rules/default/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/default/keymap/hiragana.json
+libkkc-0.3.2/data/rules/default/keymap/default.json
+libkkc-0.3.2/data/rules/default/Makefile.am
+libkkc-0.3.2/data/rules/azik-jp106/
+libkkc-0.3.2/data/rules/azik-jp106/rom-kana/
+libkkc-0.3.2/data/rules/azik-jp106/rom-kana/default.json
+libkkc-0.3.2/data/rules/azik-jp106/metadata.json.in
+libkkc-0.3.2/data/rules/azik-jp106/Makefile.in
+libkkc-0.3.2/data/rules/azik-jp106/keymap/
+libkkc-0.3.2/data/rules/azik-jp106/keymap/latin.json
+libkkc-0.3.2/data/rules/azik-jp106/keymap/katakana.json
+libkkc-0.3.2/data/rules/azik-jp106/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/azik-jp106/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/azik-jp106/keymap/hiragana.json
+libkkc-0.3.2/data/rules/azik-jp106/keymap/default.json
+libkkc-0.3.2/data/rules/azik-jp106/Makefile.am
+libkkc-0.3.2/data/rules/tcode/
+libkkc-0.3.2/data/rules/tcode/rom-kana/
+libkkc-0.3.2/data/rules/tcode/rom-kana/default.json
+libkkc-0.3.2/data/rules/tcode/metadata.json.in
+libkkc-0.3.2/data/rules/tcode/Makefile.in
+libkkc-0.3.2/data/rules/tcode/keymap/
+libkkc-0.3.2/data/rules/tcode/keymap/latin.json
+libkkc-0.3.2/data/rules/tcode/keymap/katakana.json
+libkkc-0.3.2/data/rules/tcode/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/tcode/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/tcode/keymap/hiragana.json
+libkkc-0.3.2/data/rules/tcode/Makefile.am
+libkkc-0.3.2/data/rules/rule.mk
+libkkc-0.3.2/data/rules/Makefile.in
+libkkc-0.3.2/data/rules/act/
+libkkc-0.3.2/data/rules/act/rom-kana/
+libkkc-0.3.2/data/rules/act/rom-kana/default.json
+libkkc-0.3.2/data/rules/act/metadata.json.in
+libkkc-0.3.2/data/rules/act/Makefile.in
+libkkc-0.3.2/data/rules/act/keymap/
+libkkc-0.3.2/data/rules/act/keymap/latin.json
+libkkc-0.3.2/data/rules/act/keymap/katakana.json
+libkkc-0.3.2/data/rules/act/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/act/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/act/keymap/hiragana.json
+libkkc-0.3.2/data/rules/act/keymap/default.json
+libkkc-0.3.2/data/rules/act/Makefile.am
+libkkc-0.3.2/data/rules/kana/
+libkkc-0.3.2/data/rules/kana/rom-kana/
+libkkc-0.3.2/data/rules/kana/rom-kana/default.json
+libkkc-0.3.2/data/rules/kana/metadata.json.in
+libkkc-0.3.2/data/rules/kana/Makefile.in
+libkkc-0.3.2/data/rules/kana/keymap/
+libkkc-0.3.2/data/rules/kana/keymap/latin.json
+libkkc-0.3.2/data/rules/kana/keymap/katakana.json
+libkkc-0.3.2/data/rules/kana/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/kana/keymap/direct.json
+libkkc-0.3.2/data/rules/kana/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/kana/keymap/hiragana.json
+libkkc-0.3.2/data/rules/kana/keymap/default.json
+libkkc-0.3.2/data/rules/kana/Makefile.am
+libkkc-0.3.2/data/rules/nicola/
+libkkc-0.3.2/data/rules/nicola/rom-kana/
+libkkc-0.3.2/data/rules/nicola/rom-kana/default.json
+libkkc-0.3.2/data/rules/nicola/metadata.json.in
+libkkc-0.3.2/data/rules/nicola/Makefile.in
+libkkc-0.3.2/data/rules/nicola/keymap/
+libkkc-0.3.2/data/rules/nicola/keymap/latin.json
+libkkc-0.3.2/data/rules/nicola/keymap/katakana.json
+libkkc-0.3.2/data/rules/nicola/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/nicola/keymap/direct.json
+libkkc-0.3.2/data/rules/nicola/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/nicola/keymap/hiragana.json
+libkkc-0.3.2/data/rules/nicola/keymap/default.json
+libkkc-0.3.2/data/rules/nicola/Makefile.am
+libkkc-0.3.2/data/rules/tutcode-touch16x/
+libkkc-0.3.2/data/rules/tutcode-touch16x/rom-kana/
+libkkc-0.3.2/data/rules/tutcode-touch16x/rom-kana/default.json
+libkkc-0.3.2/data/rules/tutcode-touch16x/metadata.json.in
+libkkc-0.3.2/data/rules/tutcode-touch16x/Makefile.in
+libkkc-0.3.2/data/rules/tutcode-touch16x/keymap/
+libkkc-0.3.2/data/rules/tutcode-touch16x/keymap/latin.json
+libkkc-0.3.2/data/rules/tutcode-touch16x/keymap/katakana.json
+libkkc-0.3.2/data/rules/tutcode-touch16x/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/tutcode-touch16x/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/tutcode-touch16x/keymap/hiragana.json
+libkkc-0.3.2/data/rules/tutcode-touch16x/Makefile.am
+libkkc-0.3.2/data/rules/Makefile.am
+libkkc-0.3.2/data/rules/kzik/
+libkkc-0.3.2/data/rules/kzik/rom-kana/
+libkkc-0.3.2/data/rules/kzik/rom-kana/default.json
+libkkc-0.3.2/data/rules/kzik/metadata.json.in
+libkkc-0.3.2/data/rules/kzik/Makefile.in
+libkkc-0.3.2/data/rules/kzik/keymap/
+libkkc-0.3.2/data/rules/kzik/keymap/latin.json
+libkkc-0.3.2/data/rules/kzik/keymap/katakana.json
+libkkc-0.3.2/data/rules/kzik/keymap/hankaku-katakana.json
+libkkc-0.3.2/data/rules/kzik/keymap/wide-latin.json
+libkkc-0.3.2/data/rules/kzik/keymap/hiragana.json
+libkkc-0.3.2/data/rules/kzik/keymap/default.json
+libkkc-0.3.2/data/rules/kzik/Makefile.am
+libkkc-0.3.2/data/rules/README.rules
+libkkc-0.3.2/data/templates/
+libkkc-0.3.2/data/templates/Makefile.in
+libkkc-0.3.2/data/templates/Makefile.am
+libkkc-0.3.2/data/templates/libkkc-data/
+libkkc-0.3.2/data/templates/libkkc-data/tools/
+libkkc-0.3.2/data/templates/libkkc-data/tools/sortlm.py
+libkkc-0.3.2/data/templates/libkkc-data/tools/genfilter.py
+libkkc-0.3.2/data/templates/libkkc-data/tools/Makefile.am
+libkkc-0.3.2/data/templates/libkkc-data/configure.ac.in
+libkkc-0.3.2/data/templates/libkkc-data/data/
+libkkc-0.3.2/data/templates/libkkc-data/data/Makefile.am
+libkkc-0.3.2/data/templates/libkkc-data/data/models/
+libkkc-0.3.2/data/templates/libkkc-data/data/models/Makefile.sorted3
+libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted3/
+libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted3/metadata.jso...
+libkkc-0.3.2/data/templates/libkkc-data/data/models/text3/
+libkkc-0.3.2/data/templates/libkkc-data/data/models/text3/metadata.json
+libkkc-0.3.2/data/templates/libkkc-data/data/models/text2/
+libkkc-0.3.2/data/templates/libkkc-data/data/models/text2/metadata.json
+libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted2/
+libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted2/metadata.jso...
+libkkc-0.3.2/data/templates/libkkc-data/data/models/Makefile.sorted2
+libkkc-0.3.2/data/templates/libkkc-data/Makefile.am
+libkkc-0.3.2/data/Makefile.am
+libkkc-0.3.2/lcov.mk
+libkkc-0.3.2/autogen.sh
+libkkc-0.3.2/configure.ac
+libkkc-0.3.2/AUTHORS
+libkkc-0.3.2/COPYING
+libkkc-0.3.2/config.sub
+libkkc-0.3.2/po/
+libkkc-0.3.2/po/POTFILES.in
+libkkc-0.3.2/po/ja.po
+libkkc-0.3.2/po/Makefile.in.in
+libkkc-0.3.2/po/POTFILES.skip
+libkkc-0.3.2/po/LINGUAS
+libkkc-0.3.2/m4/
+libkkc-0.3.2/m4/ltsugar.m4
+libkkc-0.3.2/m4/intltool.m4
+libkkc-0.3.2/m4/ltversion.m4
+libkkc-0.3.2/m4/libtool.m4
+libkkc-0.3.2/m4/ltoptions.m4
+libkkc-0.3.2/m4/lt~obsolete.m4
+libkkc-0.3.2/install-sh
+libkkc-0.3.2/config.guess
+libkkc-0.3.2/Makefile.am
+libkkc-0.3.2/libkkc/
+libkkc-0.3.2/libkkc/libkkc-internals.h
+libkkc-0.3.2/libkkc/metadata-file.c
+libkkc-0.3.2/libkkc/rom-kana-utils.vala
+libkkc-0.3.2/libkkc/user-rule.c
+libkkc-0.3.2/libkkc/Kkc-1.0.gir
+libkkc-0.3.2/libkkc/segment.vala
+libkkc-0.3.2/libkkc/segment-dictionary.c
+libkkc-0.3.2/libkkc/keymap.c
+libkkc-0.3.2/libkkc/segment-list.vala
+libkkc-0.3.2/libkkc/dictionary.vala
+libkkc-0.3.2/libkkc/language-model-utils.c
+libkkc-0.3.2/libkkc/text-bigram-language-model.vala
+libkkc-0.3.2/libkkc/user-segment-dictionary.vala
+libkkc-0.3.2/libkkc/keymap.vala
+libkkc-0.3.2/libkkc/numeric-template.c
+libkkc-0.3.2/libkkc/template.c
+libkkc-0.3.2/libkkc/expression.c
+libkkc-0.3.2/libkkc/key-event.vala
+libkkc-0.3.2/libkkc/convert-sentence-state-handler.vala
+libkkc-0.3.2/libkkc/keynames.c
+libkkc-0.3.2/libkkc/utils.c
+libkkc-0.3.2/libkkc/user-sentence-dictionary.vala
+libkkc-0.3.2/libkkc/dictionary-list.vala
+libkkc-0.3.2/libkkc/decoder.vala
+libkkc-0.3.2/libkkc/encoding.c
+libkkc-0.3.2/libkkc/text-trigram-language-model.c
+libkkc-0.3.2/libkkc/language-model.vala
+libkkc-0.3.2/libkkc/candidate.c
+libkkc-0.3.2/libkkc/dictionary.c
+libkkc-0.3.2/libkkc/system-segment-dictionary.vala
+libkkc-0.3.2/libkkc/sorted-bigram-language-model.vala
+libkkc-0.3.2/libkkc/trigram-decoder.c
+libkkc-0.3.2/libkkc/trellis-node.vala
+libkkc-0.3.2/libkkc/rom-kana.c
+libkkc-0.3.2/libkkc/candidate-list.vala
+libkkc-0.3.2/libkkc/bloom-filter.vala
+libkkc-0.3.2/libkkc/user-segment-dictionary.c
+libkkc-0.3.2/libkkc/keysyms.vala
+libkkc-0.3.2/libkkc/language-model-utils.vala
+libkkc-0.3.2/libkkc/template.vala
+libkkc-0.3.2/libkkc/kkc.vala
+libkkc-0.3.2/libkkc/user-sentence-dictionary.c
+libkkc-0.3.2/libkkc/sorted-bigram-language-model.c
+libkkc-0.3.2/libkkc/Makefile.in
+libkkc-0.3.2/libkkc/kkc-1.0.vapi
+libkkc-0.3.2/libkkc/segment-dictionary.vala
+libkkc-0.3.2/libkkc/segment.c
+libkkc-0.3.2/libkkc/bigram-decoder.c
+libkkc-0.3.2/libkkc/map-file.vala
+libkkc-0.3.2/libkkc/nicola.c
+libkkc-0.3.2/libkkc/convert-sentence-state-handler.c
+libkkc-0.3.2/libkkc/keynames.vala
+libkkc-0.3.2/libkkc/key-event.c
+libkkc-0.3.2/libkkc/libkkc.h
+libkkc-0.3.2/libkkc/text-bigram-language-model.c
+libkkc-0.3.2/libkkc/candidate.vala
+libkkc-0.3.2/libkkc/sentence-dictionary.c
+libkkc-0.3.2/libkkc/libkkc.symbols
+libkkc-0.3.2/libkkc/convert-segment-state-handler.c
+libkkc-0.3.2/libkkc/initial-state-handler.vala
+libkkc-0.3.2/libkkc/state.vala
+libkkc-0.3.2/libkkc/system-segment-dictionary.c
+libkkc-0.3.2/libkkc/config.vapi
+libkkc-0.3.2/libkkc/libkkc_la_vala.stamp
+libkkc-0.3.2/libkkc/bloom-filter.c
+libkkc-0.3.2/libkkc/metadata-file.vala
+libkkc-0.3.2/libkkc/nicola.vala
+libkkc-0.3.2/libkkc/expression.vala
+libkkc-0.3.2/libkkc/bigram-decoder.vala
+libkkc-0.3.2/libkkc/trigram-decoder.vala
+libkkc-0.3.2/libkkc/context.vala
+libkkc-0.3.2/libkkc/kkc-internals-1.0.vapi
+libkkc-0.3.2/libkkc/user-dictionary.vala
+libkkc-0.3.2/libkkc/kkc-1.0.deps
+libkkc-0.3.2/libkkc/state.c
+libkkc-0.3.2/libkkc/map-file.c
+libkkc-0.3.2/libkkc/text-trigram-language-model.vala
+libkkc-0.3.2/libkkc/rule.vala
+libkkc-0.3.2/libkkc/rule.c
+libkkc-0.3.2/libkkc/keysyms.c
+libkkc-0.3.2/libkkc/initial-state-handler.c
+libkkc-0.3.2/libkkc/key-event-filter.vala
+libkkc-0.3.2/libkkc/sentence-dictionary.vala
+libkkc-0.3.2/libkkc/user-rule.vala
+libkkc-0.3.2/libkkc/rom-kana-utils.c
+libkkc-0.3.2/libkkc/sorted-trigram-language-model.c
+libkkc-0.3.2/libkkc/Makefile.am
+libkkc-0.3.2/libkkc/utils.vala
+libkkc-0.3.2/libkkc/decoder.c
+libkkc-0.3.2/libkkc/user-dictionary.c
+libkkc-0.3.2/libkkc/sorted-trigram-language-model.vala
+libkkc-0.3.2/libkkc/convert-segment-state-handler.vala
+libkkc-0.3.2/libkkc/candidate-list.c
+libkkc-0.3.2/libkkc/context.c
+libkkc-0.3.2/libkkc/kkc-1.0.pc.in
+libkkc-0.3.2/libkkc/language-model.c
+libkkc-0.3.2/libkkc/dictionary-list.c
+libkkc-0.3.2/libkkc/key-event-filter.c
+libkkc-0.3.2/libkkc/encoding.vala
+libkkc-0.3.2/libkkc/segment-list.c
+libkkc-0.3.2/libkkc/trellis-node.c
+libkkc-0.3.2/libkkc/numeric-template.vala
+libkkc-0.3.2/libkkc/kkc.c
+libkkc-0.3.2/libkkc/rom-kana.vala
+libkkc-0.3.2/ChangeLog
+libkkc-0.3.2/docs/
+libkkc-0.3.2/docs/Makefile.in
+libkkc-0.3.2/docs/Makefile.am
+libkkc-0.3.2/depcomp
+libkkc-0.3.2/marisa-glib/
+libkkc-0.3.2/marisa-glib/marisa-trie.cc
+libkkc-0.3.2/marisa-glib/Marisa.metadata
+libkkc-0.3.2/marisa-glib/marisa-agent.cc
+libkkc-0.3.2/marisa-glib/marisa-keyset.h
+libkkc-0.3.2/marisa-glib/Makefile.in
+libkkc-0.3.2/marisa-glib/marisa-trie.h
+libkkc-0.3.2/marisa-glib/marisa-glib-private.h
+libkkc-0.3.2/marisa-glib/marisa-agent.h
+libkkc-0.3.2/marisa-glib/marisa-keyset.cc
+libkkc-0.3.2/marisa-glib/marisa-key.h
+libkkc-0.3.2/marisa-glib/marisa-key.cc
+libkkc-0.3.2/marisa-glib/Makefile.am
+libkkc-0.3.2/marisa-glib/marisa-glib.h
+libkkc-0.3.2/ltmain.sh
+I: untared libkkc-0.3.2.tar.gz.
+I: tar -tzf libkkc-0.3.2.tar.gz|grep -v /.
+I: pwd = "/path/to/libkkc-0.3.2"
+I: *** start packaging in "libkkc-0.3.2". ***
+I: provide libkkc_0.3.2.orig.tar.gz for non-native Debian package
+I: pwd = "/path/to"
+I: $ ln -sf libkkc-0.3.2.tar.gz libkkc_0.3.2.orig.tar.gz
+I: pwd = "/path/to/libkkc-0.3.2"
+I: parse binary package settings: libkkc2,-utils,libkkc2-dbg,-utils-dbg,...
+I: binary package=libkkc2 Type=lib / Arch=any M-A=same
+I: binary package=libkkc-utils Type=bin / Arch=any M-A=foreign
+I: binary package=libkkc2-dbg Type=dbg / Arch=any M-A=same
+I: binary package=libkkc-utils-dbg Type=dbg / Arch=any M-A=same
+W: duplicate definition of package type "dbg"
+I: binary package=libkkc-dev Type=dev / Arch=any M-A=same
+I: binary package=libkkc-common Type=data / Arch=all M-A=foreign
+I: analyze the source tree
+I: build_type = Autotools
+W: Non-UTF-8 char found, using latin-1: tests/system-segment-dictionary
+I:  32 %, ext = json
+I:  21 %, ext = c
+I:  18 %, ext = vala
+I:   6 %, ext = in
+I:   6 %, ext = am
+I:   6 %, ext = stamp
+I:   3 %, ext = gitkeep
+I:   2 %, ext = m4
+I:   1 %, ext = vapi
+I:   0 %, ext = mk
+I:   0 %, ext = sh
+I:   0 %, ext = ac
+I:   0 %, ext = python
+I:   0 %, ext = arpa
+I:   0 %, ext = pc
+I:   0 %, ext = guess
+I:   0 %, ext = sorted3
+I:   0 %, ext = rules
+I:   0 %, ext = po
+I:   0 %, ext = symbols
+I:   0 %, ext = gir
+I:   0 %, ext = sorted2
+I:   0 %, ext = metadata
+I:   0 %, ext = sub
+I:   0 %, ext = deps
+I:   0 %, ext = skip
+I: make debian/* template files
+I: multi binary packages: 6
+I: debmake -x "2" ...
+I: creating => debian/control
+I: creating => debian/copyright
+I: creating => debian/changelog
+I: creating => debian/rules
+I: creating => debian/compat
+I: creating => debian/watch
+I: creating => debian/README.Debian
+I: creating => debian/source/format
+I: creating => debian/source/local-options
+I: creating => debian/patches/series
+I: creating => debian/libkkc2.postinst
+I: creating => debian/clean
+I: creating => debian/libkkc2.postrm
+I: creating => debian/libkkc2.preinst
+I: creating => debian/libkkc2.menu
+I: creating => debian/libkkc2.prerm
+I: creating => debian/libkkc2.links
+I: creating => debian/libkkc2.symbols
+I: creating => debian/libkkc2.install
+I: creating => debian/libkkc2.docs
+I: creating => debian/libkkc2.info
+I: creating => debian/libkkc2.examples
+I: creating => debian/libkkc2.manpages
+I: skipping :: debian/libkkc2.install (file exists)
+I: creating => debian/libkkc2.doc-base
+I: creating => debian/libkkc-utils.install
+I: creating => debian/libkkc-dev.install
+I: creating => debian/libkkc-common.install
+I: run "debmake -x3" to get more template files
+I: $ wrap-and-sort
+I: upon return to the shell, current directory becomes /path/to
+I: please execute "cd /path/to/libkkc-0.3.2" before building the binary ...
+I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

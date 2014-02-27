@@ -3,7 +3,7 @@
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 525e40b] initial commit
+[master (root-commit) 432ec13] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -17,12 +17,10 @@ Initialized empty Git repository in /path/to/vcsdir/.git/
   devel
 * master
   upstream
- $ debmake -s -b':python3' -p hello-py -u 1.0 -d -i debuild
+ $ debmake -s -b':python3' -d -i debuild
 I: set parameters
 I: sanity check of parameters
-W: -p "hello-py" != auto set value ""
-W: -u "1.0" != auto set value ""
-I: pkg="hello-py", ver="1.0", rev="1"
+I: pkg="", ver="", rev="1"
 I: make the upstream tarball with "make dist" equivalents
 I: pwd = "/path/to/vcsdir"
 I: $ python3 setup.py sdist
@@ -241,7 +239,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: hello-py source: missing-license-paragraph-in-dep5-copyright no_licen...
+W: hello-py source: missing-license-paragraph-in-dep5-copyright unknown ...
 N:
 N:    The files paragraph in the machine readable copyright file referen...
 N:    license, for which no standalone license paragraph exists.

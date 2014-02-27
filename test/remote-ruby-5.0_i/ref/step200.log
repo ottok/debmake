@@ -1,9 +1,9 @@
  $ cd hello-world
-/home/user/src/debmake/debmake/test/bin/CD: line 4: cd: hello-world: No ...
+/home/osamu/src/debmake/debmake/test/bin/CD: line 4: cd: hello-world: No...
  $ debmake -s -b':ruby' -t -u 1.2.0 -i debuild
 I: set parameters
 I: sanity check of parameters
-W: -u "1.2.0" != auto set value ""
+W: -u "1.2.0" != auto set value "0~1403311551"
 I: pkg="hello-world", ver="1.2.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-world"
@@ -41,10 +41,10 @@ I: binary package=hello-world Type=ruby / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Unknown
 I:  43 %, ext = ruby
-I:  14 %, ext = gitignore
-I:  14 %, ext = gemspec
-I:  14 %, ext = rdoc
 I:  14 %, ext = document
+I:  14 %, ext = gitignore
+I:  14 %, ext = rdoc
+I:  14 %, ext = gemspec
 I: make debian/* template files
 I: single binary package
 I: debmake -x "1" ...
@@ -133,7 +133,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: hello-world source: syntax-error-in-dep5-copyright line 37: Continuat...
+W: hello-world source: syntax-error-in-dep5-copyright line 34: Continuat...
 N:
 N:    The machine-readable copyright file didn't pass Debian control fil...
 N:    syntax check.

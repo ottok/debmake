@@ -36,7 +36,6 @@
 |   |                   |-- changelog.Debian.gz
 |   |                   `-- copyright
 |   |-- hello-c-dbg.debhelper.log
-|   |-- hello-c-dbg.install
 |   |-- hello-c-dbg.substvars
 |   |-- hello-c.debhelper.log
 |   |-- hello-c.doc-base
@@ -70,4 +69,4 @@
 |-- hello.c
 `-- Makefile
 
-19 directories, 49 files
+19 directories, 48 files

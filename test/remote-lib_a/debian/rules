@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+#DH_VERBOSE = 1
+
+# In case you want to add more flags to the defaults, use 
+# the followings to harden via compiler options
+# see FEATURE AREAS in dpkg-buildflags(1))
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+# see ENVIRONMENT in dpkg-buildflags(1))
+# package maintainers to append CFLAGS
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+VALAFLAGS:=$(foreach w,$(CPPFLAGS) $(CFLAGS) $(LDFLAGS),-X $(w))
+
+%:
+	dh $@ --with autotools-dev,gir
+
+override_dh_auto_configure:
+	dh_auto_configure -- --disable-silent-rules
+
+override_dh_strip:
+	dh_strip -Xlibkkc-utils --dbg-package=libkkc2-dbg
+	dh_strip -Xlibkkc2 --dbg-package=libkkc-utils-dbg
+

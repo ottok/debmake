@@ -7,7 +7,6 @@
 |   |-- compat
 |   |-- control
 |   |-- copyright
-|   |-- hello-c-dbg.install
 |   |-- hello-c.doc-base
 |   |-- hello-c.docs
 |   |-- hello-c.examples
@@ -35,4 +34,4 @@
 |-- hello-sh
 `-- Makefile
 
-3 directories, 30 files
+3 directories, 29 files

@@ -1,0 +1,14 @@
+[[changelog]]
+=== *debian/changelog*
+
+The *debian/changelog* file records the Debian package history file and defines the upstream package version and the Debian revision in its first line.
+
+The *debchange* command (alias *dch*) is used to edit this file.
+
+The *debmake* command creates the initial template file with the upstream package version and the Debian revision.
+
+This is installed in the */usr/share/doc/*'binarypackage' directory as *changelog.Debian.gz*.
+
+The upstream changelog is installed in the */usr/share/doc/*'binarypackage' directory as *changelog.gz*.
+
+The upstream changelog is automatically found by the *dh_installchangelogs* using the case insensitive match of its file name to *changelog*, *changes*, *changelog.txt*, *changes.txt*, *history*, *history.txt*, or *changelog.md* and searched in the *./* *doc/*, or *docs/* directories.

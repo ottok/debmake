@@ -1,0 +1,2 @@
+version=3
+https://bitbucket.org/libkkc/libkkc/downloads/ libkkc-(\d[\d.]*)\.(?:zip|tgz|tbz2|txz|tar\.gz|tar\.bz2|tar\.xz)

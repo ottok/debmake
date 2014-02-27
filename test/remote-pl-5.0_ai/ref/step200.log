@@ -70,28 +70,28 @@ I: parse binary package settings: :perl
 I: binary package=acme-hello Type=perl / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Perl Module::Build
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/gl.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/pt_BR.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/zh_TW.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/es.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/hu.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/ko.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/lv.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/eo.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/he.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/pl.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/ca.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/zh_CN.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/ru.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/nb.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/pt.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/fr.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/uk.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/et.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/ja.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/sv.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/nn.po
-W: Non-UTF-8 char found, using latin-1: ./lib/Acme/Hello/I18N/el.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/gl.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pt_BR.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/zh_TW.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/es.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/hu.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ko.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/lv.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/eo.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/he.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pl.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ca.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/zh_CN.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ru.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/nb.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pt.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/fr.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/uk.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/et.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ja.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/sv.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/nn.po
+W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/el.po
 I:  83 %, ext = po
 I:  10 %, ext = perl
 I:   5 %, ext = t
@@ -141,7 +141,7 @@ Building Acme-Hello
 t/0-signature.t .. ok
 t/1-basic.t ...... ok
 All tests successful.
-Files=2, Tests=4,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.04 cusr  0...
+Files=2, Tests=4,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.04 cusr  0...
 Result: PASS
  fakeroot debian/rules binary
 dh binary
@@ -197,7 +197,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: acme-hello source: missing-license-paragraph-in-dep5-copyright no_lic...
+W: acme-hello source: missing-license-paragraph-in-dep5-copyright unknow...
 N:
 N:    The files paragraph in the machine readable copyright file referen...
 N:    license, for which no standalone license paragraph exists.

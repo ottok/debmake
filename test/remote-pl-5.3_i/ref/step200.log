@@ -1,10 +1,10 @@
  $ cd ./blhc
-/home/user/src/debmake/debmake/test/bin/CD: line 4: cd: ./blhc: No such ...
+/home/osamu/src/debmake/debmake/test/bin/CD: line 4: cd: ./blhc: No such...
  $ debmake -b':perl' -t -p blhc -u 0.4 -s -i debuild
 I: set parameters
 I: sanity check of parameters
 W: -p "blhc" != auto set value ""
-W: -u "0.4" != auto set value ""
+W: -u "0.4" != auto set value "0~1403311551"
 I: pkg="blhc", ver="0.4", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/blhc"
@@ -88,9 +88,9 @@ I: parse binary package settings: :perl
 I: binary package=blhc Type=perl / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Perl Module::Build
-I:  33 %, ext = perl
-I:  33 %, ext = t
 I:  33 %, ext = gitignore
+I:  33 %, ext = t
+I:  33 %, ext = perl
 I: make debian/* template files
 I: single binary package
 I: debmake -x "1" ...
@@ -140,7 +140,7 @@ Building blhc
    dh_auto_test
 t/tests.t .. ok
 All tests successful.
-Files=1, Tests=214,  4 wallclock secs ( 0.04 usr  0.01 sys +  3.40 cusr ...
+Files=1, Tests=214,  4 wallclock secs ( 0.05 usr  0.00 sys +  3.36 cusr ...
 Result: PASS
  fakeroot debian/rules binary
 dh binary
@@ -194,7 +194,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: blhc source: syntax-error-in-dep5-copyright line 109: Continuation li...
+W: blhc source: syntax-error-in-dep5-copyright line 99: Continuation lin...
 N:
 N:    The machine-readable copyright file didn't pass Debian control fil...
 N:    syntax check.
@@ -262,25 +262,6 @@ N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
 N:    details.
 N:
 N:    Severity: important, Certainty: certain
-N:
-N:    Check: copyright-file, Type: binary
-N:
-E: blhc: copyright-should-refer-to-common-license-file-for-gpl
-N:
-N:    The strings "GNU General Public License" or "GPL" appear in the
-N:    copyright file for this package, but the copyright file does not
-N:    reference /usr/share/common-licenses as the location of the GPL on...
-N:    Debian systems.
-N:
-N:    If the package uses some other license that just mentions the GPL ...
-N:    that Lintian should detect as an exception, please file a Lintian ...
-N:    If the copyright file must mention the GPL for reasons other than
-N:    stating the license of the package, please add a Lintian override....
-N:
-N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
-N:    details.
-N:
-N:    Severity: important, Certainty: possible
 N:
 N:    Check: copyright-file, Type: binary
 N:

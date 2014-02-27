@@ -3,37 +3,66 @@ Osamu Aoki
 
 include::00-preface.txt[]
 
+[[quick]]
 == Quick guide
 
 include::01-quick.txt[]
 
+[[topdown]]
 == Top down tutorial
 
 include::10-workflow.txt[]
 
 include::11-version.txt[]
 
-include::12-build.txt[]
+include::12-rules.txt[]
 
-include::13-library.txt[]
+include::13-control.txt[]
 
-include::19-reminders.txt[]
+include::14-changelog.txt[]
 
+include::15-copyright.txt[]
+
+include::16-debianconf.txt[]
+
+include::17-customize.txt[]
+
+include::18-build.txt[]
+
+include::19-debug.txt[]
+
+include::20-symbols.txt[]
+
+include::21-multiarch.txt[]
+
+include::22-harden.txt[]
+
+include::30-tips.txt[]
+
+[[bottomup]]
 == Bottom up tutorial
 
-include::20-toolsetup.txt[]
+include::50-toolsetup.txt[]
 
-include::21-siglepkg.txt[]
+include::51-singlepkg.txt[]
 
-include::22-patchpkg.txt[]
+include::52-modpkg.txt[]
 
-include::23-multipkg.txt[]
+include::53-emptypkg.txt[]
 
-include::24-autotools.txt[]
+include::60-snapshot.txt[]
 
-include::25-python.txt[]
+include::61-autotools.txt[]
 
+include::62-python.txt[]
+
+include::80-multipkg.txt[]
+
+include::82-librarypkg.txt[]
+
+[[appendix]]
 == Appendix
 
-include::99-debmake-man.txt[]
+[[manpage]]
+include::99-manpage.txt[]
 

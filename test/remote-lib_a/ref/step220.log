@@ -1,0 +1,31 @@
+ $ git add -A .
+ $ git commit -m debmake_template
+[master e558727] debmake_template
+ 27 files changed, 1859 insertions(+)
+ create mode 100644 debian/README.Debian
+ create mode 100644 debian/changelog
+ create mode 100644 debian/clean
+ create mode 100644 debian/compat
+ create mode 100644 debian/control
+ create mode 100644 debian/copyright
+ create mode 100644 debian/libkkc-common.install
+ create mode 100644 debian/libkkc-dev.install
+ create mode 100644 debian/libkkc-utils.install
+ create mode 100644 debian/libkkc2.doc-base
+ create mode 100644 debian/libkkc2.docs
+ create mode 100644 debian/libkkc2.examples
+ create mode 100644 debian/libkkc2.info
+ create mode 100644 debian/libkkc2.install
+ create mode 100644 debian/libkkc2.links
+ create mode 100644 debian/libkkc2.manpages
+ create mode 100644 debian/libkkc2.menu
+ create mode 100644 debian/libkkc2.postinst
+ create mode 100644 debian/libkkc2.postrm
+ create mode 100644 debian/libkkc2.preinst
+ create mode 100644 debian/libkkc2.prerm
+ create mode 100644 debian/libkkc2.symbols
+ create mode 100644 debian/patches/series
+ create mode 100755 debian/rules
+ create mode 100644 debian/source/format
+ create mode 100644 debian/source/local-options
+ create mode 100644 debian/watch

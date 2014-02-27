@@ -1,3 +1,0 @@
- $ cat hello-c-1.5/Makefile.am
-bin_PROGRAMS = hello
-hello_SOURCES = hello.c

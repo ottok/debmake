@@ -1,0 +1,9 @@
+ $ cd ..
+ $ cat hello-c.build-dep.log
+  autotools-dev
+  debhelper
+  gawk
+  libfakeroot:amd64
+  liblocale-gettext-perl
+  mime-support
+  perl-modules

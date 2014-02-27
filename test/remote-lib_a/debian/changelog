@@ -1,0 +1,7 @@
+libkkc (0.3.2-1) unstable; urgency=low
+
+  * First upload to debian archive (Closes: #715232)
+  * Depends skkdic
+  * Update debian/license
+
+ -- Mitsuya Shibata <mty.shibata@gmail.com>  Wed, 26 Feb 2014 22:51:39 +0900

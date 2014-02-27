@@ -43,13 +43,13 @@ I: creating => debian/hello-c.preinst
 I: creating => debian/hello-c.menu
 I: creating => debian/hello-c.prerm
 I: creating => debian/hello-c.links
+I: creating => debian/hello-c.install
 I: creating => debian/hello-c.docs
 I: creating => debian/hello-c.info
 I: creating => debian/hello-c.examples
 I: creating => debian/hello-c.manpages
-I: creating => debian/hello-c.install
+I: skipping :: debian/hello-c.install (file exists)
 I: creating => debian/hello-c.doc-base
-I: creating => debian/hello-c-dbg.install
 I: run "debmake -x3" to get more template files
 I: $ wrap-and-sort
 I: debuild
@@ -147,24 +147,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: hello-c source: dbg-package-missing-depends hello-c-dbg
-N:
-N:    The given binary package has a name of the form of "X-dbg", indica...
-N:    it contains detached debugging symbols for the package X. If so, i...
-N:    should depend on the corresponding package, generally with (=
-N:    ${binary:Version}) since the debugging symbols are only useful wit...
-N:    binaries created by the same build.
-N:
-N:    If this package provides debugging symbols for multiple other pack...
-N:    it should normally depend on all of those packages as alternatives...
-N:    other words, pkga (= ${binary:Version}) | pkgb (= ${binary:Version...
-N:    so forth.
-N:
-N:    Severity: normal, Certainty: certain
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
-W: hello-c source: missing-license-paragraph-in-dep5-copyright no_licens...
+W: hello-c source: missing-license-paragraph-in-dep5-copyright unknown (...
 N:
 N:    The files paragraph in the machine readable copyright file referen...
 N:    license, for which no standalone license paragraph exists.
@@ -177,7 +160,7 @@ N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
 N:
-W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
 N:
 N:    Bug numbers can only contain digits.
 N:
@@ -188,7 +171,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-c-dbg: new-package-should-close-itp-bug
+W: hello-c: new-package-should-close-itp-bug
 N:
 N:    This package appears to be the first packaging of a new upstream
 N:    software package (there is only one changelog entry and the Debian...
@@ -205,7 +188,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-E: hello-c-dbg: changelog-is-dh_make-template
+E: hello-c: changelog-is-dh_make-template
 N:
 N:    The changelog file has an instruction left by dh_make, which has n...
 N:    been removed. Example:
@@ -219,7 +202,7 @@ N:    Severity: important, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
 N:
 N:    There is "url://example.com" in your copyright file. This was most...
 N:    likely a remnant from the dh_make template.
@@ -234,7 +217,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-W: hello-c-dbg: copyright-without-copyright-notice
+W: hello-c: copyright-without-copyright-notice
 N:
 N:    The copyright file for this package does not appear to contain a
 N:    copyright notice. You should copy the copyright notice from the up...
@@ -261,50 +244,6 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-E: hello-c-dbg: section-is-dh_make-template
-N:
-N:    The "Section:" field in this package's control file is set to unkn...
-N:    This is not a valid section, and usually means a dh_make template
-N:    control file was used and never modified to set the correct sectio...
-N:
-N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
-N:
-N:    Severity: serious, Certainty: certain
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
-W: hello-c-dbg: wrong-section-according-to-package-name hello-c-dbg => d...
-N:
-N:    This package has a name suggesting that it belongs to a section ot...
-N:    than the one it is currently categorized in.
-N:
-N:    Severity: normal, Certainty: possible
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
-W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL...
-W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
-W: hello-c-dbg: empty-binary-package
-N:
-N:    This binary package appears to be empty, and its description does ...
-N:    say that it's a metapackage or a transitional package. This is oft...
-N:    to problems with updating debhelper *.install files during package...
-N:    renames or similar problems where installation rules don't put fil...
-N:    the correct place.
-N:
-N:    If the package is deliberately empty, please mention in the packag...
-N:    description one of the phrases "metapackage", "dummy", "dependency...
-N:    package", or "empty package".
-N:
-N:    Severity: important, Certainty: wild-guess
-N:
-N:    Check: files, Type: binary, udeb
-N:
-W: hello-c: wrong-bug-number-in-closes l3:#nnnn
-W: hello-c: new-package-should-close-itp-bug
-E: hello-c: changelog-is-dh_make-template
-W: hello-c: copyright-has-url-from-dh_make-boilerplate
-W: hello-c: copyright-without-copyright-notice
 W: hello-c: extended-description-line-too-long
 N:
 N:    One or more lines in the extended part of the "Description:" field...
@@ -353,6 +292,17 @@ N:    Check: description, Type: binary, udeb
 N:
 I: hello-c: capitalization-error-in-description Gnome GNOME
 E: hello-c: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unkn...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct sectio...
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
 W: hello-c: superfluous-clutter-in-homepage <insert the upstream URL, if...
 W: hello-c: bad-homepage <insert the upstream URL, if relevant>
 W: hello-c: menu-command-not-in-package usr/share/menu/hello-c:2 usr/bin...
@@ -408,5 +358,28 @@ N:
 N:    Check: scripts, Type: binary
 N:
 W: hello-c: maintainer-script-empty preinst
+W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c-dbg: new-package-should-close-itp-bug
+E: hello-c-dbg: changelog-is-dh_make-template
+W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
+W: hello-c-dbg: copyright-without-copyright-notice
+W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL...
+W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
+W: hello-c-dbg: empty-binary-package
+N:
+N:    This binary package appears to be empty, and its description does ...
+N:    say that it's a metapackage or a transitional package. This is oft...
+N:    to problems with updating debhelper *.install files during package...
+N:    renames or similar problems where installation rules don't put fil...
+N:    the correct place.
+N:
+N:    If the package is deliberately empty, please mention in the packag...
+N:    description one of the phrases "metapackage", "dummy", "dependency...
+N:    package", or "empty package".
+N:
+N:    Severity: important, Certainty: wild-guess
+N:
+N:    Check: files, Type: binary, udeb
+N:
 Finished running lintian.
 I: please inspect the build results.

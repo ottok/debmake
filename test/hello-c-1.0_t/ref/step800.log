@@ -1,0 +1,13 @@
+ $ cd hello-c
+ $ git-import-dsc ../hello-c_0~1403311544-1.dsc  \
+                  --pristine-tar --create-missing-branches
+gbp:info: Tag upstream/0_1403311544 not found, importing Upstream tarbal...
+gbp:info: Creating missing branch 'upstream'
+pristine-tar: committed hello-c_0~1403311544.orig.tar.gz.delta to branch...
+gbp:info: Version '0~1403311544-1' imported under 'hello-c'
+ $ git branch
+* devel
+  master
+  pristine-tar
+  upstream
+ $ gitk --all

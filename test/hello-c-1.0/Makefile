@@ -13,7 +13,7 @@ TERM=dumb
 TREE_COLORS=
 LS_COLORS=
 CDPATH=
-FILTER =s/\(^........................................................................\).*$$/\1.../
+FILTER =s/\(^...........................................................................\).*$$/\1.../
 export BASEDIR TESTDIR REFDIR COMMONDIR PATH PROJECT PROJECTDIR TREE_COLORS LS_COLORS TERM CDPATH
 
 steps = $(patsubst %.cmd, %, $(shell ls *.cmd))
@@ -30,12 +30,13 @@ test:
 	script -e -q -c $(BASEDIR)/$$i.cmd $(BASEDIR)/$$i.raw ; \
 	ERR=$$? ; \
 	sed -e '1d' $(BASEDIR)/$$i.raw | col -b -x | \
-	sed -e 's#$(TESTDIR)#/path/to#g' -e 's#osamu#user#g' | \
+	sed -e 's#$(TESTDIR)#/path/to#g' | \
 	sed -e '$(FILTER)' > $(BASEDIR)/$$i.log ; \
 	if [ x$$ERR != x0 ]; then exit 1 ; fi ; \
 	done
 
-#	sed -e 's#$(TESTDIR)#/path/to#g' -e 's#osamu#user#g' -e 's/\&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/\\/\\\\/g' | \
+# no more sed
+#	-e 's#osamu#user#g' -e 's/\&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/\\/\\\\/g' 
 
 cmp: test
 	:>result.diff

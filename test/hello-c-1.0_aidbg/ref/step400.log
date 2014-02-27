@@ -4,6 +4,8 @@
 |-- hello-c_1.0.orig.tar.gz -> hello-c-1.0.tar.gz
 |-- hello-c-1.0.tar.gz
 |-- hello-c.build-dep.log
+|-- hello-c.build.log
+|-- hello-c.depcheck.log
 `-- hello-c.install.log
 
-1 directory, 4 files
+1 directory, 6 files

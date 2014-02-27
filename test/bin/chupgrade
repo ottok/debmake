@@ -1,0 +1,17 @@
+#!/bin/sh
+# update original tree (not the COW copy)
+DIST=$1
+ARCH=$2
+COW="/var/cache/pbuilder"
+if [ "$DIST" = "" ] || [ "$DIST" = "sid" ] ; then
+    COW="${COW}/base"
+else
+    COW="${COW}/base-${DIST}"
+fi
+if [ "$ARCH" = "" ] || [ "$ARCH" = "amd64" ] ; then
+    COW="${COW}.cow"
+else
+    COW="${COW}-${ARCH}.cow"
+fi
+echo "update $COW"
+sudo cowbuilder --update --basepath $COW

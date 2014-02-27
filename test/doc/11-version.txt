@@ -1,3 +1,4 @@
+[[name-version]]
 === Package name and version
 
 If the upstream source comes as *hello-0.9.12.tar.gz*, you can take *hello* as the upstream source package name and *0.9.12* as the upstream version.
@@ -6,9 +7,13 @@ include::caveat.txt[]
 
 You must adjust the package name and upstream version accordingly for the Debian packaging.
 
+In order to manage these information effectively under popular tools such as the *aptitude* command, it is a good idea to keep the length of package name to be equal or less than 30 characters; and the total length of version and revision to be equal or less than 14 characters. footnote:[For more than 90% of packages, the package name is equal or less than 24 characters; the upstream version is equal or less than 10 characters and the Debian revision is equal or less than 3 characters.]
+
+// aptitude bug #62454 fixed :-)
+
 If upstream does not use a normal versioning scheme such as *2.30.32* but uses some kind of date such as *11Apr29*, a random codename string, or a VCS hash value as part of the version, make sure to remove them from the upstream version. Such information can be recorded in the *debian/changelog* file. If you need to invent a version string, use the *YYYYMMDD* format such as *20110429* as upstream version. This ensures that dpkg interprets later versions correctly as upgrades. If you need to ensure smooth transition to the normal version scheme such as *0.1* in future, use the *0\~YYMMDD* format such as *0~110429* as upstream version, instead.
 
-Version strings can be compared using *dpkg*(1) as follows.
+Version strings can be compared using the *dpkg* command as follows.
 
 ----
 $ dpkg --compare-versions ver1 op ver2

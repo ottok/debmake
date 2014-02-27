@@ -15,8 +15,8 @@ drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/lib/
 drwxr-xr-x root/root ...  ./usr/lib/debug/
 drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/
-drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/de/
--rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/de/316ffc70f35adbe1d...
+drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/a9/
+-rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/a9/023dfdad9d4c1b846...
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c-dbg/

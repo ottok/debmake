@@ -1,7 +1,10 @@
  $ cd ..
  $ tree
 .
-|-- hello-c-1.0
+|-- hello-c
+|   |-- hello.c
+|   `-- Makefile
+|-- hello-c-0~1403311544
 |   |-- debian
 |   |   |-- changelog
 |   |   |-- compat
@@ -17,10 +20,7 @@
 |   |   `-- watch
 |   |-- hello.c
 |   `-- Makefile
-|-- hello-c_1.0.orig.tar.gz -> hello-c-1.0.tar.gz
-|-- hello-c-1.0.tar.gz
-`-- vcsdir
-    |-- hello.c
-    `-- Makefile
+|-- hello-c_0~1403311544.orig.tar.gz -> hello-c-0~1403311544.tar.gz
+`-- hello-c-0~1403311544.tar.gz
 
 5 directories, 16 files

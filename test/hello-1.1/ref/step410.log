@@ -48,13 +48,13 @@ I: creating => debian/hello-c.preinst
 I: creating => debian/hello-c.menu
 I: creating => debian/hello-c.prerm
 I: creating => debian/hello-c.links
+I: creating => debian/hello-c.install
 I: creating => debian/hello-c.docs
 I: creating => debian/hello-c.info
 I: creating => debian/hello-c.examples
 I: creating => debian/hello-c.manpages
-I: creating => debian/hello-c.install
+I: skipping :: debian/hello-c.install (file exists)
 I: creating => debian/hello-c.doc-base
-I: creating => debian/hello-c-dbg.install
 I: creating => debian/hello-data.install
 I: creating => debian/hello-sh.install
 I: run "debmake -x3" to get more template files

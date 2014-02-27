@@ -3,23 +3,20 @@
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 455cd85] initial commit
+[master (root-commit) 7488d5e] initial commit
  3 files changed, 21 insertions(+)
  create mode 100644 Makefile.am
  create mode 100644 configure.ac
  create mode 100644 hello.c
- $ git branch devel
- $ git branch upstream
+ $ git checkout -b devel
+Switched to a new branch 'devel'
  $ git branch
-  devel
-* master
-  upstream
- $ debmake -p hello-c -u 1.5 -d
+* devel
+  master
+ $ debmake -d
 I: set parameters
 I: sanity check of parameters
-W: -p "hello-c" != auto set value ""
-W: -u "1.5" != auto set value ""
-I: pkg="hello-c", ver="1.5", rev="1"
+I: pkg="", ver="", rev="1"
 I: make the upstream tarball with "make dist" equivalents
 I: pwd = "/path/to/vcsdir"
 I: $ autoreconf -ivf && ./configure --prefix "/usr" && make distcheck
@@ -178,13 +175,13 @@ make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[5]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
- /bin/mkdir -p '/tmp/am-dc-650//path/to/vcsdir/hello-c-1.5/_inst/bin'
-  /usr/bin/install -c hello '/tmp/am-dc-650//path/to/vcsdir/hello-c-1.5/...
+ /bin/mkdir -p '/tmp/am-dc-14960//path/to/vcsdir/hello-c-1.5/_inst/bin'
+  /usr/bin/install -c hello '/tmp/am-dc-14960//path/to/vcsdir/hello-c-1....
 make[5]: Nothing to be done for `install-data-am'.
 make[5]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
- ( cd '/tmp/am-dc-650//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f he...
+ ( cd '/tmp/am-dc-14960//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f ...
 make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory `/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory `/path/to/vcsdir/hello-c-1.5/_build'
@@ -255,9 +252,11 @@ I: parse binary package settings:
 I: binary package=hello-c Type=bin / Arch=any M-A=foreign
 I: analyze the source tree
 I: build_type = Autotools
-I:  33 %, ext = am
 I:  33 %, ext = c
-I:  33 %, ext = ac
+I:  17 %, ext = m4
+I:  17 %, ext = ac
+I:  17 %, ext = am
+I:  17 %, ext = in
 I: make debian/* template files
 I: single binary package
 I: debmake -x "1" ...

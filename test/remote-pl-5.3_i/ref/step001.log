@@ -2,7 +2,7 @@
 Cloning into 'blhc'...
 remote: Counting objects: 1392, done.
 remote: Compressing objects: 100% (388/388), done.
-remote:nTotale1392 (delta8817),9reused.1392i(delta.817)iB/s
-Receiving objects: 100% (1392/1392),5160.99KKiB||994.00KKiB/s, done.
+remote:nTotale1392 (delta1817),3reused01392K(delta1817)KKiB/s
+Receiving objects: 100% (1392/1392), 160.99KKiB||1111.00KKiB/s, done.
 Resolving deltas: 100% (817/817), done.
 Checking connectivity... done.

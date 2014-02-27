@@ -1,1 +1,1 @@
-L "git clean -d -f"
+L "git clean -d -f -x"
