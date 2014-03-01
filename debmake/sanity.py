@@ -22,6 +22,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+import datetime
 import os
 import re
 import sys
@@ -87,6 +88,10 @@ def sanity(para):
             else:
                 print('E: changelog start with "{}"'.format(line), file=sys.stderr)
                 exit(1)
+    #######################################################################
+    if para['tar']: # -t
+        if version == '':
+            version = datetime.datetime.utcnow().strftime("0~%y%m%d%H%M") # 0~YYMMDDHHmm
     #######################################################################
     # set parent/srcdir/tarball/package/version/revision
     para['parent'] = parent
