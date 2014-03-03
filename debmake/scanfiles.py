@@ -31,31 +31,31 @@ import debmake.copyright
 ###################################################################
 # Define constants
 ###################################################################
-MAX_FILE_SIZE = 100*1024 # 100 KB
+MAX_FILE_SIZE = 1024*1024 # 1 MiB
 SKIP_FILES = [
         'COPYING',
         'LICENSE',
-        'INSTALL',
-        'README',
-        'README.txt',
-        'README.Debian',
         'ChangeLog',
         'changelog',
-        'Makefile.in',
-        'aclocal.m4',
-        'compile',
-        'config.guess',
-        'config.h.in',
-        'config.sub',
-        'configure',
-        'depcomp',
-        'install-sh',
-        'ltconfig',
-        'ltmain.sh',
-        'missing',
-        'mkinstalldirs',
-        'py-compile'
 ]       # Skip these files for scanning
+#        'INSTALL',
+#        'README',
+#        'README.txt',
+#        'README.Debian',
+#        'Makefile.in',
+#        'aclocal.m4',
+#        'compile',
+#        'config.guess',
+#        'config.h.in',
+#        'config.sub',
+#        'configure',
+#        'depcomp',
+#        'install-sh',
+#        'ltconfig',
+#        'ltmain.sh',
+#        'missing',
+#        'mkinstalldirs',
+#        'py-compile'
 
 # First 2 are specified by --license
 
