@@ -23,8 +23,10 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import datetime
+import glob
 import os
 import re
+import subprocess
 import sys
 ###########################################################################
 # sanity: called from debmake.main()
@@ -39,7 +41,7 @@ def sanity(para):
     targz = ''
     if para['archive']: # -a
         # remote URL
-        reurl = re.match(r'(http:://|https://|ftp://).*/([^/]+)$', para['tarball'])
+        reurl = re.match(r'(http://|https://|ftp://).*/([^/]+)$', para['tarball'])
         if reurl:
             url = para['tarball']
             para['tarball'] = reurl.group(2)
@@ -55,13 +57,29 @@ def sanity(para):
                 print('E: wget/curl failed.', file=sys.stderr)
                 exit(1)
         parent = ''
+        # tarball: ibus-1.5.5-2.fc19.src.rpm
+        resrcrpm = re.match(r'([^/_]+-[^/_-]+)-[0-9]+\.[^.]+\.src\.rpm$', para['tarball'])
+        if resrcrpm:
+            command = 'rpm2cpio ' + para['tarball'] + '|cpio -dium'
+            print('I: $ {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: rpm2cpioc ... | cpio -dium failed.', file=sys.stderr)
+                exit(1)
+            files = glob.glob(resrcrpm.group(1) + '*.tar.gz') + \
+                    glob.glob(resrcrpm.group(1) + '*.tar.bz2') + \
+                    glob.glob(resrcrpm.group(1) + '*.tar.xz')
+            if files:
+                para['tarball'] = files[0]
+            else:
+                print('E: no tar found in src.rpm.', file=sys.stderr)
+                exit(1)
         if not os.path.isfile(para['tarball']):
             print('E: Non-existing tarball name {}'.format(para['tarball']), file=sys.stderr)
             exit(1)
         # tarball: package_version.orig.tar.gz
-        reorigtar = re.match(r'([^/]+)_([^-/_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
+        reorigtar = re.match(r'([^/_]+)_([^-/_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
         # tarball: package-version.tar.gz or package_version.tar.gz
-        rebasetar = re.match(r'([^/]+)[-_]([^-/_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
+        rebasetar = re.match(r'([^/_]+)[-_]([^-/_]+)\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
         if reorigtar:
             package = reorigtar.group(1).lower()
             version = reorigtar.group(2)
