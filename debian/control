@@ -12,8 +12,8 @@ Package: debmake
 Architecture: all
 Multi-Arch: foreign
 Depends: devscripts, dpkg-dev, rsync, ${misc:Depends}, ${python3:Depends}
-Recommends: build-essential, wget | curl
-Suggests: autotools-dev, cmake, dh-autoreconf, gem2deb, javahelper
+Recommends: build-essential, strace, wget | curl
+Suggests: autotools-dev, cmake, dh-autoreconf, gem2deb, javahelper, rpm2cpio
 Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source
