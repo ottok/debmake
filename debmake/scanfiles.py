@@ -199,12 +199,12 @@ def get_all_files(dir):
 #######################################################################
 # complete scanfiles
 #######################################################################
-def scanfiles(check=True):
+def scanfiles(mode=0, check=True):
     (nonlink_files, binary_files, huge_files, extensions) = get_all_files('.')
     # copyright license checks
     if check:
         data = debmake.copyright.check_all_license(nonlink_files)
-        bdata = debmake.copyright.bunch_licence(data)
+        bdata = debmake.copyright.bunch_licence(data, mode)
     else:
         bdata = []
     # filename extensions
@@ -226,7 +226,7 @@ def scanfiles(check=True):
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    (bdata, binary_files, huge_files, extcount) = scanfiles(check=False)
+    (bdata, binary_files, huge_files, extcount) = scanfiles(mode=1, check=False)
     print('Number of bunched license data: {}'.format(len(bdata)))
     print('I: frequency of file extensions', file=sys.stderr)
     for ext, freq in extcount:

@@ -29,6 +29,7 @@ import re
 import subprocess
 import sys
 import debmake.debug
+import debmake.lc
 ###################################################################
 # Define constants
 
@@ -39,6 +40,27 @@ style = {
     'quote' : '/*',
     'plain' : '__',
     'irregular' : 'XX'}
+# license name: file name, licence full name
+licensefiles = {
+    'Apache-2.0'    : ('Apache-2.0','Apache License Version 2.0\n '),
+    'Artistic'      : ('Artistic',  '"Artistic License"\n '),
+    'BSD-3-Clause'  : ('BSD',       'BSD 3-clause "New" or "Revised"\n License'),
+    'GFDL-1.2'      : ('GFDL-1.2',  'GNU Free Documentation License\n Version 1.2'),
+    'GFDL-1.2+'     : ('GFDL-1.2',  'GNU Free Documentation License\n Version 1.2'),
+    'GFDL-1.3'      : ('GFDL-1.3',  'GNU Free Documentation License\n Version 1.3'),
+    'GFDL-1.3+'     : ('GFDL-1.3',  'GNU Free Documentation License\n Version 1.3'),
+    'GPL-1.0'       : ('GPL-1',     'GNU General Public License\n Version 1'),
+    'GPL-1.0+'      : ('GPL-1',     'GNU General Public License\n Version 1'),
+    'GPL-2.0'       : ('GPL-2',     'GNU General Public License\n Version 2'),
+    'GPL-2.0+'      : ('GPL-2',     'GNU General Public License\n Version 2'),
+    'GPL-3.0'       : ('GPL-3',     'GNU General Public License\n Version 3'),
+    'GPL-3.0+'      : ('GPL-3',     'GNU General Public License\n Version 3'),
+    'LGPL-2.0'      : ('LGPL-2',    'GNU Library General Public License\n Version 2'),
+    'LGPL-2.0+'     : ('LGPL-2',    'GNU Library General Public License\n Version 2'),
+    'LGPL-2.1'      : ('LGPL-2.1',  'GNU Lesser General Public License\n Version 2.1'),
+    'LGPL-2.1+'     : ('LGPL-2.1',  'GNU Lesser General Public License\n Version 2.1'),
+    'LGPL-3.0'      : ('LGPL-3',    'GNU Lesser General Public License\n Version 3'),
+    'LGPL-3.0+'     : ('LGPL-3',    'GNU Lesser General Public License\n Version 3')}
 
 ###################################################################
 # Regular expressions
@@ -53,6 +75,7 @@ re_fake_copyright_mark = re.compile(r'''(
                 [=?]|
                 \S\(C\)|
                 if\s\(C\)|
+                switch\s+\(C\)|
                 \SCopyright|
                 print.+copyright|
                 copyright.+disclaimer|
@@ -512,18 +535,18 @@ def check_all_license(files, encoding='utf-8'):
 ###################################################################
 # Bunch licence
 ###################################################################
-# return data which is list of tuples
-# No. of files
-# bdata[*][0]: license data (normalized)
-# bdata[*][1]: file name (bunched, list)
-# bdata[*][2]: copyright holder info (data=dictionary)
-# bdata[*][3]: license text (original: list of lines)
-# bdata[*][4]: extra copyright holder lines with file and line number (bunched)
-def bunch_licence(data):
+# bdata[*][0]: licenseid
+# bdata[*][1]: license data (normalized)
+# bdata[*][2]: file name (bunched, list)
+# bdata[*][3]: copyright holder info (data=dictionary)
+# bdata[*][4]: license text (original: list of lines)
+# bdata[*][5]: extra copyright holder lines with file and line number (bunched)
+def bunch_licence(data, mode):
     bdata = []
     if len(data) == 0:
         print('W: bunch_licence(data) should have data', file=sys.stderr)
     xlicense = ''
+    xlicenseid = ''
     xfile = []
     xcopyright_data = {}
     xlicense_lines_rep = []
@@ -546,14 +569,18 @@ def bunch_licence(data):
                         xcopyright_data[name] = (year_min, year_max)
                 xextra_lines += extra_lines
             else:
-                bdata.append((len(xfile) + min(0.999,len(xlicense)/1000000), xlicense, xfile, xcopyright_data, xlicense_lines_rep, xextra_lines))
+                xlicenseid = debmake.lc.lc(xlicense, mode)
+                xorder = '{0} {1:08}'.format(xlicenseid, max(99999999 - len(xfile), 0))
+                bdata.append((xorder, xlicense, xlicenseid, xfile, xcopyright_data, xlicense_lines_rep, xextra_lines))
                 xlicense = license
                 xfile = [file]
                 xcopyright_data = copyright_data
                 xlicense_lines_rep = license_lines_rep
                 xextra_lines += extra_lines
-    bdata.append((len(xfile) + min(0.999,len(xlicense)/1000000), xlicense, xfile, xcopyright_data, xlicense_lines_rep, xextra_lines))
-    bdata = sorted(bdata, key=operator.itemgetter(0), reverse=True) # sort by No. of files
+    xlicenseid = debmake.lc.lc(xlicense, mode)
+    xorder = '{0} {1:08}'.format(xlicenseid, max(99999999 - len(xfile), 0))
+    bdata.append((xorder, xlicense, xlicenseid, xfile, xcopyright_data, xlicense_lines_rep, xextra_lines))
+    bdata = sorted(bdata, key=operator.itemgetter(0)) # sort by licenseid
     return bdata
 
 ###################################################################
@@ -600,7 +627,9 @@ def license_text(file, encoding='utf-8'):
 #######################################################################
 # main program
 #######################################################################
-def copyright(package_name, license_file_masks, bdata, binary_files, huge_files):
+def copyright(package_name, license_file_masks, bdata, binary_files, huge_files, mode=0):
+    # mode: 0: not -c, 1: -c simple, 2: -cc normal, 3: -ccc extensive 
+    #      -1: -cccc debug simple, -2 -ccccc debug normal -3 -cccccc debug extensive
     # make text to print
     text = '''\
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
@@ -611,17 +640,14 @@ Source: <url://example.com>
 # Edit this accordinng to the "Machine-readable debian/copyright file" as
 # http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ .
 #
-# Generate updated license templates with the "debmake -c" to STDOUT
+# Generate updated license templates with the "debmake -cc" to STDOUT
 # and merge them into debian/copyright as needed.
-#
-# licensecheck(1) from the devscripts package is used here to determin
-# the name of the license that applies.
 #
 # Please avoid to pick license terms that are more restrictive than the
 # packaged work, as it may make Debian's contributions unacceptable upstream.
 
 '''.format(package_name)
-    for (index, license, file, copyright_data, license_lines_rep, extra_lines) in bdata:
+    for (index, license, licenseid, file, copyright_data, license_lines_rep, extra_lines) in bdata:
         # Files:
         text += 'Files: {}\n'.format('\n       '.join(file))
         # Copyright:
@@ -639,47 +665,48 @@ Source: <url://example.com>
                 else:
                     copy += '           {}-{} {}\n'.format(copyright_data[name][0], copyright_data[name][1], name)
         text += 'Copyright:' + copy[10:]
-        # licensecheck(1):
-        command = 'licensecheck '+ file[0] + ' | sed -e "s/^[^:]*://"'
-        p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        licensecheck = p.stdout.read().decode('utf-8').strip()
-        if p.wait() != 0:
-            print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
-            exit(1)
+#        # licensecheck(1):
+#        command = 'licensecheck '+ file[0] + ' | sed -e "s/^[^:]*://"'
+#        p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+#        licensecheck = p.stdout.read().decode('utf-8').strip()
+#        if p.wait() != 0:
+#            print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
+#            exit(1)
         # License:
-        if license_lines_rep == []:
-            text += 'License: {} NO_LICENSE_TEXT_FOUND\n\n'.format(licensecheck)
-        else:
-            text += 'License: {}\n'.format(licensecheck)
-            text += '{}\n'.format(format_license(license_lines_rep))
-        try:
-            DEBUG = os.environ["DEBUG"]
-        except KeyError:
-            pass
-        else:
-            if 'g' in DEBUG:
-                # add comments
-                if extra_lines != '':
-                    text += '### !!! ......................................................................\n'
-                    text += '### !!! gray hits with matching text of "copyright":\n'
-                    text += extra_lines.rstrip() + '\n'
+        text += 'License: {}\n'.format(licenseid)
+        if license_lines_rep != []:
+            if abs(mode) != 1: # Skip if simple
+                text += format_license(license_lines_rep)
+        lid = licenseid.split()[0] # the main part of license id
+        if lid in licensefiles.keys():
+            (nm,fn) = licensefiles[lid]
+            text += """ .
+ On Debian systems, the complete text of the {} can be found in `/usr/share/common-licenses/{}'.
+""".format(fn, nm)
+        if abs(mode) > 2: # for debug
+            # add comments
+            if extra_lines != '':
+                text += '### !!! ......................................................................\n'
+                text += extra_lines.rstrip() + '\n'
+        text += '\n'
     if binary_files != []:
         text += '#----------------------------------------------------------------------------\n'
         text += '# binary files (skipped):\n#       {}\n\n'.format('\n#       '.join(binary_files))
     if huge_files != []:
         text += '#----------------------------------------------------------------------------\n'
         text += '# huge files   (skipped):\n#       {}\n\n'.format('\n#       '.join(huge_files))
-    text += '''\
+    if mode == 0: # not for -c
+        text += '''\
 #----------------------------------------------------------------------------
 # Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following 
 # license/copyright files.
 
 '''
-    for f in license_files(license_file_masks):
-        text += '#----------------------------------------------------------------------------\n'
-        text += '# License file: {}\n'.format(f)
-        text += license_text(f)
-        text += '\n'
+        for f in license_files(license_file_masks):
+            text += '#----------------------------------------------------------------------------\n'
+            text += '# License file: {}\n'.format(f)
+            text += license_text(f)
+            text += '\n'
 
     return text
 

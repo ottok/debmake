@@ -118,10 +118,10 @@ def main():
 #######################################################################
 # -c: scan source for copyright+ license text, print and exit
 #######################################################################
-    if para['copyright']:
+    if para['copyright'] !=0:
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
-        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(check=True)
-        print(debmake.copyright.copyright('package', set(),bdata, binary_files, huge_files))
+        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(mode=para['copyright'], check=True)
+        print(debmake.copyright.copyright('package', set(), bdata, binary_files, huge_files, mode=para['copyright']))
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
