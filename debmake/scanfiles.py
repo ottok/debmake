@@ -148,19 +148,17 @@ def istextfile(file, blocksize=4048):
 ###################################################################
 # Get all files to be analyzed under dir
 ###################################################################
-def get_all_files(dir):
+def get_all_files():
     nonlink_files = []
     binary_files = []
     huge_files = []
     extensions = []
     # extensions : representative code type
     # binary means possible non-DFSG component
-    if not os.path.isdir(dir):
-        print('E: get_all_files(dir) should have existing dir', file=sys.stderr)
-        exit(1)
-    for dir, subdirs, files in os.walk(dir):
+    for dir, subdirs, files in os.walk("."):
         for file in files:
-            filepath = os.path.join(dir, file)
+            # dir iterates over ./ ./foo ./foo/bar/ ./foo/bar/baz ...
+            filepath = os.path.join(dir[2:], file)
             if os.path.islink(filepath):
                 pass # skip symlink (both for file and dir)
             elif file in SKIP_FILES:
@@ -200,7 +198,7 @@ def get_all_files(dir):
 # complete scanfiles
 #######################################################################
 def scanfiles(mode=0, check=True):
-    (nonlink_files, binary_files, huge_files, extensions) = get_all_files('.')
+    (nonlink_files, binary_files, huge_files, extensions) = get_all_files()
     # copyright license checks
     if check:
         data = debmake.copyright.check_all_license(nonlink_files)
