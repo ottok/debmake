@@ -109,10 +109,7 @@ def dist(para):
         matchtar = re.match(r'(?P<package>[^_]*)[-_](?P<version>[^-_]*)\.(?P<targz>tar\..{2,3})$', para['tarball'])
         if matchtar:
             if para['package'] == "":
-                if (len(para['parent']) <= len(matchtar.group('package'))):
-                    para['package'] = para['parent'].lower()
-                else:
-                    para['package'] = matchtar.group('package').lower()
+                para['package'] = matchtar.group('package').lower()
             if para['version'] =='':
                 para['version'] = matchtar.group('version')
             elif para['version'] != matchtar.group('version'):

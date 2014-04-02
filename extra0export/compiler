@@ -1,4 +1,5 @@
-# harden via compile options
+# In case you want to add more flags to the defaults, use 
+# the followings to harden via compiler options
 # see FEATURE AREAS in dpkg-buildflags(1))
 #export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 # see ENVIRONMENT in dpkg-buildflags(1))
@@ -6,3 +7,4 @@
 #export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+

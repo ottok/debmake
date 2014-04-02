@@ -43,7 +43,7 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.0.9'
+__version__         = '4.0.10'
 __copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -118,10 +118,10 @@ def main():
 #######################################################################
 # -c: scan source for copyright+ license text, print and exit
 #######################################################################
-    if para['copyright']:
+    if para['copyright'] !=0:
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
-        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(check=True)
-        print(debmake.copyright.copyright('package', set(),bdata, binary_files, huge_files))
+        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(mode=para['copyright'], check=True)
+        print(debmake.copyright.copyright('package', set(), bdata, binary_files, huge_files, mode=para['copyright']))
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
@@ -191,17 +191,32 @@ def main():
 # Make Debian package(s)
 #######################################################################
     if para['judge']:
-        command = 'fakeroot dpkg-depcheck -b -f -catch-alternatives debian/rules install >../{}.build-dep.log 2>&1'.format(para['package'])
+        command = 'fakeroot dpkg-depcheck -m -C -o ../{0}.depcheck.log -f -catch-alternatives debian/rules install >../{0}.build.log 2>&1'.format(para['package'])
         print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
-            print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
+            print('E: failed to run dpkg-depcheck.', file=sys.stderr)
             exit(1)
-        if len(para['debs']) > 1:
-            command = 'find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" >../{}.install.log'.format(para['package'])
+        command = 'LANG=C ; sed -e "1d" < ../{0}.depcheck.log | sort >../{0}.build-dep.log'.format(para['package'])
+        print('I: $ {}'.format(command), file=sys.stderr)
+        if subprocess.call(command, shell=True) != 0:
+            print('E: failed to run sort on build-dep.', file=sys.stderr)
+            exit(1)
+        if len(para['debs']) == 1:
+            bpackage = para['debs'][0]['package']
+            command = 'LANG=C; find debian/' + bpackage + ' -type f 2>&1 | sed -e "s/^debian\/' + bpackage + '\///" | sort >../{0}.install.log'.format(para['package'])
             print('I: $ {}'.format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
-                print('E: failed to run dpkg-buildcheck.', file=sys.stderr)
+                print('E: failed to run find debian/{}.'.format(bpackage), file=sys.stderr)
                 exit(1)
+        elif len(para['debs']) > 1:
+            command = 'LANG=C; find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" | sort >../{0}.install.log'.format(para['package'])
+            print('I: $ {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: failed to run find debian/tmp.', file=sys.stderr)
+                exit(1)
+        else:
+            print('E: No binary package was generated.', file=sys.stderr)
+            exit(1)
         print('I: upon return to the shell, current directory becomes {}'.format(para['cwd']), file=sys.stderr)
         print('I: please execute "cd {0}" before building the binary package'.format(os.getcwd()), file=sys.stderr)
         print('I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).', file=sys.stderr)

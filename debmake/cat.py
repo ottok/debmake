@@ -43,5 +43,5 @@ def cat(file, text, end=''):
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    print('no test')
+    cat('testfile.tmp', 'fooo\nbarrrr\nbazzzzz')
 

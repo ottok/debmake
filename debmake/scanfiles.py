@@ -31,31 +31,31 @@ import debmake.copyright
 ###################################################################
 # Define constants
 ###################################################################
-MAX_FILE_SIZE = 100*1024 # 100 KB
+MAX_FILE_SIZE = 1024*1024 # 1 MiB
 SKIP_FILES = [
         'COPYING',
         'LICENSE',
-        'INSTALL',
-        'README',
-        'README.txt',
-        'README.Debian',
         'ChangeLog',
         'changelog',
-        'Makefile.in',
-        'aclocal.m4',
-        'compile',
-        'config.guess',
-        'config.h.in',
-        'config.sub',
-        'configure',
-        'depcomp',
-        'install-sh',
-        'ltconfig',
-        'ltmain.sh',
-        'missing',
-        'mkinstalldirs',
-        'py-compile'
 ]       # Skip these files for scanning
+#        'INSTALL',
+#        'README',
+#        'README.txt',
+#        'README.Debian',
+#        'Makefile.in',
+#        'aclocal.m4',
+#        'compile',
+#        'config.guess',
+#        'config.h.in',
+#        'config.sub',
+#        'configure',
+#        'depcomp',
+#        'install-sh',
+#        'ltconfig',
+#        'ltmain.sh',
+#        'missing',
+#        'mkinstalldirs',
+#        'py-compile'
 
 # First 2 are specified by --license
 
@@ -148,19 +148,17 @@ def istextfile(file, blocksize=4048):
 ###################################################################
 # Get all files to be analyzed under dir
 ###################################################################
-def get_all_files(dir):
+def get_all_files():
     nonlink_files = []
     binary_files = []
     huge_files = []
     extensions = []
     # extensions : representative code type
     # binary means possible non-DFSG component
-    if not os.path.isdir(dir):
-        print('E: get_all_files(dir) should have existing dir', file=sys.stderr)
-        exit(1)
-    for dir, subdirs, files in os.walk(dir):
+    for dir, subdirs, files in os.walk("."):
         for file in files:
-            filepath = os.path.join(dir, file)
+            # dir iterates over ./ ./foo ./foo/bar/ ./foo/bar/baz ...
+            filepath = os.path.join(dir[2:], file)
             if os.path.islink(filepath):
                 pass # skip symlink (both for file and dir)
             elif file in SKIP_FILES:
@@ -199,12 +197,12 @@ def get_all_files(dir):
 #######################################################################
 # complete scanfiles
 #######################################################################
-def scanfiles(check=True):
-    (nonlink_files, binary_files, huge_files, extensions) = get_all_files('.')
+def scanfiles(mode=0, check=True):
+    (nonlink_files, binary_files, huge_files, extensions) = get_all_files()
     # copyright license checks
     if check:
         data = debmake.copyright.check_all_license(nonlink_files)
-        bdata = debmake.copyright.bunch_licence(data)
+        bdata = debmake.copyright.bunch_licence(data, mode)
     else:
         bdata = []
     # filename extensions
@@ -226,7 +224,7 @@ def scanfiles(check=True):
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    (bdata, binary_files, huge_files, extcount) = scanfiles(check=False)
+    (bdata, binary_files, huge_files, extcount) = scanfiles(mode=1, check=False)
     print('Number of bunched license data: {}'.format(len(bdata)))
     print('I: frequency of file extensions', file=sys.stderr)
     for ext, freq in extcount:

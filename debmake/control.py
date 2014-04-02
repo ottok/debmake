@@ -171,16 +171,26 @@ def control_bin(para, deb):
     else:
         multiarch = 'Multi-Arch: ' + deb['multiarch'] + '\n'
         predepends = ''
-
+    if deb['type'] == 'dbg':
+        section = 'Section: debug\n'
+    elif deb['type'] == 'dev':
+        section = 'Section: libdevel\n'
+    elif deb['type'] == 'lib':
+        section = 'Section: libs\n'
+    elif deb['type'] == 'doc':
+        section = 'Section: doc\n'
+    else:
+        section = ''
     ###################################################################
     return '''\
 Package: {0}
-Architecture: {1}
-{2}{3}Depends: {4}
-Description: {5}
-{6}
+{1}Architecture: {2}
+{3}{4}Depends: {5}
+Description: {6}
+{7}
 '''.format(
             deb['package'],
+            section,
             deb['arch'],
             multiarch,
             predepends,

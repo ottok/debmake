@@ -72,8 +72,8 @@ Argument may need to be quoted to protect from the shell.
     p.add_argument(
             '-c', 
             '--copyright', 
-            action = 'store_true', 
-            default = False,
+            action = 'count', 
+            default = 0, 
             help = 'scan source for copyright+license text and exit')
     sp = p.add_mutually_exclusive_group()
     sp.add_argument(
@@ -245,7 +245,10 @@ Argument may need to be quoted to protect from the shell.
         para['tarball'] = ''
     #############################################
     para['binaryspec']      = args.binaryspec   # -b
-    para['copyright']       = args.copyright    # -c
+    para['copyright']       = min(args.copyright, 6)   # -c
+    if para['copyright'] >=4:
+        para['copyright'] = 3 - para['copyright']
+        # 0: debian/copyright, +/-1: simple, +/-2: standard +/-3: extensive
     para['dist']            = args.dist         # -d
     para['email']           = args.email        # -e
     para['fullname']        = args.fullname     # -f
@@ -279,7 +282,7 @@ Argument may need to be quoted to protect from the shell.
         para['dh_with'] = set(args.withargs.split(','))
     #############################################
     para['extra']           = args.extra        # -x
-    para['yes']             = args.yes % 3      # -y
+    para['yes']             = min(args.yes, 2)  # -y
                             # 0: ask, 1: yes, 2: no
     para['targz']           = args.targz        # -z
     ############################################# -o
