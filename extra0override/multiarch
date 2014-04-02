@@ -1,5 +1,4 @@
-# Set required multiarch library install path.
-# See dpkg-architecture(1)
+# See dpkg-architecture(1) to set multiarch path as needed.
 #DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 #
 # This is example for Cmake (See http://bugs.debian.org/641051 )

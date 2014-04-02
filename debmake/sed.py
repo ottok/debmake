@@ -53,6 +53,7 @@ def sed(confdir, destdir, substlist, package, mask='*'):
 #######################################################################
 if __name__ == '__main__':
     substlist = {
+        '@BINPACKAGE@': 'binpackage',
         '@PACKAGE@': 'package',
         '@UCPACKAGE@': 'package'.upper(),
         '@YEAR@': '2014',
@@ -60,7 +61,8 @@ if __name__ == '__main__':
         '@EMAIL@': 'email@example.org',
         '@SHORTDATE@': '11 Jan. 2013',
     }
-    print(sed('/share/debmake/extra2/', 'debian/', substlist, 'package'))
-    print(sed('/share/debmake/extra3/', 'debian/', substlist), 'package')
-    print(sed('/share/debmake/extra4/', 'debian/copyright-example/', substlist, 'package'))
+    sed('../extra2dbg/', 'debian/', substlist, 'package')
+#    sed('../extra2/', 'debian/', substlist, 'package')
+#    sed('../extra3/', 'debian/', substlist, 'package')
+#    sed('../extra4/', 'debian/copyright-example/', substlist, 'package')
 

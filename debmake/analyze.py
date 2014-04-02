@@ -32,6 +32,29 @@ import debmake.compat
 import debmake.scanfiles
 import debmake.yn
 ###########################################################################
+# get master name (remove -dev -dbg)
+###########################################################################
+# re.sub: drop "-dev"
+re_dev = re.compile(r'''(-dev$)''')
+def masterdev(name):
+    if re_dev.search(name):
+        name = re_dev.sub('',name)
+    else:
+        print('E: development package "{}" does not end with "-dev"'.format(name), file=sys.stderr)
+        exit(1)
+    return name
+
+# re.sub: drop "-dbg"
+re_dbg = re.compile(r'''(-dbg$)''')
+def masterdbg(name):
+    if re_dbg.search(name):
+        name = re_dbg.sub('',name)
+    else:
+        print('E: debug package "{}" does not end with "-dbg"'.format(name), file=sys.stderr)
+        exit(1)
+    return name
+
+###########################################################################
 # popular: warn binary dependency etc. if they are top 3 popular files
 ###########################################################################
 def popular(exttype, msg, debs, extcount, yes):
@@ -86,51 +109,109 @@ def description_long(type, base_path):
 # analyze: called from debmake.main()
 ###########################################################################
 def analyze(para):
-    #######################################################################
-    # binary package types: para['debs']
-    #######################################################################
-    setcompiler = False # for export
-    setmultiarch = False # for override
-    para['dbg'] = [] # list of dbg package names for override
+    ###################################################################
+    # package list by types (first pass)
+    ###################################################################
+    para['bin'] = []
+    para['lib'] = []
+    para['dev'] = []
+    para['dbg'] = []
+    para['data'] = []
+    para['doc'] = []
+    para['scripts'] = []
     for i, deb in enumerate(para['debs']):
-        # update binary package dependency by package type etc.
-        # interpreters
-        if deb['type'] == 'perl':
+        if deb['type'] == 'bin':
+            para['bin'].append(deb['package'])
+        elif deb['type'] == 'lib':
+            para['lib'].append(deb['package'])
+        elif deb['type'] == 'dev':
+            para['dev'].append(deb['package'])
+        elif deb['type'] == 'dbg':
+            para['dbg'].append(deb['package'])
+        elif deb['type'] == 'doc':
+            para['doc'].append(deb['package'])
+        elif deb['type'] == 'data':
+            para['data'].append(deb['package'])
+        else:
+            para['scripts'].append(deb['package'])
+    if len(para['debs']) != 1 and len(para['dev']) != len(para['lib']):
+        print('E: # of "dev":{} != # of "lib": {}.'.format(len(para['dev']), len(para['lib'])), file=sys.stderr)
+        exit(1)
+    if len(para['dbg']) != 0 and len(para['dbg']) != (len(para['bin']) + len(para['lib'])):
+        print('E: # of "dbg":{} != # of "bin+lib": {}.'.format(len(para['dev']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
+        exit(1)
+    if para['lib'] != []:
+        setmultiarch = True
+    elif para['bin'] != [] and len(para['debs']) == 1:
+        setmultiarch = True
+    else:
+        setmultiarch = False # for override
+    if para['monoarch']:
+        setmultiarch = False
+    ###################################################################
+    # package list by types (second pass)
+    ###################################################################
+    para['dh_strip'] = ''
+    for i, deb in enumerate(para['debs']):
+        if deb['type'] == 'bin':
+            para['export'].update({'compiler'})
+            for libpkg in para['lib']:
+                para['debs'][i]['depends'].update({libpkg + ' (= ${binary:Version})'})
+        elif deb['type'] == 'lib':
+            para['export'].update({'compiler'})
+        elif deb['type'] == 'dev':
+            pkg = masterdev(deb['package'])
+            match = False
+            for libpkg in para['lib']:
+                if libpkg[:len(pkg)] == pkg:
+                    para['debs'][i]['depends'].update({libpkg + ' (= ${binary:Version})'})
+                    match = True
+                    break
+            if not match:
+                print('E: {} does not have matching library in "{}".'.format(deb['package'], ', '.join(para['lib'])), file=sys.stderr)
+                exit(1)
+        elif deb['type'] == 'dbg':
+            para['override'].update({'dbg'})
+            pkg = masterdbg(deb['package'])
+            pkgs = para['bin'] + para['lib']
+            if pkg in pkgs:
+                para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
+            else:
+                print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(para['bin'] + para['lib'])), file=sys.stderr)
+                exit(1)
+            pkgs.remove(pkg)
+            if pkgs == []:        
+                para['dh_strip'] += '\tdh_strip --dbg-package={}\n'.format(deb['package'])
+            else:
+                para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
+        elif deb['type'] == 'perl':
             para['debs'][i]['depends'].update({'perl'}) # may not be needed
+            for libpkg in para['lib']:
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
         elif deb['type'] == 'python':
-            para['dh_with'].update({'python2'}) # may not be needed
+            #para['dh_with'].update({'python2'}) # may not be needed
             para['debs'][i]['depends'].update({'python'})
+            para['build_depends'].update({'python-all'})
+            for libpkg in para['lib']:
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
         elif deb['type'] == 'python3':
             para['dh_with'].update({'python3'})
             para['debs'][i]['depends'].update({'python3'})
             para['override'].update({'python3'})
+            para['build_depends'].update({'python3-all'})
+            for libpkg in para['lib']:
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
         elif deb['type'] == 'ruby':
             para['dh_with'].update({'ruby'}) # may not be needed
             para['debs'][i]['depends'].update({'ruby'})
+            para['build_depends'].update({'ruby'})
+            for libpkg in para['lib']:
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
         elif deb['type'] == 'script':
+            for libpkg in para['lib']:
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
+        else:
             pass
-        elif deb['type'] == 'doc':
-            pass
-        elif deb['type'] == 'data':
-            pass
-        # ELF executables
-        elif deb['type'] == 'bin':
-            setcompiler = True
-            if len(para['debs']) == 1:
-                # it may contain library for the single binary case
-                setmultiarch = True
-        elif deb['type'] == 'lib':
-            setcompiler = True
-            setmultiarch = True
-        elif deb['type'] == 'dbg':
-            para['override'].update({'dbg'})
-            para['dbg'].append(deb['package'])
-        else: # -dev
-            pass
-    if setcompiler:
-        para['export'].update({'compiler'})
-    if para['monoarch']:
-        setmultiarch = False
     #######################################################################
     # auto-set build system by files in the base directory
     #######################################################################
@@ -287,7 +368,10 @@ def analyze(para):
     if 'java' in dict(para['extcount']).keys():
         if para['build_type'][0:4] != 'Java':
             # Non-ant build system
-            para['build_type']      = 'Java'
+            if para['build_type']:
+                para['build_type']      = 'Java + ' + para['build_type']
+            else:
+                para['build_type']      = 'Java'
             para['dh_with'].update({'javahelper'})
             para['build_depends'].update({'javahelper', 'gcj'})
             para['export'].update({'java', 'compiler'})
@@ -299,7 +383,7 @@ def analyze(para):
     if 'vala' in dict(para['extcount']).keys():
         para['build_type']      = 'Vala'
         para['build_depends'].update({'valac'})
-        para['export'].update({'compiler'})
+        para['export'].update({'vala', 'compiler'})
         if setmultiarch and para['build_type'][0:9] != 'Autotools':
             para['override'].update({'multiarch'})
     #######################################################################

@@ -1,3 +1,15 @@
+debmake (4.0.10-1) unstable; urgency=medium
+
+  * Set Build-Depends to python3-all. Closes: #743090
+  * Run dpkg-depcheck with -j also for the single binary
+  * Allow empty archive (E:->W:)
+  * Support dh_systemd etc.
+  * Documentation updates.
+  * Improve DEP-5 compliance with internally implemented license 
+    check script lc.py.
+
+ -- Osamu Aoki <osamu@debian.org>  Thu, 03 Apr 2014 01:26:21 +0900
+
 debmake (4.0.9-1) unstable; urgency=medium
 
   * Fix regression of 4.0.8 for -d and add safegurd of VCS for untar.

@@ -256,7 +256,8 @@ def debs(binaryspec, package, monoarch, dh_with):
         pset.update({p})
         if t in tset:
             print('W: duplicate definition of package type "{}"'.format(t), file=sys.stderr)
-            print('W: *** manual modifiocation of debian/{}.install required ***'.format(p), file=sys.stderr)
+            if t != 'dbg':
+                print('W: *** manual modifiocation of debian/{}.install required ***'.format(p), file=sys.stderr)
         tset.update({t})
         ###################################################################
         # append dictionary to a list
@@ -267,28 +268,6 @@ def debs(binaryspec, package, monoarch, dh_with):
                 'depends': dp, 
                 'pre-depends': pd,
                 'type': t})
-    ###################################################################
-    # sanity check
-    ###################################################################
-    binorlib = False
-    dev = False
-    dbg = False
-    for deb in debs:
-        if deb['type'] == 'bin':
-            binorlib = True
-        elif deb['type'] == 'lib':
-            binorlib = True
-        elif deb['type'] == 'dev':
-            dev = True
-        elif deb['type'] == 'dbg':
-            dbg = True
-    if binorlib == False:
-        if dev == True:
-            print('E: "dev" without "bin" or "lib" does not make sense.', file=sys.stderr)
-            exit(1)
-        if dbg == True:
-            print('E: "dbg" without "bin" or "lib" does not make sense.', file=sys.stderr)
-            exit(1)
     ###################################################################
     return debs
 

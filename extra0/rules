@@ -4,6 +4,7 @@
 #DH_VERBOSE = 1
 
 @EXPORT@
+
 # main packaging script based on dh7 syntax
 %:
 	dh $@ @DHWITH@

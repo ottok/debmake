@@ -84,27 +84,21 @@ def debian(para):
     ###################################################################
     # check which package have the documentation
     ###################################################################
-    binlist = {'bin', 'perl', 'python', 'python3', 'ruby', 'script'}
-    docpackage = ''
-    for deb in para['debs']:
-        if deb['type'] == 'doc':
-            docpackage = deb['package']
-    if docpackage == '':
-        for deb in para['debs']:
-            if deb['type'] in binlist:
-                docpackage = deb['package']
-                break
-    if docpackage == '':
-        docpackage = para['debs'][0]['package']
+    if para['doc'] == []:
+        docpackage = para['debs'][0]['package'] # 1st package
+    else:
+         docpackage = ''
     #######################################################################
     # set export string
     #######################################################################
     export_dir = para['base_path'] + '/share/debmake/extra0export/'
     substlist['@EXPORT@'] = ''
     if 'compiler' in para['export']:
-        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'compiler').rstrip() + '\n'
+        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'compiler').rstrip() + '\n\n'
     if 'java' in para['export']:
-        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'java').rstrip() + '\n'
+        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'java').rstrip() + '\n\n'
+    if 'vala' in para['export']:
+        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'vala').rstrip() + '\n\n'
 
     #######################################################################
     # set override string
@@ -116,19 +110,13 @@ def debian(para):
     else:
         build_dir = 'debian/tmp'
     if 'dbg' in para['override']:
-        if len(para['dbg']) == 1:
-            substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg1').format(para['dbg'][0]).rstrip() + '\n'
-        elif len(para['dbg']) > 1:
-            substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg2').format(para['dbg']).rstrip() + '\n'
-        else:
-            print('E: no -dbg package but wondered in here.', file=sys.stderr)
-            exit(1)
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(para['dh_strip']).rstrip() + '\n\n'
     if 'python3' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'python3').format(build_dir).strip() + '\n'
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'python3').format(build_dir).strip() + '\n\n'
     if 'multiarch' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n'
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n\n'
     if 'java' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n'
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n\n'
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################
@@ -160,9 +148,10 @@ def debian(para):
     # * create templates only for the first binary package:
     #   package.menu, package.docs, package.examples, package.manpages, 
     #   package.preinst, package.prerm, package.postinst, package.postrm
-    # * create for all binary packages: package.install
+    # * create for all but dbg binary packages: package.install
     # * create for lib package: package.symbol
     ###################################################################
+    binlist = {'bin', 'perl', 'python', 'python3', 'ruby', 'script'}
     if extra >= 2:
         if len(para['debs']) == 1: # if single binary deb
             confdir = para['base_path'] + '/share/debmake/extra2single/'
@@ -174,12 +163,13 @@ def debian(para):
                 substlist['@BINPACKAGE@'] = deb['package']
                 type = deb['type']
                 if type in binlist:
-                    if deb['package'] == docpackage:
-                        type = 'binall'
-                    else:
-                        type = 'bin'
+                    type = 'bin'
                 confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
                 debmake.sed.sed(confdir, 'debian/', substlist, deb['package'])
+                if deb['package'] == docpackage:
+                    type = 'doc'
+                    confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
+                    debmake.sed.sed(confdir, 'debian/', substlist, deb['package'])
     ###################################################################
     # Rarely used optional files (level=3)
     # Provided as the dh_make compatibilities. (files with ".ex" postfix)
