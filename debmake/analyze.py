@@ -29,6 +29,7 @@ import sys
 import subprocess
 import debmake.read
 import debmake.compat
+import debmake.copyright
 import debmake.scanfiles
 import debmake.yn
 ###########################################################################
@@ -57,9 +58,9 @@ def masterdbg(name):
 ###########################################################################
 # popular: warn binary dependency etc. if they are top 3 popular files
 ###########################################################################
-def popular(exttype, msg, debs, extcount, yes):
+def popular(exttype, msg, debs, extcountlist, yes):
     n = 3 # check files with the top 3 popular extension types
-    if exttype in dict(extcount[0:n]).keys():
+    if exttype in dict(extcountlist[0:n]).keys():
         settype = False
         for deb in debs:
             type = deb['type'] # -b (python3 also reports python)
@@ -353,19 +354,21 @@ def analyze(para):
     # analize copyright+license content + file extensions
     # copyright, control: build/binary dependency, rules export/override
     #######################################################################
+    print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
+    (para['nonlink_files'], para['binary_files'], para['huge_files'], para['extcount'], para['extcountlist']) \
+            = debmake.scanfiles.scanfiles()
     # skip slow license+copyright check if debian/copyright exists
     if os.path.isfile('debian/copyright'):
-        check = False
+        para['cdata'] = []
     else:
-        check = True
-    (para['bdata'], para['binary_files'], para['huge_files'], para['extcount']) = debmake.scanfiles.scanfiles(check=check)
+        para['cdata'] = debmake.copyright.check_copyright(para['nonlink_files'], mode=2)
     #######################################################################
     # compiler: set build dependency etc. if they are used
-    if 'c' in dict(para['extcount']).keys():
+    if 'c' in para['extcount'].keys():
         para['export'].update({'compiler'})
         if setmultiarch and para['build_type'][0:9] != 'Autotools':
             para['override'].update({'multiarch'})
-    if 'java' in dict(para['extcount']).keys():
+    if 'java' in para['extcount'].keys():
         if para['build_type'][0:4] != 'Java':
             # Non-ant build system
             if para['build_type']:
@@ -380,7 +383,7 @@ def analyze(para):
                 para['override'].update({'multiarch'})
     if para['build_type'][0:4] == 'Java':
         print('W: Java support is not perfect. (/usr/share/doc/javahelper/tutorials.html)', file=sys.stderr)
-    if 'vala' in dict(para['extcount']).keys():
+    if 'vala' in para['extcount'].keys():
         para['build_type']      = 'Vala'
         para['build_depends'].update({'valac'})
         para['export'].update({'vala', 'compiler'})
@@ -388,9 +391,9 @@ def analyze(para):
             para['override'].update({'multiarch'})
     #######################################################################
     # interpreter: warn binary dependency etc. if they are top 3 popular files
-    popular('perl', '-b":perl, ..." missing. Continue?', para['debs'], para['extcount'], para['yes'])
-    popular('python', '-b":python, ..." or -b":python3" missing. Continue?', para['debs'], para['extcount'], para['yes'])
-    popular('ruby', '-b":ruby, ..." missing. Continue?', para['debs'], para['extcount'], para['yes'])
+    popular('perl', '-b":perl, ..." missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
+    popular('python', '-b":python, ..." or -b":python3" missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
+    popular('ruby', '-b":ruby, ..." missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
     #######################################################################
     # set build dependency if --with requests (to be safe)
     #######################################################################

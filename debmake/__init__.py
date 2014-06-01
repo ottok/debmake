@@ -104,7 +104,7 @@ def main():
     else:
         para['base_path'] = os.path.dirname(fullparent)
     para = debmake.para.para(para)
-    debmake.debug.debug_para('D: post para', para)
+    debmake.debug.debug_para('Dp: @post-para para[*]', para)
 #######################################################################
 # -v: print version and copyright notice and exit
 #######################################################################
@@ -120,15 +120,16 @@ def main():
 #######################################################################
     if para['copyright'] !=0:
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
-        (bdata, binary_files, huge_files, extcount) = debmake.scanfiles.scanfiles(mode=para['copyright'], check=True)
-        print(debmake.copyright.copyright('package', set(), bdata, binary_files, huge_files, mode=para['copyright']))
+        (nonlink_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
+        data = debmake.copyright.check_copyright(nonlink_files, mode=para['copyright'])
+        print(debmake.copyright.copyright('package', set(), data, binary_files, huge_files, mode=para['copyright']))
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
 #######################################################################
     print('I: sanity check of parameters', file=sys.stderr)
     para = debmake.sanity.sanity(para)
-    debmake.debug.debug_para('D: post-sanity', para)
+    debmake.debug.debug_para('Dp: @post-sanity para[*]', para)
     print('I: pkg="{}", ver="{}", rev="{}"'.format(para['package'], para['version'], para['revision']), file=sys.stderr)
 #######################################################################
 # -d: make dist (with upstream buildsystem dist/sdist target)
@@ -136,7 +137,7 @@ def main():
     if para['dist']:
         print('I: make the upstream tarball with "make dist" equivalents', file=sys.stderr)
         para = debmake.dist.dist(para)
-        debmake.debug.debug_para('D: post-dist', para)
+        debmake.debug.debug_para('Dp: @post-dist para[*]', para)
         print('I: pkg="{}", ver="{}", rev="{}"'.format(para['package'], para['version'], para['revision']), file=sys.stderr)
 #######################################################################
 # -t: make tar (with "tar --exclude=debian" command)
@@ -144,14 +145,14 @@ def main():
     elif para['tar']:
         print('I: make the upstream tarball with "tar --exclude=debian"', file=sys.stderr)
         debmake.tar.tar(para['tarball'], para['targz'], para['srcdir'], para['parent'], para['yes'])
-        debmake.debug.debug_para('D: post-tar', para)
+        debmake.debug.debug_para('Dp: @post-tar para[*]', para)
 #######################################################################
 # -a, -d: extract archive from tarball (tar -xvzf)
 #######################################################################
     if para['archive'] or para['dist']:
         print('I: untar the upstream tarball', file=sys.stderr)
         debmake.untar.untar(para['tarball'], para['targz'], para['srcdir'], para['dist'], para['tar'], para['parent'], para['yes'])
-        debmake.debug.debug_para('D: post-untar', para)
+        debmake.debug.debug_para('Dp: @post-untar para[*]', para)
 #######################################################################
 # always: generate orig tarball if missing and non-native package
 #######################################################################
@@ -164,7 +165,7 @@ def main():
         # ln -sf parent/dist/Foo-1.0.tar.gz foo_1.0.orig.tar.gz
         debmake.origtar.origtar(para['package'], para['version'], para['targz'], para['tarball'], para['parent'])
         para['tarball'] = para['package'] + '_' + para['version'] + '.orig.' + para['targz']
-        debmake.debug.debug_para('D: post-origtar', para)
+        debmake.debug.debug_para('Dp: @post-origtar para[*]', para)
 #######################################################################
 # -q: quit here before generating template debian/* package files
 #######################################################################
@@ -176,12 +177,12 @@ def main():
 #######################################################################
     print('I: parse binary package settings: {}'.format(para['binaryspec']), file=sys.stderr)
     para['debs'] = debmake.debs.debs(para['binaryspec'], para['package'], para['monoarch'], para['dh_with'])
-    debmake.debug.debug_debs('D: post-debs', para['debs'])
+    debmake.debug.debug_debs("Dd: para['debs'] =>", para['debs'])
     print('I: analyze the source tree', file=sys.stderr)
     para = debmake.analyze.analyze(para)
-    debmake.debug.debug_para('D: post-analyze', para)
+    debmake.debug.debug_para('Dp: @post-analyze para[*]', para)
     #debmake.gui()          # GUI setting
-    #debmake.debug.debug_para('D: post-gui', para)
+    #debmake.debug.debug_para('Dp: @post-gui para[*]', para)
 #######################################################################
 # Make debian/* package files
 #######################################################################

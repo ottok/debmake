@@ -23,6 +23,8 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import glob
+import hashlib
+import itertools
 import operator
 import os
 import re
@@ -31,392 +33,659 @@ import sys
 import debmake.debug
 import debmake.lc
 ###################################################################
-# Define constants
-
+# Parse year within a copyright line
 ###################################################################
-style = {
-    'unknown' : '??',
-    'comment' : '//',
-    'quote' : '/*',
-    'plain' : '__',
-    'irregular' : 'XX'}
-# license name: file name, licence full name
-licensefiles = {
-    'Apache-2.0'    : ('Apache-2.0','Apache License Version 2.0\n '),
-    'Artistic'      : ('Artistic',  '"Artistic License"\n '),
-    'BSD-3-Clause'  : ('BSD',       'BSD 3-clause "New" or "Revised"\n License'),
-    'GFDL-1.2'      : ('GFDL-1.2',  'GNU Free Documentation License\n Version 1.2'),
-    'GFDL-1.2+'     : ('GFDL-1.2',  'GNU Free Documentation License\n Version 1.2'),
-    'GFDL-1.3'      : ('GFDL-1.3',  'GNU Free Documentation License\n Version 1.3'),
-    'GFDL-1.3+'     : ('GFDL-1.3',  'GNU Free Documentation License\n Version 1.3'),
-    'GPL-1.0'       : ('GPL-1',     'GNU General Public License\n Version 1'),
-    'GPL-1.0+'      : ('GPL-1',     'GNU General Public License\n Version 1'),
-    'GPL-2.0'       : ('GPL-2',     'GNU General Public License\n Version 2'),
-    'GPL-2.0+'      : ('GPL-2',     'GNU General Public License\n Version 2'),
-    'GPL-3.0'       : ('GPL-3',     'GNU General Public License\n Version 3'),
-    'GPL-3.0+'      : ('GPL-3',     'GNU General Public License\n Version 3'),
-    'LGPL-2.0'      : ('LGPL-2',    'GNU Library General Public License\n Version 2'),
-    'LGPL-2.0+'     : ('LGPL-2',    'GNU Library General Public License\n Version 2'),
-    'LGPL-2.1'      : ('LGPL-2.1',  'GNU Lesser General Public License\n Version 2.1'),
-    'LGPL-2.1+'     : ('LGPL-2.1',  'GNU Lesser General Public License\n Version 2.1'),
-    'LGPL-3.0'      : ('LGPL-3',    'GNU Lesser General Public License\n Version 3'),
-    'LGPL-3.0+'     : ('LGPL-3',    'GNU Lesser General Public License\n Version 3')}
+re_year_1900 = re.compile(r'''
+        (?P<pre>.*?)
+        (?P<n1>19\d\d)\s*[-,]\s*
+        (?P<n2>\d\d)
+        (?P<post>\D.*|$)''', re.IGNORECASE | re.VERBOSE)
 
-###################################################################
-# Regular expressions
-###################################################################
-# re.search: copyright line
-re_copyright_mark = re.compile(r'''
-                (Copyright|\(C\)|©|\\\(co)\s              # Copyright mark
-                ''', re.IGNORECASE | re.VERBOSE)
+re_year_2000 = re.compile(r'''
+        (?P<pre>.*?)
+        (?P<n1>20\d\d)\s*[-,]\s*
+        (?P<n2>\d\d)
+        (?P<post>\D.*|$)''', re.IGNORECASE | re.VERBOSE)
 
-# re.search: exclusion of C MACRO, copyright holder, ...
-re_fake_copyright_mark = re.compile(r'''(
-                [=?]|
-                \S\(C\)|
-                if\s\(C\)|
-                switch\s+\(C\)|
-                \SCopyright|
-                print.+copyright|
-                copyright.+disclaimer|
-                copyright\s+for\s|
-                copyright.+holder|
-                copyright\s+is\s|
-                copyright.+interest|
-                copyright.+information|
-                copyright.+license|
-                copyright.+line|
-                copyright.+name|
-                copyright.+string|
-                copyright.+notice|
-                copyright\slaw|
-                \(c\)\sall\s
-                )''', re.IGNORECASE | re.VERBOSE)
+def normalize_year_span(line):
+    # 1990-91 -> 1990-1991 etc.
+    while True:
+        m = re_year_1900.search(line)
+        if m:
+            line = m.group('pre') + m.group('n1') + '-19' + \
+                    m.group('n2') + m.group('post')
+        else:
+            break
+    # 2010-11 -> 2010-2011 etc.
+    while True:
+        m = re_year_2000.search(line)
+        if m:
+            line = m.group('pre') + m.group('n1') + '-20' + \
+                    m.group('n2') + m.group('post')
+        else:
+            break
+    return line
 
-###################################################################
-# re.match: copyright line with comment characters
-re_copy_in_comment = re.compile(r'''
-                (?P<marker>\*+|/\*|\#+|//|dnl\s|--|@c|\.\\"|%|;;)
-                # C, C++, Shell, m4, Lua, info, man comment, tex
-                (\s|written\s+by\s+)*                        # possible comment
-                (?P<copyright>(Copyright|\(C\)|©).*)        # copyright mark
-                ''', re.IGNORECASE | re.VERBOSE)
+re_year_yn = re.compile(r'''^\s*
+        (?P<year>(?:\d\d+[-,.;\s]*)+)[.,;:]?\s*
+        (?P<name>\D.*\D)\s*\.?$''', re.IGNORECASE | re.VERBOSE)
 
-# re.match: copyright line with quotes
-re_copy_in_quote = re.compile(r'''
-                .*(?P<q1>["'])                          # quote opening
-                (\s+|\t+|written\s+by\s+)?                # possible quote 
-                (?P<copyright>(Copyright|\(C\)|©)[^"']+)    # copyright text
-                (?P=q1)                                     # quote closing
-                ''', re.IGNORECASE | re.VERBOSE)
+re_year_ny = re.compile(r'''^\s*
+        (?P<name>.*?\D)\s*
+        (?P<year>(?:\d\d+[-.,;\s]*)+)[.,;:]?\s*$''', re.IGNORECASE | re.VERBOSE)
 
-# re.match: copyright line with quotes (cont)
-re_copy_in_quote_continue = re.compile(r'''
-                .*(?P<q1>["'])                          # quote opening
-                (\s+|\t+|written\s+by\s+)?                # possible plain text 
-                (?P<copyright>[^"']+)                       # continued copyright text
-                (?P=q1)                                     # quote closing
-                ''', re.IGNORECASE | re.VERBOSE)
+def split_year_span(line):
+    # split line into years and name
+    m1 = re_year_yn.search(line)
+    m2 = re_year_ny.search(line)
+    if m1:
+        years = m1.group('year').strip()
+        name = m1.group('name').strip()
+    elif m2:
+        years = m2.group('year').strip()
+        name = m2.group('name').strip()
+    elif line:
+        years = 'NO_MATCH' # sign for funkey line
+        name = line.strip()
+    else:
+        years = ''
+        name = ''
+    if name[:2].lower() == 'by':
+        name = name[2:].strip()
+    debmake.debug.debug('Dy: years="{}", name="{}" <- "{}"'.format(years, name, line), type='y')
+    return (years, name)
 
-# re.match: copyright line in plain text
-re_copy_in_plaintext = re.compile(r'''
-                (\s+|\t+|written\s+by\s+)?                # possible plain text
-                (?P<copyright>(Copyright|\(C\)|©|\\\(co)\s.+)  # Copyright mark
-                ''', re.IGNORECASE | re.VERBOSE)
-
-###################################################################
-# re.match: start of license
-re_license = re.compile(r'''(
-                this\s.*is|
-                this\s.*program|
-                this\s.*software|
-                this\s.*script|
-                license|
-                Distributable\s+under|
-                Released\s+under|
-                You\s+are\s+free|
-                permission\s+is|
-                51\s+Franklin\s+Street|
-                59\s+Temple\s+Place|
-                .*redistribution|
-                .*everyone.*permitted.*copy|
-                .*For\s+copyright|
-                .*See.+LICENSE|
-                .*See.+COPYING|
-                .*See.*legal\s+use|
-                .*See.*distribution\s+rights)''', re.IGNORECASE | re.VERBOSE)
-
-###################################################################
-# re.match: move author from license to copyright
-re_license_copyright = re.compile(r'''(
-                written\s+by\s                         # possible leader
-                )''', re.IGNORECASE | re.VERBOSE)
-
-###################################################################
-# re.match: end of copyright/license
-re_end = re.compile(r'''(
-                .*\*+/|                                 # no */ in line
-                .*[=?_]|                                # no = ? _ in line
-                """|\'\'\'|                             # python block comment
-                ---|\+\+\+|@@|                          # diff block
-                [{}]|                                   # perl/shell block
-                ^\.SH|                                   # no .SH for manpage
-                ^EOT$|EOF$|EOL$|END$|                    # shell <<EOF like lines
-                ^You\scan\sget\sthe\slatest\sversion|
-                ^From\shttp|
-                ^Please\ssend\spatches|
-                ^The\snames\sof\sthe\stagged\sconfigurations|
-                ^This\sfile\sis\smaintained\sin|
-                ^force\sinclude|
-                ^Basic\sInstallation|
-                ^[#]\s-----------*\s[#]|
-                ^serial|
-                ^TODO:|
-                ^usage:|
-                ^msgid\s|
-                ^msgstr\s
-                )''', re.IGNORECASE | re.VERBOSE)
-
-###################################################################
-# re.sub: drop "All Rights Reserved" etc.
-re_dropline = re.compile(r'''(
-                ^timestamp=.*|                          # timestamp line
-                ^scriptversion=.*|                      # version line
-                All\s+Rights\s+Reserved.*|              # possible leader
-                This\s+file\s+is\s+part\s+of\s+GNU.*
-                )''', re.IGNORECASE | re.VERBOSE)
-
-###################################################################
-# manpage and text substitution
-# re.sub: \co -> ©
-re_co = re.compile(r'\\\(co')
-
-# re.sub: .bp -> ''
-re_bp = re.compile(r'\.bp', re.IGNORECASE)
-
-# re.sub: tailing and -> ,
-re_and = re.compile(r',?\s+and$', re.IGNORECASE)
-
-# re.sub: copyright
-re_copyright = re.compile(r'''Copyright|\(C\)|©''', 
-        re.IGNORECASE | re.VERBOSE)
-
-###################################################################
-# copyright year
 re_year = re.compile(r'\d\d+')
 
-re_year_section = re.compile(r'((\d\d+)[ ,-]*)')
+def get_year_range(years):
+    # year range
+    year_min = 9999
+    year_max = 0
+    for year_string in re_year.findall(years):
+        year = int(year_string)
+        year_min =  min(year_min, year)
+        year_max =  max(year_max, year)
+    return (year_min, year_max)
 
 ###################################################################
-# Check a line for copyright and license and
-#  return (copyright_line, license_line, section, style, marker)
+# Parse name within a copyright line
 ###################################################################
-def check_line(line, section, style, marker):
-    line = line.strip()
-    lmarker = len(marker)
-    copyright_line = ''
-    license_line = ''
-    debmake.debug.debug('D: {} {} {}'.format(section, style, line), type='i')
-    # drop useless line section       
-    line = re_dropline.sub('', line).strip()
+re_name_drop = re.compile(r'''(?:
+        All\s+Rights\s+Reserved\.?|
+        originally\s+by.*$|
+        (?:originally\s+)?written\s+by.*$)
+        ''', re.IGNORECASE | re.VERBOSE)
 
-    if section == 'outside': # if outside
-       
-        # if no copyright is found, skip
-        if not re_copyright_mark.search(line):
-            pass
-       
-        # if not really copyright line, skip
-        elif re_fake_copyright_mark.search(line):
-            pass
+re_fsf_addr = re.compile(r'^Free\s+Software\s+Foundation,\s+Inc\.',
+        re.IGNORECASE)
 
-        else:
-            section = 'copyright'
-            r1 = re_copy_in_comment.match(line)
-            r2 = re_copy_in_quote.match(line)
-            r3 = re_copy_in_plaintext.match(line)
-            if r1: # if comment
-                marker = r1.group('marker')
-                line = r1.group('copyright')
-                style = 'comment'
-            elif r2: # if quote
-                line = r2.group('copyright')
-                style = 'quote'
-            elif r3: # if plain
-                line = r3.group('copyright')
-                line = re_co.sub('©', line)
-                style = 'plain'
-            else: # if irregular
-                style = 'irregular'
-           
-            # normalize style (tailing "and" to ",")
-            line = re_and.sub(',', line)
-           
-            copyright_line = line.strip()
-       
-    elif section == 'copyright':
-        if style == 'comment':
-            if len(line) == 0:
-                pass
-            elif marker[-1:] == '*' and len(line) > 1 and line[:2] == '*/':
-                style = 'unknown'
-                section = 'outside'
-            elif len(line) >= lmarker and line[:lmarker] == marker:
-                line =  line[lmarker:].strip()  # un-boxed
-            elif marker == '/*' and line[0] == '*':
-                line = line[1:].strip()
-            else:
-                style = 'unknown'
-                section = 'outside'
-        elif style == 'quote':
-            rx2 = re_copy_in_quote_continue.match(line)
-            if rx2:
-                line = rx2.group('copyright')
-            else:
-                style = 'unknown'
-                section = 'outside'
-        elif style == 'plain':
-            line = re_co.sub('©', line)
-            re_bp.sub('', line)
-        elif style == 'irregular':
-            line = re_co.sub('©', line)
-            line = re_bp.sub('', line)
-        else: # 'unknown' should not be here
-            print("E: 'unknown' should not come to 'copyright'", file=sys.stderr)
-            exit(1)
-        #
-        if section != 'outside':
-            if re_end.match(line):
-                style = 'unknown'
-                section = 'outside'
-            elif line =='' or re_license.match(line):
-                section = 'license'
-                license_line = line.strip()
-            else:
-                copyright_line = line.strip()
-       
-    elif section == 'license':
-        if style == 'comment':
-            if len(line) == 0:
-                pass
-            elif marker[-1:] == '*' and len(line) > 1 and line[:2] == '*/':
-                style = 'unknown'
-                section = 'outside'
-            elif len(line) >= lmarker and line[:lmarker] == marker:
-                line =  line[lmarker:].lstrip()  # un-boxed
-            elif marker == '/*' and line[0] == '*':
-                line = line[1:].strip()
-            else:
-                style = 'unknown'
-                section = 'outside'
-
-        elif style == 'quote':
-            rx2 = re_copy_in_quote_continue.match(line)
-            if rx2:
-                line = rx2.group('copyright')
-            else:
-                style = 'unknown'
-                section = 'outside'
-        elif style == 'plain':
-            line = re_bp.sub('', line)
-        elif style == 'irregular':
-            line = re_bp.sub('', line)
-        else: # 'unknown' should not be here
-            print("E: 'unknown' should not come to  'license'", file=sys.stderr)
-            exit(1)
-        #
-        if section != 'outside':
-            if re_end.match(line):
-                style = 'unknown'
-                section = 'outside'
-            elif re_license_copyright.match(line):
-                section = 'copyright'
-                copyright_line = line.strip()
-            else:
-                license_line = line.strip()
-       
-    else:
-        print('E: Section should be valid {}'.format(section), file=sys.stderr)
-        exit(1)
-
-    if section == 'outside':
-        debmake.debug.debug('D: {} {} {}'.format(section, style, line), type='o')
-    elif section == 'copyright':
-        debmake.debug.debug('D: {} {} {}'.format(section, style, line), type='c')
-    elif section == 'license':
-        debmake.debug.debug('D: {} {} {}'.format(section, style, line), type='l')
-    else:
-        print('E: Section invalid.', file=sys.stderr)
-        exit(1)
-
-    return (copyright_line, license_line, section, style, marker)
+def cleanup_name(name):
+    if re_fsf_addr.search(name): # FSF without address etc.
+        name = 'Free Software Foundation, Inc.'
+    return name
 
 ###################################################################
-# Check license of a text file (internal, no encoding error)
+# Parse (year, name) within all copyright lines
 ###################################################################
-def check_license_fd(fd):
-# Return list of tuple: [(copyright_lines, license_lines, style, line_count), ...]
-    parts = []
-    copyright_lines = []
-    license_lines =   []
-    section = 'outside'
-    style = 'unknown'
-    marker = ''
-    ###################################################################
-    # Loop over lines with (style, section) as state variables
-    ###################################################################
-    copyright_lines = []
-    license_lines =   []
-    line_count = 0
-    for line in fd.readlines():
-        if line[:1] == '+': # drop patch (1 level)
-            line = line[1:]
+def analyze_copyright(copyright_lines):
+    copyright_data = {}
+    for line in copyright_lines:
         line = line.strip()
-        old_section = section
-        old_style = style
-        (copyright_line, license_line, section, style, marker) = \
-                    check_line(line, section, style, marker)
+        line = normalize_year_span(line).strip()
+        line = re_name_drop.sub('', line).strip()
+        (years, name) = split_year_span(line)
+        name = cleanup_name(name).strip()
+        (year_min, year_max) = get_year_range(years)
+        if name in copyright_data.keys():
+            (year0_min, year0_max) = copyright_data[name]
+            year_min =  min(year_min, year0_min)
+            year_max =  max(year_max, year0_max)
+        if name:
+            copyright_data[name] = (year_min, year_max)
+        else:
+            print('W: analyze_copyright: skip name="", years="{}" <- line"{}"'.format(years, line), file=sys.stderr)
+    return copyright_data
 
-        if copyright_line != '':
-            copyright_lines.append(copyright_line)
-        if (license_lines != [] and license_lines[-1] != '' ) or license_line != '':
-            license_lines.append(license_line)
-        if old_section != 'outside' and section == 'outside':
-            if copyright_lines != [] or license_lines != []:
-                parts.append((copyright_lines, license_lines, old_style, line_count))
-                copyright_lines = []
-                license_lines =   []
-        line_count += 1
-    ###################################################################
-    # add the last ones if they exist
-    ###################################################################
-    if copyright_lines != [] or license_lines != []:
-        parts.append((copyright_lines, license_lines, old_style, line_count))
-    ###################################################################
-    # clean-up empty line tails of license text for each part
-    ###################################################################
-    parts_tailcleaned = []
-    for copyright_lines, license_lines, style, line_count in parts:
-        while len(license_lines) > 0 and license_lines[-1] == '':
-            del license_lines[-1]
-        parts_tailcleaned.append((copyright_lines, license_lines, style, line_count))
-    ###################################################################
-    # Return parts as results
-    ###################################################################
-    return parts_tailcleaned
+###################################################################
+# A format state machine parser to extract copyright+license by format
+###################################################################
+F_BLNK = 0 # blank line
+F_QUOTE  =  1
+F_PLAIN7 =  2
+F_PLAIN6 =  3
+F_PLAIN5 =  4
+F_PLAIN4 =  5
+F_PLAIN3 =  6
+F_PLAIN2 =  7
+F_PLAIN1 =  8
+F_BLKP   =  9
+F_BLKPE  = 10
+F_BLKP0  = 11
+F_BLKQ   = 12
+F_BLKQE  = 13
+F_BLKQ0  = 14
+F_BLKC   = 15
+F_BLKCE  = 16
+F_BLKC2  = 17
+F_BLKC1  = 18
+F_BLKC0  = 19
+F_PLAIN0 = 20
+# force EOF before processing the next line
+F_EOF = -1
+
+fs = [
+'F_BLNK',
+'F_QUOTE ',
+'F_PLAIN7',
+'F_PLAIN6',
+'F_PLAIN5',
+'F_PLAIN4',
+'F_PLAIN3',
+'F_PLAIN2',
+'F_PLAIN1',
+'F_BLKP  ',
+'F_BLKPE ',
+'F_BLKP0 ',
+'F_BLKQ  ',
+'F_BLKQE ',
+'F_BLKQ0 ',
+'F_BLKC  ',
+'F_BLKCE ',
+'F_BLKC2 ',
+'F_BLKC1 ',
+'F_BLKC0 ',
+'F_PLAIN0',
+'F_EOF',
+]
+
+all_entry_formats = list(range(F_BLNK, F_PLAIN1 + 1)) + [F_BLKP, F_BLKQ, F_BLKC, F_PLAIN0]
+
+formats = {}
+# define next format state
+# formats[*][0]: regex to match
+# formats[*][1]: next format state allowed
+# formats[*][2]: format state allowed (persistent)
+
+formats[F_BLNK] = (
+        re.compile(r'^(?P<prefix>)(?P<text>)(?P<postfix>)$'),
+        all_entry_formats,
+        {F_BLNK}
+        )
+
+formats[F_QUOTE] = (
+        re.compile(r'^(?P<prefix>/\*)\**(?P<text>.*?)\**(?P<postfix>\*/)$'),  # C /*...*/
+        all_entry_formats,
+        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        )
+
+formats[F_PLAIN7] = (
+        re.compile(r'^(?P<prefix>#)#*(?P<text>.*)(?P<postfix>)$'),   # Shell/Perl/Python
+        all_entry_formats,
+        {F_PLAIN7, F_BLNK}
+        )
+
+formats[F_PLAIN6] = (
+        re.compile(r'^(?P<prefix>//)/*(?P<text>.*)(?P<postfix>)$'),  # C++ //
+        all_entry_formats,
+        {F_PLAIN6, F_BLNK}
+        )
+
+formats[F_PLAIN5] = (
+        re.compile(r'^(?P<prefix>--)-*(?P<text>.*)(?P<postfix>)$'),  # Lua --
+        all_entry_formats,
+        {F_PLAIN5, F_BLNK}
+        )
+
+formats[F_PLAIN4] = (
+        re.compile(r'^(?P<prefix>\.\\")(?P<text>.*)(?P<postfix>)$'), # manpage
+        all_entry_formats,
+        {F_PLAIN4, F_BLNK}
+        )
+
+formats[F_PLAIN3] = (
+        re.compile(r'^(?P<prefix>@%:@)(?P<text>.*)(?P<postfix>)$'),  # autom4te.cache
+        all_entry_formats,
+        {F_PLAIN3, F_BLNK}
+        )
+
+formats[F_PLAIN2] = (
+        re.compile(r'^(?P<prefix>@c)\s+(?P<text>.*)(?P<postfix>)$'), # Texinfo @c
+        all_entry_formats,
+        {F_PLAIN2, F_BLNK}
+        )
+
+formats[F_PLAIN1] = (
+        re.compile(r'^(?P<prefix>dnl)\s+(?P<text>.*)(?P<postfix>)$'),# m4 dnl
+        all_entry_formats,
+        {F_PLAIN1, F_BLNK}
+        )
+
+# python block mode start with '''
+formats[F_BLKP] = (
+        re.compile(r'^.*?(?P<prefix>\'\'\')(?P<text>.*)(?P<postfix>)$'),  # Python
+        [F_BLKPE, F_BLKP0],
+        {F_BLKP, F_BLKPE, F_BLKP0, F_BLNK}
+        )
+formats[F_BLKPE] = (
+        re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>\'\'\').*$'),  # Python
+        all_entry_formats,
+        {F_BLKP, F_BLKPE, F_BLKP0, F_BLNK}
+        )
+formats[F_BLKP0] = (
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*)\s*(?P<postfix>)$'),
+        [F_BLKPE, F_BLKP0],
+        {F_BLKP, F_BLKPE, F_BLKP0, F_BLNK}
+        )
+
+# python block mode start with """
+formats[F_BLKQ] = (
+        re.compile(r'^.*?(?P<prefix>""")(?P<text>.*)(?P<postfix>)$'),  # Python
+        [F_BLKQE, F_BLKQ0],
+        {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
+        )
+formats[F_BLKQE] = (
+        re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>""").*$'),  # Python
+        all_entry_formats,
+        {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
+        )
+formats[F_BLKQ0] = (
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*)\s*(?P<postfix>)$'),
+        [F_BLKQE, F_BLKQ0],
+        {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
+        )
+
+# C block mode start with """
+formats[F_BLKC] = (
+        re.compile(r'^(?P<prefix>/\*)\s*\**(?P<text>.*)(?P<postfix>)$'),  # C /*...
+        [F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0],
+        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        )
+formats[F_BLKCE] = (
+        re.compile(r'^(?P<prefix>\*\s|)(?P<text>.*?)\s*\**?(?P<postfix>\*/).*$'),  # C ...*/
+        all_entry_formats,
+        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        )
+formats[F_BLKC2] = (
+        re.compile(r'^(?P<prefix>\*)\**?(?P<text>.*?)\**?(?P<postfix>\*)$'),  # C *...*
+        [F_BLKCE, F_BLKC2],
+        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        )
+formats[F_BLKC1] = (
+        re.compile(r'^(?P<prefix>\*)\**?(?P<text>.*)(?P<postfix>)$'),  # C *...
+        [F_BLKCE, F_BLKC1],
+        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        )
+formats[F_BLKC0] = (
+        re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>)$'),
+        [F_BLKCE, F_BLKC0],
+        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        )
+# This is the last rule always match
+formats[F_PLAIN0] = (
+        re.compile(r'^(?P<prefix>)(?P<text>.+)(?P<postfix>)$'),     # Text
+        all_entry_formats,
+        {F_PLAIN0, F_BLNK}
+        )
+
+# drop lines such as "All Rights Reserved" and treat them blank
+re_dropline = re.compile(r'''(?:
+        ^timestamp=|                        # timestamp line
+        ^scriptversion=|                    # version line
+        ^All\s+Rights\s+Reserved|           # possible leader
+        ^written\s+by|
+        ^This\s+file\s+is\s+part\s+of\s+GNU|
+        ^Last\s+update:\s|
+        ^\.bp\s                             # manpage
+        )''', re.IGNORECASE | re.VERBOSE)
+
+def check_format_style(line, xformat_state):
+    line = line.strip()
+    if line[:1] == '+': # hack to drop patch (1 level)
+        line = line[1:].strip()
+    prefix = ''
+    postfix = ''
+    format_state = F_EOF
+    formats_allowed = formats[xformat_state][1]
+    for f in formats_allowed:
+        regex = formats[f][0]
+        m = regex.search(line)
+        if m:
+            line = m.group('text').strip()
+            prefix = m.group('prefix') # for debug output
+            postfix = m.group('postfix') # for debug output
+            format_state = f
+            break
+    if re_dropline.match(line): # hack to drop line
+        line = ''
+        if format_state != F_EOF:
+            format_state = F_BLNK
+    debmake.debug.debug('Ds: format={}->{}, prefix="{}", postfix="{}": "{}"'.format(fs[xformat_state], fs[format_state], prefix, postfix, line), type='s')
+    return (line, format_state)
+
+###################################################################
+# Clean copyright
+###################################################################
+# substitute: \(co or (c) or  @copyright{} -> ©
+re_co = re.compile(r'(?:\\\(co|\(c\)|@copyright\{\})', re.IGNORECASE) # fake match )
+
+# search to allow leading jank words
+re_copyright_line = re.compile(r'''
+        (?:(?:Copyright|Copyr\.)(?:\s*©)?|
+        ©\s*(?:Copyright|Copyr\.)|
+        ©)\s*(?P<copyright>.*)$
+        ''', re.IGNORECASE | re.VERBOSE)
+
+def clean_copyright(line):
+    # simplify '©' handling: no (c) from C MACRO here
+    line = re_co.sub('©', line)
+    m = re_copyright_line.search(line)
+    if m:
+        line = m.group('copyright').strip()
+    else:
+        print("W: no match @clean_copyright line={}".format(line), file=sys.stderr)
+    return line
+
+###################################################################
+# Clean license
+###################################################################
+def clean_license(license_lines):
+    lines = license_lines
+    while len(lines) > 0 and lines[0] == '':
+        del lines[0]
+    while len(lines) > 0 and lines[-1:][0] == '':
+        del lines[-1:]
+    return lines
+
+###################################################################
+# Extract copyright+license from a source file
+###################################################################
+# content_state: copyright content state
+C_INIT = 0 # initial content_state
+C_COPY = 1 # copyright found
+C_COPYB = 2 # blank after C_COPY
+C_AUTH = 3 # AUTHOR: like
+C_AUTHB = 4 # blank after C_AUTH
+C_LICN = 5 # license found
+C_EOF = -1 # EOF found at the end of line
+
+cs = [
+'C_INIT',
+'C_COPY',
+'C_COPYB',
+'C_AUTH',
+'C_AUTHB',
+'C_LICN',
+'C_EOF',
+]
+
+re_copyright_mark_maybe = re.compile(r'''
+        (?:Copyright|Copyr\.|\(C\)|©|\\\(co) # fake )
+        ''', re.IGNORECASE | re.VERBOSE)
+
+re_copyright_mark_exclude = re.compile(r'''(?:
+        [=?$]|                  # C MACRO
+        ^Copyright\s+holder|    # copyright holders ...
+        copyright\s+and\s+license # copyright and license
+        Copyright[!-')-~]|      # no coding variables
+        Copyright:?$|           # ... copyright
+        if\s+\(C\)|             # C code
+        ^modified\s+version|    # ... of Copyright
+        [^h][-+*/_a-su-z0-9]\(C\)|  # C MACRO (but Copyright(C) is OK)
+        (?:def|if|return)\s.*\(C\)| # Python/C
+        switch\s+\(C\)|         # C code
+        ^This\s                 # This ...  Copyright
+        )''', re.IGNORECASE | re.VERBOSE)
+
+re_copyright_nomark_year = re.compile(r'''
+        ^[12]\d\d\d\d
+        ''', re.IGNORECASE | re.VERBOSE)
+
+re_author_init = re.compile(r'''^(?:
+        authors?:?|
+        translators?:?)
+        \s*(?P<author>.*)\s*$
+        ''', re.IGNORECASE | re.VERBOSE)
+re_author_cont = re.compile(r'^(?:.*@.*\..*|[^ ]*(?: [^ ]*){1,4})$')
+
+re_license_start_maybe = re.compile(r'''(
+        \sare\s|
+        \sis\s|
+        ^Copying\s|
+        ^Everyone\s|
+        ^Licensed\s|
+        ^License\s|
+        ^Permission\s|
+        ^Redistribution\s|
+        ^This\s|
+        ^Unless\s
+        )''', re.IGNORECASE | re.VERBOSE)
+re_license_start_sure = re.compile(r'''(
+        ^Copying\s+and\s+distribution\s+of\s+this\s+file|       # PERMISSIVE
+        ^Distributed\s+under\s+the\s+Boost\s+Software\s+License,|   # Boost
+        ^Everyone\s+is\s+permitted\s+to\s+copy\s+and\s+distribute|  # GNU FULL
+        ^Distribute\s+under\s[AL]?GPL\s+version|                # GPL short
+        ^Licensed\s+to\s+the\s+Apache\s+Software\s+Foundation|  #Apache-2.0_var1
+        ^Licensed\s+under\s+|                                   # ECL
+        ^Licensed\s+under\s+the\s+Apache\s+License|             #Apache-2.0_var2
+        ^License\s+Applicability.\s+Except\s+to\s+the\s+extent\s+portions|  # SGI
+        ^Permission\s+is\s+granted\s+to\s+copy,\s+distribute|   # GFDL 1.1
+        ^Permission\s+is\s+hereby\s+granted|                    # MIT
+        ^Permission\s+to\suse,\s+copy,\s+modify|                # ISC
+        ^Redistribution\s+and\s+use\s+in\s+source\s+and\s+binary\s+forms|   # Apache 1.0/BSD
+        ^The\s+contents\s+of\s+this\s+file|                     # ErlPL, ...
+        ^The\s+contents\s+of\s+this\s+file\s+are\s+subject\s+to| # MPL-1.0 1.1
+        ^This\s+.{2,40}\s+is\s+free\s+software|                 # makefile.in etc.
+        ^This\s+file\s+is\s+distributed\s+under\s+the\s+same\s+license\s+as\s+.{5,40}\.$| # same
+        ^This\s+library\s+is\s+free\s+software|                 # LGPL variants
+        ^This\s+license\s+is\s+a\s+modified\s+version\s+of\s+the|   # AGPL-1.0
+        ^This\s+program\s+can\s+redistributed|                  # LaTeX LPPL 1.0
+        ^This\s+program\s+is\s+free\s+software|                 # GPL variants
+        ^This\s+program\s+may\s+be\s+redistributed|             # LaTeX LPPL 1.1 1.2
+        ^This\s+software\s+is\s+furnished\s+under\s+license|    # DEC
+        ^This\s+software\s+is\s+provided\s+|                    # Zlib
+        ^This\s+Source\s+Code\s+Form\s+is\s+subject\s+to\s+the\s+terms\s+of| # MPL 2.0
+        ^This\s+work\s+is\s+distributed\s+under|                # W3C
+        ^This\s+work\s+may\s+be\s+redistributed|                # LaTeX LPPL 1.3
+        ^unless\s+explicitly\s+acquired\s+and\s+licensed        # Watcom
+        )''', re.IGNORECASE | re.VERBOSE)
+
+re_license_end_start = re.compile(r'''(
+        ^EOT$|^EOF$|^EOL$|^END$|        # shell <<EOF like lines
+        ^msgid\s|                       # po/pot
+        ^msgstr\s                       # po/pot
+        )''', re.IGNORECASE | re.VERBOSE)
+
+re_license_end_nostart = re.compile(r'''(
+        [=?_]|                          # C MACRO code
+        ^#if|                           # C CPP
+        ^#include|                      # C CPP
+        enum\s.*\s{|                    # C enum
+        class\s.*\s{|                   # C++
+        ^"""|^\'\'\'|                   # python block comment
+        ^=cut|                          # perl
+        ^---|^@@|                       # diff block
+        ^\.SH|                          # no .SH for manpage
+        ^Who\sare\swe\?$|               # The Linux Foundation License templates
+        ^-----------|                   # ./configure
+        ^Usage:|                        # ltmain.sh
+        ^serial\s+[0-9]|                # aclocal.m4
+        ^@configure_input@|             # ltversion.m4
+        ^This\sfile\sis\smaintained|    # Automake files
+        ^Do\sall\sthe\swork\sfor\sAutomake| # aclocal.m4 Automake
+        ^Originally\s+written\s+by\+.{10,20}?\s+Please\s+send\spatches| # config.guess
+        ^Please\s+send\s+patches\s+with|   # config.sub
+        ^Please\s+send\s+patches\s+to|  # config.sub, config.guess
+        ^if\s+not\s+1,\s+datestamp\s+to\s+the\s+version\s+number|  # configure.ac
+        ^the\s+first\s+argument\s+passed\s+to\s+this\s+file|  # config.rpath
+        ^You\s+can\s+get\s+the\s+latest\s+version\s+of| # config.guess GPL3+ based
+        ^@include|                      # Texinfo
+        ^@end|                          # Texinfo
+        ^%\*\*|                         # Texinfo
+        ^Please\stry\sthe\slatest\sversion\sof # Texinfo.tex
+        )''', re.IGNORECASE | re.VERBOSE)
+
+# This should be also listed in re_license_start_sure
+re_license_end_next = re.compile(r'''(
+    ^This\s+file\s+is\s+distributed\s+under\s+the\s+same\s+license\s+as\s+.{5,40}\.$
+        )''', re.IGNORECASE | re.VERBOSE)
+
+#        [{}]|                           # perl/shell block
+def check_lines(lines):
+    copyright_found = False
+    license_found = False
+    format_state = F_BLNK
+    content_state = C_INIT
+    copyright_lines = []
+    license_lines = []
+    author_lines = []
+    ##########################################################################
+    # main loop for lines (start)
+    ##########################################################################
+    for line in lines:
+        line = line.strip()
+        # set previous values
+        xformat_state = format_state
+        xcontent_state = content_state
+        debmake.debug.debug('Db: begin xformat={}, xcontent={}, copyright={}, license={}: "{}"'.format(fs[xformat_state], cs[xcontent_state], copyright_found, license_found, line), type='b')
+        if xcontent_state == C_EOF:
+            break
+        if xformat_state == F_EOF:
+            break
+        ######################################################################
+        (line, format_state) = check_format_style(line, xformat_state)
+        ######################################################################
+        if xcontent_state == C_INIT:
+            persistent_format = [] # unset
+        else: # xcontent_state != C_INIT
+            if persistent_format == []:
+                persistent_format = formats[xformat_state][2] # set
+            elif format_state not in persistent_format:
+                break
+            else:
+                pass
+        ######################################################################
+        match_author_init = re_author_init.search(line)
+        ######################################################################
+        if re_license_end_start.search(line): # end no matter what
+            debmake.debug.debug('Dm: license_end_start: "{}"'.format(line), type='m')
+            break
+        elif xcontent_state != C_INIT and \
+                re_license_end_nostart.search(line):
+            debmake.debug.debug('Dm: xcontent_state != C_INIT and license_end_nostart: "{}"'.format(line), type='m')
+            break
+        elif xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and \
+                re_copyright_mark_maybe.search(line) and \
+                (not re_copyright_mark_exclude.search(line)): # copyright_start_sure
+            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and copyright_start_sure: "{}"'.format(line), type='m')
+            line = clean_copyright(line)
+            copyright_lines.append(line)
+            copyright_found = True
+            content_state = C_COPY
+        elif xcontent_state == C_COPY and \
+                re_copyright_nomark_year.search(line):
+            debmake.debug.debug('Dm: copyright_nomark_year: "{}"'.format(line), type='m')
+            copyright_lines.append(line)
+            copyright_found = True
+            content_state = C_COPY
+        elif xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and \
+                re_license_start_sure.search(line):
+            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and license_start_sure: "{}"'.format(line), type='m')
+            license_lines.append(line)
+            license_found = True
+            if re_license_end_next.search(line):
+                content_state = C_EOF
+            else:
+                content_state = C_LICN
+        elif xcontent_state in [C_INIT, C_COPY, C_COPYB, C_LICN, C_AUTH, C_AUTHB] and \
+                match_author_init:
+            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_COPY, C_COPYB, C_LICN, C_AUTH, C_AUTHB] and author_init: "{}"'.format(line), type='m')
+            content_state = C_AUTH
+            author_lines.append(match_author_init.group('author'))
+        elif xcontent_state == C_INIT:
+            debmake.debug.debug('Dm: xcontent_state == C_INIT: "{}"'.format(line), type='m')
+            content_state = C_INIT
+        elif xcontent_state in [C_AUTH, C_AUTHB] and \
+                re_author_cont.search(line):
+            debmake.debug.debug('Dm: xcontent_state in [C_AUTH, C_AUTHB] and author_cont: "{}"'.format(line), type='m')
+            author_lines.append(line)
+            content_state = C_AUTH
+        elif xcontent_state in [C_COPY, C_AUTH] and \
+                re_license_start_maybe.search(line):
+            debmake.debug.debug('Dm: xcontent_state in [C_COPY, C_AUTH] and license_start_maybe: "{}"'.format(line), type='m')
+            license_lines.append(line)
+            license_found = True
+            content_state = C_LICN
+        elif xcontent_state == C_COPY and line == '':
+            debmake.debug.debug('Dm: C_COPY + blank line', type='m')
+            content_state = C_COPYB
+        elif xcontent_state == C_COPY: # line != ''
+            debmake.debug.debug('Dm: C_COPY + non-blank line: "{}"'.format(line), type='m')
+            last = len(copyright_lines) -1
+            if copyright_lines[last][-1:] == '-':
+                copyright_lines[last] = (copyright_lines[last][:-1] + line).strip()
+            else:
+                copyright_lines[last] = (copyright_lines[last] + ' ' + line).strip()
+            content_state = C_COPY
+        elif xcontent_state == C_COPYB and line == '':
+            debmake.debug.debug('Dm: C_COPYB + blank line', type='m')
+            content_state = C_COPYB
+        elif xcontent_state == C_COPYB: # line != ''
+            debmake.debug.debug('Dm: C_COPYB + non-blank line: "{}"'.format(line), type='m')
+            license_lines.append(line)
+            license_found = True
+            content_state = C_LICN
+        elif xcontent_state == C_LICN:
+            debmake.debug.debug('Dm: xcontent_state == C_LICN: "{}"'.format(line), type='m')
+            license_lines.append(line)
+            license_found = True
+            content_state = C_LICN
+        elif xcontent_state == C_AUTH:
+            debmake.debug.debug('Dm: xcontent_state == C_AUTH: "{}"'.format(line), type='m')
+            author_lines.append(line)
+            content_state = C_AUTH
+        elif xcontent_state == C_AUTHB and license_found:
+            debmake.debug.debug('Dm: xcontent_state == C_AUTHB and license_found, copyright={}, license={}: "{}"'.format(copyright_found, license_found, line), type='m')
+            content_state = C_EOF
+        elif xcontent_state == C_AUTHB and copyright_found:
+            debmake.debug.debug('Dm: xcontent_state == C_AUTHB and copyright_found, copyright={}, license={}: "{}"'.format(copyright_found, license_found, line), type='m')
+            license_lines.append(line)
+            license_found = True
+            content_state = C_LICN
+        elif xcontent_state == C_AUTHB:
+            debmake.debug.debug('Dm: xcontent_state == C_AUTHB, copyright={}, license={}: "{}"'.format(copyright_found, license_found, line), type='m')
+            author_lines.append(line)
+            content_state = C_AUTH
+        else: # should not be here
+            print('W: !!!!! format={}->{}, content={}->{}, copyright={}, license={}: "{}"'.format(fs[xformat_state], fs[format_state], cs[xcontent_state], cs[content_state], copyright_found, license_found, line), file=sys.stderr)
+            print('W: !!!!! assertion error, exit loop !!!!!', file=sys.stderr)
+            break
+        debmake.debug.debug('De: *end* format={}->{}, content={}->{}, copyright={}, license={}: "{}"'.format(fs[xformat_state], fs[format_state], cs[xcontent_state], cs[content_state], copyright_found, license_found, line), type='e')
+    ##########################################################################
+    # main loop for lines (end)
+    ##########################################################################
+    copyright_data = analyze_copyright(copyright_lines)
+    license_lines = clean_license(license_lines)
+    debmake.debug.debug('Da: AUTHOR(s)/TRANSLATOR(s):', type='a')
+    for line in author_lines:
+        debmake.debug.debug('Da: {}'.format(line), type='a')
+    if copyright_data == {} and license_lines == []:
+        # no copyright and no license
+        copyright_data = {'__NO_COPYRIGHT_NOR_LICENSE__':(0, 0)}
+    elif copyright_data == {}:
+        # no copyright and but with license (Maybe __UNKNOWN__ license)
+        copyright_data = {'__NO_COPYRIGHT__':(0, 0)}
+    return (copyright_data, license_lines)
 
 ###################################################################
 # Check license of a text file
 ###################################################################
 def check_license(file, encoding='utf-8'):
-# Return list of tuple: [(copyright_lines, license_lines, style, line_count), ...]
-
     ###################################################################
     # Start analyzing file (default encoding)
     ###################################################################
     try:
         with open(file, 'r', encoding=encoding) as fd:
-            parts = check_license_fd(fd)
+            (copyright_data, license_lines) = check_lines(fd.readlines())
     ###################################################################
     # Fall back for analyzing file (latin-1 encoding)
     ###################################################################
@@ -424,164 +693,108 @@ def check_license(file, encoding='utf-8'):
         print('W: Non-UTF-8 char found, using latin-1: {}'.format(file), file=sys.stderr)
         fd.close()
         with open(file, 'r', encoding='latin-1') as fd:
-            parts = check_license_fd(fd)
-
-    ###################################################################
-    # Return parts as results
-    ###################################################################
-    return parts
-
-###################################################################
-# Analyze copyright
-###################################################################
-def merge_year_span(year0_min, year0_max, year1_min, year1_max):
-    if year0_min > year1_min:
-        year0_min = year1_min
-    if year0_max < year1_max:
-        year0_max = year1_max
-    return (year0_min, year0_max)
-
-def analyze_copyright(copyright_lines):
-    # normalize copyright
-    lines = []
-    line = ''
-    for line_new in copyright_lines:
-        line_new = line_new.strip()
-        if re_copyright.match(line_new):
-            if line != '':
-                lines.append(line)
-            line = re_copyright.sub('', line_new).strip()
-        else:
-            line = ' '.join([line, line_new])
-    if line != '':
-            lines.append(line)
-    copyright_lines = lines
-    copyright_data = {}
-    for line in copyright_lines:
-        year_min = 9999
-        year_max = 0
-        for year_string in re_year.findall(line):
-            year = int(year_string)
-            if year < year_min:
-                year_min = year
-            if year > year_max:
-                year_max = year
-        name = re_year_section.sub('', line).strip()
-        if name in copyright_data.keys():
-            (year0_min, year0_max) = copyright_data[name]
-            copyright_data[name] = merge_year_span(year0_min, year0_max, year_min, year_max)
-        else:
-            copyright_data[name] = (year_min, year_max)
-    return copyright_data
-
-###################################################################
-# Analyze license
-###################################################################
-def analyze_license(license_lines):
-    # normalize license
-    license_data = []
-    for line in license_lines:
-        line = line.strip()
-        license_data.extend(line.split())
-    try:
-        license_data.remove('') # remove empty words
-    except ValueError:
-        pass
-    license = ' '.join(license_data)
-    return license
+            (copyright_data, license_lines) = check_lines(fd.readlines())
+    return (copyright_data, license_lines)
 
 ###################################################################
 # Check all appearing copyright and license texts
 ###################################################################
-# return data which is list of tuples
-# data[*][0]: license data (normalized)
-# data[*][1]: file name
-# data[*][2]: copyright holder info (data=dictionary)
-# data[*][3]: license text (original: list of lines)
-# data[*][4]: extra copyright holder info with file and line number
+# data[*][0]: license name ID: licenseid
+# data[*][1]: file name (bunched, list): files
+# data[*][2]: copyright holder info (data=dictionary): copyright_lines
+# data[*][3]: license text (original: list of lines): license_lines
 ###################################################################
-def check_all_license(files, encoding='utf-8'):
-    data = []
+def check_all_licenses(files, encoding='utf-8', mode=0):
+    adata = []
+    license_cache = {} # hashtable for quicker license scan
     if len(files) == 0:
-        print('W: check_all_license(files) should have files', file=sys.stderr)
+        print('W: check_all_licenses(files) should have files', file=sys.stderr)
+    if sys.hexversion >= 0x03030000: # Python 3.3 ...
+        print('I: ', file=sys.stderr, end='', flush=True)
     for file in files:
-        debmake.debug.debug('D: section  ??     *** {} ***'.format(file), type='f')
+        debmake.debug.debug('Df: check_all_licenses file={}'.format(file), type='f')
         if os.path.isfile(file):
-            parts = check_license(file, encoding=encoding)
-            license = ''
-            copyright_data = {}
-            license_lines_rep = []
-            extra_lines = ''
-            for i, (copyright_lines, license_lines, style, line_count) in enumerate(parts):
-                if i == 0:
-                    copyright_data = analyze_copyright(copyright_lines)
-                    license = analyze_license(license_lines)
-                    license_lines_rep = license_lines
-                else:
-                    extra_lines += '### !!! F: file = {} @ {} ==========\n'.format(file, line_count)
-                    for line in copyright_lines:
-                        extra_lines += '### !!! C: {}\n'.format(line)
-                    for line in license_lines:
-                        extra_lines += '### !!! L: {}\n'.format(line)
-                    extra_lines += '### !!!\n'
-            if copyright_data == {}:
-                copyright_data = {'NO_COPYRIGHT_INFO_FOUND':(0, 0)}
-        else:
-            print('W: check_all_license on non-existing file: {}'.format(file), file=sys.stderr)
-        data.append((license, file, copyright_data, license_lines_rep, extra_lines))
-    data = sorted(data, key=operator.itemgetter(0), reverse=True) # sort by license
-    return data
-
-###################################################################
-# Bunch licence
-###################################################################
-# bdata[*][0]: licenseid
-# bdata[*][1]: license data (normalized)
-# bdata[*][2]: file name (bunched, list)
-# bdata[*][3]: copyright holder info (data=dictionary)
-# bdata[*][4]: license text (original: list of lines)
-# bdata[*][5]: extra copyright holder lines with file and line number (bunched)
-def bunch_licence(data, mode):
-    bdata = []
-    if len(data) == 0:
-        print('W: bunch_licence(data) should have data', file=sys.stderr)
-    xlicense = ''
-    xlicenseid = ''
-    xfile = []
-    xcopyright_data = {}
-    xlicense_lines_rep = []
-    xextra_lines = ''
-    for i, (license, file, copyright_data, license_lines_rep, extra_lines) in enumerate(data):
-        if i == 0:
-            xlicense = license
-            xfile = [file]
-            xcopyright_data = copyright_data
-            xlicense_lines_rep = license_lines_rep
-            xextra_lines += extra_lines
-        else:
-            if xlicense == license:
-                xfile += [file]
-                for name, (year_min, year_max) in copyright_data.items():
-                    if name in xcopyright_data.keys():
-                        (xyear_min, xyear_max) = xcopyright_data[name]
-                        xcopyright_data[name] = merge_year_span(xyear_min, xyear_max, year_min, year_max)
-                    else:
-                        xcopyright_data[name] = (year_min, year_max)
-                xextra_lines += extra_lines
+            if sys.hexversion >= 0x03030000: # Python 3.3 ...
+                print('.', file=sys.stderr, end='', flush=True)
+            (copyright_data, license_lines) = check_license(file, encoding=encoding)
+            norm_text = debmake.lc.normalize(license_lines)
+            md5hash = hashlib.md5()
+            md5hash.update(norm_text.encode())
+            md5hashkey = md5hash.hexdigest()
+            if md5hashkey in license_cache.keys():
+                (licenseid, licensetext) = license_cache[md5hashkey]
             else:
-                xlicenseid = debmake.lc.lc(xlicense, mode)
-                xorder = '{0} {1:08}'.format(xlicenseid, max(99999999 - len(xfile), 0))
-                bdata.append((xorder, xlicense, xlicenseid, xfile, xcopyright_data, xlicense_lines_rep, xextra_lines))
-                xlicense = license
-                xfile = [file]
-                xcopyright_data = copyright_data
-                xlicense_lines_rep = license_lines_rep
-                xextra_lines += extra_lines
-    xlicenseid = debmake.lc.lc(xlicense, mode)
-    xorder = '{0} {1:08}'.format(xlicenseid, max(99999999 - len(xfile), 0))
-    bdata.append((xorder, xlicense, xlicenseid, xfile, xcopyright_data, xlicense_lines_rep, xextra_lines))
-    bdata = sorted(bdata, key=operator.itemgetter(0)) # sort by licenseid
+                (licenseid, licensetext) = debmake.lc.lc(norm_text, license_lines, mode)
+                license_cache[md5hashkey] = (licenseid, licensetext)
+            adata.append((md5hashkey, copyright_data, licenseid, licensetext, file))
+        else:
+            print('W: check_all_licenses on non-existing file: {}'.format(file), file=sys.stderr)
+        for c in copyright_data.keys():
+            debmake.debug.debug('Dc: {}-{}: {}'.format(copyright_data[c][0], copyright_data[c][0], c), type='c')
+        for l in license_lines:
+            debmake.debug.debug('Dl: {}'.format(l), type='l')
+    print('\nI: check_all_licenses completed for {} files.'.format(len(files)), file=sys.stderr)
+    return adata
+
+def bunch_all_licenses(adata):
+    # group scan result by license
+    group_by_license = []
+    adata = sorted(adata, key=operator.itemgetter(0)) # sort by md5hashkey
+    for k, g in itertools.groupby(adata, operator.itemgetter(0)):
+        group_by_license.append(list(g))      # Store group iterator as a list
+    # bunch the same license for reporting
+    bdata = []
+    for data_by_license in group_by_license:
+        bunched_files = []
+        bunched_copyright_data = {}
+        for (md5hashkey, copyright_data, licenseid, licensetext, file) in data_by_license:
+            bunched_files.append(file)
+            for name, (year_min, year_max) in copyright_data.items():
+                if name in bunched_copyright_data.keys():
+                    (year_min0, year_max0) = bunched_copyright_data[name]
+                    bunched_copyright_data[name] = (min(year_min0, year_min), max(year_max0, year_max))
+                else:
+                    bunched_copyright_data[name] = (year_min, year_max)
+        sortkey = '{0:03} {1:02} {2} {3}'.format(max(0, 1000 - len(bunched_files)), min(99, len(licenseid)), licenseid, md5hashkey)
+        bunched_files = sorted(bunched_files)
+        copyright_list = []
+        for name, (year_min, year_max) in copyright_data.items():
+            copyright_list.append((year_min, year_max, name))
+        copyright_list = sorted(copyright_list)
+        bdata.append((sortkey, bunched_files, copyright_list, licenseid, licensetext))
+        debmake.debug.debug('Dk: sortkey="{}", files={}'.format(sortkey, bunched_files), type='k')
     return bdata
+
+def format_all_licenses(bdata):
+    spaces = '           ' # 11 spaces
+    # sort for printer ready order
+    group_by_license = []
+    bdata = sorted(bdata, key=operator.itemgetter(0)) # sort by sortkey (more files comes early)
+    for k, g in itertools.groupby(bdata, operator.itemgetter(0)):
+        group_by_license.append(list(g))      # Store group iterator as a list
+    cdata = []
+    for data_by_sortkey in group_by_license:
+        for (sortkey, bunched_files, copyright_list, licenseid, licensetext) in data_by_sortkey:
+            copyright_lines = ''
+            for (year_min, year_max, name) in copyright_list:
+                if year_max == 0: # not found
+                    copyright_lines += '{}{}\n'.format(spaces, name)
+                elif year_min == year_max:
+                    copyright_lines += '{}{} {}\n'.format(spaces, year_min, name)
+                else:
+                    copyright_lines += '{}{}-{} {}\n'.format(spaces, year_min, year_max, name)
+            cdata.append((licenseid, licensetext, bunched_files, copyright_lines))
+    return cdata
+
+def check_copyright(files, mode=0, encoding='utf-8'):
+    print('I: check_all_licenses', file=sys.stderr)
+    adata = check_all_licenses(files, encoding=encoding, mode=mode)
+    print('I: bunch_all_licenses', file=sys.stderr)
+    bdata = bunch_all_licenses(adata)
+    print('I: format_all_licenses', file=sys.stderr)
+    cdata = format_all_licenses(bdata)
+    return cdata
+
 
 ###################################################################
 # Format licence
@@ -598,18 +811,9 @@ def format_license(lines):
     return ''.join(xlines)
 
 #######################################################################
-# license text files (glob files specified by --license)
-#######################################################################
-def license_files(files): 
-    f = set()
-    for fx in files:
-        f.update(set(glob.glob(fx)))
-    return f
-
-#######################################################################
 # license text file conversion
 #######################################################################
-def license_text(file, encoding='utf-8'): 
+def license_text(file, encoding='utf-8'):
     lines = []
     try:
         with open(file, 'r', encoding=encoding) as fd:
@@ -627,8 +831,8 @@ def license_text(file, encoding='utf-8'):
 #######################################################################
 # main program
 #######################################################################
-def copyright(package_name, license_file_masks, bdata, binary_files, huge_files, mode=0):
-    # mode: 0: not -c, 1: -c simple, 2: -cc normal, 3: -ccc extensive 
+def copyright(package_name, license_file_masks, data, binary_files, huge_files, mode=0):
+    # mode: 0: not -c, 1: -c simple, 2: -cc normal, 3: -ccc extensive
     #      -1: -cccc debug simple, -2 -ccccc debug normal -3 -cccccc debug extensive
     # make text to print
     text = '''\
@@ -647,62 +851,31 @@ Source: <url://example.com>
 # packaged work, as it may make Debian's contributions unacceptable upstream.
 
 '''.format(package_name)
-    for (index, license, licenseid, file, copyright_data, license_lines_rep, extra_lines) in bdata:
+    for (licenseid, licensetext, files, copyright_lines) in data:
         # Files:
-        text += 'Files: {}\n'.format('\n       '.join(file))
+        text +=             'Files:     {}\n'.format('\n           '.join(files))
         # Copyright:
-        copy = ''
-        for name in copyright_data.keys():
-            # name found
-            if copyright_data[name][0] == copyright_data[name][1]:
-                if copyright_data[name][1] == 0: # max == 0 for binary etc.
-                    copy += '           {}\n'.format(name)
-                else:
-                    copy += '           {} {}\n'.format(copyright_data[name][0], name)
-            else:
-                if copyright_data[name][1] == 0: # max == 0 means not found
-                    copy += '           {}\n'.format(name)
-                else:
-                    copy += '           {}-{} {}\n'.format(copyright_data[name][0], copyright_data[name][1], name)
-        text += 'Copyright:' + copy[10:]
-#        # licensecheck(1):
-#        command = 'licensecheck '+ file[0] + ' | sed -e "s/^[^:]*://"'
-#        p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#        licensecheck = p.stdout.read().decode('utf-8').strip()
-#        if p.wait() != 0:
-#            print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
-#            exit(1)
+        text +=             'Copyright: ' + copyright_lines[11:]
         # License:
-        text += 'License: {}\n'.format(licenseid)
-        if license_lines_rep != []:
-            if abs(mode) != 1: # Skip if simple
-                text += format_license(license_lines_rep)
-        lid = licenseid.split()[0] # the main part of license id
-        if lid in licensefiles.keys():
-            (nm,fn) = licensefiles[lid]
-            text += """ .
- On Debian systems, the complete text of the {} can be found in `/usr/share/common-licenses/{}'.
-""".format(fn, nm)
-        if abs(mode) > 2: # for debug
-            # add comments
-            if extra_lines != '':
-                text += '### !!! ......................................................................\n'
-                text += extra_lines.rstrip() + '\n'
-        text += '\n'
+        text +=             'License:   {}{}\n\n'.format(licenseid, licensetext)
     if binary_files != []:
         text += '#----------------------------------------------------------------------------\n'
-        text += '# binary files (skipped):\n#       {}\n\n'.format('\n#       '.join(binary_files))
+        text += '# binary files (skipped):\n#         {}\n\n'.format('\n#         '.join(binary_files))
     if huge_files != []:
         text += '#----------------------------------------------------------------------------\n'
-        text += '# huge files   (skipped):\n#       {}\n\n'.format('\n#       '.join(huge_files))
+        text += '# huge files   (skipped):\n#         {}\n\n'.format('\n#         '.join(huge_files))
     if mode == 0: # not for -c
         text += '''\
 #----------------------------------------------------------------------------
-# Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following 
+# Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following
 # license/copyright files.
 
 '''
-        for f in license_files(license_file_masks):
+        # get list of files to attach
+        license_files = set()
+        for fx in license_file_masks:
+            license_files.update(set(glob.glob(fx)))
+        for f in license_files:
             text += '#----------------------------------------------------------------------------\n'
             text += '# License file: {}\n'.format(f)
             text += license_text(f)
@@ -715,3 +888,8 @@ Source: <url://example.com>
 #######################################################################
 if __name__ == '__main__':
     print(copyright('foo', {'LICENSE*', 'COPYRIGHT'}, [], ['binary1.file', 'binary2.file'], ['huge.file1', 'huge.file2']))
+    check_lines(['#!/bin/sh', 'COPYRIGHT FOO_BAR 1890', '', 'License', 'END'])
+    print(analyze_copyright(["1987-90 FOO bar","boo foo wooo 2001-12", "1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation, Inc." ]))
+    X = 'Free Software Foundation, Inc. HHHHHHH'
+    print(cleanup_name(X))
+

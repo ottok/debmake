@@ -121,7 +121,7 @@ def debian(para):
     # 4 configuration files which must exist (level=0)
     ###################################################################
     debmake.cat.cat('debian/control', debmake.control.control(para))
-    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['bdata'], para['binary_files'], para['huge_files']))
+    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['cdata'], para['binary_files'], para['huge_files']))
     if para['dh_with'] == set(): # no dh_with
         substlist['@DHWITH@'] = ''
     else:

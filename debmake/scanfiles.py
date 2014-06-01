@@ -22,11 +22,11 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+import collections
 import operator
 import os
 import re
 import sys
-import debmake.copyright
 
 ###################################################################
 # Define constants
@@ -197,35 +197,29 @@ def get_all_files():
 #######################################################################
 # complete scanfiles
 #######################################################################
-def scanfiles(mode=0, check=True):
+def scanfiles():
     (nonlink_files, binary_files, huge_files, extensions) = get_all_files()
-    # copyright license checks
-    if check:
-        data = debmake.copyright.check_all_license(nonlink_files)
-        bdata = debmake.copyright.bunch_licence(data, mode)
+    if len(extensions):
+        delta = 100.0 / len(extensions)
     else:
-        bdata = []
-    # filename extensions
-    n = len(extensions)
-    count = {}
-    for ext in extensions:
-        if ext in count.keys():
-            count[ext] += 100.0 / n
-        else:
-            count[ext] = 100.0 / n
-    extcount = sorted(count.items(), key=operator.itemgetter(1), reverse=True)
-    for ext, freq in extcount:
+        delta = 100.0
+    counter = collections.Counter(extensions)
+    count_list = sorted(list(counter.items()), key=operator.itemgetter(1), \
+            reverse=True)
+    for ext, count in count_list:
         if ext == 'binary' or ext == 'archive':
             print('W: {} type exists.  Maybe non-DFSG!'.format(ext), file=sys.stderr)
-        print('I: {1:3.0f} %, ext = {0}'.format(ext, freq), file=sys.stderr)
-    return (bdata, binary_files, huge_files, extcount)
+        print('I: {1:3.0f} %, ext = {0}'.format(ext, count * delta), file=sys.stderr)
+    return (nonlink_files, binary_files, huge_files, counter, count_list)
 
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    (bdata, binary_files, huge_files, extcount) = scanfiles(mode=1, check=False)
-    print('Number of bunched license data: {}'.format(len(bdata)))
-    print('I: frequency of file extensions', file=sys.stderr)
-    for ext, freq in extcount:
-        print('{1:3.0f} %, ext = {0}'.format(ext, freq))
+    (nonlink_files, binary_files, huge_files, counter, count_list) = scanfiles()
+    print('Number of nonlink_files: {}'.format(len(nonlink_files)))
+    print('Number of binary_files: {}'.format(len(binary_files)))
+    print('Number of huge_files: {}'.format(len(huge_files)))
+    print('I: counts of file extensions', file=sys.stderr)
+    for ext, count in count_list:
+        print('{1} files for ext = {0}'.format(ext, count))
