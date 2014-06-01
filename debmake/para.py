@@ -262,6 +262,8 @@ Argument may need to be quoted to protect from the shell.
 #   para['gui']             = args.gui          # -g
     para['invoke']          = args.invoke       # -i
     para['judge']           = args.judge        # -j
+    if para['judge']:
+        para['override'].update({'judge'})
     para['kludge']          = args.kludge       # -k
     ############################################# -l
     # --license: args.license -> para['license'] as set

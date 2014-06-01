@@ -117,6 +117,8 @@ def debian(para):
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n\n'
     if 'java' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n\n'
+    if 'judge' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'judge').rstrip() + '\n\n'
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################
