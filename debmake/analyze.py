@@ -232,32 +232,35 @@ def analyze(para):
     # GNU coding standard with autotools = autoconf+automake
     if os.path.isfile('configure.ac') and \
             os.path.isfile('Makefile.am') and \
-            os.path.isfile('configure') and \
-            not ('autoreconf' in para['dh_with']):
+            not ('autotools-dev' in para['dh_with']):
+        para['dh_with'].update({'autoreconf'})
+        para['build_type']      = 'Autotools with autoreconf'
+        para['build_depends'].update({'dh-autoreconf'})
+    elif os.path.isfile('configure.in') and \
+            os.path.isfile('Makefile.am') and \
+            not ('autotools-dev' in para['dh_with']):
+        para['dh_with'].update({'autoreconf'})
+        para['build_type']      = 'Autotools with autoreconf (old)'
+        para['build_depends'].update({'dh-autoreconf'})
+        print('W: Use of configure.in has been deprecated since 2001.', file=sys.stderr)
+    elif os.path.isfile('configure.ac') and \
+            os.path.isfile('Makefile.am') and \
+            os.path.isfile('configure'):
         para['dh_with'].update({'autotools-dev'})
         para['build_type']      = 'Autotools'
         para['build_depends'].update({'autotools-dev'})
     elif os.path.isfile('configure.in') and \
             os.path.isfile('Makefile.am') and \
-            os.path.isfile('configure') and \
-            not ('autoreconf' in para['dh_with']):
+            os.path.isfile('configure'):
         para['dh_with'].update({'autotools-dev'})
         para['build_type']      = 'Autotools (old)'
         para['build_depends'].update({'autotools-dev'})
         print('W: Use of configure.in has been deprecated since 2001.', file=sys.stderr)
-    elif os.path.isfile('configure.ac') and \
-            os.path.isfile('Makefile.am'):
-        para['dh_with'].update({'autoreconf'})
-        para['build_type']      = 'Autotools with autoreconf'
-        para['build_depends'].update({'dh-autoreconf'})
-    elif os.path.isfile('configure.in') and \
-            os.path.isfile('Makefile.am'):
-        para['dh_with'].update({'autoreconf'})
-        para['build_type']      = 'Autotools with autoreconf (old)'
-        para['build_depends'].update({'dh-autoreconf'})
-        print('W: Use of configure.in has been deprecated since 2001.', file=sys.stderr)
     elif 'autoreconf' in para['dh_with']:
-        print('E: missing configure.ac or Makefile.am required for "dh --with autoreconf".', file=sys.stderr)
+        print('E: missing configure.ac or Makefile.am required for "dh $@ --with autoreconf".', file=sys.stderr)
+        exit(1)
+    elif 'autotools-dev' in para['dh_with']:
+        print('E: missing configure.ac or Makefile.am or configure required for "dh $@ --with autotools-dev".', file=sys.stderr)
         exit(1)
     # GNU coding standard with configure
     elif os.path.isfile('configure'):
