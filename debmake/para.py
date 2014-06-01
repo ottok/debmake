@@ -69,12 +69,19 @@ Argument may need to be quoted to protect from the shell.
                 para['program_version'],
                 para['program_copyright']),
             epilog='See debmake(1) manpage for more.')
-    p.add_argument(
+    ck = p.add_mutually_exclusive_group()
+    ck.add_argument(
             '-c', 
             '--copyright', 
             action = 'count', 
             default = 0, 
             help = 'scan source for copyright+license text and exit')
+    ck.add_argument(
+            '-k', 
+            '--kludge', 
+            action = 'count', 
+            default = 0, 
+            help = 'compare debian/copyright with the source and exit')
     sp = p.add_mutually_exclusive_group()
     sp.add_argument(
             '-n', 
@@ -255,7 +262,7 @@ Argument may need to be quoted to protect from the shell.
 #   para['gui']             = args.gui          # -g
     para['invoke']          = args.invoke       # -i
     para['judge']           = args.judge        # -j
-    # ******************************************* -k
+    para['kludge']          = args.kludge       # -k
     ############################################# -l
     # --license: args.license -> para['license'] as set
     if args.license == '':

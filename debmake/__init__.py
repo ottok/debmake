@@ -32,6 +32,7 @@ import debmake.debian
 import debmake.debs
 import debmake.debug
 import debmake.dist
+import debmake.kludge
 import debmake.origtar
 import debmake.para
 import debmake.sanity
@@ -123,6 +124,13 @@ def main():
         (nonlink_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
         data = debmake.copyright.check_copyright(nonlink_files, mode=para['copyright'])
         print(debmake.copyright.copyright('package', set(), data, binary_files, huge_files, mode=para['copyright']))
+        return
+#######################################################################
+# -k: compare debian/copyright with the source and exit
+#######################################################################
+    if para['kludge'] !=0:
+        print('I: compare debian/copyright with the source', file=sys.stderr)
+        debmake.kludge.kludge(para['kludge'])
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
