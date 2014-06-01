@@ -27,50 +27,48 @@ import sys
 #######################################################################
 # Debug output
 #######################################################################
-def debug(msg, type=''):
-    """Outputs to sys.stderr if DEBUG is set."""
+def get_debug():
     try:
-        DEBUG = os.environ["DEBUG"]
+        e = os.environ["DEBUG"]
     except KeyError:
-        pass
-    else:
-        if type =='':
-            print(msg, file=sys.stderr)
-        elif type in DEBUG:
-            print(msg, file=sys.stderr)
+        e = ''
+    return e
+
+def debug(msg, type=''):
+    e = get_debug()
+    if (e != '' and type == '') or \
+            (type in e):
+        print(msg, file=sys.stderr)
     return
 
 def debug_para(msg, para):
-    try:
-        DEBUG = os.environ["DEBUG"]
-    except KeyError:
-        pass
-    else:
-        if 'p' in DEBUG:
-            line = '{}: \n'.format(msg)
-            for x in para.keys():
-                line += 'para[{}] = "{}"\n'.format(x, para[x])
-            print(line, file=sys.stderr)
-        else:
-            print('{}: "{}_{}.{}"'.format(
-                msg, 
-                para['package'], 
-                para['version'], 
-                para['targz']),
-                file=sys.stderr)
+    e = get_debug()
+    if 'p' in e:
+        line = '{}:\n'.format(msg)
+        for x in para.keys():
+            line += '  para[{}] = "{}"\n'.format(x, para[x])
+        print(line, file=sys.stderr)
+    elif e:
+        line = '{}:\n'.format(msg)
+        line += '  para[{}] = "{}"\n'.format('package', para['package'])
+        line += '  para[{}] = "{}"\n'.format('version', para['version'])
+        line += '  para[{}] = "{}"\n'.format('revision', para['revision'])
+        line += '  para[{}] = "{}"\n'.format('targz', para['targz'])
+        print(line, file=sys.stderr)
     return
 
 def debug_debs(msg, debs):
-    try:
-        DEBUG = os.environ["DEBUG"]
-    except KeyError:
-        pass
-    else:
-        if 'd' in DEBUG:
-            line = '{}: \n'.format(msg)
-            for deb in debs:
-                line += 'package: {}, arch: {}, M-A: {}, Depends: {}, Pre-Depends: {}, Type: {}\n'.format(deb['package'], deb['arch'], deb['multiarch'], deb['depends'], deb['pre-depends'], deb['type'])
-            print(line, file=sys.stderr)
+    e = get_debug()
+    if 'd' in e:
+        line = '{}: \n'.format(msg)
+        for deb in debs:
+            line += '  Binary Package: {}\n'.format(deb['package'])
+            line += '    Architecture: {}\n'.format(deb['arch'])
+            line += '    Multi-Arch:   {}\n'.format(deb['multiarch'])
+            line += '    Depends:      {}\n'.format(deb['depends'])
+            line += '    Pre-Depends:  {}\n'.format(deb['pre-depends'])
+            line += '    Type:         {}\n'.format(deb['type'])
+        print(line, file=sys.stderr)
     return
 
 #######################################################################
