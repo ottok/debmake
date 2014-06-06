@@ -831,7 +831,7 @@ def license_text(file, encoding='utf-8'):
 #######################################################################
 # main program
 #######################################################################
-def copyright(package_name, license_file_masks, data, binary_files, huge_files, mode=0):
+def copyright(package_name, license_file_masks, data, xml_html_files, binary_files, huge_files, mode=0):
     # mode: 0: not -c, 1: -c simple, 2: -cc normal, 3: -ccc extensive
     #      -1: -cccc debug simple, -2 -ccccc debug normal -3 -cccccc debug extensive
     # make text to print
@@ -858,6 +858,9 @@ Source: <url://example.com>
         text +=             'Copyright: ' + copyright_lines[11:]
         # License:
         text +=             'License:   {}{}\n\n'.format(licenseid, licensetext)
+    if xml_html_files != []:
+        text += '#----------------------------------------------------------------------------\n'
+        text += '# xml and html files (skipped):\n#         {}\n\n'.format('\n#         '.join(xml_html_files))
     if binary_files != []:
         text += '#----------------------------------------------------------------------------\n'
         text += '# binary files (skipped):\n#         {}\n\n'.format('\n#         '.join(binary_files))

@@ -358,7 +358,7 @@ def analyze(para):
     # copyright, control: build/binary dependency, rules export/override
     #######################################################################
     print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
-    (para['nonlink_files'], para['binary_files'], para['huge_files'], para['extcount'], para['extcountlist']) \
+    (para['nonlink_files'], para['xml_html_files'], para['binary_files'], para['huge_files'], para['extcount'], para['extcountlist']) \
             = debmake.scanfiles.scanfiles()
     # skip slow license+copyright check if debian/copyright exists
     if os.path.isfile('debian/copyright'):

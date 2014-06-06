@@ -103,7 +103,7 @@ def copydiff(mode):
     ###########################################################################
     # scan copyright of the source tree and create license_new[]
     ###########################################################################
-    (nonlink_files, binary_files, huge_files, extcount, extcountlist) = debmake.scanfiles.scanfiles()
+    (nonlink_files, xml_html_files, binary_files, huge_files, extcount, extcountlist) = debmake.scanfiles.scanfiles()
     data_new = debmake.copyright.check_copyright(nonlink_files, mode=1)
     licenses_new = {}
     for (licenseid, licensetext, files, copyright_lines) in data_new:
