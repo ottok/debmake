@@ -61,8 +61,7 @@ if __name__ == '__main__':
         '@EMAIL@': 'email@example.org',
         '@SHORTDATE@': '11 Jan. 2013',
     }
-    sed('../extra2dbg/', 'debian/', substlist, 'package')
-#    sed('../extra2/', 'debian/', substlist, 'package')
-#    sed('../extra3/', 'debian/', substlist, 'package')
-#    sed('../extra4/', 'debian/copyright-example/', substlist, 'package')
+    sed('../extra2/', 'debian/', substlist, 'package')
+    sed('../extra3/', 'debian/', substlist, 'package')
+    sed('../extra4/', 'debian/copyright-example/', substlist, 'package')
 
