@@ -1,3 +1,6 @@
+# See dpkg-buildflags(1)
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
 # In case you want to add more flags to the defaults, use 
 # the followings to harden via compiler options
 # see FEATURE AREAS in dpkg-buildflags(1))
