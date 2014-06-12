@@ -53,7 +53,7 @@ def copydiff(mode):
     licenses_old = {}
     file_to_pattern = {}
     for line in lines + ['']: # easy sure EOF
-        line = line.strip()
+        line = line.rstrip()
         if line == '':
             # summarize data
             if patterns_for_license != [] and license != '':
@@ -66,15 +66,19 @@ def copydiff(mode):
                             if os.path.isfile(file_or_dir):
                                 file_to_pattern[file_or_dir] = (iptn, ptn)
                                 licenses_old[file_or_dir] = license
+                                debmake.debug.debug('Dn: Pattern #{:02}: {}, file={}, {}'.format(iptn, ptn, file_or_dir, license), type='n')
                             elif os.path.isdir(file_or_dir):
                                 for dir, subdirs, files in os.walk(file_or_dir):
+                                    #debmake.debug.debug('Dn: Pattern #{:02}: {}, dir={}, files={}'.format(iptn, ptn, dir, files), type='n')
                                     for file in files:
                                         filepath = os.path.join(dir, file)
                                         file_to_pattern[filepath] = (iptn, ptn)
                                         licenses_old[filepath] = license
+                                        debmake.debug.debug('Dn: Pattern #{:02}: {}, filepath={}, {}'.format(iptn, ptn, filepath, license), type='n')
                     else:
                         file_to_pattern['__MISSING__'] = (iptn, ptn)
                         licenses_old['__MISSING__'] = license
+                        debmake.debug.debug('Dn: Pattern #{:02}: {}, file={}, {}'.format(iptn, ptn, '__MISSING__', license), type='n')
             # Next stanza
             patterns_for_license = []
             license = ''
@@ -87,7 +91,10 @@ def copydiff(mode):
             f_cont = True
         elif line[:8].lower() == 'license:':
             license = line[8:].strip()
-        elif f_file == True and line[:1] == ' ':
+            f_cont = False
+        elif f_cont == True and line[:1] == ' ':
+            patterns_for_license += line.split()
+        elif f_cont == True and line[:1] == '\t':
             patterns_for_license += line.split()
         elif line[:1].lower() != ' ':
             f_cont = False
