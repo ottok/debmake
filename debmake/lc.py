@@ -41,24 +41,16 @@ def pattern(text, tail=' '):
     text = ' '.join(text.split()) # normalize white space(s) 
     text = re_connect.sub('', text) + tail # connect words
     return text # pattern normally ends with ' '
-def always(text):
-    if text[-3:] == ' )?':
-       text = text[:-1]
-    return text # drop "?" for vanishable "(.... )?" patterns
+def eval_sub(sub):
+    rtext = eval(sub)
+    if rtext[-3:] == ' )?':
+       rtext = rtext[:-1]
+    return rtext # drop "?" for vanishable "(.... )?" patterns
 # non greedy
 rhead0=r'^(?P<head>.{0,' + '{}'.format(LMAX) + r'}?)'
 rtail0=r'(?P<tail>.{0,'  + '{}'.format(LMAX) + r'}?)$'
 def regex(reg, rhead=rhead0, rtail=rtail0):
     return re.compile(rhead + reg + rtail, re.IGNORECASE)
-def joinand(misc):
-    x = list(misc) 
-    if len(x) == 0:
-        text = ''
-    elif len(x) == 1:
-        text = x[0]
-    elif len(x) > 1:
-        text = ', '.join(x[:-1]) + ', and ' + x[-1]
-    return text
 ###############################################################################
 # BSD Exact
 ###############################################################################
@@ -82,11 +74,11 @@ list_sub += ['r_BSD3']
 r_BSD3 = pattern(r'''
     (?P<bsd3>(?:..? )?All advertising materials mentioning features or use of
     this software must display the following acknowledgement: This product
-    includes software developed by the organization\. )?
+    includes software developed by .{2,85}\. )?
     ''', tail='')
 list_sub += ['r_BSD4']
 r_BSD4 = pattern(r'''
-    (?P<noendorse>(?:..? )?Neither the name of the organization nor the names of its
+    (?P<noendorse>(?:..? )?Neither the name of .{2,85} nor the names of its
     contributors may be used to endorse or promote products derived from this
     software without specific prior written permission\. )?
     ''', tail='')
@@ -105,12 +97,13 @@ r_BSDW = pattern(r'''
     POSSIBILITY OF SUCH DAMAGE\. )?
     ''', tail='')
 ### BSD {2,3,4}-clause
-list_main += [('BSD', regex(r_BSD0 + r_BSD1 + r_BSD2 + r_BSD3 + r_BSD4 +
-    r_BSDW[:-1]), ['name', 'bsd3', 'noendorse', 'nowarranty',
+list_main += [('BSD', 'EXACT', regex(r_BSD0 + r_BSD1 + r_BSD2 + r_BSD3 + r_BSD4 +
+    r_BSDW[:-1]), ['bsd3', 'name', 'noendorse', 'nowarranty',
     'head', 'tail'])]
 ###############################################################################
 # BSD Generic
 ###############################################################################
+# list 'bsd3' before 'name'
 list_sub += ['r_BSD0G']
 r_BSD0G = pattern(r'''
     Redistribution and use in source and binary forms, with or without
@@ -162,8 +155,8 @@ r_BSDWG = pattern(r'''
     THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE\.) )?
     ''', tail='') # "EXPRESSED" is what XFREE86 1.1 uses. BSD uses "EXPRESS"
 ### BSD {2,3,4}-clause
-list_main += [('BSD', regex(r_BSD0G + r_BSD1G + r_BSD2G + r_BSD3G + r_BSD4G +
-    r_BSDWG[:-1]), ['name', 'subject', 'bsd3', 'noendorse', 'nowarranty', 'patent',
+list_main += [('BSD', 'GENERIC', regex(r_BSD0G + r_BSD1G + r_BSD2G + r_BSD3G + r_BSD4G +
+    r_BSDWG[:-1]), ['bsd3', 'name', 'subject', 'noendorse', 'nowarranty', 'patent',
     'head', 'tail'])]
 ###############################################################################
 # Apache family (BSD0, BSD1, BSD2 are the same one)
@@ -195,11 +188,11 @@ r_Apache6 = pattern(r'''
     in .{2,85}\.
     ''')
 ### Apache 1.0
-list_main += [('Apache-1.0', regex(r_BSD0G + r_BSD1G + r_BSD2G + r_BSD3G +
-    r_Apache4 + r_Apache5 + r_Apache6 + r_BSDWG[:-1]), ['name', 'subject',
-    'bsd3', 'nowarranty', 'patent', 'head', 'tail'])]
+list_main += [('Apache-1.0', 'EXACT', regex(r_BSD0G + r_BSD1G + r_BSD2G + r_BSD3G +
+    r_Apache4 + r_Apache5 + r_Apache6 + r_BSDWG[:-1]), ['bsd3', 'name', 
+    'subject', 'nowarranty', 'patent', 'head', 'tail'])]
 ### Apache 1.1
-list_main += [('Apache-1.1', regex(r_BSD0G + r_BSD1G + r_BSD2G + r_Apache3 +
+list_main += [('Apache-1.1', 'EXACT', regex(r_BSD0G + r_BSD1G + r_BSD2G + r_Apache3 +
     r_Apache4 + r_Apache5 + r_BSDWG[:-1]), ['name', 'subject', 'nowarranty',
     'patent', 'head', 'tail'])]
 ###############################################################################
@@ -230,7 +223,7 @@ r_disclaimer_expat = pattern(r'''
     USE OR OTHER DEALINGS IN THE SOFTWARE. )
     ''', tail='')
 ### Expat
-list_main += [('MIT', regex(r_pemission_expat + r_notice_expat + r_disclaimer_expat),
+list_main += [('MIT', 'Expat', regex(r_pemission_expat + r_notice_expat + r_disclaimer_expat),
     ['head', 'tail', 'nowarranty'])]
 ###############################################################################
 # MIT: Generic (trained with xorg source data)
@@ -273,7 +266,7 @@ r_disclaimer_expatG = pattern(r'''
     ''', tail='')
 # noendorse (=BSD4) is not used in Expat but used in many old MIT licenses
 # MIT Xorg variants with warranty
-list_main += [('MIT', regex(r_pemission_expatG + r_notice_expatG +
+list_main += [('MIT', 'GENERIC', regex(r_pemission_expatG + r_notice_expatG +
     r_disclaimer_expatG[:-1] + r_BSD4G), ['requiredisclaimer', 'nowarranty',
     'noendorse', 'head', 'tail']), ]
 ###############################################################################
@@ -300,7 +293,7 @@ r_disclaimer_isc = pattern(r'''
     IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. )
     ''', tail='')
 ### ISC
-list_main += [('ISC', regex(r_pemission_isc + r_notice_isc + r_disclaimer_isc),
+list_main += [('ISC', 'EXACT', regex(r_pemission_isc + r_notice_isc + r_disclaimer_isc),
     ['head', 'tail', 'nowarranty', 'name'])]
 ###############################################################################
 # ISC: Generic
@@ -347,10 +340,10 @@ r_disclaimer_iscGx = pattern(r'''
     CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.) )?
     ''', tail='')
 # ISC variants with no-endorse in the middle
-list_main += [('ISC', regex(r_pemission_iscG + r_notice_iscG +
+list_main += [('ISC', 'VARIANT_1', regex(r_pemission_iscG + r_notice_iscG +
     r_BSD4G + r_disclaimer_iscG[:-1]), ['nowarranty', 'noendorse', 'head', 'tail']), ]
 # ISC variants with no-endorse at the end
-list_main += [('ISC', regex(r_pemission_iscG + r_notice_iscG + r_notice_expatG +
+list_main += [('ISC', 'VARIANT_2', regex(r_pemission_iscG + r_notice_iscG + r_notice_expatG +
     r_disclaimer_expatG[:-1] + r_BSD4G ), ['nowarranty', 'noendorse', 'head', 'tail']), ]
 ###############################################################################
 # Zlib: Exact
@@ -379,7 +372,7 @@ r_notice_zlib = pattern(r'''
     distribution.
     ''')
 ### Zlib
-list_main += [('Zlib', regex(r_disclaimer_zlib + r_permission_zlib + r_notice_zlib),
+list_main += [('Zlib', 'EXACT', regex(r_disclaimer_zlib + r_permission_zlib + r_notice_zlib),
     ['phead', 'tail', 'nowarranty'])]
 ###############################################################################
 # DEC
@@ -418,7 +411,7 @@ r_disclaimer_dec = pattern(r'''
     advised of the possibility of such damage. )?
     ''', tail='')
 # MIT DEC variants with warranty
-list_main += [('MIT-DEC', regex(r_permission_dec + r_notice_dec + r_noendorse_dec +
+list_main += [('MIT', 'DEC', regex(r_permission_dec + r_notice_dec + r_noendorse_dec +
     r_disclaimer_dec[:-1]), ['nowarranty',
     'noendorse', 'head', 'tail']), ]
 ###############################################################################
@@ -433,7 +426,7 @@ r_BSD3A = pattern(r'''
     in the software itself, in the same form and location as other such
     third-party acknowledgments.
     ''')
-list_main += [('MIT (XORG/BSD hybrid)', regex(r_pemission_expatG + r_BSD1G +r_BSD2G +r_BSD3A
+list_main += [('MIT', 'XORG+BSD', regex(r_pemission_expatG + r_BSD1G +r_BSD2G +r_BSD3A
     + r_BSD4G + r_BSDWG[:-1] ), ['nowarranty', 'noendorse', 'head', 'tail']), ]
 ###############################################################################
 # SGI
@@ -446,7 +439,7 @@ r_notice_sgi = pattern(r'''
     substantial portions of the Software.
     ''')
 # SGI
-list_main += [('SGI-B-2.0', regex(r_pemission_expatG + r_notice_sgi +
+list_main += [('SGI-B-2.0', 'EXACT', regex(r_pemission_expatG + r_notice_sgi +
     r_disclaimer_expatG[:-1] + r_BSD4G), ['nowarranty',
     'noendorse', 'head', 'tail']), ]
 ###############################################################################
@@ -469,8 +462,8 @@ r_MPL2 = pattern(r'''
     Code Form is Incompatible With Secondary Licenses, as defined by the
     Mozilla Public License, v. (?:\d+(?:\.\d+)?).)?
     ''')
-list_main += [('MPL', regex(r_MPL1), ['version'])]
-list_main += [('MPL', regex(r_MPL2), ['version', 'incompatible'])]
+list_main += [('MPL', 'VARIANT1', regex(r_MPL1), ['version'])]
+list_main += [('MPL', 'VARIANT2', regex(r_MPL2), ['version', 'incompatible'])]
 ###############################################################################
 # PERMISSIVE license from GNU releted sources
 ###############################################################################
@@ -484,7 +477,7 @@ r_PM0 = pattern(r'''
 # PERMISSIVE (aclocal.m4, libtool)
 r_PM1 = pattern(r'''
     free software. (?:as a special exception )?the (Free Software
-    Foundation|author) gives unlimited permission to copy and(?:/ ?or)?
+    Foundation|author|author\(s\)) gives unlimited permission to copy and(?:/ ?or)?
     distribute it, with or without modifications, as long as this notice is
     preserved.(?P<nowarranty> This (program|file) is distributed in the hope
     that it will be useful, but WITHOUT ANY WARRANTY, to the extent permitted
@@ -500,10 +493,10 @@ r_PM3 = pattern(r'''
     This configure script is free software; the Free Software Foundation gives
     unlimited permission to copy, distribute and modify it.
     ''')
-list_main += [('PERMISSIVE', regex(r_PM0), ['nowarranty'])]
-list_main += [('PERMISSIVE', regex(r_PM1), ['nowarranty'])]
-list_main += [('PERMISSIVE', regex(r_PM2), [])]
-list_main += [('PERMISSIVE', regex(r_PM3), [])]
+list_main += [('PERMISSIVE', 'VARIANT0', regex(r_PM0), ['nowarranty'])]
+list_main += [('PERMISSIVE', 'VARIANT1', regex(r_PM1), ['nowarranty'])]
+list_main += [('PERMISSIVE', 'VARIANT2', regex(r_PM2), [])]
+list_main += [('PERMISSIVE', 'VARIANT3', regex(r_PM3), [])]
 ###############################################################################
 # Reference to license name (Generic style)
 ###############################################################################
@@ -525,15 +518,14 @@ r_under = pattern(r'''
     |free software .{2,85} under )
     ''', tail='') + r'(?:the (?:terms of the )?)?'
 ###############################################################################
+# GNU version
 list_sub += ['r_version1']
 r_version1 = pattern(r'''
     (?:(?:as )?published by the Free Software Foundation[,;:.]? 
     )?(?:either )?versions? 
-    (?P<version>\d+(?:\.\d+)?)(?: of the License)?(?:\.?
-    | \(?only\)\.?
-    |,? or (?:\(at your option\) )?(?:any )?(?P<later>later)(?: versions?)?\.?
-        (?:published by the Free Software Foundation; )?)
-    ''',tail='')
+    (?P<version>\d+(?:\.\d+)?)(?: of the License)?[,.]?(?: \(?only\)?\.? 
+    | or (?:\(at your option\)? )?(?:any )?(?P<later>later)(?: versions?)?\.?|)
+    (?:published by the Free Software Foundation[,;:.]? )?''', tail='')
     # wrong additional "s" is used in some software
     # GNU Free Documentation License, Version 1.1 or any later version published 
 # XXXXX FIXME XXXXX r_version2 not tested
@@ -548,114 +540,121 @@ r_version2 = pattern(r'''
 ###############################################################################
 list_sub += ['r_LGPL']
 r_LGPL = r'(?:GNU (?:Library|Lesser) General Public License|(?:GNU )?LGPL).? '
-list_main += [('LGPL', regex(r_under + r_LGPL + r_version1), ['head',
+list_main += [('LGPL', 'VARIANT1', regex(r_under + r_LGPL + r_version1), ['head',
     'version', 'later', 'tail'])]
-list_main += [ ('LGPL', regex(r_under + r_version2 + r_LGPL), ['head',
+list_main += [ ('LGPL', 'VARIANT2', regex(r_under + r_version2 + r_LGPL), ['head',
     'version', 'later', 'tail'])]
 
 list_sub += ['r_AGPL']
 r_AGPL = r'(?:GNU Affero General Public License|(?:GNU )?AGPL).? '
-list_main += [('AGPL', regex(r_under + r_AGPL + r_version1), ['head',
+list_main += [('AGPL', 'VARIANT1', regex(r_under + r_AGPL + r_version1), ['head',
     'version', 'later', 'tail'])]
-list_main += [ ('AGPL', regex(r_under + r_version2 + r_AGPL), ['head',
+list_main += [ ('AGPL', 'VARIANT2', regex(r_under + r_version2 + r_AGPL), ['head',
     'version', 'later', 'tail']) ]
 
 list_sub += ['r_GFDL']
 r_GFDL = r'(?:GNU Free Documentation License|(?:GNU )?GFDL|GNU FDL).? '
-list_main += [ ('GFDL', regex(r_under + r_GFDL + r_version1), ['head',
+list_main += [ ('GFDL', 'VARIANT1', regex(r_under + r_GFDL + r_version1), ['head',
     'version', 'later', 'tail']), ]
-list_main += [ ('GFDL', regex(r_under + r_version2 + r_GFDL), ['head',
+list_main += [ ('GFDL', 'VARIANT2', regex(r_under + r_version2 + r_GFDL), ['head',
     'version', 'later', 'tail']), ]
 
 list_sub += ['r_GPL']
 r_GPL = r'(?:GNU General Public License|(?:GNU )?GPL).? '
-list_main += [ ('GPL', regex(r_under + r_GPL + r_version1), ['head',
+list_main += [ ('GPL', 'VARIANT1', regex(r_under + r_GPL + r_version1), ['head',
     'version', 'later', 'tail']), ]
-list_main += [ ('GPL', regex(r_under + r_version2 + r_GPL), ['head',
+list_main += [ ('GPL', 'VARIANT2', regex(r_under + r_version2 + r_GPL), ['head',
     'version', 'later', 'tail']), ]
 
 list_sub += ['r_MPL']
 r_MPL = r'Mozilla Public License.? '
-list_main += [ ('MPL', regex(r_under + r_MPL + r_version1), ['head',
+list_main += [ ('MPL', 'VARIANT1', regex(r_under + r_MPL + r_version1), ['head',
     'version', 'later', 'tail']), ]
-list_main += [ ('MPL', regex(r_under + r_version2 + r_MPL), ['head',
+list_main += [ ('MPL', 'VARIANT2', regex(r_under + r_version2 + r_MPL), ['head',
     'version', 'later', 'tail']), ]
 
 list_sub += ['r_Artistic']
 r_Artistic = r'Artistic License.? '
-list_main += [ ('Artistic', regex(r_under + r_Artistic + r_version1),
+list_main += [ ('Artistic', 'VARIANT1', regex(r_under + r_Artistic + r_version1),
     ['head', 'version', 'later', 'tail']), ]
-list_main += [ ('Artistic', regex(r_under + r_version2 + r_Artistic),
+list_main += [ ('Artistic', 'VARIANT2', regex(r_under + r_version2 + r_Artistic),
     ['head', 'version', 'later', 'tail']), ]
+###############################################################################
+# Reference to the package license
+###############################################################################
+r_SM0 = pattern(r'''
+    This file is distributed under the same license as .{5,40}\.
+    ''')
+list_main += [('_SAME_', 'VARIANT0', regex(r_SM0), [])]
 ###############################################################################
 # Reference to license name (specific style)
 ###############################################################################
 list_main += [
-    ('Apache', regex(pattern(r'''
+    ('Apache', 'EXTRA', regex(pattern(r'''
         (?:.{2,85} licenses? this file to you|licensed) under the Apache
         License, Version (?P<version>[^ ]+) \(the LICENSE\).
         ''')), ['version','head', 'tail']),
-    ('QPL', regex(pattern(r'''
+    ('QPL', 'EXTRA', regex(pattern(r'''
         (?P<toolkit>This file is part of the .*Qt GUI Toolkit.  This file )?may
         be distributed under the terms of the Q Public License as defined.
         ''')), ['toolkit', 'head', 'tail']),
-    ('Perl', regex(pattern(r'''
+    ('Perl', 'EXTRA', regex(pattern(r'''
         This program is free software; you can redistribute it and/or modify it
         under the same terms as Perl itself.
         ''')), []),
-    ('Beerware', regex(r'\(THE BEER-WARE LICENSE\).' 
+    ('Beerware', 'EXTRA', regex(r'\(THE BEER-WARE LICENSE\).' 
         ), []),
-    ('PHP', regex(pattern(r'''
+    ('PHP', 'EXTRA', regex(pattern(r'''
         This source file is subject to version (?P<version>[^ ]+) of the PHP
         license.
         ''')), ['version']),
-    ('CeCILL', regex(pattern(r'''
+    ('CeCILL', 'EXTRA', regex(pattern(r'''
         under the terms of the CeCILL(?:-(?P<version>[^ ]+))?.
         ''')), ['version']),
-    ('SGI-B', regex(pattern(r'''
+    ('SGI-B', 'EXTRA', regex(pattern(r'''
         (?:permitted in|under) the SGI Free Software License B, Version (?P<version>[^ ]+) \(the License\).
         ''')), ['version']),
-    ('Public domain', regex(pattern(r'''
+    ('Public domain', 'EXTRA', regex(pattern(r'''
         is in the public domain.
         ''')), []),
-    ('CDDL', regex(pattern(r''''
+    ('CDDL', 'EXTRA', regex(pattern(r''''
         terms of the Common Development and Distribution License (?:, Version
         (?P<version>[^ ]+)? \(the License\)).
         ''')), ['version']),
-    ('Ms-PL', regex(pattern(r'''
+    ('Ms-PL', 'EXTRA', regex(pattern(r'''
         Microsoft Permissive License \(Ms-PL\).
         ''')), []),
-    ('BSL', regex(pattern(r'''
+    ('BSL', 'EXTRA', regex(pattern(r'''
         Distributed under the Boost Software License, Version (?P<version>[^ ]+)\.
         ''')), ['version']),
-    ('PSF', regex(pattern(r'''
+    ('PSF', 'EXTRA', regex(pattern(r'''
         PYTHON SOFTWARE FOUNDATION LICENSE (VERSION (?P<version>[^ ]+))?.
         ''')), ['version']),
-    ('libpng', regex(pattern(r'''
+    ('libpng', 'EXTRA', regex(pattern(r'''
         This code is released under the libpng license.
         ''')), []),
-    ('APSL', regex(pattern(r'''
+    ('APSL', 'EXTRA', regex(pattern(r'''
         subject to the Apple Public
         Source License Version (?P<version>[^ ]+) \(the License\).
         ''')), ['version']),
-    ('LPPL', regex(pattern(r'''
+    ('LPPL', 'EXTRA', regex(pattern(r'''
         (?:under the conditions of the LaTeX Project Public License,
         |under the terms of the LaTeX Project Public License Distributed from
         CTAN archives in directory macros/latex/base/lppl.txt; )either 
         version (?P<version>[^ ]+) of (?:this|the) license,? or \(at your
         option\) any later version.
         ''')), ['version']),
-    ('W3C', regex(pattern(r'''
+    ('W3C', 'EXTRA', regex(pattern(r'''
         distributed under the W3C..? Software License in
         ''')), []), # W3C(R)
-    ('WTFPL', regex(pattern(r'''
+    ('WTFPL', 'EXTRA', regex(pattern(r'''
         Do What The Fuck You Want To Public License (?:, Version
         (?P<version>[^, ]+))?.
         ''')), ['version']),
-    ('WTFPL', regex(pattern(r'''
+    ('WTFPL', 'EXTRA', regex(pattern(r'''
         (?:License WTFPL|Under (?:the|a) WTFPL).
         ''')), []),
-    ('UNKNOWN', regex(r'.*'), []), # always true
+    ('__UNKNOWN__', '', regex(r'.*'), []), # always true
 ]
 ###############################################################################
 # exception clause
@@ -688,16 +687,17 @@ r_font = pattern(r'''
     License. If you modify this font, you may extend this exception to your
     version of the font, but you are not obligated to do so. If you do not wish
     to do so, delete this exception statement from your version.''', tail='')
-list_misc = [
-    ('with autoconf exception', regex(r_autoconf), True),
-    ('with libtool exception', regex(r_libtool), True),
-    ('with bison exception', regex(r_bison), True),
-    ('with font exception', regex(r_font), True),
-    ('with incorrect FSF address', regex(
-        r'(?:675 Mass Ave|59 Temple Place|51 Franklin Steet|02139|02111-1307)'), 
-        False),
+list_exceptions = [
+    ('autoconf', regex(r_autoconf)),
+    ('libtool', regex(r_libtool)),
+    ('bison', regex(r_bison)),
+    ('font', regex(r_font)),
 ]
 regex_exception = regex(r'exception')
+list_attribs = [
+    ('The FSF address in the above text is the old one.', 
+    regex(r'(?:675 Mass Ave|59 Temple Place|51 Franklin Steet|02139|02111-1307)')),
+]
 ###############################################################################
 # GNU License text
 # 300 BYTES:   Most license headers included in the source
@@ -705,75 +705,143 @@ regex_exception = regex(r'exception')
 # "Definitions": not present in normal license headers
 re_FULL = re.compile(r'definition', re.IGNORECASE)
 size_FULL = 500
-# tailing "," is important.
+re_LICENSE_HEADER = regex(pattern(r'''
+    Standard License Header COPYRIGHT'''), 
+    rhead=r'^(?P<head>.*?)', rtail='(?P<tail>.*?)$')
+re_LICENSE_AFFERO = regex(pattern(r'''
+    software over a computer network.*Affero General Public License
+    '''),
+    rhead=r'^(?P<head>.*?)', rtail='(?P<tail>.*?)$')
 re_LICENSE = regex(pattern(r'''
-    (?:(?P<agpl>AFFERO GENERAL PUBLIC LICENSE)
-    |(?P<gfdl>GNU Free Documentation License)
-    |(?P<lgpl>GNU (?:Library|Lesser) General Public License)
-    |(?P<gpl>GNU General Public License ))version 
-        (?P<version>\d+(?:\.\d+)?),
-    '''), rhead=r'^(?P<head>.*?)', rtail='(?P<tail>.*?)$')
+    (?:(?P<agpl>AFFERO GENERAL PUBLIC LICENSE.*)
+    |(?P<gfdl>GNU Free Documentation License.*)
+    |(?P<lgpl>GNU (?:Library|Lesser) General Public License.*)
+    |(?P<gpl>GNU General Public License.*) )version 
+    (?P<version>\d+(?:\.\d+)?),? o.*later'''), 
+    rhead=r'^(?P<head>.*?)', rtail='(?P<tail>.*?)$')
+###############################################################################
+# license name: file name, licence full name
+licensefiles = {
+    'Apache-2.0'    : ('Apache-2.0','Apache License Version 2.0\n '),
+    'Artistic'      : ('Artistic',  '"Artistic License"\n '),
+    'BSD-3-Clause'  : ('BSD',       'BSD 3-clause "New" or "Revised"\n License'),
+    'GFDL-1.2'      : ('GFDL-1.2',  'GNU Free Documentation License\n Version 1.2'),
+    'GFDL-1.2+'     : ('GFDL-1.2',  'GNU Free Documentation License\n Version 1.2'),
+    'GFDL-1.3'      : ('GFDL-1.3',  'GNU Free Documentation License\n Version 1.3'),
+    'GFDL-1.3+'     : ('GFDL-1.3',  'GNU Free Documentation License\n Version 1.3'),
+    'GPL-1.0'       : ('GPL-1',     'GNU General Public License\n Version 1'),
+    'GPL-1.0+'      : ('GPL-1',     'GNU General Public License\n Version 1'),
+    'GPL-2.0'       : ('GPL-2',     'GNU General Public License\n Version 2'),
+    'GPL-2.0+'      : ('GPL-2',     'GNU General Public License\n Version 2'),
+    'GPL-3.0'       : ('GPL-3',     'GNU General Public License\n Version 3'),
+    'GPL-3.0+'      : ('GPL-3',     'GNU General Public License\n Version 3'),
+    'LGPL-2.0'      : ('LGPL-2',    'GNU Library General Public License\n Version 2'),
+    'LGPL-2.0+'     : ('LGPL-2',    'GNU Library General Public License\n Version 2'),
+    'LGPL-2.1'      : ('LGPL-2.1',  'GNU Lesser General Public License\n Version 2.1'),
+    'LGPL-2.1+'     : ('LGPL-2.1',  'GNU Lesser General Public License\n Version 2.1'),
+    'LGPL-3.0'      : ('LGPL-3',    'GNU Lesser General Public License\n Version 3'),
+    'LGPL-3.0+'     : ('LGPL-3',    'GNU Lesser General Public License\n Version 3')}
 #########################################################################################
-def lc(text, mode):
-    text = pattern(text)
-    if mode <= -1:
-        id = '-1: '
-    else:
-        id = ''
-    if len(text) > size_FULL and re_FULL.search(text):
-        license = ''
-        version = ''
-        suffix = ''
-        misc = set()
-        extra = ''
-        # full license text
-        l = re_LICENSE.search(text)
-        if l:
-            if l.group('agpl'):
-                license = 'AGPL'
-                ver =  l.group('version')
-                misc.update({' (license text)'})
-            elif l.group('lgpl'):
-                license = 'LGPL'
-                ver =  l.group('version')
-                misc.update({' (license text)'})
-            elif l.group('gfdl'):
-                license = 'GFDL'
-                ver =  l.group('version')
-                misc.update({' (license text)'})
-            elif l.group('gpl'):
-                license = 'GPL'
-                ver =  l.group('version')
-                misc.update({' (license text)'})
+def normalize(license_lines):
+    # normalize license to a single normalized line with single space
+    license_data = []
+    for line in license_lines:
+        line = line.strip()
+        license_data.extend(line.split())
+    try:
+        license_data.remove('') # remove empty words
+    except ValueError:
+        pass
+    return pattern(' '.join(license_data))
+#########################################################################################
+def lc(norm_text, license_lines, mode):
+    # norm_text: normalized license lines to be analized
+    # license_lines: original license lines for output
+    # mode: license check mode
+    # mode = 0: mode for copyright file generation; same as mode == 2 for lc.py
+    if mode == 0:
+        mode = 2
+    # abs(mode) = 1: mode for the license scan (1 line; -c, -cccc)
+    # abs(mode) = 2: mode for the license scan (mode = 1 + license text; -cc, -ccccc)
+    # abs(mode) = 3: mode for the license scan (mode = 2 + comments; -ccc, -cccccc)
+    # abs(mode) = 4: mode for the license scan (mode = 3 + match text; debug only)
+    # mode < 0: add pattern index id (for -cccc, -ccccc, -cccccc)
+    # return: text to be placed after "License: "
+    #####################################################################################
+    # 1-line part
+    license = ''
+    id = ''
+    version = ''
+    suffix = ''
+    misc1 = ''
+    # not in the 1-line part
+    misc2 = set() # mode == 2 (add to copyright file)
+    misc3 = set() # mode == 3
+    match_text = '' # mode == 4 debug
+    if len(norm_text) == 0:
+        license = '__NO_LICENSE_TEXT__'
+        text = ''
+    elif len(norm_text) > size_FULL and re_FULL.search(norm_text):
+        # full license text (very rough guess)
+        lh = re_LICENSE_HEADER.search(norm_text)
+        la = re_LICENSE_AFFERO.search(norm_text)
+        if la:
+            license = 'AGPL'
+            version =  '-1.0'
+            suffix = '+'
+            id = 'FULL_LICENSE'
+        elif lh:
+            norm_text = lh.group('tail').strip()
+            #print('~~~>>> : {}'.format(norm_text))
+            l = re_LICENSE.search(norm_text)
+            if l:
+                if l.group('agpl'):
+                    license = 'AGPL'
+                    version =  l.group('version')
+                    id = 'FULL_LICENSE'
+                elif l.group('lgpl'):
+                    license = 'LGPL'
+                    version =  l.group('version')
+                    id = 'FULL_LICENSE'
+                elif l.group('gfdl'):
+                    license = 'GFDL'
+                    version =  l.group('version')
+                    id = 'FULL_LICENSE'
+                elif l.group('gpl'):
+                    license = 'GPL'
+                    version =  l.group('version')
+                    id = 'FULL_LICENSE'
+                else:
+                    license = '__TOO_LONG_TYPE1__'
+                if (len(version) == 1) and (version in '1234567890'):
+                    version = version + '.0'
+                if version:
+                    version = '-' + version
+                    suffix = '+'
             else:
-                license = '~~~ TOO_LONG ({}) with unknown license ~~~'.format(len(text))
-            if (len(ver) == 1) and (ver in '1234567890'):
-                ver = ver + '.0'
-            if ver:
-                version = '-' + ver
+                license = '__TOO_LONG_TYPE2__'
         else:
-            license = '~~~ TOO_LONG ({}) without key-line  ~~~'.format(len(text))
+            license = '__TOO_LONG_TYPE3__'
     else:
-        if text:
-            for i, (license, regex, vars) in enumerate(list_main):
-                #print('>> {}: {}'.format(i, license))
-                version = ''
-                suffix = ''
-                misc = set()
-                extra = ''
+        if norm_text:
+            for (license, id, regex, vars) in list_main:
+                #print('>> {}:{}'.format(license, id))
                 if license == 'BSD':
                     version = '-2-Clause'
-                r0 =regex.search(text)
+                else:
+                    version = ''
+                r0 =regex.search(norm_text)
                 if r0:
+                    match_text = r0.group()
                     for v in vars:
                         try:
                             if v == 'version':
                                 if r0.group(v):
-                                    ver = r0.group('version')
-                                    if (len(ver) == 1) and (ver in '1234567890'):
-                                        ver = ver + '.0'
-                                    if ver:
-                                        version = '-' + ver
+                                    version = r0.group('version')
+                                    if (len(version) == 1) and (version in '1234567890'):
+                                        version = version + '.0'
+                                    if version:
+                                        version = '-' + version
                             elif v == 'later':
                                 if r0.group(v):
                                     suffix = '+'
@@ -787,20 +855,20 @@ def lc(text, mode):
                                         version = '-3-Clause'
                                 elif license[:3] == 'MIT' or license[:3] == 'ISC': 
                                     # MIT variants with optional noendorse
-                                    if r0.group(v) and mode < 0:
-                                        misc.update({'with no-endorsement clause'})
+                                    if r0.group(v):
+                                        misc3.update({'no-endorsement clause'})
                                 else: # SGI-B, DEC incorporating BSD's no-endorsement clause
-                                    if not r0.group(v) and mode < 0:
-                                        misc.update({'without no-endorsement clause'})
+                                    if not r0.group(v):
+                                        misc3.update({'no-endorsement clause'})
                             elif v == 'incompatible':
                                 if r0.group(v):
-                                    misc.update({'with copyleft incompatibility'})
+                                    misc3.update({'copyleft incompatibility concern'})
                             elif v == 'nowarranty':
-                                if not r0.group(v) and mode < 0:
-                                    misc.update({'without disclaimer'})
+                                if not r0.group(v):
+                                    misc3.update({'nowarranty disclaimer'})
                             elif v == 'requiredisclaimer':
-                                if r0.group(v) and mode < 0:
-                                    misc.update({'requiring disclaimer'})
+                                if r0.group(v):
+                                    misc3.update({'requiring nowarranty disclaimer'})
                             elif v == 'name':
                                 if r0.group(v):
                                     name = r0.group('name')
@@ -819,43 +887,84 @@ def lc(text, mode):
                             #        name3 = r0.group('name1')
                             #        suffix += '<1:' + name1 + '>'
                         except IndexError:
-                            print('ERROR: {} missing.'.format(v))
-                    if license == 'PERMISSIVE':
-                        if (not 'nowarranty' in vars) and (mode < 0):
-                            misc.update({'without disclaimer'})
+                            print('ERROR: {} missing: {} {}'.format(v, license, id))
+                    # find only first match
                     break
-            if mode <= -1:
-                id = '{}: '.format(i)
+            for (type1, attrib1) in list_attribs:
+                r2 = attrib1.search(norm_text)
+                if r2:
+                    misc2.update({type1})
+            count1 = 0
+            for (type1, except1) in list_exceptions:
+                r2 = except1.search(norm_text)
+                if r2:
+                    misc1 = type1
+                    count1 += 1
+            if count1 == 1:
+                misc1 = ' with ' + misc1 + ' exception'
+            elif count1 == 0:
+                r2 = regex_exception.search(norm_text)
+                if r2:
+                    misc1 = ' with unknown exception XXX FIXME XXX'
             else:
-                id = ''
-            if mode <= -2:
-                extra += '\n### !!! M: {}'.format(r0.group())
-            if mode <= -3:
-                extra += '\n### !!! T: {}'.format(text)
-            flag_exception = False
-            for (t, regex, flag) in list_misc:
-                r2 = regex.search(text)
-                if r2:
-                    misc.update({t})
-                if flag:
-                    flag_exception = True
-            if not flag_exception:
-                r2 = regex_exception.search(text)
-                if r2:
-                    misc.update({'with exception'})
+                misc1 = ' with multiple exceptions XXX FIXME XXX'
         else:
-            license = '~~~ NO_LICENSE_TEXT ~~~'
-            version = ''
-            suffix = ''
-            misc = set()
-            extra = ''
-            if mode <= -1:
-                id = '-9: '
+            license = '' # NO LICENSE TEXT
+    if mode <= -1 and id !='':
+        id = ':' + id
+    else:
+        id = ''
+    licenseid = license + version + suffix + id + misc1
+    text = ''
+    if abs(mode) >= 3: # output comments
+        if misc3:
+            text += '\n### !!! C: {}'.format('\n### !!! C: '.join(list(misc3)))
+    if abs(mode) >= 2: # Skip if simple
+        # RFC-822 complian and empty lines replaced with " ."
+        for line in license_lines:
+            line = line.rstrip()
+            if line == '':
+                text += '\n .'
             else:
-                id = ''
-    licenseid = id + license + version + suffix + ' ' + joinand(misc) + extra
-    return licenseid
+                text += '\n {}'.format(line)
+        if misc2:
+            text += '\n .\n {}'.format('\n '.join(list(misc2)))
+        if license + version + suffix in licensefiles.keys():
+            (filename, licensename) = licensefiles[license + version + suffix]
+            text += "\n .\n On Debian systems, the complete text of the " + licensename + \
+                " can be found in `/usr/share/common-licenses/{}'.".format(filename)
+    if abs(mode) >= 4: # output debug outputs
+        if match_text:
+            text += '\n### !!! M: {}'.format(match_text)
+        if norm_text:
+            text += '\n### !!! T: {}'.format(norm_text)
+    return (licenseid, text)
 
+#########################################################################################
+def lc_sub(norm_text, mode):
+    # check license for debug regex pattern
+    # license_lines: license lines to be checked (list)
+    # mode: license check mode
+    # abs(mode) = 5 (single)
+    # abs(mode) = 6 (combination)
+    #####################################################################################
+    text = ''
+    for subx in list_sub:
+        r = re.compile(eval_sub(subx), re.IGNORECASE)
+        if r.search(norm_text):
+            # match with regx
+            text += '>>>>>>>> {} -> "{}"\n'.format(subx, r.search(norm_text).group())
+            if abs(mode) >= 6:
+                for suby in list_sub:
+                    if subx != suby:
+                        try:
+                            r = re.compile(eval_sub(subx) + eval_sub(suby), re.IGNORECASE)
+                            if r.search(norm_text):
+                                # match with combination of subx + suby
+                                text += '==== {} + {} => "{}"\n'.format(subx, suby, r.search(norm_text).group())
+                        except:
+                            pass
+    return text
 #########################################################################################
 if __name__ == '__main__':
     import sys
@@ -863,7 +972,7 @@ if __name__ == '__main__':
     mode = 1
     argc = len(sys.argv)
     if argc == 1:
-        print('Syntax: ' + argv[0] + ' [-][123] file1 file2 ...')
+        print('Syntax: ' + argv[0] + ' [-][123456] file1 file2 ...')
     elif argc == 2:
         files = sys.argv[1:]
     elif argc >= 3:
@@ -878,29 +987,20 @@ if __name__ == '__main__':
     for file in files:
         if os.path.isfile(file):
             with open(file, 'r') as f:
-                text = f.read()
-            text = pattern(text)
-            if abs(mode) <=3: # debmake -ccc like
-                print('{} => {}'.format(file, lc(text, mode)))
-            if abs(mode) >= 4: # unit test of regex
-                text = pattern(text)
-                print('FILE = {} -----------------------------'.format(file))
-                if abs(mode) >= 5:
-                    print('TEXT = {}'.format(text))
-                for reg in list_sub:
-                    r = re.compile(always(eval(reg)), re.IGNORECASE)
-                    if r.search(text):
-                        print('>>>>>>>> {} -> "{}"'.format(reg, r.search(text).group()))
-                        if abs(mode) >= 6:
-                            for regy in list_sub:
-                                if reg != regy:
-                                    try:
-                                        r = re.compile(always(eval(reg)) + always(eval(regy)), re.IGNORECASE)
-                                        if r.search(text):
-                                            print('==== {} + {} => "{}"'.format(reg, regy, r.search(text).group()))
-                                    except:
-                                        if abs(mode) >= 7:
-                                            print('**** {} + {} => regrex error'.format(reg, regy))
-                                        else:
-                                            pass
+                license_lines = f.readlines()
+            while(license_lines[0].strip() == ''):
+                del license_lines[0]
+            while(license_lines[-1].strip() == ''):
+                del license_lines[-1]
+            norm_text = normalize(license_lines)
+            if abs(mode) <= 1: # like debmake -c etc.
+                (licenseid, text) = lc(norm_text, license_lines, mode)
+                print('{}\t=> {}'.format(file, licenseid))
+            elif abs(mode) <= 4: # like debmake -c etc.
+                print('File:    {}'.format(file))
+                (licenseid, text) = lc(norm_text, license_lines, mode)
+                print('License: {}{}\n'.format(licenseid, text))
+            else: # abs(mode> => 5 for sunstring match to debug list_sub regex
+                print('File:    {}'.format(file))
+                print(lc_sub(norm_text, mode))
 

@@ -2,12 +2,12 @@
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 04/03/2014
+.\"      Date: 06/14/2014
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE 4.0
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "04/03/2014" "DEBMAKE 4\&.0" "Debmake Manual"
+.TH "DEBMAKE" "1" "06/14/2014" "DEBMAKE 4\&.0" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 debmake \- program to make the Debian source package
 .SH "SYNOPSIS"
 .sp
-\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR]
+\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR]
 .SH "DESCRIPTION"
 .sp
 \fBdebmake\fR helps to build the Debian package from the upstream source\&. Normally, this is done as follows:
@@ -150,6 +150,33 @@ file)
 .IP \(bu 2.3
 .\}
 \fB\-ccc\fR: debug output style
+.RE
+.RE
+.PP
+\fB\-k\fR, \fB\-\-kludge\fR
+.RS 4
+compare debian/copyright with the source and exit\&.
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-k\fR: basic output style
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-kk\fR: verbose output style
 .RE
 .RE
 .PP
@@ -393,7 +420,7 @@ file\&.
 .sp
 In many cases, the
 \fBdebmake\fR
-command makes good guess for
+command makes good guesses for
 \fItype\fR
 from
 \fIbinarypackage\fR\&. If
@@ -413,7 +440,7 @@ sets
 to
 \fBdata\fR, \&...
 .sp
-If the source tree contents does not match settings for
+If the source tree contents do not match settings for
 \fItype\fR,
 \fBdebmake\fR
 warns you\&.
@@ -837,7 +864,7 @@ Debian revision (\fB\-r\fR): [0\-9][+\&.~a\-z0\-9A\-Z]*
 See the exact definition in Chapter 5 \- Control files and their fields of \(lqDebian Policy Manual\(rq\&.
 .SH "DEBUG"
 .sp
-The character set in the environ variable \fB$DEBUG\fR determines the logging output level\&.
+The character set in the environment variable \fB$DEBUG\fR determines the logging output level\&.
 .sp
 .RS 4
 .ie n \{\
@@ -847,7 +874,7 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBp\fR: list all parameters
+\fBp\fR: list all global parameters
 .RE
 .sp
 .RS 4
@@ -858,7 +885,7 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBd\fR: list all binary package parameters
+\fBd\fR: list parsed parameters for all binary packages
 .RE
 .sp
 .RS 4
@@ -869,7 +896,7 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBf\fR: copyright scanner input filename
+\fBf\fR: input filename for the copyright scan
 .RE
 .sp
 .RS 4
@@ -880,7 +907,7 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBi\fR: copyright scanner input line
+\fBy\fR: year/name split of copyright line
 .RE
 .sp
 .RS 4
@@ -891,7 +918,7 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBo\fR: line outside of the copyright and license sections
+\fBs\fR: line scanner for format_state
 .RE
 .sp
 .RS 4
@@ -902,7 +929,7 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBc\fR: line inside of the copyright section
+\fBb\fR: content_state scan loop: begin\-loop
 .RE
 .sp
 .RS 4
@@ -913,16 +940,96 @@ The character set in the environ variable \fB$DEBUG\fR determines the logging ou
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBl\fR: line inside of the license section
+\fBm\fR: content_state scan loop: after regex match
 .RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBe\fR: content_state scan loop: end\-loop
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBc\fR: print copyright section text
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBl\fR: print license section text
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBa\fR: print author/translator section text
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBk\fR: sort key for debian/copyright stanza
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBn\fR: scan result of debian/copyright (debmake \-k)
+.RE
+.sp
+Use this as:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+ $ DEBUG=pdfbmeclak debmake \&.\&.\&.
+.fi
+.if n \{\
+.RE
+.\}
 .SH "AUTHOR"
 .sp
-Copyright \(co 2013 Osamu Aoki <osamu@debian\&.org>
+Copyright \(co 2014 Osamu Aoki <osamu@debian\&.org>
 .SH "LICENSE"
 .sp
 MIT License
 .SH "SEE ALSO"
 .sp
-See also \fBdebhelper\fR(7), \fBdpkg\-buildpackage\fR(1) \fBdebuild\fR(1) and \fBpdebuild\fR(1) manpages and files in /usr/share/doc/debmake/\&.
+An detailed tutorial document focused on using the \fBdebmake\fR command is provided as a HTML file: /usr/share/doc/debmake/debmake\&.html \&.
 .sp
 Learn basics of Debian packaging with the \(lqDebian New Maintainers\*(Aq Guide\(rq at http://www\&.debian\&.org/doc/manuals/maint\-guide/ or with the \fBmaint\-guide\fR package\&.
+.sp
+See also \fBdpkg\-source\fR(1), \fBdeb\-control\fR(5), \fBdebhelper\fR(7), \fBdh\fR(1), \fBdpkg\-buildpackage\fR(1), \fBdebuild\fR(1), \fBquilt\fR(1), \fBdpkg\-depcheck\fR(1), \fBpdebuild\fR(1), \fBpbuilder\fR(8), \fBcowbuilder\fR(8), \fBgbp\-buildpackage\fR(1), \fBgbp\-pq\fR(1), and \fBgit\-pbuilder\fR(1) manpages\&.

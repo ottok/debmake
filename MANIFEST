@@ -14,6 +14,7 @@ debmake/debian.py
 debmake/debs.py
 debmake/debug.py
 debmake/dist.py
+debmake/kludge.py
 debmake/lc.py
 debmake/origtar.py
 debmake/para.py
@@ -53,6 +54,7 @@ extra0export/java
 extra0export/vala
 extra0override/dbg
 extra0override/java
+extra0override/judge
 extra0override/multiarch
 extra0override/python3
 extra1/README.Debian

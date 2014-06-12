@@ -1,3 +1,14 @@
+debmake (4.1.0-1) unstable; urgency=medium
+
+  * Rewrite license scanner scripts and improved DEP-5 compliance 
+    for the exception.
+  * Add experimental debian/copyright verification (-k) support.
+  * Skip dh_auto_test for -j.
+  * Skip license scan for XML/HTML files.
+  * Use /usr/share/dpkg/default.mk in debian/rules.
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 13 Jun 2014 00:53:08 +0900
+
 debmake (4.0.10-1) unstable; urgency=medium
 
   * Set Build-Depends to python3-all. Closes: #743090
