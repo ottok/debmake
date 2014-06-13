@@ -149,40 +149,9 @@ def analyze_copyright(copyright_lines):
 ###################################################################
 # A format state machine parser to extract copyright+license by format
 ###################################################################
-F_BLNK = 0 # blank line
-F_QUOTE  =  1
-F_PLAIN7 =  2
-F_PLAIN6 =  3
-F_PLAIN5 =  4
-F_PLAIN4 =  5
-F_PLAIN3 =  6
-F_PLAIN2 =  7
-F_PLAIN1 =  8
-F_BLKP   =  9
-F_BLKPE  = 10
-F_BLKP0  = 11
-F_BLKQ   = 12
-F_BLKQE  = 13
-F_BLKQ0  = 14
-F_BLKC   = 15
-F_BLKCE  = 16
-F_BLKC2  = 17
-F_BLKC1  = 18
-F_BLKC0  = 19
-F_PLAIN0 = 20
-# force EOF before processing the next line
-F_EOF = -1
-
 fs = [
-'F_BLNK',
+'F_BLNK  ', # blank line
 'F_QUOTE ',
-'F_PLAIN7',
-'F_PLAIN6',
-'F_PLAIN5',
-'F_PLAIN4',
-'F_PLAIN3',
-'F_PLAIN2',
-'F_PLAIN1',
 'F_BLKP  ',
 'F_BLKPE ',
 'F_BLKP0 ',
@@ -194,13 +163,37 @@ fs = [
 'F_BLKC2 ',
 'F_BLKC1 ',
 'F_BLKC0 ',
-'F_PLAIN0',
-'F_EOF',
+'F_PLAIN1',
+'F_PLAIN2',
+'F_PLAIN3',
+'F_PLAIN4',
+'F_PLAIN5',
+'F_PLAIN6',
+'F_PLAIN7',
+'F_PLAIN8',
+'F_PLAIN9',
+'F_PLAIN0', # always match
+'F_EOF   ', # force EOF before processing the next line
 ]
+# enum(fs)
+for i, name in enumerate(fs):
+    exec('{} = {}'.format(name.strip(), i))
+F_EOF = -1 # override
 
-all_entry_formats = list(range(F_BLNK, F_PLAIN1 + 1)) + [F_BLKP, F_BLKQ, F_BLKC, F_PLAIN0]
+# entry format style id list
+all_non_entry_formats = {
+F_BLKPE, F_BLKP0,
+F_BLKQE, F_BLKQ0,
+F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0,
+F_EOF}
 
-formats = {}
+all_entry_formats = set()
+for name in fs:
+    id = eval(name.strip())
+    if id not in all_non_entry_formats:
+        all_entry_formats.add(id)
+
+formats = {} # dictionary
 # define next format state
 # formats[*][0]: regex to match
 # formats[*][1]: next format state allowed
@@ -216,48 +209,6 @@ formats[F_QUOTE] = (
         re.compile(r'^(?P<prefix>/\*)\**(?P<text>.*?)\**(?P<postfix>\*/)$'),  # C /*...*/
         all_entry_formats,
         {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
-        )
-
-formats[F_PLAIN7] = (
-        re.compile(r'^(?P<prefix>#)#*(?P<text>.*)(?P<postfix>)$'),   # Shell/Perl/Python
-        all_entry_formats,
-        {F_PLAIN7, F_BLNK}
-        )
-
-formats[F_PLAIN6] = (
-        re.compile(r'^(?P<prefix>//)/*(?P<text>.*)(?P<postfix>)$'),  # C++ //
-        all_entry_formats,
-        {F_PLAIN6, F_BLNK}
-        )
-
-formats[F_PLAIN5] = (
-        re.compile(r'^(?P<prefix>--)-*(?P<text>.*)(?P<postfix>)$'),  # Lua --
-        all_entry_formats,
-        {F_PLAIN5, F_BLNK}
-        )
-
-formats[F_PLAIN4] = (
-        re.compile(r'^(?P<prefix>\.\\")(?P<text>.*)(?P<postfix>)$'), # manpage
-        all_entry_formats,
-        {F_PLAIN4, F_BLNK}
-        )
-
-formats[F_PLAIN3] = (
-        re.compile(r'^(?P<prefix>@%:@)(?P<text>.*)(?P<postfix>)$'),  # autom4te.cache
-        all_entry_formats,
-        {F_PLAIN3, F_BLNK}
-        )
-
-formats[F_PLAIN2] = (
-        re.compile(r'^(?P<prefix>@c)\s+(?P<text>.*)(?P<postfix>)$'), # Texinfo @c
-        all_entry_formats,
-        {F_PLAIN2, F_BLNK}
-        )
-
-formats[F_PLAIN1] = (
-        re.compile(r'^(?P<prefix>dnl)\s+(?P<text>.*)(?P<postfix>)$'),# m4 dnl
-        all_entry_formats,
-        {F_PLAIN1, F_BLNK}
         )
 
 # python block mode start with '''
@@ -320,7 +271,62 @@ formats[F_BLKC0] = (
         [F_BLKCE, F_BLKC0],
         {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
-# This is the last rule always match
+
+# comment start with something
+formats[F_PLAIN1] = (
+        re.compile(r'^(?P<prefix>#)#*(?P<text>.*)(?P<postfix>)$'),   # Shell/Perl/Python
+        all_entry_formats,
+        {F_PLAIN1, F_BLNK}
+        )
+
+formats[F_PLAIN2] = (
+        re.compile(r'^(?P<prefix>//)/*(?P<text>.*)(?P<postfix>)$'),  # C++ //
+        all_entry_formats,
+        {F_PLAIN2, F_BLNK}
+        )
+
+formats[F_PLAIN3] = (
+        re.compile(r'^(?P<prefix>--)-*(?P<text>.*)(?P<postfix>)$'),  # Lua --
+        all_entry_formats,
+        {F_PLAIN3, F_BLNK}
+        )
+
+formats[F_PLAIN4] = (
+        re.compile(r'^(?P<prefix>\.\\")(?P<text>.*)(?P<postfix>)$'), # manpage
+        all_entry_formats,
+        {F_PLAIN4, F_BLNK}
+        )
+
+formats[F_PLAIN5] = (
+        re.compile(r'^(?P<prefix>@%:@)(?P<text>.*)(?P<postfix>)$'),  # autom4te.cache
+        all_entry_formats,
+        {F_PLAIN5, F_BLNK}
+        )
+
+formats[F_PLAIN6] = (
+        re.compile(r'^(?P<prefix>@c)\s+(?P<text>.*)(?P<postfix>)$'), # Texinfo @c
+        all_entry_formats,
+        {F_PLAIN6, F_BLNK}
+        )
+
+formats[F_PLAIN7] = (
+        re.compile(r"^(?P<prefix>')(?P<text>.*)(?P<postfix>)$"),# Basic
+        all_entry_formats,
+        {F_PLAIN7, F_BLNK}
+        )
+
+formats[F_PLAIN8] = (
+        re.compile(r'^(?P<prefix>;);*(?P<text>.*)(?P<postfix>)$'),# vim
+        all_entry_formats,
+        {F_PLAIN8, F_BLNK}
+        )
+
+formats[F_PLAIN9] = (
+        re.compile(r'^(?P<prefix>dnl)\s+(?P<text>.*)(?P<postfix>)$'),# m4 dnl
+        all_entry_formats,
+        {F_PLAIN9, F_BLNK}
+        )
+# This is the last rule (always match, no blank line comes here)
 formats[F_PLAIN0] = (
         re.compile(r'^(?P<prefix>)(?P<text>.+)(?P<postfix>)$'),     # Text
         all_entry_formats,
@@ -399,24 +405,20 @@ def clean_license(license_lines):
 ###################################################################
 # Extract copyright+license from a source file
 ###################################################################
-# content_state: copyright content state
-C_INIT = 0 # initial content_state
-C_COPY = 1 # copyright found
-C_COPYB = 2 # blank after C_COPY
-C_AUTH = 3 # AUTHOR: like
-C_AUTHB = 4 # blank after C_AUTH
-C_LICN = 5 # license found
-C_EOF = -1 # EOF found at the end of line
-
+# content_state
 cs = [
-'C_INIT',
-'C_COPY',
-'C_COPYB',
-'C_AUTH',
-'C_AUTHB',
-'C_LICN',
-'C_EOF',
+'C_INIT',  # initial content_state
+'C_COPY',  # copyright found
+'C_COPYB', # blank after C_COPY
+'C_AUTH',  # AUTHOR: like
+'C_AUTHB', # blank after C_AUTH
+'C_LICN',  # license found
+'C_EOF',   # EOF found at the end of line
 ]
+# enum(cs)
+for i, name in enumerate(cs):
+    exec('{} = {}'.format(name.strip(), i))
+C_EOF = -1 # override
 
 re_copyright_mark_maybe = re.compile(r'''
         (?:Copyright|Copyr\.|\(C\)|©|\\\(co) # fake )
@@ -424,8 +426,8 @@ re_copyright_mark_maybe = re.compile(r'''
 
 re_copyright_mark_exclude = re.compile(r'''(?:
         [=?$]|                  # C MACRO
-        ^Copyright\s+holder|    # copyright holders ...
-        copyright\s+and\s+license # copyright and license
+        Copyright\s+holder|     # copyright holders ...
+        copyright\s+and\s+license| # copyright and license
         Copyright[!-')-~]|      # no coding variables
         Copyright:?$|           # ... copyright
         if\s+\(C\)|             # C code
@@ -442,6 +444,7 @@ re_copyright_nomark_year = re.compile(r'''
 
 re_author_init = re.compile(r'''^(?:
         authors?:?|
+        maintainers?:?|
         translators?:?)
         \s*(?P<author>.*)\s*$
         ''', re.IGNORECASE | re.VERBOSE)
