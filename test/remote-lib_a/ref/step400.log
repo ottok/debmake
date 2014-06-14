@@ -1,538 +1,538 @@
  $ tree
 .
-|-- aclocal.m4
-|-- AUTHORS
-|-- autogen.sh
-|-- ChangeLog
-|-- compile
-|-- config.guess
-|-- config.h.in
-|-- config.sub
-|-- configure
-|-- configure.ac
-|-- COPYING
-|-- data
-|   |-- Makefile.am
-|   |-- Makefile.in
-|   |-- rules
-|   |   |-- act
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- azik
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- azik-jp106
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- default
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- direct.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- kana
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- direct.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- kzik
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- Makefile.am
-|   |   |-- Makefile.in
-|   |   |-- nicola
-|   |   |   |-- keymap
-|   |   |   |   |-- default.json
-|   |   |   |   |-- direct.json
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- README.rules
-|   |   |-- rule.mk
-|   |   |-- tcode
-|   |   |   |-- keymap
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- trycode
-|   |   |   |-- keymap
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   |-- tutcode
-|   |   |   |-- keymap
-|   |   |   |   |-- hankaku-katakana.json
-|   |   |   |   |-- hiragana.json
-|   |   |   |   |-- katakana.json
-|   |   |   |   |-- latin.json
-|   |   |   |   `-- wide-latin.json
-|   |   |   |-- Makefile.am
-|   |   |   |-- Makefile.in
-|   |   |   |-- metadata.json.in
-|   |   |   `-- rom-kana
-|   |   |       `-- default.json
-|   |   `-- tutcode-touch16x
-|   |       |-- keymap
-|   |       |   |-- hankaku-katakana.json
-|   |       |   |-- hiragana.json
-|   |       |   |-- katakana.json
-|   |       |   |-- latin.json
-|   |       |   `-- wide-latin.json
-|   |       |-- Makefile.am
-|   |       |-- Makefile.in
-|   |       |-- metadata.json.in
-|   |       `-- rom-kana
-|   |           `-- default.json
-|   `-- templates
-|       |-- libkkc-data
-|       |   |-- configure.ac.in
-|       |   |-- data
-|       |   |   |-- Makefile.am
-|       |   |   `-- models
-|       |   |       |-- Makefile.sorted2
-|       |   |       |-- Makefile.sorted3
-|       |   |       |-- sorted2
-|       |   |       |   `-- metadata.json
-|       |   |       |-- sorted3
-|       |   |       |   `-- metadata.json
-|       |   |       |-- text2
-|       |   |       |   `-- metadata.json
-|       |   |       `-- text3
-|       |   |           `-- metadata.json
-|       |   |-- Makefile.am
-|       |   `-- tools
-|       |       |-- genfilter.py
-|       |       |-- Makefile.am
-|       |       `-- sortlm.py
-|       |-- Makefile.am
-|       `-- Makefile.in
-|-- debian
-|   |-- changelog
-|   |-- clean
-|   |-- compat
-|   |-- control
-|   |-- copyright
-|   |-- libkkc2.doc-base
-|   |-- libkkc2.docs
-|   |-- libkkc2.examples
-|   |-- libkkc2.info
-|   |-- libkkc2.install
-|   |-- libkkc2.links
-|   |-- libkkc2.manpages
-|   |-- libkkc2.menu
-|   |-- libkkc2.postinst
-|   |-- libkkc2.postrm
-|   |-- libkkc2.preinst
-|   |-- libkkc2.prerm
-|   |-- libkkc2.symbols
-|   |-- libkkc-common.install
-|   |-- libkkc-dev.install
-|   |-- libkkc-utils.install
-|   |-- patches
-|   |   `-- series
-|   |-- README.Debian
-|   |-- rules
-|   |-- source
-|   |   |-- format
-|   |   `-- local-options
-|   `-- watch
-|-- depcomp
-|-- docs
-|   |-- Makefile.am
-|   `-- Makefile.in
-|-- INSTALL
-|-- install-sh
-|-- lcov.mk
-|-- libkkc
-|   |-- bigram-decoder.c
-|   |-- bigram-decoder.vala
-|   |-- bloom-filter.c
-|   |-- bloom-filter.vala
-|   |-- candidate.c
-|   |-- candidate-list.c
-|   |-- candidate-list.vala
-|   |-- candidate.vala
-|   |-- config.vapi
-|   |-- context.c
-|   |-- context.vala
-|   |-- convert-segment-state-handler.c
-|   |-- convert-segment-state-handler.vala
-|   |-- convert-sentence-state-handler.c
-|   |-- convert-sentence-state-handler.vala
-|   |-- decoder.c
-|   |-- decoder.vala
-|   |-- dictionary.c
-|   |-- dictionary-list.c
-|   |-- dictionary-list.vala
-|   |-- dictionary.vala
-|   |-- encoding.c
-|   |-- encoding.vala
-|   |-- expression.c
-|   |-- expression.vala
-|   |-- initial-state-handler.c
-|   |-- initial-state-handler.vala
-|   |-- key-event.c
-|   |-- key-event-filter.c
-|   |-- key-event-filter.vala
-|   |-- key-event.vala
-|   |-- keymap.c
-|   |-- keymap.vala
-|   |-- keynames.c
-|   |-- keynames.vala
-|   |-- keysyms.c
-|   |-- keysyms.vala
-|   |-- kkc-1.0.deps
-|   |-- Kkc-1.0.gir
-|   |-- kkc-1.0.pc.in
-|   |-- kkc-1.0.vapi
-|   |-- kkc.c
-|   |-- kkc-internals-1.0.vapi
-|   |-- kkc.vala
-|   |-- language-model.c
-|   |-- language-model-utils.c
-|   |-- language-model-utils.vala
-|   |-- language-model.vala
-|   |-- libkkc.h
-|   |-- libkkc-internals.h
-|   |-- libkkc_la_vala.stamp
-|   |-- libkkc.symbols
-|   |-- Makefile.am
-|   |-- Makefile.in
-|   |-- map-file.c
-|   |-- map-file.vala
-|   |-- metadata-file.c
-|   |-- metadata-file.vala
-|   |-- nicola.c
-|   |-- nicola.vala
-|   |-- numeric-template.c
-|   |-- numeric-template.vala
-|   |-- rom-kana.c
-|   |-- rom-kana-utils.c
-|   |-- rom-kana-utils.vala
-|   |-- rom-kana.vala
-|   |-- rule.c
-|   |-- rule.vala
-|   |-- segment.c
-|   |-- segment-dictionary.c
-|   |-- segment-dictionary.vala
-|   |-- segment-list.c
-|   |-- segment-list.vala
-|   |-- segment.vala
-|   |-- sentence-dictionary.c
-|   |-- sentence-dictionary.vala
-|   |-- sorted-bigram-language-model.c
-|   |-- sorted-bigram-language-model.vala
-|   |-- sorted-trigram-language-model.c
-|   |-- sorted-trigram-language-model.vala
-|   |-- state.c
-|   |-- state.vala
-|   |-- system-segment-dictionary.c
-|   |-- system-segment-dictionary.vala
-|   |-- template.c
-|   |-- template.vala
-|   |-- text-bigram-language-model.c
-|   |-- text-bigram-language-model.vala
-|   |-- text-trigram-language-model.c
-|   |-- text-trigram-language-model.vala
-|   |-- trellis-node.c
-|   |-- trellis-node.vala
-|   |-- trigram-decoder.c
-|   |-- trigram-decoder.vala
-|   |-- user-dictionary.c
-|   |-- user-dictionary.vala
-|   |-- user-rule.c
-|   |-- user-rule.vala
-|   |-- user-segment-dictionary.c
-|   |-- user-segment-dictionary.vala
-|   |-- user-sentence-dictionary.c
-|   |-- user-sentence-dictionary.vala
-|   |-- utils.c
-|   `-- utils.vala
-|-- ltmain.sh
-|-- m4
-|   |-- intltool.m4
-|   |-- libtool.m4
-|   |-- lt~obsolete.m4
-|   |-- ltoptions.m4
-|   |-- ltsugar.m4
-|   `-- ltversion.m4
-|-- Makefile.am
-|-- Makefile.in
-|-- marisa-glib
-|   |-- Makefile.am
-|   |-- Makefile.in
-|   |-- marisa-agent.cc
-|   |-- marisa-agent.h
-|   |-- marisa-glib.h
-|   |-- marisa-glib-private.h
-|   |-- marisa-key.cc
-|   |-- marisa-key.h
-|   |-- marisa-keyset.cc
-|   |-- marisa-keyset.h
-|   |-- Marisa.metadata
-|   |-- marisa-trie.cc
-|   `-- marisa-trie.h
-|-- missing
-|-- NEWS
-|-- po
-|   |-- ja.po
-|   |-- LINGUAS
-|   |-- Makefile.in.in
-|   |-- POTFILES.in
-|   `-- POTFILES.skip
-|-- README
-|-- test-driver
-|-- tests
-|   |-- candidate.c
-|   |-- candidate-list.c
-|   |-- candidate-list.vala
-|   |-- candidate_list_vala.stamp
-|   |-- candidate.vala
-|   |-- candidate_vala.stamp
-|   |-- context.c
-|   |-- context.vala
-|   |-- context_vala.stamp
-|   |-- conversions-initial.json
-|   |-- conversions-segment.json
-|   |-- conversions-sentence.json
-|   |-- conversions-user-dictionary.json
-|   |-- conversions-user-dictionary-phrase.json
-|   |-- data
-|   |   |-- models
-|   |   |   |-- sorted2
-|   |   |   |   `-- metadata.json
-|   |   |   |-- sorted3
-|   |   |   |   `-- metadata.json
-|   |   |   |-- text2
-|   |   |   |   |-- data.arpa
-|   |   |   |   `-- metadata.json
-|   |   |   `-- text3
-|   |   |       |-- data.arpa
-|   |   |       `-- metadata.json
-|   |   `-- rules
-|   |       |-- test-bad1
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad10
-|   |       |   |-- keymap
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |       `-- default.json
-|   |       |-- test-bad2
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad3
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad4
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad5
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad6
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad7
-|   |       |   |-- keymap
-|   |       |   |   `-- hiragana.json
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |-- test-bad8
-|   |       |   |-- keymap
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |       `-- default.json
-|   |       |-- test-bad9
-|   |       |   |-- keymap
-|   |       |   |-- metadata.json
-|   |       |   `-- rom-kana
-|   |       |       `-- default.json
-|   |       `-- test-empty
-|   |           |-- keymap
-|   |           |-- metadata.json
-|   |           `-- rom-kana
-|   |-- decoder.c
-|   |-- decoder.vala
-|   |-- decoder_vala.stamp
-|   |-- dictionary-list.c
-|   |-- dictionary-list.vala
-|   |-- dictionary_list_vala.stamp
-|   |-- encoding.c
-|   |-- encoding.vala
-|   |-- encoding_vala.stamp
-|   |-- expression.c
-|   |-- expression.vala
-|   |-- expression_vala.stamp
-|   |-- key-event.c
-|   |-- key-event.vala
-|   |-- key_event_vala.stamp
-|   |-- keymap.c
-|   |-- keymap.vala
-|   |-- keymap_vala.stamp
-|   |-- language-model.c
-|   |-- language-model-metadata-bad1.json
-|   |-- language-model-metadata-bad2.json
-|   |-- language-model.vala
-|   |-- language_model_vala.stamp
-|   |-- lib
-|   |   |-- kkc-test.vapi
-|   |   |-- libkkc-test.h
-|   |   |-- libkkc_test_la_vala.stamp
-|   |   |-- Makefile.am
-|   |   |-- Makefile.in
-|   |   |-- test-case.c
-|   |   |-- test-case.vala
-|   |   |-- test-utils.c
-|   |   `-- test-utils.vala
-|   |-- Makefile.am
-|   |-- Makefile.in
-|   |-- metadata-bad1.json
-|   |-- metadata-bad2.json
-|   |-- metadata-bad3.json
-|   |-- metadata-bad4.json
-|   |-- metadata-file.c
-|   |-- metadata-file.vala
-|   |-- metadata_file_vala.stamp
-|   |-- metadata.json
-|   |-- rom-kana.c
-|   |-- rom-kana.vala
-|   |-- rom_kana_vala.stamp
-|   |-- rule.c
-|   |-- rule-metadata-bad.json
-|   |-- rule.vala
-|   |-- rule_vala.stamp
-|   |-- segment.c
-|   |-- segment-list.c
-|   |-- segment-list.vala
-|   |-- segment_list_vala.stamp
-|   |-- segment.vala
-|   |-- segment_vala.stamp
-|   |-- state.c
-|   |-- state.vala
-|   |-- state_vala.stamp
-|   |-- system-dictionary.c
-|   |-- system-dictionary.vala
-|   |-- system_dictionary_vala.stamp
-|   |-- system-segment-dictionary
-|   |-- system-segment-dictionary-bad1
-|   |-- system-segment-dictionary-bad2
-|   |-- system-segment-dictionary-bad3
-|   |-- template.c
-|   |-- template.vala
-|   |-- template_vala.stamp
-|   |-- trellis-node.c
-|   |-- trellis-node.vala
-|   |-- trellis_node_vala.stamp
-|   |-- user-dictionary.c
-|   |-- user-dictionary.vala
-|   |-- user_dictionary_vala.stamp
-|   |-- user-rule.c
-|   |-- user-rule.vala
-|   |-- user_rule_vala.stamp
-|   |-- user-segment-dictionary-bad1
-|   |-- user-segment-dictionary-bad2
-|   |-- user-segment-dictionary-good
-|   |-- user-sentence-dictionary-bad1
-|   |-- user-sentence-dictionary-bad2
-|   `-- user-sentence-dictionary-good
-`-- tools
-    |-- kkc.c
-    |-- kkc-package-data.in
-    |-- kkc.vala
-    |-- kkc_vala.stamp
-    |-- Makefile.am
-    `-- Makefile.in
+├── aclocal.m4
+├── AUTHORS
+├── autogen.sh
+├── ChangeLog
+├── compile
+├── config.guess
+├── config.h.in
+├── config.sub
+├── configure
+├── configure.ac
+├── COPYING
+├── data
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── rules
+│   │   ├── act
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── azik
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── azik-jp106
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── default
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── direct.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── kana
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── direct.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── kzik
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── nicola
+│   │   │   ├── keymap
+│   │   │   │   ├── default.json
+│   │   │   │   ├── direct.json
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── README.rules
+│   │   ├── rule.mk
+│   │   ├── tcode
+│   │   │   ├── keymap
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── trycode
+│   │   │   ├── keymap
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   ├── tutcode
+│   │   │   ├── keymap
+│   │   │   │   ├── hankaku-katakana.json
+│   │   │   │   ├── hiragana.json
+│   │   │   │   ├── katakana.json
+│   │   │   │   ├── latin.json
+│   │   │   │   └── wide-latin.json
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── metadata.json.in
+│   │   │   └── rom-kana
+│   │   │       └── default.json
+│   │   └── tutcode-touch16x
+│   │       ├── keymap
+│   │       │   ├── hankaku-katakana.json
+│   │       │   ├── hiragana.json
+│   │       │   ├── katakana.json
+│   │       │   ├── latin.json
+│   │       │   └── wide-latin.json
+│   │       ├── Makefile.am
+│   │       ├── Makefile.in
+│   │       ├── metadata.json.in
+│   │       └── rom-kana
+│   │           └── default.json
+│   └── templates
+│       ├── libkkc-data
+│       │   ├── configure.ac.in
+│       │   ├── data
+│       │   │   ├── Makefile.am
+│       │   │   └── models
+│       │   │       ├── Makefile.sorted2
+│       │   │       ├── Makefile.sorted3
+│       │   │       ├── sorted2
+│       │   │       │   └── metadata.json
+│       │   │       ├── sorted3
+│       │   │       │   └── metadata.json
+│       │   │       ├── text2
+│       │   │       │   └── metadata.json
+│       │   │       └── text3
+│       │   │           └── metadata.json
+│       │   ├── Makefile.am
+│       │   └── tools
+│       │       ├── genfilter.py
+│       │       ├── Makefile.am
+│       │       └── sortlm.py
+│       ├── Makefile.am
+│       └── Makefile.in
+├── debian
+│   ├── changelog
+│   ├── clean
+│   ├── compat
+│   ├── control
+│   ├── copyright
+│   ├── libkkc2.doc-base
+│   ├── libkkc2.docs
+│   ├── libkkc2.examples
+│   ├── libkkc2.info
+│   ├── libkkc2.install
+│   ├── libkkc2.links
+│   ├── libkkc2.manpages
+│   ├── libkkc2.menu
+│   ├── libkkc2.postinst
+│   ├── libkkc2.postrm
+│   ├── libkkc2.preinst
+│   ├── libkkc2.prerm
+│   ├── libkkc2.symbols
+│   ├── libkkc-common.install
+│   ├── libkkc-dev.install
+│   ├── libkkc-utils.install
+│   ├── patches
+│   │   └── series
+│   ├── README.Debian
+│   ├── rules
+│   ├── source
+│   │   ├── format
+│   │   └── local-options
+│   └── watch
+├── depcomp
+├── docs
+│   ├── Makefile.am
+│   └── Makefile.in
+├── INSTALL
+├── install-sh
+├── lcov.mk
+├── libkkc
+│   ├── bigram-decoder.c
+│   ├── bigram-decoder.vala
+│   ├── bloom-filter.c
+│   ├── bloom-filter.vala
+│   ├── candidate.c
+│   ├── candidate-list.c
+│   ├── candidate-list.vala
+│   ├── candidate.vala
+│   ├── config.vapi
+│   ├── context.c
+│   ├── context.vala
+│   ├── convert-segment-state-handler.c
+│   ├── convert-segment-state-handler.vala
+│   ├── convert-sentence-state-handler.c
+│   ├── convert-sentence-state-handler.vala
+│   ├── decoder.c
+│   ├── decoder.vala
+│   ├── dictionary.c
+│   ├── dictionary-list.c
+│   ├── dictionary-list.vala
+│   ├── dictionary.vala
+│   ├── encoding.c
+│   ├── encoding.vala
+│   ├── expression.c
+│   ├── expression.vala
+│   ├── initial-state-handler.c
+│   ├── initial-state-handler.vala
+│   ├── key-event.c
+│   ├── key-event-filter.c
+│   ├── key-event-filter.vala
+│   ├── key-event.vala
+│   ├── keymap.c
+│   ├── keymap.vala
+│   ├── keynames.c
+│   ├── keynames.vala
+│   ├── keysyms.c
+│   ├── keysyms.vala
+│   ├── kkc-1.0.deps
+│   ├── Kkc-1.0.gir
+│   ├── kkc-1.0.pc.in
+│   ├── kkc-1.0.vapi
+│   ├── kkc.c
+│   ├── kkc-internals-1.0.vapi
+│   ├── kkc.vala
+│   ├── language-model.c
+│   ├── language-model-utils.c
+│   ├── language-model-utils.vala
+│   ├── language-model.vala
+│   ├── libkkc.h
+│   ├── libkkc-internals.h
+│   ├── libkkc_la_vala.stamp
+│   ├── libkkc.symbols
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── map-file.c
+│   ├── map-file.vala
+│   ├── metadata-file.c
+│   ├── metadata-file.vala
+│   ├── nicola.c
+│   ├── nicola.vala
+│   ├── numeric-template.c
+│   ├── numeric-template.vala
+│   ├── rom-kana.c
+│   ├── rom-kana-utils.c
+│   ├── rom-kana-utils.vala
+│   ├── rom-kana.vala
+│   ├── rule.c
+│   ├── rule.vala
+│   ├── segment.c
+│   ├── segment-dictionary.c
+│   ├── segment-dictionary.vala
+│   ├── segment-list.c
+│   ├── segment-list.vala
+│   ├── segment.vala
+│   ├── sentence-dictionary.c
+│   ├── sentence-dictionary.vala
+│   ├── sorted-bigram-language-model.c
+│   ├── sorted-bigram-language-model.vala
+│   ├── sorted-trigram-language-model.c
+│   ├── sorted-trigram-language-model.vala
+│   ├── state.c
+│   ├── state.vala
+│   ├── system-segment-dictionary.c
+│   ├── system-segment-dictionary.vala
+│   ├── template.c
+│   ├── template.vala
+│   ├── text-bigram-language-model.c
+│   ├── text-bigram-language-model.vala
+│   ├── text-trigram-language-model.c
+│   ├── text-trigram-language-model.vala
+│   ├── trellis-node.c
+│   ├── trellis-node.vala
+│   ├── trigram-decoder.c
+│   ├── trigram-decoder.vala
+│   ├── user-dictionary.c
+│   ├── user-dictionary.vala
+│   ├── user-rule.c
+│   ├── user-rule.vala
+│   ├── user-segment-dictionary.c
+│   ├── user-segment-dictionary.vala
+│   ├── user-sentence-dictionary.c
+│   ├── user-sentence-dictionary.vala
+│   ├── utils.c
+│   └── utils.vala
+├── ltmain.sh
+├── m4
+│   ├── intltool.m4
+│   ├── libtool.m4
+│   ├── lt~obsolete.m4
+│   ├── ltoptions.m4
+│   ├── ltsugar.m4
+│   └── ltversion.m4
+├── Makefile.am
+├── Makefile.in
+├── marisa-glib
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── marisa-agent.cc
+│   ├── marisa-agent.h
+│   ├── marisa-glib.h
+│   ├── marisa-glib-private.h
+│   ├── marisa-key.cc
+│   ├── marisa-key.h
+│   ├── marisa-keyset.cc
+│   ├── marisa-keyset.h
+│   ├── Marisa.metadata
+│   ├── marisa-trie.cc
+│   └── marisa-trie.h
+├── missing
+├── NEWS
+├── po
+│   ├── ja.po
+│   ├── LINGUAS
+│   ├── Makefile.in.in
+│   ├── POTFILES.in
+│   └── POTFILES.skip
+├── README
+├── test-driver
+├── tests
+│   ├── candidate.c
+│   ├── candidate-list.c
+│   ├── candidate-list.vala
+│   ├── candidate_list_vala.stamp
+│   ├── candidate.vala
+│   ├── candidate_vala.stamp
+│   ├── context.c
+│   ├── context.vala
+│   ├── context_vala.stamp
+│   ├── conversions-initial.json
+│   ├── conversions-segment.json
+│   ├── conversions-sentence.json
+│   ├── conversions-user-dictionary.json
+│   ├── conversions-user-dictionary-phrase.json
+│   ├── data
+│   │   ├── models
+│   │   │   ├── sorted2
+│   │   │   │   └── metadata.json
+│   │   │   ├── sorted3
+│   │   │   │   └── metadata.json
+│   │   │   ├── text2
+│   │   │   │   ├── data.arpa
+│   │   │   │   └── metadata.json
+│   │   │   └── text3
+│   │   │       ├── data.arpa
+│   │   │       └── metadata.json
+│   │   └── rules
+│   │       ├── test-bad1
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad10
+│   │       │   ├── keymap
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       │       └── default.json
+│   │       ├── test-bad2
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad3
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad4
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad5
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad6
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad7
+│   │       │   ├── keymap
+│   │       │   │   └── hiragana.json
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       ├── test-bad8
+│   │       │   ├── keymap
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       │       └── default.json
+│   │       ├── test-bad9
+│   │       │   ├── keymap
+│   │       │   ├── metadata.json
+│   │       │   └── rom-kana
+│   │       │       └── default.json
+│   │       └── test-empty
+│   │           ├── keymap
+│   │           ├── metadata.json
+│   │           └── rom-kana
+│   ├── decoder.c
+│   ├── decoder.vala
+│   ├── decoder_vala.stamp
+│   ├── dictionary-list.c
+│   ├── dictionary-list.vala
+│   ├── dictionary_list_vala.stamp
+│   ├── encoding.c
+│   ├── encoding.vala
+│   ├── encoding_vala.stamp
+│   ├── expression.c
+│   ├── expression.vala
+│   ├── expression_vala.stamp
+│   ├── key-event.c
+│   ├── key-event.vala
+│   ├── key_event_vala.stamp
+│   ├── keymap.c
+│   ├── keymap.vala
+│   ├── keymap_vala.stamp
+│   ├── language-model.c
+│   ├── language-model-metadata-bad1.json
+│   ├── language-model-metadata-bad2.json
+│   ├── language-model.vala
+│   ├── language_model_vala.stamp
+│   ├── lib
+│   │   ├── kkc-test.vapi
+│   │   ├── libkkc-test.h
+│   │   ├── libkkc_test_la_vala.stamp
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── test-case.c
+│   │   ├── test-case.vala
+│   │   ├── test-utils.c
+│   │   └── test-utils.vala
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── metadata-bad1.json
+│   ├── metadata-bad2.json
+│   ├── metadata-bad3.json
+│   ├── metadata-bad4.json
+│   ├── metadata-file.c
+│   ├── metadata-file.vala
+│   ├── metadata_file_vala.stamp
+│   ├── metadata.json
+│   ├── rom-kana.c
+│   ├── rom-kana.vala
+│   ├── rom_kana_vala.stamp
+│   ├── rule.c
+│   ├── rule-metadata-bad.json
+│   ├── rule.vala
+│   ├── rule_vala.stamp
+│   ├── segment.c
+│   ├── segment-list.c
+│   ├── segment-list.vala
+│   ├── segment_list_vala.stamp
+│   ├── segment.vala
+│   ├── segment_vala.stamp
+│   ├── state.c
+│   ├── state.vala
+│   ├── state_vala.stamp
+│   ├── system-dictionary.c
+│   ├── system-dictionary.vala
+│   ├── system_dictionary_vala.stamp
+│   ├── system-segment-dictionary
+│   ├── system-segment-dictionary-bad1
+│   ├── system-segment-dictionary-bad2
+│   ├── system-segment-dictionary-bad3
+│   ├── template.c
+│   ├── template.vala
+│   ├── template_vala.stamp
+│   ├── trellis-node.c
+│   ├── trellis-node.vala
+│   ├── trellis_node_vala.stamp
+│   ├── user-dictionary.c
+│   ├── user-dictionary.vala
+│   ├── user_dictionary_vala.stamp
+│   ├── user-rule.c
+│   ├── user-rule.vala
+│   ├── user_rule_vala.stamp
+│   ├── user-segment-dictionary-bad1
+│   ├── user-segment-dictionary-bad2
+│   ├── user-segment-dictionary-good
+│   ├── user-sentence-dictionary-bad1
+│   ├── user-sentence-dictionary-bad2
+│   └── user-sentence-dictionary-good
+└── tools
+    ├── kkc.c
+    ├── kkc-package-data.in
+    ├── kkc.vala
+    ├── kkc_vala.stamp
+    ├── Makefile.am
+    └── Makefile.in
 
 95 directories, 438 files
  $ cd debian

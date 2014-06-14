@@ -10,7 +10,7 @@ Let's inspect files.
 include::../hello-c-1.0_t/ref/step101.log[]
 ----
 
-The source is the same one as <<singlepkg>> but the parent directory lacks the version part since this is the VCS directory.
+The source is the same one as <<singlepkg>> but the parent directory lacks the version part.  This is typical for the source in the VCS. 
 
 You create a non-native Debian package source tree from the above upstream example using the *debmake*(1) command.
 
@@ -66,9 +66,9 @@ include::../hello-c-1.0_t/ref/step700.log[]
 include::../hello-c-1.0_t/ref/step701.log[]
 ----
 
-Your development branch holding the real upstream source tree is the *devel* branch.
+Your development branch holding the working upstream source tree and the **debian/*** files is the *devel* branch.
 
-The following will import generated Debian packages to *master*, *upstream*, and *pristine-tar* branches.
+The following will import generated Debian packages to *master*, *upstream*, and *pristine-tar* branches. (These are the 3 typical branches used by the *gbp* command.)
 
 ----
 include::../hello-c-1.0_t/ref/step800.log[]

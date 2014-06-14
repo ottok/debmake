@@ -1,11 +1,11 @@
  $ cd ../
  $ git add -A .
  $ git commit -m initial_commit
-[master c97da03] initial_commit
- 18 files changed, 518 insertions(+), 1763 deletions(-)
+[master 1fee795] initial_commit
+ 18 files changed, 539 insertions(+), 2783 deletions(-)
  delete mode 100644 debian/clean
  rewrite debian/control (74%)
- rewrite debian/copyright (79%)
+ rewrite debian/copyright (87%)
  create mode 100644 debian/kkc.1
  create mode 100644 debian/libkkc-utils.docs
  create mode 100644 debian/libkkc-utils.manpages
@@ -15,3 +15,4 @@
  delete mode 100644 debian/libkkc2.postrm
  delete mode 100644 debian/libkkc2.preinst
  delete mode 100644 debian/libkkc2.prerm
+ rewrite debian/rules (72%)

@@ -54,6 +54,7 @@ clean:
 	rm -rf $(TESTDIR)
 	-rm -f *.log *.raw
 	-rm -f result.diff
+	-rm -f ref/result.log
 	-rm -rf next.dir project
 
 .PHONY: all test cmp ref clean

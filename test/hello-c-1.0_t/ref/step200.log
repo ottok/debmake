@@ -3,7 +3,7 @@
 Initialized empty Git repository in /path/to/hello-c/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) d829cfe] initial commit
+[master (root-commit) 8947584] initial commit
  2 files changed, 21 insertions(+)
  create mode 100644 Makefile
  create mode 100644 hello.c
@@ -13,34 +13,42 @@ Switched to a new branch 'devel'
 * devel
   master
  $ debmake -t
+D: /usr/bin/debmake started
+D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-I: pkg="hello-c", ver="0~1403311544", rev="1"
+I: pkg="hello-c", ver="0~1406140702", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-c"
 I: pwd = "/path/to"
-I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1403311...
+I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1406140702...
 sending incremental file list
-created directory hello-c-0~1403311544
+created directory hello-c-0~1406140702
 
-sent 97 bytes  received 55 bytes  304.00 bytes/sec
-total size is 288  speedup is 1.89
-I: $ tar --exclude='hello-c-0~1403311544/debian' --anchored --exclude-ca...
-hello-c-0~1403311544/
-hello-c-0~1403311544/Makefile
-hello-c-0~1403311544/hello.c
-I: hello-c-0~1403311544.tar.gz tarball made
-I: pwd = "/path/to/hello-c-0~1403311544"
-I: *** start packaging in "hello-c-0~1403311544". ***
-I: provide hello-c_0~1403311544.orig.tar.gz for non-native Debian packag...
+sent 99 bytes  received 55 bytes  308.00 bytes/sec
+total size is 288  speedup is 1.87
+I: $ tar --exclude='hello-c-0~1406140702/debian' --anchored --exclude-cache...
+hello-c-0~1406140702/
+hello-c-0~1406140702/Makefile
+hello-c-0~1406140702/hello.c
+I: hello-c-0~1406140702.tar.gz tarball made
+I: pwd = "/path/to/hello-c-0~1406140702"
+I: *** start packaging in "hello-c-0~1406140702". ***
+I: provide hello-c_0~1406140702.orig.tar.gz for non-native Debian package
 I: pwd = "/path/to"
-I: $ ln -sf hello-c-0~1403311544.tar.gz hello-c_0~1403311544.orig.tar.gz...
-I: pwd = "/path/to/hello-c-0~1403311544"
+I: $ ln -sf hello-c-0~1406140702.tar.gz hello-c_0~1406140702.orig.tar.gz
+I: pwd = "/path/to/hello-c-0~1406140702"
 I: parse binary package settings:
 I: binary package=hello-c Type=bin / Arch=any M-A=foreign
 I: analyze the source tree
 I: build_type = make
+I: scan source for copyright+license text and file extensions
 I: 100 %, ext = c
+I: check_all_licenses
+I: ..
+I: check_all_licenses completed for 2 files.
+I: bunch_all_licenses
+I: format_all_licenses
 I: make debian/* template files
 I: single binary package
 I: debmake -x "1" ...
@@ -57,5 +65,5 @@ I: creating => debian/patches/series
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: upon return to the shell, current directory becomes /path/to/hello-c
-I: please execute "cd /path/to/hello-c-0~1403311544" before building the...
+I: please execute "cd /path/to/hello-c-0~1406140702" before building the bi...
 I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

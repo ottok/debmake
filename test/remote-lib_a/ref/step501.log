@@ -1,3 +1,3 @@
  $ git reset --hard HEAD
-HEAD is now at c97da03 initial_commit
+HEAD is now at 1fee795 initial_commit
  $ git clean -d -f -x

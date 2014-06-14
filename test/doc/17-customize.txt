@@ -1,7 +1,7 @@
 [[custom]]
 === Package customization
 
-There are some upstream sources which does not behave well and you may need to add customization to the build system of those upstream sources.
+Some upstream sources do not behave well and you may need to add customization to the build system of those upstream sources.
 
 The package should be customized by the least invasive way to address the root cause of the Debian packaging problem.  Your packaging shall be more robust for the future upgrades in this way.  (You should also solve the root cause of the problem and send its patch to the upstream.)
 
@@ -21,18 +21,16 @@ There are several methods to prepare *-p1* patches for this.
 * The *diff* command
 * The *dquilt* command (alias of the *quilt* command, see <<quilt>>)
 * The *git* command with the *--format-patches* option
+* The *gbp-pq* command
 * The *git-dpm* command
 * Patches used in other distros and floating on the mailing list
 * ...
 
-Wherever these patches come from, it is good idea to tag them with http://dep.debian.net/deps/dep3/[DEP-3] compatible header and normalizing it by the *dquilt* command (see <<quilt>>).  This is also needed for upgrading to the newer upstream source or importing the externally generated security patch.
+Wherever these patches come from, it is good idea to tag them with http://dep.debian.net/deps/dep3/[DEP-3] compatible header and normalizing them by the *dquilt* command (see <<quilt>>).  This is also needed for upgrading to the newer upstream source or importing the externally generated security patch.
 
 ----
- $ dquilt push; dquilt refresh
-  ... (repeat)
- $ dquilt push; dquilt refresh
-File series fully applied, ends at patch ...
- $ pop -a
+ $ while dquilt push; do dquilt refresh ; done
+ $ dquilt pop -a
 ----
 
 See  <<modpkg>> for example.

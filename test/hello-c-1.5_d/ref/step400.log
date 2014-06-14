@@ -1,36 +1,36 @@
  $ cd ..
  $ tree
 .
-|-- hello-c-1.5
-|   |-- aclocal.m4
-|   |-- compile
-|   |-- config.h.in
-|   |-- configure
-|   |-- configure.ac
-|   |-- debian
-|   |   |-- changelog
-|   |   |-- compat
-|   |   |-- control
-|   |   |-- copyright
-|   |   |-- patches
-|   |   |   `-- series
-|   |   |-- README.Debian
-|   |   |-- rules
-|   |   |-- source
-|   |   |   |-- format
-|   |   |   `-- local-options
-|   |   `-- watch
-|   |-- depcomp
-|   |-- hello.c
-|   |-- install-sh
-|   |-- Makefile.am
-|   |-- Makefile.in
-|   `-- missing
-|-- hello-c_1.5.orig.tar.gz -> hello-c-1.5.tar.gz
-|-- hello-c-1.5.tar.gz
-`-- vcsdir
-    |-- configure.ac
-    |-- hello.c
-    `-- Makefile.am
+├── hello-c-1.5
+│   ├── aclocal.m4
+│   ├── compile
+│   ├── config.h.in
+│   ├── configure
+│   ├── configure.ac
+│   ├── debian
+│   │   ├── changelog
+│   │   ├── compat
+│   │   ├── control
+│   │   ├── copyright
+│   │   ├── patches
+│   │   │   └── series
+│   │   ├── README.Debian
+│   │   ├── rules
+│   │   ├── source
+│   │   │   ├── format
+│   │   │   └── local-options
+│   │   └── watch
+│   ├── depcomp
+│   ├── hello.c
+│   ├── install-sh
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   └── missing
+├── hello-c_1.5.orig.tar.gz -> hello-c-1.5.tar.gz
+├── hello-c-1.5.tar.gz
+└── vcsdir
+    ├── configure.ac
+    ├── hello.c
+    └── Makefile.am
 
 5 directories, 26 files

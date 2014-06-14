@@ -1,9 +1,7 @@
 [[autopkg]]
 === Snapshot (*Autotools*)
 
-Let's consider an upstream source in the VCS and make a snapshot package from it.
-
-Let's make this more fun to use the Autotools (=Autoconf + Automake) its build system where the upstream VCS does not contain auto-generated files while the distributed tarball has many auto-generated files.
+Let's make this upstream source in the VCS more fun to use the Autotools (=Autoconf + Automake).  The upstream VCS does not contain auto-generated files while the distributed tarball for the snapshot package has many auto-generated files.
 
 Let's inspect files.
 
@@ -12,7 +10,7 @@ Let's inspect files.
 include::../hello-c-1.5_d/ref/step101.log[]
 ----
 
-There are minimalistic configuration files for Autotools.
+Here are minimalistic configuration files for Autotools specifying the upstream version to be *1.5*.
 
 .*configure.ac*:
 ----

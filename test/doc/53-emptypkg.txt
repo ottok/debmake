@@ -3,7 +3,7 @@
 
 Although executing the *debmake* command with the larger *-x*'[01234]' option in the upstream source adds new template files without overwriting the existing ones, it tends to leave too many unused ones and is quite messy.
 
-If you wish to get some template files, I recommend to do it as follows with an empty directory, e.g., 'package/'.
+If you wish to get some template files without making mess in the upstream source tree, I recommend the following scheme with an empty directory, e.g., 'package/'.
 
 ----
 include::../hello-c-0.0/ref/step101.log[]
@@ -11,7 +11,7 @@ include::../hello-c-0.0/ref/step101.log[]
 
 Let's get the maximum amount of template files by specifying the *-x4* option.
 
-Let's also use the "*-t -u* '0.0'" options to make missing upstream tarball with a version '0.0'.
+Let's also use the "*-t -u* '0.0'" options to make missing upstream tarball with an upstream version '0.0'.
 
 ----
 sys::[head -n2  ../hello-c-0.0/ref/step200.log]

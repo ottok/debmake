@@ -1,8 +1,10 @@
  $ cd package
  $ debmake -t -u 0.0 -x4
+D: /usr/bin/debmake started
+D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-W: -u "0.0" != auto set value "0~1403311543"
+W: -u "0.0" != auto set value "0~1406140700"
 I: pkg="package", ver="0.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/package"
@@ -11,9 +13,9 @@ I: $ rsync -aCv --link-dest=/path/to/package package/. package-0.0
 sending incremental file list
 ./
 
-sent 60 bytes  received 19 bytes  158.00 bytes/sec
+sent 57 bytes  received 19 bytes  152.00 bytes/sec
 total size is 0  speedup is 0.00
-I: $ tar --exclude='package-0.0/debian' --anchored --exclude-caches --ex...
+I: $ tar --exclude='package-0.0/debian' --anchored --exclude-caches --exclu...
 package-0.0/
 I: package-0.0.tar.gz tarball made
 I: pwd = "/path/to/package-0.0"
@@ -26,8 +28,13 @@ I: parse binary package settings:
 I: binary package=package Type=bin / Arch=any M-A=foreign
 I: analyze the source tree
 I: build_type = Unknown
-W: check_all_license(files) should have files
-W: bunch_licence(data) should have data
+I: scan source for copyright+license text and file extensions
+I: check_all_licenses
+W: check_all_licenses(files) should have files
+I:
+I: check_all_licenses completed for 0 files.
+I: bunch_all_licenses
+I: format_all_licenses
 I: make debian/* template files
 I: debmake -x "4" ...
 I: creating => debian/control
@@ -82,5 +89,5 @@ I: creating => debian/license-examples/Apache-2.0
 I: creating => debian/license-examples/LGPL-3.0+
 I: $ wrap-and-sort
 I: upon return to the shell, current directory becomes /path/to/package
-I: please execute "cd /path/to/package-0.0" before building the binary p...
+I: please execute "cd /path/to/package-0.0" before building the binary pack...
 I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).

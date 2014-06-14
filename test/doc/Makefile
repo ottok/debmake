@@ -1,5 +1,8 @@
 all: man html
 
+remote: new
+	scp debmake.html people.debian.org:~osamu/public_html/debmake.html
+
 list:
 	echo $(wildcard *.txt)
 
@@ -24,4 +27,4 @@ clean:
 	-rm -f debmake.1 *.html binary.txt caveat.txt 99-manpage.txt
 
 
-.PHONY: all html man clean new
+.PHONY: all html man clean new remote

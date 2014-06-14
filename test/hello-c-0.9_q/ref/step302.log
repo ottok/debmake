@@ -6,9 +6,11 @@ Description: make Makefile to support GNU coding standard
  $DESTDIR: debian/hello-c
  $prefix:  /usr/local -> /usr
 
---- a/Makefile
-+++ b/Makefile
-@@ -4,7 +4,7 @@
+Index: hello-c-0.9/Makefile
+===================================================================
+--- hello-c-0.9.orig/Makefile
++++ hello-c-0.9/Makefile
+@@ -4,7 +4,7 @@ hello: hello.c
         gcc -Wall -o hello hello.c
 
  install: hello
@@ -18,12 +20,12 @@ Description: make Makefile to support GNU coding standard
  clean:
         -rm -f hello
  $ dquilt pop -a
-Removing patch 0001-destdir.patch
+Removing patch debian/patches/0001-destdir.patch
 Restoring Makefile
 
 No patches applied
  $ cat debian/patches/series
-# The patch files of the -p1 format included in the debian/patches direc...
+# The patch files of the -p1 format included in the debian/patches director...
 # are applied to the upstream source in the order listed below.
 # This is manually managed by users with dquilt (quilt(1) wrapper) etc.
 # Also this may be updated by dpkg-source(1) when making a package.

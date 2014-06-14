@@ -1,23 +1,23 @@
  $ cd ..
  $ tree -L 1
 .
-|-- libkkc-0.3.2
-|-- libkkc_0.3.2-1_amd64.build
-|-- libkkc_0.3.2-1_amd64.changes
-|-- libkkc_0.3.2-1.debian.tar.xz
-|-- libkkc_0.3.2-1.dsc
-|-- libkkc_0.3.2-1_source.changes
-|-- libkkc_0.3.2.orig.tar.gz -> libkkc-0.3.2.tar.gz
-|-- libkkc-0.3.2.tar.gz
-|-- libkkc2_0.3.2-1_amd64.deb
-|-- libkkc2-dbg_0.3.2-1_amd64.deb
-|-- libkkc.build-dep.log
-|-- libkkc.build.log
-|-- libkkc-common_0.3.2-1_all.deb
-|-- libkkc.depcheck.log
-|-- libkkc-dev_0.3.2-1_amd64.deb
-|-- libkkc.install.log
-|-- libkkc-utils_0.3.2-1_amd64.deb
-`-- libkkc-utils-dbg_0.3.2-1_amd64.deb
+├── libkkc-0.3.2
+├── libkkc_0.3.2-1_amd64.build
+├── libkkc_0.3.2-1_amd64.changes
+├── libkkc_0.3.2-1.debian.tar.xz
+├── libkkc_0.3.2-1.dsc
+├── libkkc_0.3.2-1_source.changes
+├── libkkc_0.3.2.orig.tar.gz -> libkkc-0.3.2.tar.gz
+├── libkkc-0.3.2.tar.gz
+├── libkkc2_0.3.2-1_amd64.deb
+├── libkkc2-dbg_0.3.2-1_amd64.deb
+├── libkkc.build-dep.log
+├── libkkc.build.log
+├── libkkc-common_0.3.2-1_all.deb
+├── libkkc.depcheck.log
+├── libkkc-dev_0.3.2-1_amd64.deb
+├── libkkc.install.log
+├── libkkc-utils_0.3.2-1_amd64.deb
+└── libkkc-utils-dbg_0.3.2-1_amd64.deb
 
 1 directory, 17 files

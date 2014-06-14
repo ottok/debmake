@@ -1,13 +1,13 @@
  $ tree
 .
-`-- vcsdir
-    |-- hello-py
-    |   `-- __init__.py
-    |-- MANIFEST
-    |-- MANIFEST.in
-    |-- PKG-INFO
-    |-- scripts
-    |   `-- hello
-    `-- setup.py
+└── vcsdir
+    ├── hello-py
+    │   └── __init__.py
+    ├── MANIFEST
+    ├── MANIFEST.in
+    ├── PKG-INFO
+    ├── scripts
+    │   └── hello
+    └── setup.py
 
 3 directories, 6 files

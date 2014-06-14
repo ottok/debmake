@@ -5,6 +5,8 @@ Debian takes the copyright and license matters very seriously. The ``Debian Poli
 
 You should format it as the http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/[machine-readable debian/copyright file] (DEP-5).
 
-The *debmake* command creates the initial DEP-5 compatible template file by scanning the entire source tree with its internal regular expression.  It also use nternal license checker to clasify each license text. footnote:[(The *licensecheck* command from the *devscripts* package was referenced to make this internal checker.]
+The *debmake* command creates the initial DEP-5 compatible template file by scanning the entire source tree.  It uses an internal license checker to clasify each license text. footnote:[The *licensecheck* command from the *devscripts* package was referenced to make this internal checker.]
 
-NOTE: If you find issues with this license checker, please file bug to the *debmake* package with the header part of the problematic file.
+NOTE: If you updated package with the new upstream source, running *debmake* with the *-k* option gives you good idea if the *debian/copyright* file is current or not.
+
+NOTE: If you find issues with this license checker, please file a bug report to the *debmake* package with the problematic part of text containing the copyright and license.

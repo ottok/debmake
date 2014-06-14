@@ -1,24 +1,24 @@
  $ cd ..
  $ tree
 .
-|-- hello-c-0.9
-|   |-- debian
-|   |   |-- changelog
-|   |   |-- compat
-|   |   |-- control
-|   |   |-- copyright
-|   |   |-- patches
-|   |   |   |-- 0001-destdir.patch
-|   |   |   `-- series
-|   |   |-- README.Debian
-|   |   |-- rules
-|   |   |-- source
-|   |   |   |-- format
-|   |   |   `-- local-options
-|   |   `-- watch
-|   |-- hello.c
-|   `-- Makefile
-|-- hello-c_0.9.orig.tar.gz -> hello-c-0.9.tar.gz
-`-- hello-c-0.9.tar.gz
+├── hello-c-0.9
+│   ├── debian
+│   │   ├── changelog
+│   │   ├── compat
+│   │   ├── control
+│   │   ├── copyright
+│   │   ├── patches
+│   │   │   ├── 0001-destdir.patch
+│   │   │   └── series
+│   │   ├── README.Debian
+│   │   ├── rules
+│   │   ├── source
+│   │   │   ├── format
+│   │   │   └── local-options
+│   │   └── watch
+│   ├── hello.c
+│   └── Makefile
+├── hello-c_0.9.orig.tar.gz -> hello-c-0.9.tar.gz
+└── hello-c-0.9.tar.gz
 
 4 directories, 15 files

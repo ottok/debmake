@@ -1,63 +1,63 @@
  $ cd ..
  $ tree
 .
-|-- package
-|-- package-0.0
-|   `-- debian
-|       |-- changelog
-|       |-- clean
-|       |-- compat
-|       |-- control
-|       |-- copyright
-|       |-- install
-|       |-- license-examples
-|       |   |-- Apache-2.0
-|       |   |-- Artistic-1.0
-|       |   |-- BSD-3-Clause
-|       |   |-- GPL-2.0+
-|       |   |-- GPL-3.0+
-|       |   |-- LGPL-2.1+
-|       |   |-- LGPL-3.0+
-|       |   `-- MIT
-|       |-- links
-|       |-- manpage.1.ex
-|       |-- manpage.asciidoc.ex
-|       |-- manpage.sgml.ex
-|       |-- manpage.xml.ex
-|       |-- menu
-|       |-- package.bug-control.ex
-|       |-- package.bug-presubj.ex
-|       |-- package.bug-script.ex
-|       |-- package.conffiles.ex
-|       |-- package.cron.daily.ex
-|       |-- package.cron.d.ex
-|       |-- package.cron.hourly.ex
-|       |-- package.cron.monthly.ex
-|       |-- package.cron.weekly.ex
-|       |-- package.default.ex
-|       |-- package.dirs.ex
-|       |-- package.emacsen-install.ex
-|       |-- package.emacsen-remove.ex
-|       |-- package.emacsen-startup.ex
-|       |-- package.init.ex
-|       |-- package.lintian-overrides.ex
-|       |-- package.service.ex
-|       |-- package.tmpfile.ex
-|       |-- package.upstrat.ex
-|       |-- patches
-|       |   `-- series
-|       |-- postinst
-|       |-- postrm
-|       |-- preinst
-|       |-- prerm
-|       |-- README.Debian
-|       |-- rules
-|       |-- source
-|       |   |-- format
-|       |   `-- local-options
-|       |-- source.lintian-overrides.ex
-|       `-- watch
-|-- package_0.0.orig.tar.gz -> package-0.0.tar.gz
-`-- package-0.0.tar.gz
+├── package
+├── package-0.0
+│   └── debian
+│       ├── changelog
+│       ├── clean
+│       ├── compat
+│       ├── control
+│       ├── copyright
+│       ├── install
+│       ├── license-examples
+│       │   ├── Apache-2.0
+│       │   ├── Artistic-1.0
+│       │   ├── BSD-3-Clause
+│       │   ├── GPL-2.0+
+│       │   ├── GPL-3.0+
+│       │   ├── LGPL-2.1+
+│       │   ├── LGPL-3.0+
+│       │   └── MIT
+│       ├── links
+│       ├── manpage.1.ex
+│       ├── manpage.asciidoc.ex
+│       ├── manpage.sgml.ex
+│       ├── manpage.xml.ex
+│       ├── menu
+│       ├── package.bug-control.ex
+│       ├── package.bug-presubj.ex
+│       ├── package.bug-script.ex
+│       ├── package.conffiles.ex
+│       ├── package.cron.daily.ex
+│       ├── package.cron.d.ex
+│       ├── package.cron.hourly.ex
+│       ├── package.cron.monthly.ex
+│       ├── package.cron.weekly.ex
+│       ├── package.default.ex
+│       ├── package.dirs.ex
+│       ├── package.emacsen-install.ex
+│       ├── package.emacsen-remove.ex
+│       ├── package.emacsen-startup.ex
+│       ├── package.init.ex
+│       ├── package.lintian-overrides.ex
+│       ├── package.service.ex
+│       ├── package.tmpfile.ex
+│       ├── package.upstrat.ex
+│       ├── patches
+│       │   └── series
+│       ├── postinst
+│       ├── postrm
+│       ├── preinst
+│       ├── prerm
+│       ├── README.Debian
+│       ├── rules
+│       ├── source
+│       │   ├── format
+│       │   └── local-options
+│       ├── source.lintian-overrides.ex
+│       └── watch
+├── package_0.0.orig.tar.gz -> package-0.0.tar.gz
+└── package-0.0.tar.gz
 
 6 directories, 52 files

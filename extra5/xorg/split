@@ -26,19 +26,21 @@ import os
 import sys
 import re
 
+#Copyright (C) 2000 Jakub Jelinek (jakub@redhat.com)
+
 re_copy = re.compile('\s*(?:\(c\))?\s*copyright.[^n][^o][^t]', re.IGNORECASE)
 re_nocopy = re.compile(r'''
-    copyright.+disclaimer|
+    copyright.+\sdisclaimer\s|
     copyright\s+for\s|
-    copyright.+holder|
+    copyright.+\sholder\s|
     copyright\s+is\s|
-    copyright.+interest|
-    copyright.+information|
-    copyright.+license|
-    copyright.+line|
-    copyright.+name|
-    copyright.+string|
-    copyright.+notice|
+    copyright.*\sinterest\s|
+    copyright.*\sinformation\s|
+    copyright.*\slicense\s|
+    copyright.*\sline\s|
+    copyright.*\sname\s|
+    copyright.*\sstring\s|
+    copyright.*\snotice\s|
     copyright\slaw
     ''', re.IGNORECASE | re.VERBOSE)
 #######################################################################

@@ -55,7 +55,7 @@ TIP: Configuration files used by the *dh_** commands from the *debhelper* packag
 include::../hello-c-1.0/ref/step202.log[]
 ----
 
-Please note that the *debmake* command is run with the *-x21* option as the default for the new single binary package.
+Please note that the *debmake* command is run with the *-x1* option as the default for the new single binary package.
 
 Since this is the ELF binary executable package ('type'=*bin*), it is set to "*Architecture: any*" and "*Multi-Arch: foreign*".  Also, required *substvar* parameters are set as "*Depends: $\{shlibs:Depends}, $\{misc:Depends}*" by the *debmake* command.
 

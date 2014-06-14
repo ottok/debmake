@@ -1,4 +1,6 @@
  $ debmake -b':perl' -a Acme-Hello-0.05.tar.gz -s -i debuild
+D: /usr/bin/debmake started
+D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 I: pkg="acme-hello", ver="0.05", rev="1"
@@ -70,32 +72,38 @@ I: parse binary package settings: :perl
 I: binary package=acme-hello Type=perl / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Perl Module::Build
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/gl.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pt_BR.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/zh_TW.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/es.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/hu.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ko.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/lv.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/eo.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/he.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pl.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ca.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/zh_CN.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ru.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/nb.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pt.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/fr.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/uk.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/et.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ja.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/sv.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/nn.po
-W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/el.po
+I: scan source for copyright+license text and file extensions
 I:  83 %, ext = po
 I:  10 %, ext = perl
 I:   5 %, ext = t
 I:   2 %, ext = yml
+I: check_all_licenses
+I: ............W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/...
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pt_BR.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/zh_TW.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/es.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/hu.po
+...W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ko.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/lv.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/eo.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/he.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pl.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ca.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/zh_CN.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ru.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/nb.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/pt.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/fr.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/uk.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/et.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/ja.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/sv.po
+..W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/nn.po
+.W: Non-UTF-8 char found, using latin-1: lib/Acme/Hello/I18N/el.po
+..
+I: check_all_licenses completed for 45 files.
+I: bunch_all_licenses
+I: format_all_licenses
 I: make debian/* template files
 I: single binary package
 I: debmake -x "1" ...
@@ -116,7 +124,7 @@ I: debuild
 dpkg-buildpackage: source package acme-hello
 dpkg-buildpackage: source version 0.05-1
 dpkg-buildpackage: source distribution UNRELEASED
-dpkg-buildpackage: source changed by "Firstname Lastname" <email.address...
+dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
  dpkg-source -I -i --before-build acme-hello-0.05
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
@@ -126,8 +134,8 @@ dh clean
    dh_clean
  dpkg-source -I -i -b acme-hello-0.05
 dpkg-source: info: using source format `3.0 (quilt)'
-dpkg-source: info: building acme-hello using existing ./acme-hello_0.05....
-dpkg-source: info: building acme-hello in acme-hello_0.05-1.debian.tar.x...
+dpkg-source: info: building acme-hello using existing ./acme-hello_0.05.ori...
+dpkg-source: info: building acme-hello in acme-hello_0.05-1.debian.tar.xz
 dpkg-source: info: building acme-hello in acme-hello_0.05-1.dsc
  debian/rules build
 dh build
@@ -141,7 +149,7 @@ Building Acme-Hello
 t/0-signature.t .. ok
 t/1-basic.t ...... ok
 All tests successful.
-Files=2, Tests=4,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.04 cusr  0...
+Files=2, Tests=4,  0 wallclock secs ( 0.05 usr  0.00 sys +  0.06 cusr  0.00...
 Result: PASS
  fakeroot debian/rules binary
 dh binary
@@ -149,10 +157,10 @@ dh binary
    dh_prep
    dh_auto_install
 Building Acme-Hello
-Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/perl5/Ac...
-Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/perl5/Ac...
-Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/man/man3...
-Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/man/man3...
+Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/perl5/Acme/...
+Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/perl5/Acme/...
+Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/man/man3/Ac...
+Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/man/man3/Ac...
    dh_installdocs
    dh_installchangelogs
    dh_installman
@@ -164,46 +172,46 @@ Installing /path/to/acme-hello-0.05/debian/acme-hello/usr/share/man/man3...
    dh_gencontrol
    dh_md5sums
    dh_builddeb
-dpkg-deb: building package `acme-hello' in `../acme-hello_0.05-1_all.deb...
+dpkg-deb: building package `acme-hello' in `../acme-hello_0.05-1_all.deb'.
  dpkg-genchanges  >../acme-hello_0.05-1_amd64.changes
 dpkg-genchanges: including full source code in upload
  dpkg-source -I -i --after-build acme-hello-0.05
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
-W: acme-hello source: superfluous-clutter-in-homepage <insert the upstre...
+W: acme-hello source: superfluous-clutter-in-homepage <insert the upstream ...
 N:
 N:    The "Homepage:" field in this package's control file contains
-N:    superfluous markup around the URL, like enclosing < and >. This is...
+N:    superfluous markup around the URL, like enclosing < and >. This is
 N:    unnecessary and needlessly complicates using this information.
 N:
-N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for detail...
+N:    Refer to Debian Policy Manual section 5.6.23 (Homepage) for details.
 N:
 N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: acme-hello source: bad-homepage <insert the upstream URL, if relevant...
+W: acme-hello source: bad-homepage <insert the upstream URL, if relevant>
 N:
-N:    The "Homepage:" field in this package's control file does not cont...
-N:    valid absolute URL. Most probably you forgot to specify the scheme...
+N:    The "Homepage:" field in this package's control file does not contain...
+N:    valid absolute URL. Most probably you forgot to specify the scheme (e...
 N:    http).
 N:
 N:    This tag is also triggered if the scheme is not known by Lintian.
 N:
-N:    Please file a bug against Lintian, if this tag is triggered for a ...
+N:    Please file a bug against Lintian, if this tag is triggered for a val...
 N:    homepage URL.
 N:
 N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: acme-hello source: missing-license-paragraph-in-dep5-copyright unknow...
+W: acme-hello source: missing-license-paragraph-in-dep5-copyright __unknown...
 N:
-N:    The files paragraph in the machine readable copyright file referen...
+N:    The files paragraph in the machine readable copyright file references...
 N:    license, for which no standalone license paragraph exists.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ ...
+N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible
@@ -224,14 +232,14 @@ N:
 W: acme-hello: new-package-should-close-itp-bug
 N:
 N:    This package appears to be the first packaging of a new upstream
-N:    software package (there is only one changelog entry and the Debian...
-N:    revision is 1), but it does not close any bugs. The initial upload...
-N:    new package should close the corresponding ITP bug for that packag...
+N:    software package (there is only one changelog entry and the Debian
+N:    revision is 1), but it does not close any bugs. The initial upload of...
+N:    new package should close the corresponding ITP bug for that package.
 N:
-N:    This warning can be ignored if the package is not intended for Deb...
+N:    This warning can be ignored if the package is not intended for Debian...
 N:    if it is a split of an existing Debian package.
 N:
-N:    Refer to Debian Developer's Reference section 5.1 (New packages) f...
+N:    Refer to Debian Developer's Reference section 5.1 (New packages) for
 N:    details.
 N:
 N:    Severity: normal, Certainty: certain
@@ -240,12 +248,12 @@ N:    Check: changelog-file, Type: binary
 N:
 E: acme-hello: changelog-is-dh_make-template
 N:
-N:    The changelog file has an instruction left by dh_make, which has n...
+N:    The changelog file has an instruction left by dh_make, which has not
 N:    been removed. Example:
 N:
-N:      * Initial release (Closes: #nnnn)  <nnnn is the bug number of yo...
+N:      * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ...
 N:
-N:    The "<... is the bug number ...>" part has not been removed from t...
+N:    The "<... is the bug number ...>" part has not been removed from the
 N:    changelog.
 N:
 N:    Severity: important, Certainty: certain
@@ -254,13 +262,13 @@ N:    Check: changelog-file, Type: binary
 N:
 W: acme-hello: copyright-has-url-from-dh_make-boilerplate
 N:
-N:    There is "url://example.com" in your copyright file. This was most...
+N:    There is "url://example.com" in your copyright file. This was most
 N:    likely a remnant from the dh_make template.
 N:
-N:    Make sure you include the real location where you obtained the ups...
+N:    Make sure you include the real location where you obtained the upstre...
 N:    sources (if any).
 N:
-N:    Refer to Debian Policy Manual section 12.5 (Copyright information)...
+N:    Refer to Debian Policy Manual section 12.5 (Copyright information) fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: certain
@@ -270,11 +278,11 @@ N:
 E: acme-hello: description-synopsis-is-duplicated
 N:
 N:    The first line of the extended Description: should not repeat the
-N:    synopsis exactly. This indicates that either the synopsis is badly...
-N:    formed or that the extended description has been wrongly copied an...
+N:    synopsis exactly. This indicates that either the synopsis is badly
+N:    formed or that the extended description has been wrongly copied and
 N:    pasted.
 N:
-N:    Refer to Debian Policy Manual section 3.4.2 (The extended descript...
+N:    Refer to Debian Policy Manual section 3.4.2 (The extended description...
 N:    for details.
 N:
 N:    Severity: important, Certainty: certain
@@ -285,13 +293,13 @@ I: acme-hello: extended-description-is-probably-too-short
 N:
 N:    The extended description (the lines after the first line of the
 N:    "Description:" field) is only one or two lines long. The extended
-N:    description should provide a user with enough information to decid...
-N:    whether they want to install this package, what it contains, and h...
-N:    compares to similar packages. One or two lines is normally not eno...
+N:    description should provide a user with enough information to decide
+N:    whether they want to install this package, what it contains, and how ...
+N:    compares to similar packages. One or two lines is normally not enough...
 N:    do this.
 N:
-N:    Refer to Debian Developer's Reference section 6.2.1 (General guide...
-N:    for package descriptions) and Debian Developer's Reference section...
+N:    Refer to Debian Developer's Reference section 6.2.1 (General guidelin...
+N:    for package descriptions) and Debian Developer's Reference section 6....
 N:    (The long description) for details.
 N:
 N:    Severity: minor, Certainty: possible
@@ -300,9 +308,9 @@ N:    Check: description, Type: binary, udeb
 N:
 E: acme-hello: section-is-dh_make-template
 N:
-N:    The "Section:" field in this package's control file is set to unkn...
+N:    The "Section:" field in this package's control file is set to unknown...
 N:    This is not a valid section, and usually means a dh_make template
-N:    control file was used and never modified to set the correct sectio...
+N:    control file was used and never modified to set the correct section.
 N:
 N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
 N:
@@ -310,18 +318,18 @@ N:    Severity: serious, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: acme-hello: superfluous-clutter-in-homepage <insert the upstream URL,...
+W: acme-hello: superfluous-clutter-in-homepage <insert the upstream URL, if...
 W: acme-hello: bad-homepage <insert the upstream URL, if relevant>
-W: acme-hello: manpage-has-errors-from-pod2man usr/share/man/man3/Acme::...
+W: acme-hello: manpage-has-errors-from-pod2man usr/share/man/man3/Acme::Hel...
 N:
-N:    This man page contains a section "POD ERRORS" generated by pod2man...
-N:    sections lists errors in the POD syntax found by pod2man during th...
+N:    This man page contains a section "POD ERRORS" generated by pod2man. T...
+N:    sections lists errors in the POD syntax found by pod2man during the
 N:    generation of the man page.
 N:
 N:    Severity: normal, Certainty: certain
 N:
 N:    Check: manpages, Type: binary
 N:
-W: acme-hello: manpage-has-errors-from-pod2man usr/share/man/man3/Acme::...
+W: acme-hello: manpage-has-errors-from-pod2man usr/share/man/man3/Acme::Hel...
 Finished running lintian.
 I: please inspect the build results.

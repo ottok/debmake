@@ -103,8 +103,8 @@ usr/share/libkkc/templates/libkkc-data/configure.ac.in
 usr/share/libkkc/templates/libkkc-data/data/Makefile.am
 usr/share/libkkc/templates/libkkc-data/data/models/Makefile.sorted2
 usr/share/libkkc/templates/libkkc-data/data/models/Makefile.sorted3
-usr/share/libkkc/templates/libkkc-data/data/models/sorted2/metadata.json...
-usr/share/libkkc/templates/libkkc-data/data/models/sorted3/metadata.json...
+usr/share/libkkc/templates/libkkc-data/data/models/sorted2/metadata.json
+usr/share/libkkc/templates/libkkc-data/data/models/sorted3/metadata.json
 usr/share/libkkc/templates/libkkc-data/data/models/text2/metadata.json
 usr/share/libkkc/templates/libkkc-data/data/models/text3/metadata.json
 usr/share/libkkc/templates/libkkc-data/tools/Makefile.am

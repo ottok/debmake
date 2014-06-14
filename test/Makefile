@@ -16,6 +16,16 @@ all:
 	$(MAKE) clean
 	$(MAKE) ref
 	$(MAKE) doc
+
+remote:
+	$(MAKE) clean
+	$(MAKE) -C doc remote
+
+doc:
+	$(MAKE) clean
+	$(MAKE) -C doc
+	cp -f doc/debmake.html ../doc/debmake.html
+	cp -f doc/debmake.1 ../manpages/debmake.1
 	$(MAKE) clean
 	$(MAKE) tar
 
@@ -44,18 +54,12 @@ cmp_REMOTE:
 step%.log: step%.cmd
 	./$^ >$@
 
-doc/debmake.html doc/debmake.1 doc/examples.html:
-	 $(MAKE) -C doc
-
-doc: doc/debmake.html doc/debmake.1 doc/examples.html
-	cp -f doc/debmake.html ../doc/debmake.html
-	cp -f doc/debmake.1 ../manpages/debmake.1
-	#cp -f doc/examples.html ../doc/examples.html
 tar:
 	tar -cvJf ../doc/examples.tar.xz ../test
 
 clean:
 	for i in doc $(LIST) ; do  $(MAKE) -C $$i clean ; echo "I: $$i done" ; done
+	-rm -rf ../dist ../debmake/__pycache__
 
 .PHONY: all ref cmp doc clean check tar
 .PHONY: check_LOCAL check_REMOTE ref_LOCAL ref_REMOTE cmp_LOCAL cmp_REMOTE

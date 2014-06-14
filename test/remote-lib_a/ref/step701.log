@@ -384,13 +384,13 @@ libkkc-0.3.2/data/templates/libkkc-data/data/Makefile.am
 libkkc-0.3.2/data/templates/libkkc-data/data/models/
 libkkc-0.3.2/data/templates/libkkc-data/data/models/Makefile.sorted3
 libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted3/
-libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted3/metadata.jso...
+libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted3/metadata.json
 libkkc-0.3.2/data/templates/libkkc-data/data/models/text3/
 libkkc-0.3.2/data/templates/libkkc-data/data/models/text3/metadata.json
 libkkc-0.3.2/data/templates/libkkc-data/data/models/text2/
 libkkc-0.3.2/data/templates/libkkc-data/data/models/text2/metadata.json
 libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted2/
-libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted2/metadata.jso...
+libkkc-0.3.2/data/templates/libkkc-data/data/models/sorted2/metadata.json
 libkkc-0.3.2/data/templates/libkkc-data/data/models/Makefile.sorted2
 libkkc-0.3.2/data/templates/libkkc-data/Makefile.am
 libkkc-0.3.2/data/Makefile.am

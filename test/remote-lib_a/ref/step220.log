@@ -1,7 +1,7 @@
  $ git add -A .
  $ git commit -m debmake_template
-[master e558727] debmake_template
- 27 files changed, 1859 insertions(+)
+[master d8b23d7] debmake_template
+ 27 files changed, 2860 insertions(+)
  create mode 100644 debian/README.Debian
  create mode 100644 debian/changelog
  create mode 100644 debian/clean

@@ -1,20 +1,20 @@
  $ cd ..
  $ tree -L 1
 .
-|-- hello-1.1
-|-- hello_1.1-1_amd64.build
-|-- hello_1.1-1_amd64.changes
-|-- hello_1.1-1.debian.tar.xz
-|-- hello_1.1-1.dsc
-|-- hello_1.1.orig.tar.gz -> hello-1.1.tar.gz
-|-- hello-1.1.tar.gz
-|-- hello.build-dep.log
-|-- hello.build.log
-|-- hello-c_1.1-1_amd64.deb
-|-- hello-c-dbg_1.1-1_amd64.deb
-|-- hello-data_1.1-1_all.deb
-|-- hello.depcheck.log
-|-- hello.install.log
-`-- hello-sh_1.1-1_all.deb
+├── hello-1.1
+├── hello_1.1-1_amd64.build
+├── hello_1.1-1_amd64.changes
+├── hello_1.1-1.debian.tar.xz
+├── hello_1.1-1.dsc
+├── hello_1.1.orig.tar.gz -> hello-1.1.tar.gz
+├── hello-1.1.tar.gz
+├── hello.build-dep.log
+├── hello.build.log
+├── hello-c_1.1-1_amd64.deb
+├── hello-c-dbg_1.1-1_amd64.deb
+├── hello-data_1.1-1_all.deb
+├── hello.depcheck.log
+├── hello.install.log
+└── hello-sh_1.1-1_all.deb
 
 1 directory, 14 files

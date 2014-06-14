@@ -1,4 +1,6 @@
- $ debmake -b'libkkc2,-utils,libkkc2-dbg,-utils-dbg,-dev,-common:data' -...
+ $ debmake -b'libkkc2,-utils,libkkc2-dbg,-utils-dbg,-dev,-common:data'
+D: /usr/bin/debmake started
+D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 I: pkg="libkkc", ver="0.3.2", rev="1"
@@ -7,7 +9,7 @@ I: provide libkkc_0.3.2.orig.tar.gz for non-native Debian package
 I: pwd = "/path/to"
 I: $ ln -sf libkkc-0.3.2.tar.gz libkkc_0.3.2.orig.tar.gz
 I: pwd = "/path/to/libkkc-0.3.2"
-I: parse binary package settings: libkkc2,-utils,libkkc2-dbg,-utils-dbg,...
+I: parse binary package settings: libkkc2,-utils,libkkc2-dbg,-utils-dbg,-de...
 I: binary package=libkkc2 Type=lib / Arch=any M-A=same
 I: binary package=libkkc-utils Type=bin / Arch=any M-A=foreign
 I: binary package=libkkc2-dbg Type=dbg / Arch=any M-A=same
@@ -16,34 +18,40 @@ W: duplicate definition of package type "dbg"
 I: binary package=libkkc-dev Type=dev / Arch=any M-A=same
 I: binary package=libkkc-common Type=data / Arch=all M-A=foreign
 I: analyze the source tree
-I: build_type = Autotools
-W: Non-UTF-8 char found, using latin-1: tests/system-segment-dictionary
+I: build_type = Autotools with autoreconf
+I: scan source for copyright+license text and file extensions
 I:  32 %, ext = json
 I:  21 %, ext = c
 I:  18 %, ext = vala
+I:   6 %, ext = am
 I:   6 %, ext = stamp
 I:   6 %, ext = in
-I:   6 %, ext = am
 I:   3 %, ext = gitkeep
 I:   2 %, ext = m4
 I:   1 %, ext = vapi
 I:   0 %, ext = python
 I:   0 %, ext = sh
-I:   0 %, ext = arpa
 I:   0 %, ext = mk
+I:   0 %, ext = arpa
 I:   0 %, ext = ac
+I:   0 %, ext = sorted2
+I:   0 %, ext = sorted3
+I:   0 %, ext = gir
 I:   0 %, ext = pc
-I:   0 %, ext = po
+I:   0 %, ext = sub
+I:   0 %, ext = metadata
+I:   0 %, ext = guess
+I:   0 %, ext = rules
 I:   0 %, ext = symbols
 I:   0 %, ext = skip
-I:   0 %, ext = guess
-I:   0 %, ext = sub
-I:   0 %, ext = rules
-I:   0 %, ext = gir
-I:   0 %, ext = metadata
-I:   0 %, ext = sorted3
+I:   0 %, ext = po
 I:   0 %, ext = deps
-I:   0 %, ext = sorted2
+I: check_all_licenses
+I: ...........................................................................
+..............................................................................
+I: check_all_licenses completed for 420 files.
+I: bunch_all_licenses
+I: format_all_licenses
 I: make debian/* template files
 I: multi binary packages: 6
 I: debmake -x "2" ...

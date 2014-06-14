@@ -8,6 +8,7 @@ There are several methods to prepare the *-p1* patch needed for applying modific
 * The *diff* command
 * The *dquilt* command (alias of the *quilt* command)
 * The *git* command with the *--format-patches* option.
+* The *gbp-pq* command.
 * The *git-dpm* command.
 * ...
 
@@ -34,7 +35,7 @@ The "*dquilt add* ..." command sets the files to be modified.
 include::../hello-c-0.9_q/ref/step300.log[]
 ----
 
-The *vim* command edits the *Makefile* to be modified to support *$(DESTDIR)*..
+The *vim* command edits the *Makefile* to support *$(DESTDIR)*..
 
 The "*dquilt refresh* ..." command records the modification as the *-p1* patch in the *debian/patches/* directory.
 

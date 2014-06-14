@@ -13,7 +13,7 @@ The *debmake* command with the *-b* option (see <<boption>>) creates the initial
 
 For well behaving build systems, the split of the Debian binary package into small ones can be realized as follows.
 
-* Create binary package entries for all binary packages in the *debian/control* file, and 
+* Create binary package entries for all binary packages in the *debian/control* file.
 * List all file paths (relative to *debian/tmp*) in the corresponding *debian/*'binarypackage'**.install** files.
 
 Please check examples in this document:
@@ -39,14 +39,14 @@ The *debmake* command supports following substvars.
 [[binnmu]]
 ==== binNMU safe
 
-For safe binNMU, the dependency among binary packages from a same source package needs attention if there are both "*Architecture: any*" and "*Architecture: all*" packages involved in it.
+For the safe binNMU, the dependency among binary packages from a same source package needs attention if there are both "*Architecture: any*" and "*Architecture: all*" packages involved in it.
 
 * "*Architecture: any*" package depends on "*Architecture: any*" 'foo' package
 ** *Depends:* 'foo' *(== $\{binary:Version})*
 * "*Architecture: any*" package depends on "*Architecture: all*" 'bar' package
 ** *Depends:* 'bar' *(== $\{source:Version}*
 * "*Architecture: all*" package depends on "*Architecture: any*" 'baz' package
-** *Depends:* 'baz' *(>= $\{source:Version})* (no way for a safe dependency but good enough for most cases)
+** *Depends:* 'baz' *(>= $\{source:Version})* (This is good enough for most cases.)
 
 The *debian/control* file needs to be be manually adjusted.  See https://wiki.debian.org/binNMU[binNMU].
 
@@ -61,7 +61,9 @@ When naming the *-dev* package, there are two approaches:
 
 * *lib*'foo'*-dev* if you support only one *lib*'foo7' only. 
 ** This is good enough if the number of dependent packages are limitted.
+** You need to work with the https://wiki.debian.org/Teams/ReleaseTeam[release team] for the library transition: https://wiki.debian.org/Teams/ReleaseTeam/TransitionTracker[TransitionTracker]
 * *lib*'foo7'*-dev* and *lib*'foo8'*-dev* if you support both *lib*'foo7' and *lib*'foo8'.
+** This is an option if the number of dependent packages are huge.
 ** Both *lib*'foo7'*-dev* and *lib*'foo8'*-dev* provide *lib*'foo'*-dev* to enable the automatic library transition via binNMU.
 
 See http://www.debian.org/doc/debian-policy/ch-sharedlibs.html[Chapter 8 - Shared libraries] in the ``Debian Policy Manual''.

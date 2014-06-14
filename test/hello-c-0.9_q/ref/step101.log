@@ -1,8 +1,8 @@
  $ tree
 .
-|-- hello-c-0.9
-|   |-- hello.c
-|   `-- Makefile
-`-- hello-c-0.9.tar.gz
+├── hello-c-0.9
+│   ├── hello.c
+│   └── Makefile
+└── hello-c-0.9.tar.gz
 
 1 directory, 3 files

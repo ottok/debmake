@@ -32,4 +32,4 @@ The upstream usually performs the step 1 and builds the upstream tarball for dis
 
 The package maintainer needs to take care step 2.  This is realized simply by the "*dh $@*" command used in the *debian/rules* file, after *jessie*.
 
-The situation of other build systems such as CMake are very similar to this Python one.
+The situation of other build systems, such as CMake, are very similar to this Python one.

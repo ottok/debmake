@@ -1,5 +1,7 @@
  $ cd hello-c-1.0
  $ debmake
+D: /usr/bin/debmake started
+D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 I: pkg="hello-c", ver="1.0", rev="1"
@@ -12,7 +14,13 @@ I: parse binary package settings:
 I: binary package=hello-c Type=bin / Arch=any M-A=foreign
 I: analyze the source tree
 I: build_type = make
+I: scan source for copyright+license text and file extensions
 I: 100 %, ext = c
+I: check_all_licenses
+I: ..
+I: check_all_licenses completed for 2 files.
+I: bunch_all_licenses
+I: format_all_licenses
 I: make debian/* template files
 I: single binary package
 I: debmake -x "1" ...

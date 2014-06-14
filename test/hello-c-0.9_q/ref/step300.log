@@ -1,7 +1,7 @@
  $ dquilt new 0001-destdir.patch
-Patch 0001-destdir.patch is now on top
+Patch debian/patches/0001-destdir.patch is now on top
  $ dquilt add Makefile
-File Makefile added to patch 0001-destdir.patch
+File Makefile added to patch debian/patches/0001-destdir.patch
  $ cat Makefile
 all: hello
 

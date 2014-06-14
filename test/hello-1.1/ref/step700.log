@@ -15,13 +15,13 @@ drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/lib/
 drwxr-xr-x root/root ...  ./usr/lib/debug/
 drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/
-drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/a9/
--rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/a9/023dfdad9d4c1b846...
+drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/88/
+-rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/88/0998dda32dec122bf152...
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c-dbg/
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/changelog.Debian.g...
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/changelog.Debian.gz
  $ dpkg -c hello-data_1.1-1_all.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
@@ -29,7 +29,7 @@ drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-data/
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-data/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-data/changelog.Debian.gz...
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-data/changelog.Debian.gz
 drwxr-xr-x root/root ...  ./usr/share/hello/
 -rwxr-xr-x root/root ...  ./usr/share/hello/hello.data
  $ dpkg -c hello-sh_1.1-1_all.deb

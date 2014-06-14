@@ -1,14 +1,14 @@
  $ cd ..
  $ tree -L 1
 .
-|-- blhc
-|-- blhc-0.4
-|-- blhc_0.4-1_all.deb
-|-- blhc_0.4-1_amd64.build
-|-- blhc_0.4-1_amd64.changes
-|-- blhc_0.4-1.debian.tar.xz
-|-- blhc_0.4-1.dsc
-|-- blhc_0.4.orig.tar.gz -> blhc-0.4.tar.gz
-`-- blhc-0.4.tar.gz
+├── blhc
+├── blhc-0.4
+├── blhc_0.4-1_all.deb
+├── blhc_0.4-1_amd64.build
+├── blhc_0.4-1_amd64.changes
+├── blhc_0.4-1.debian.tar.xz
+├── blhc_0.4-1.dsc
+├── blhc_0.4.orig.tar.gz -> blhc-0.4.tar.gz
+└── blhc-0.4.tar.gz
 
 2 directories, 7 files

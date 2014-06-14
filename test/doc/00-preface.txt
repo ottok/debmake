@@ -5,11 +5,13 @@ The *debmake* command is a helper script to generate Debian packaging files.
 
 The *debmake* command is intended to replace functions offered historically by *deb-make* footnote:[This new *debmake* package starts its version from *4.0* to avoid version overlaps with its predecessor provided the *deb-make* command.] and *dh_make* commands.  Its features include:
 
-* keep pre-existing Debian package configuration files untouched
 * use of *dh* syntax under the new *debhelper (> 9.0)* package
-** extensive check of copyright for *DEP-5* (with *licensecheck*(1) and more)
-** substvar supports for binary packages
-** support of compiler hardening options
+** extensive check of copyright for *DEP-5* (*debian/copyright*)
+** substvar supports for binary packages (*debian/control*)
+** support of compiler hardening options (*debian/rules*)
+* keep pre-existing Debian package configuration files untouched
+** automatic generation of the missing template packaging files
+** easy verification of the *debian/copyright* file against the current source. (*-k* option)
 * easy packaging command line UI supporting
 ** non-stop execution with clean results
 ** direct operation on the tarball archive

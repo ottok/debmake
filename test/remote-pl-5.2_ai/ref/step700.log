@@ -6,13 +6,13 @@ drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/perl-tutorial/
 -rw-r--r-- root/root ...  ./usr/share/doc/perl-tutorial/copyright
 -rw-r--r-- root/root ...  ./usr/share/doc/perl-tutorial/README.Debian
--rw-r--r-- root/root ...  ./usr/share/doc/perl-tutorial/changelog.Debian...
+-rw-r--r-- root/root ...  ./usr/share/doc/perl-tutorial/changelog.Debian.gz...
 drwxr-xr-x root/root ...  ./usr/share/perl5/
 drwxr-xr-x root/root ...  ./usr/share/perl5/Perl/
 -rw-r--r-- root/root ...  ./usr/share/perl5/Perl/Tutorial.pm
 drwxr-xr-x root/root ...  ./usr/share/perl5/Perl/Tutorial/
--rw-r--r-- root/root ...  ./usr/share/perl5/Perl/Tutorial/HelloWorld.pod...
+-rw-r--r-- root/root ...  ./usr/share/perl5/Perl/Tutorial/HelloWorld.pod
 drwxr-xr-x root/root ...  ./usr/share/man/
 drwxr-xr-x root/root ...  ./usr/share/man/man3/
--rw-r--r-- root/root ...  ./usr/share/man/man3/Perl::Tutorial::HelloWorl...
+-rw-r--r-- root/root ...  ./usr/share/man/man3/Perl::Tutorial::HelloWorld.3...
 -rw-r--r-- root/root ...  ./usr/share/man/man3/Perl::Tutorial.3pm.gz

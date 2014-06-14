@@ -12,7 +12,7 @@ sys::[head -n8  ../remote-lib_a/ref/step100.log]
 sys::[tail -n6  ../remote-lib_a/ref/step100.log]
 ----
 
-Let's make a test build this with the *-j* option.
+Let's make a test build this with the *-j* option (see <<testbuild>>).
 
 .Step 1: *debmake -j*
 ----

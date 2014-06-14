@@ -7,7 +7,9 @@ include::caveat.txt[]
 
 You must adjust the package name and upstream version accordingly for the Debian packaging.
 
-In order to manage these information effectively under popular tools such as the *aptitude* command, it is a good idea to keep the length of package name to be equal or less than 30 characters; and the total length of version and revision to be equal or less than 14 characters. footnote:[For more than 90% of packages, the package name is equal or less than 24 characters; the upstream version is equal or less than 10 characters and the Debian revision is equal or less than 3 characters.]
+In order to manage the package name and version information effectively under popular tools such as the *aptitude* command, it is a good idea to keep the length of package name to be equal or less than 30 characters; and the total length of version and revision to be equal or less than 14 characters. footnote:[For more than 90% of packages, the package name is equal or less than 24 characters; the upstream version is equal or less than 10 characters and the Debian revision is equal or less than 3 characters.]
+
+In order to avoid name collisions, the user visible binary package name should not be chosen from any generic words.
 
 // aptitude bug #62454 fixed :-)
 
@@ -32,5 +34,5 @@ There are special rules for period (*.*), plus (*+*), and tilde (*~*) characters
 0.0 < 0.5 < 0.10 < 0.99 < 1 < 1.0~rc1 < 1.0 < 1.0+b1 < 1.0+nmu1 < 1.1 < 2.0
 ----
 
-One tricky case occurs when upstream releases *hello-0.9.12-ReleaseCandidate-99.tar.gz* as the pre-release of *hello-0.9.12.tar.gz*. You need to make sure that the upgrade works properly by renaming the upstream source to *hello-0.9.12~rc99.tar.gz*.
+One tricky case occurs when upstream releases *hello-0.9.12-ReleaseCandidate-99.tar.gz* as the pre-release of *hello-0.9.12.tar.gz*. You can ensure the upgrade to work properly by renaming the upstream source to *hello-0.9.12~rc99.tar.gz* having the proper version order.
 

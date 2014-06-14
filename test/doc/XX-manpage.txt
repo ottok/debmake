@@ -9,7 +9,7 @@ debmake - program to make the Debian source package
 
 == SYNOPSIS
 
-*debmake*  [*-h*]  [*-c*] [*-n* | *-a* 'package-version'*.orig.tar.gz* | *-d* | *-t* ] [*-p* 'package'] [*-u* 'version'] [*-r* 'revision'] [*-z* 'extension'] [*-b* "'binarypackage'[:__type__]__, ...__]" [*-e* 'foo@example.org'] [*-f* "'firstname lastname'"] [*-i* "'buildtool'" | *-j*] [*-l* 'license_file'] [*-m*] [*-o* 'file'] [*-q*] [*-s*] [*-v*] [*-w* "'addon, ...'"] [*-x* [01234]] [*-y*]
+*debmake*  [*-h*]  [*-c* | *-k*] [*-n* | *-a* 'package-version'*.orig.tar.gz* | *-d* | *-t* ] [*-p* 'package'] [*-u* 'version'] [*-r* 'revision'] [*-z* 'extension'] [*-b* "'binarypackage'[:__type__]__, ...__]" [*-e* 'foo@example.org'] [*-f* "'firstname lastname'"] [*-i* "'buildtool'" | *-j*] [*-l* 'license_file'] [*-m*] [*-o* 'file'] [*-q*] [*-s*] [*-v*] [*-w* "'addon, ...'"] [*-x* [01234]] [*-y*]
 
 
 == DESCRIPTION
@@ -35,6 +35,12 @@ scan source for copyright+license text and exit.
 * *-c*: sinple output style
 * *-cc*: normal output style (similar to the *debian/copyright* file)
 * *-ccc*: debug output style
+
+*-k*, *--kludge*::
+compare debian/copyright with the source and exit.
++
+* *-k*: basic output style
+* *-kk*: verbose output style
 
 *-n*, *--native*::
 make a native Debian source package without *.orig.tar.gz*.  This makes the "*3.0 (native)*" format package.
@@ -93,9 +99,9 @@ Here, 'binarypackage' is the binary package name; and optional 'type' is chosen 
 +
 The pair values in the parentheses, such as (any, foreign), are the *Architecture* and *Multi-Arch* stanza values set in the *debian/control* file.
 +
-In many cases, the *debmake* command makes good guess for 'type' from 'binarypackage'.  If 'type' is not obvious, 'type' is set to *bin*.  For example, *libfoo* sets 'type' to *lib*, and *font-bar* sets 'type' to *data*, ...
+In many cases, the *debmake* command makes good guesses for 'type' from 'binarypackage'.  If 'type' is not obvious, 'type' is set to *bin*.  For example, *libfoo* sets 'type' to *lib*, and *font-bar* sets 'type' to *data*, ...
 +
-If the source tree contents does not match settings for 'type', *debmake* warns you.
+If the source tree contents do not match settings for 'type', *debmake* warns you.
 
 *-e* 'foo@example.org', *--email* 'foo@example.org'::
 set e-mail address.
@@ -230,19 +236,31 @@ See the exact definition in http://www.debian.org/doc/debian-policy/ch-controlfi
 
 == DEBUG
 
-The character set in the environ variable *$DEBUG* determines the logging output level.
+The character set in the environment variable *$DEBUG* determines the logging output level.
 
-* *p*: list all parameters
-* *d*: list all binary package parameters
-* *f*: copyright scanner input filename
-* *i*: copyright scanner input line
-* *o*: line outside of the copyright and license sections
-* *c*: line inside of the copyright section
-* *l*: line inside of the license section
+* *p*: list all global parameters
+* *d*: list parsed parameters for all binary packages
+* *f*: input filename for the copyright scan
+* *y*: year/name split of copyright line
+* *s*: line scanner for format_state
+* *b*: content_state scan loop: begin-loop
+* *m*: content_state scan loop: after regex match
+* *e*: content_state scan loop: end-loop
+* *c*: print copyright section text
+* *l*: print license section text
+* *a*: print author/translator section text
+* *k*: sort key for debian/copyright stanza
+* *n*: scan result of debian/copyright (`debmake -k`)
+
+Use this as:
+
+----
+ $ DEBUG=pdfbmeclak debmake ...
+----
 
 == AUTHOR
 
-Copyright © 2013 Osamu Aoki <osamu@debian.org>
+Copyright © 2014 Osamu Aoki <osamu@debian.org>
 
 == LICENSE
 
@@ -250,7 +268,8 @@ MIT License
 
 == SEE ALSO
 
-See also *debhelper*(7), *dpkg-buildpackage*(1) *debuild*(1) and *pdebuild*(1) manpages and files in /usr/share/doc/debmake/.
+An detailed tutorial document focused on using the *debmake* command is provided as a HTML file: /usr/share/doc/debmake/debmake.html .
 
 Learn basics of Debian packaging with the ``Debian New Maintainers' Guide'' at http://www.debian.org/doc/manuals/maint-guide/ or with the *maint-guide* package.
 
+See also *dpkg-source*(1), *deb-control*(5), *debhelper*(7), *dh*(1), *dpkg-buildpackage*(1), *debuild*(1), *quilt*(1), *dpkg-depcheck*(1), *pdebuild*(1), *pbuilder*(8), *cowbuilder*(8), *gbp-buildpackage*(1), *gbp-pq*(1), and *git-pbuilder*(1) manpages.

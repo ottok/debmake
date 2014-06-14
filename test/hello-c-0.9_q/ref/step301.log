@@ -16,11 +16,13 @@ distclean: clean
 
 .PHONY: all install clean distclean
  $ dquilt refresh
-Refreshed patch 0001-destdir.patch
+Refreshed patch debian/patches/0001-destdir.patch
  $ cat debian/patches/0001-destdir.patch
---- a/Makefile
-+++ b/Makefile
-@@ -4,7 +4,7 @@
+Index: hello-c-0.9/Makefile
+===================================================================
+--- hello-c-0.9.orig/Makefile
++++ hello-c-0.9/Makefile
+@@ -4,7 +4,7 @@ hello: hello.c
         gcc -Wall -o hello hello.c
 
  install: hello

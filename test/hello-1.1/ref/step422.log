@@ -19,13 +19,13 @@ Description: auto-generated package by debmake: bin
  .
  ===== This comes from the unmodified template file =====
  .
- Please edit this template file (debian/control) and other package files...
+ Please edit this template file (debian/control) and other package files
  (debian/*) to make them meet all the requirements of the Debian Policy
  before uploading this package to the Debian archive.
  .
  See
   * http://www.debian.org/doc/manuals/maint-guide/dreq.en.html#control
-  * http://www.debian.org/doc/manuals/developers-reference/best-pkging-p...
+  * http://www.debian.org/doc/manuals/developers-reference/best-pkging-prac...
  .
  The synopsis description at the top should be about 60 characters and
  written as a phrase.  No extra capital letters or a final period.  No
@@ -36,7 +36,7 @@ Description: auto-generated package by debmake: bin
  jargon.  GNOME or KDE is fine but GTK+ is probably not.
  .
  Use the canonical forms of words:
-  * Use X Window System, X11, or X; not X Windows, X-Windows, or X Windo...
+  * Use X Window System, X11, or X; not X Windows, X-Windows, or X Window.
   * Use GTK+, not GTK or gtk.
   * Use GNOME, not Gnome.
   * Use PostScript, not Postscript or postscript.

@@ -1,9 +1,25 @@
  $ cd ..
  $ cat hello-c.build-dep.log
-  autotools-dev
-  debhelper
+  bison
+  cmake-data
+  dh-autoreconf
   gawk
+  gobject-introspection
+  gtk-doc-tools
+  libexpat1-dev:amd64
   libfakeroot:amd64
+  libfreetype6-dev
+  libglib2.0-dev
+  libgpg-error-dev
+  libgtk-3-dev
+  libgtk2.0-dev
   liblocale-gettext-perl
+  libltdl-dev:amd64
+  libnspr4-dev
+  libwayland-dev
+  libxml2-dev:amd64
   mime-support
   perl-modules
+  valac-0.24
+  xfonts-utils
+  xtrans-dev

@@ -1,27 +1,27 @@
  $ tree
 .
-|-- aclocal.m4
-|-- autom4te.cache
-|   |-- output.0
-|   |-- output.1
-|   |-- requests
-|   |-- traces.0
-|   `-- traces.1
-|-- compile
-|-- config.h
-|-- config.h.in
-|-- config.log
-|-- config.status
-|-- configure
-|-- configure.ac
-|-- depcomp
-|-- hello.c
-|-- hello-c-1.5.tar.gz
-|-- install-sh
-|-- Makefile
-|-- Makefile.am
-|-- Makefile.in
-|-- missing
-`-- stamp-h1
+├── aclocal.m4
+├── autom4te.cache
+│   ├── output.0
+│   ├── output.1
+│   ├── requests
+│   ├── traces.0
+│   └── traces.1
+├── compile
+├── config.h
+├── config.h.in
+├── config.log
+├── config.status
+├── configure
+├── configure.ac
+├── depcomp
+├── hello.c
+├── hello-c-1.5.tar.gz
+├── install-sh
+├── Makefile
+├── Makefile.am
+├── Makefile.in
+├── missing
+└── stamp-h1
 
 1 directory, 22 files

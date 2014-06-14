@@ -1,9 +1,9 @@
 [[deb]]
 === Debian package
 
-The Debian source package is a set of input files used to build the Debian binary package building and is not a single file.
+The Debian source package is a set of input files used to build the Debian binary package and is not a single file.
 
-The Debian binary package is an special archive file which holds a set of installable binary data with their associated information.
+The Debian binary package is a special archive file which holds a set of installable binary data with their associated information.
 
 A single Debian source package may generate multiple Debian binary packages defined in the *debian/control* file.
 
@@ -16,7 +16,7 @@ Some people promote to package even programs which have been written especially 
 
 The Debian packaging work flow to create the Debian binary package involves generating several specifically named files (see <<name-version>>) as defined in the ``Debian Policy Manual''.
 
-It can be summarized in 5 steps as follows.
+The oversimplified method for the Debian packaging work flow can be summarized in 5 steps as follows.
 
 1. The upstream tarball is downloaded as the 'package-version'**.tar.gz** file.
 2. The upstream tarball is untared to create many files under the 'package-version'**/** directory.
@@ -38,7 +38,7 @@ The copyright and license summary (see <<copyright>>)
 ** Required specification files are generated even with the *-x0* option.
 ** The *debmake* command does not overwrite any existing configuration files.
 * These files must be manually edited to their perfection according to the ``Debian Policy Manual'' and ``Debian Developer’s Reference''.
-5. The *dpkg-buildpackage* command (usually from its wrapper *debuild* or *pdebuild*) is invoked in the 'package-version/' directory to make the Debian source and binary package by invoking the *debian/rules* script.
+5. The *dpkg-buildpackage* command (usually from its wrapper *debuild* or *pdebuild*) is invoked in the 'package-version/' directory to make the Debian source and binary packages by invoking the *debian/rules* script.
 * The current directory is set as: *$(CURDIR)=*'/path/to/package-version/'
 * Create the Debian source package in "*3.0 (quilt)*" format using *dpkg-source*(1)
 ** 'package_version'.*orig.tar.gz* (copy or symlink of 'package-version'.*tar.gz*)

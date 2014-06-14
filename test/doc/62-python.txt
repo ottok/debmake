@@ -1,7 +1,7 @@
 [[pythonpkg]]
 === Snapshot (*Python*)
 
-Let's consider another upstream source in the VCS and make a snapshot package from it.  Let's assume this is a Python3 source package in distutils.
+Let's consider another upstream source in the VCS and make a snapshot package from it.  Let's assume this is a https://docs.python.org/3/[Python3] source package with the https://docs.python.org/3/distutils/[distutils].
 
 Let's inspect files.
 
@@ -9,7 +9,7 @@ Let's inspect files.
 include::../hello-py-1.0_di/ref/step101.log[]
 ----
 
-There are minimalistic configuration files for Autotools.
+Here are minimalistic configuration files for distutils with the upstream version *1.0*..
 
 .*setup.py*:
 ----
@@ -55,7 +55,7 @@ Let's check the generated control file content.
 include::../hello-py-1.0_di/ref/step800.log[]
 ----
 
-Let's compare how packaging deals with *substvar* etc.
+Let's compare how the packaging process converts the *substvar* etc.
 
 .*debian/control* in the source package
 ----

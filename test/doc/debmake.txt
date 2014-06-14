@@ -37,12 +37,14 @@ include::21-multiarch.txt[]
 
 include::22-harden.txt[]
 
-include::30-tips.txt[]
-
 [[bottomup]]
 == Bottom up tutorial
 
-include::50-toolsetup.txt[]
+include::40-tooltips.txt[]
+
+include::41-toolsetup.txt[]
+
+include::42-sourcetips.txt[]
 
 include::51-singlepkg.txt[]
 
