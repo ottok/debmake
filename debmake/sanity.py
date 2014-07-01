@@ -58,7 +58,7 @@ def sanity(para):
                 exit(1)
         parent = ''
         # tarball: ibus-1.5.5-2.fc19.src.rpm
-        resrcrpm = re.match(r'([^/_]+-[^/_-]+)-[0-9]+\.[^.]+\.src\.rpm$', para['tarball'])
+        resrcrpm = re.match(r'([^/_]+-[^/_-]+)-[0-9]+\.[^.]+\.src\.rpm$', os.path.basename(para['tarball']))
         if resrcrpm:
             command = 'rpm2cpio ' + para['tarball'] + '|cpio -dium'
             print('I: $ {}'.format(command), file=sys.stderr)
@@ -76,6 +76,13 @@ def sanity(para):
         if not os.path.isfile(para['tarball']):
             print('E: Non-existing tarball name {}'.format(para['tarball']), file=sys.stderr)
             exit(1)
+        if os.path.abspath(os.path.dirname(para['tarball'])) != os.getcwd():
+            command = 'cp ' + para['tarball'] + ' ' + os.path.basename(para['tarball'])
+            print('I: $ {}'.format(command), file=sys.stderr)
+            if subprocess.call(command, shell=True) != 0:
+                print('E: {} failed.'.format(command), file=sys.stderr)
+                exit(1)
+        para['tarball'] = os.path.basename(para['tarball'])
         # tarball: package_version.orig.tar.gz
         reorigtar = re.match(r'([^/_]+)_([^-/_]+)\.orig\.(tar\.gz|tar\.bz2|tar\.xz)$', para['tarball'])
         # tarball: package-version.tar.gz or package_version.tar.gz
