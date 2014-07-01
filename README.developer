@@ -1,0 +1,20 @@
+If you are updating this source in the git repo, read on.
+
+1. Check-out devel branch
+2. Make modification
+3. Add new entry to the debian/changelog with new upstream version
+   dch create entry such as 4.1.1-2 --> change to 4.1.2-1
+4. Update debmake/__init__.py with new upstream version 4.1.2
+5. Build with
+   debmake -d -y -b':py3' -i pdebuild
+
+
+Please follow PEP-8
+ * indent 4 spaces
+ * 80 char/line
+
+Exceptions:
+ * line for debug code -> single line
+ * some regex (max 100 char/line) for readability
+
+Osamu
