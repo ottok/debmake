@@ -1,3 +1,10 @@
+debmake (4.1.1-1) unstable; urgency=medium
+
+  * Support non-currentdir tarball. Closes: #752206
+  * Case insensitive license check. 
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 01 Jul 2014 23:44:40 +0900
+
 debmake (4.1.0-1) unstable; urgency=medium
 
   * Rewrite license scanner scripts and improved DEP-5 compliance 
