@@ -132,9 +132,11 @@ def copydiff(mode):
             else:
                 new = ''
             if old == new and mode <= 5:
-                printdiff = False
-            elif old == re_round0.sub('', new) and mode <= 4:
-                printdiff = False
+                printdiff = False # exact match
+            elif old.lower() == new.lower() and mode <= 4:
+                printdiff = False # case insensitive match
+            elif old.lower() == re_round0.sub('', new.lower()) and mode <= 4:
+                printdiff = False # ignore tailing .0
             elif new =='' and mode <= 3:
                 printdiff = False
             elif new[:2] == '__' and mode <= 2:
