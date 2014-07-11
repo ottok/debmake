@@ -1,6 +1,6 @@
 === Debugging information
 
-The Debian package is build with the debugging information but packaged into the binary package after stripping the debugging information as required by https://www.debian.org/doc/debian-policy/ch-files.html[Chapter 10 - Files] in the ``Debian Policy Manual''.
+The Debian package is build with the debugging information but packaged into the binary package after stripping the debugging information as required by https://www.debian.org/doc/debian-policy/ch-files.html[Chapter 10 - Files] of the ``Debian Policy Manual''.
 
 The debugging information can be packaged separately as the debug packege using the "*dh_strip --dbg-package=*'package'" command in the *override_dh_strip:* target of the *debian/rules* file.
 
@@ -13,7 +13,7 @@ The installation path of the debugging information is as follows to enable auto-
 See
 
 * http://www.debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-dbg[6.7.9. Best practices for debug packages] of the ``Debian Developer's Reference''.
-* https://sourceware.org/gdb/current/onlinedocs/gdb/Separate-Debug-Files.html#Separate-Debug-Files[18.2 Debugging Information in Separate Files] in the ``Debugging with gdb''
+* https://sourceware.org/gdb/current/onlinedocs/gdb/Separate-Debug-Files.html#Separate-Debug-Files[18.2 Debugging Information in Separate Files] of the ``Debugging with gdb''
 * *dh_strip*(1)
 * *strip*(1)
 * *readelf*(1)

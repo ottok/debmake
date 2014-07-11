@@ -4,7 +4,7 @@ D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-W: -u "0.0" != auto set value "0~1406140700"
+W: -u "0.0" != auto set value "0~1407190457"
 I: pkg="package", ver="0.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/package"

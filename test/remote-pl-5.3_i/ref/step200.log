@@ -6,7 +6,7 @@ D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 W: -p "blhc" != auto set value ""
-W: -u "0.4" != auto set value "0~1406140710"
+W: -u "0.4" != auto set value "0~1407190500"
 I: pkg="blhc", ver="0.4", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/blhc"
@@ -15,8 +15,8 @@ I: $ rsync -aCv --link-dest=/path/to/blhc blhc/. blhc-0.4
 sending incremental file list
 created directory blhc-0.4
 
-sent 1,523 bytes  received 46 bytes  3,138.00 bytes/sec
-total size is 229,413  speedup is 146.22
+sent 1,461 bytes  received 46 bytes  3,014.00 bytes/sec
+total size is 229,544  speedup is 152.32
 I: $ tar --exclude='blhc-0.4/debian' --anchored --exclude-caches --exclude-...
 blhc-0.4/
 blhc-0.4/Build.PL
@@ -91,9 +91,9 @@ I: binary package=blhc Type=perl / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Perl Module::Build
 I: scan source for copyright+license text and file extensions
-I:  33 %, ext = perl
 I:  33 %, ext = t
 I:  33 %, ext = gitignore
+I:  33 %, ext = perl
 I: check_all_licenses
 I: .........................................................
 I: check_all_licenses completed for 57 files.
@@ -148,7 +148,7 @@ Building blhc
    dh_auto_test
 t/tests.t .. ok
 All tests successful.
-Files=1, Tests=214,  6 wallclock secs ( 0.13 usr  0.00 sys +  5.11 cusr  0....
+Files=1, Tests=214,  4 wallclock secs ( 0.10 usr  0.01 sys +  3.79 cusr  0....
 Result: PASS
  fakeroot debian/rules binary
 dh binary
@@ -211,7 +211,7 @@ N:    This issue may hide other issues as Lintian skips some checks on the
 N:    file in this case.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible

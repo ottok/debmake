@@ -1,0 +1,120 @@
+= Debian Maintainers' Guide with debmake
+:Author:    Osamu Aoki
+:Email:     osamu@debian.org
+:Date:      {date}
+:Revision:  {revision}
+
+include::00-terms.txt[]
+
+[[preface]]
+== Preface
+
+include::01-preface.txt[]
+
+[[start]]
+== Prerequisites
+
+include::10-prereq.txt[]
+
+[[setup]]
+== Tool Setups
+
+include::20-setups.txt[]
+
+[[simple]]
+== Simple Debian package
+
+include::30-simpledeb.txt[]
+
+[[deb]]
+== Debian Package
+
+include::40-workflow.txt[]
+
+include::41-version.txt[]
+
+include::42-rules.txt[]
+
+include::43-control.txt[]
+
+include::44-boption.txt[]
+
+include::45-changelog.txt[]
+
+include::46-copyright.txt[]
+
+include::47-debconfig.txt[]
+
+include::48-gpg.txt[]
+
+include::50-customize.txt[]
+
+include::51-build.txt[]
+
+include::52-debug.txt[]
+
+include::53-symbols.txt[]
+
+include::54-multiarch.txt[]
+
+include::55-harden.txt[]
+
+[[tips]]
+== Tips
+
+include::60-devs.txt[]
+
+include::61-gbp.txt[]
+
+include::62-gitrepo.txt[]
+
+include::63-chroot.txt[]
+
+include::64-newrev.txt[]
+
+include::65-newver.txt[]
+
+include::66-aioption.txt[]
+
+include::67-dtoption.txt[]
+
+include::68-pymod.txt[]
+
+include::69-coption.txt[]
+
+include::70-koption.txt[]
+
+include::71-joption.txt[]
+
+include::72-xoption.txt[]
+
+include::74-deb3.txt[]
+
+include::75-cdbs.txt[]
+
+include::77-utf8.txt[]
+
+include::79-spec.txt[]
+
+[[examples]]
+== Packaging examples
+
+include::80-example.txt[]
+
+include::81-emptypkg.txt[]
+
+include::82-modpkg.txt[]
+
+include::83-snapshot.txt[]
+
+include::84-autotools.txt[]
+
+include::85-python.txt[]
+
+include::86-multipkg.txt[]
+
+include::87-libpkg.txt[]
+
+
+[[manpage]]
+include::99-manpage.txt[]

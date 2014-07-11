@@ -11,8 +11,8 @@ Here, there are a few technical approaches to customize the build system:
 * *debian/rules* approach
 * *debian/*'bianrypackage'.* approach
 
-[[patchaproach]]
-==== *patches/** approach
+[[patchapproach]]
+==== patches/* approach
 
 Modifications to the upstream source before building it can be done by placing the collection of the *-p1* patches in the *patches/* directory and applying them in sequence defined in the  *patches/series* file.
 
@@ -20,30 +20,34 @@ There are several methods to prepare *-p1* patches for this.
 
 * The *diff* command
 * The *dquilt* command (alias of the *quilt* command, see <<quilt>>)
-* The *git* command with the *--format-patches* option
-* The *gbp-pq* command
-* The *git-dpm* command
+* The "*git format-patches*" command
+* The *gbp-pq* command (basic)
+* The *git-dpm* command (specialized)
 * Patches used in other distros and floating on the mailing list
 * ...
 
-Wherever these patches come from, it is good idea to tag them with http://dep.debian.net/deps/dep3/[DEP-3] compatible header and normalizing them by the *dquilt* command (see <<quilt>>).  This is also needed for upgrading to the newer upstream source or importing the externally generated security patch.
+Wherever these patches come from, it is good idea to tag them with http://dep.debian.net/deps/dep3/[DEP-3] compatible header.
+
+These patches should apply cleanly.  You must normalize them by the *dquilt* command (see <<quilt>>).
 
 ----
  $ while dquilt push; do dquilt refresh ; done
  $ dquilt pop -a
 ----
 
+CAUTION:  Don't forget to normalize patches when you upgrade to the new upstream source or import the externally generated patches.
+
 See  <<modpkg>> for example.
 
 [[rulesapproach]]
-==== *debian/rules* approach
+==== debian/rules approach
 
 The customization to the Debian package build system can be done through the *debian/rules* file.
 
 See <<customrules>>.
 
 [[configapproach]]
-==== *debian/*'binarypackage'.* approach
+==== debian/binarypackage.* approach
 
 Add customized configuration files for the *dh_** command from the *debhelper* package in the *debian/* directory.
 

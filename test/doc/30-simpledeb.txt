@@ -1,0 +1,160 @@
+There is an old Latin saying: ``**Longum iter est per praecepta, breve et efficax per exempla**'' (``It's a long way by the rules, but short and efficient with examples'').
+
+Let's start with an example of creating a simple Debian package.
+
+=== hello-c
+
+Let's consider a simple C source *hello-c* with the upstream version *1.0* following the *$(DESTDIR)* feature of the http://www.gnu.org/prep/standards/[GNU Coding Standards] and http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard[FHS] for the file ionstallation path as an example.
+
+The C source *hello.c* is a very simple one.
+
+----
+include::../hello-c-1.0/ref/step110.log[]
+----
+
+*Makefile* supports *$(DESTDIR)* and *FHS*.
+
+----
+include::../hello-c-1.0/ref/step102.log[]
+----
+
+=== hello-c-1.0.tar.gz
+
+Let's make an upstream tarball *hello-c-1.0.tar.gz*.
+
+----
+ $ tar -czf hello-c-1.0.tar.gz hello-c-1.0
+include::../hello-c-1.0/ref/step101.log[]
+----
+
+[[debmake]]
+=== debmake
+
+The *debmake* command is the helper script for the Debian packaging. Let's note its 4 most important featurs. footnote::[See link:debmake.html[Debmake tutorial] for the extensive list of featurs.]
+
+* It always sets most of the obvious option states and values to reasonable defaults.
+* It doesn't overwrite existing configuration files in the *debian/* directory.
+* It supports the *multiarch* package.
+* It creates good template files such as the *debian/copyright* file complient to *DEP-5*.
+
+These 4 featurs make Debian packaging simple and modern.  Let's use this *debmake* command.
+
+=== Big picture
+
+Let's get the big picture for the making of the Debian package from the upstream tarball *hello-c-1.0.tar.gz*.
+
+A single non-native Debian binary package can be made with the *debmake* command as follows.
+
+----
+ $ cd hello-c-1.0
+ $ debmake
+   ... (skipped)
+ $ debuild
+----
+
+TIP: The *debuild* command in these examples may be substituted by the equivalent commands such as the *pdebuild* command.
+
+Since manual adjustments of auto-generated configuration files are skipped, the generated binary package lacks meaningful package description and some of the policy requirements are missed.  This package functions well under the *dpkg* command, and is good enough for your local deployment.
+
+=== debmake: step-by-step
+
+The output from the *debmake* command was intentionally skipped in the above.  The actual command output is very verbose and explains what it does as follows.
+
+----
+include::../hello-c-1.0/ref/step200.log[]
+----
+
+The *debmake* command generates all these template files based on the command line option.  Since no options are specified, the *debmake* command choses reasonable default values for you:
+
+* The source package name: *hello-c*
+* The upstream version: *1.0*
+* The binary package name: *hello-c*
+* The Debian revison: *1*
+* The package type: *bin* (the ELF binary executable package)
+* The *-x* option: *-x1* (default for the single binary package)
+
+Let’s inspect generated template files.
+
+The *debian/rules* file is the build script provided by the package maintainer.
+
+.*debian/rules*:
+----
+include::../hello-c-1.0/ref/step201.log[]
+----
+
+This is essentially the standard *debian/rules* file with the *dh* command. (There are some commented out contents for you to customize it.)
+
+TIP: Configuration files used by the *dh_** commands from the *debhelper* package usually treat *#* as the start of the comment line.
+
+The *debian/control* file provides the main meta data for the Debian package.
+
+.*debian/control*:
+----
+include::../hello-c-1.0/ref/step202.log[]
+----
+
+Since this is the ELF binary executable package, the *debmake* command sets "*Architecture: any*" and "*Multi-Arch: foreign*".  Also, it sets required *substvar* parameters as "*Depends: $\{shlibs:Depends}, $\{misc:Depends}*".  These are explained in <<deb>>.
+
+NOTE: Please note this *debian/control* file uses the RFC-822 style as documented in http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-sourcecontrolfiles[5.2 Source package control files -- debian/control] of the ``Debian Policy Manual''. The use of the empty line and the leading space are significant.
+
+There are several other template files under the *debian/* directory.  These are explained in <<deb>>.
+
+.The source tree after the basic *debmake* execution.
+----
+include::../hello-c-1.0/ref/step400.log[]
+----
+
+For the proper packaging, you are required to make further modification here. 
+
+For learning purpose, let's leave such details and move on for now. 
+
+=== debuild: step-by-step
+
+You can create a non-native Debian package using the *debuild* command (or its equivalents) in this source tree.  The command output is very verbose and explains what it does as follows.
+
+----
+sys::[head -n3  ../hello-c-1.0/ref/step500.log]
+ ...
+sys::[grep -A 1 -e '^ fakeroot debian/rules clean' ../hello-c-1.0/ref/step500.log]
+ ...
+sys::[grep -A 1 -e '^ debian/rules build' ../hello-c-1.0/ref/step500.log]
+ ...
+sys::[grep -A 1 -e '^ fakeroot debian/rules binary' ../hello-c-1.0/ref/step500.log]
+ ...
+sys::[tail -n1  ../hello-c-1.0/ref/step500.log]
+----
+
+TIP: If you wish a more fine grained build report, please uncomment "*#DH_VERBOSE = 1*" in the *debian/rules* file before running the *debuild* command.
+
+Let’s inspect the result.
+
+.The generated files of *hello-c* version *1.0* by the *debuild* command:
+----
+include::../hello-c-1.0/ref/step600.log[]
+----
+
+You see all the generated files.
+
+* The *hello-c_1.0.orig.tar.gz* is a symlink to the upstream tarball.
+* The *hello-c_1.0-1.debian.tar.xz* contains the maintainer generated contents.
+* The *hello-c_1.0-1.dsc* is the meta data file for the Debian source package.
+* The *hello-c_1.0-1_amd64.deb* is the Debian binary package.
+* The *hello-c_1.0-1_amd64.changes* is the meta data file for the Debian binary package.
+
+The *hello-c_1.0-1.debian.tar.xz* contains the Debian changes to the upstream source as follows.
+
+.The compressed archive contents of *hello-c_1.0-1.debian.tar.xz*:
+----
+include::../hello-c-1.0/ref/step701.log[]
+----
+
+The *hello-c_1.0-1_amd64.deb* contains the files to be installed as follows.
+
+.The binary package contents of *hello-c_1.0-1_amd64.deb*:
+----
+include::../hello-c-1.0/ref/step700.log[]
+----
+
+CAUTION: Much more details need to be addressed before uploading the package to the Debian archive.
+
+

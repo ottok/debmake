@@ -37,10 +37,13 @@ scan source for copyright+license text and exit.
 * *-ccc*: debug output style
 
 *-k*, *--kludge*::
-compare debian/copyright with the source and exit.
+compare the *debian/copyright* file with the source and exit.
++
+The *debian/copyright* file must be organized to list the generic file patterns before the specific exceptions.
 +
 * *-k*: basic output style
 * *-kk*: verbose output style
+
 
 *-n*, *--native*::
 make a native Debian source package without *.orig.tar.gz*.  This makes the "*3.0 (native)*" format package.
@@ -232,7 +235,7 @@ There  are some limitations for what characters may be used as a part of the Deb
 * Upstream version (*-u*): [0-9][-+.:~a-z0-9A-Z]*
 * Debian revision (*-r*): [0-9][+.~a-z0-9A-Z]*
 
-See the exact definition in http://www.debian.org/doc/debian-policy/ch-controlfields.html[Chapter 5 - Control files and their fields] of ``Debian Policy Manual''.
+See the exact definition in http://www.debian.org/doc/debian-policy/ch-controlfields.html[Chapter 5 - Control files and their fields] of the ``Debian Policy Manual''.
 
 == DEBUG
 
@@ -268,8 +271,11 @@ MIT License
 
 == SEE ALSO
 
-An detailed tutorial document focused on using the *debmake* command is provided as a HTML file: /usr/share/doc/debmake/debmake.html .
+The debamake package provides following HTML documents:
 
-Learn basics of Debian packaging with the ``Debian New Maintainers' Guide'' at http://www.debian.org/doc/manuals/maint-guide/ or with the *maint-guide* package.
+* A simple tutorial: link:debmake.html[/usr/share/doc/debmake/debmake.html]
+* A full tutorial document for the Debian packaging with packaging examples: link:maint-guide.html[/usr/share/doc/debmake/maint-guide.html]
+
+Also, please read the original http://www.debian.org/doc/manuals/maint-guide/[Debian New Maintainers' Guide] provided by the the *maint-guide* package.
 
 See also *dpkg-source*(1), *deb-control*(5), *debhelper*(7), *dh*(1), *dpkg-buildpackage*(1), *debuild*(1), *quilt*(1), *dpkg-depcheck*(1), *pdebuild*(1), *pbuilder*(8), *cowbuilder*(8), *gbp-buildpackage*(1), *gbp-pq*(1), and *git-pbuilder*(1) manpages.

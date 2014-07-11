@@ -89,7 +89,7 @@ N:    The files paragraph in the machine readable copyright file references...
 N:    license, for which no standalone license paragraph exists.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible
@@ -103,7 +103,7 @@ N:    relocation" link flag. This package was likely not built with the
 N:    default Debian compiler flags defined by dpkg-buildflags. If built us...
 N:    dpkg-buildflags directly, be sure to import LDFLAGS.
 N:
-N:    Refer to http://wiki.debian.org/Hardening for details.
+N:    Refer to https://wiki.debian.org/Hardening for details.
 N:
 N:    Severity: normal, Certainty: certain
 N:
@@ -187,7 +187,7 @@ N:    this is very rare and not the same as a DFSG-free license. True publi...
 N:    domain software is generally limited to such special cases as a work
 N:    product of a United States government agency.
 N:
-N:    Refer to http://ftp-master.debian.org/REJECT-FAQ.html for details.
+N:    Refer to https://ftp-master.debian.org/REJECT-FAQ.html for details.
 N:
 N:    Severity: normal, Certainty: certain
 N:

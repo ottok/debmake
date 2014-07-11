@@ -3,7 +3,7 @@
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) ffc50b7] initial commit
+[master (root-commit) e8e14ac] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -232,7 +232,7 @@ N:    The files paragraph in the machine readable copyright file references...
 N:    license, for which no standalone license paragraph exists.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible

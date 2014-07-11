@@ -2,12 +2,12 @@
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 06/14/2014
+.\"      Date: 07/19/2014
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE 4.0
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "06/14/2014" "DEBMAKE 4\&.0" "Debmake Manual"
+.TH "DEBMAKE" "1" "07/19/2014" "DEBMAKE 4\&.0" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -155,7 +155,13 @@ file)
 .PP
 \fB\-k\fR, \fB\-\-kludge\fR
 .RS 4
-compare debian/copyright with the source and exit\&.
+compare the
+\fBdebian/copyright\fR
+file with the source and exit\&.
+.sp
+The
+\fBdebian/copyright\fR
+file must be organized to list the generic file patterns before the specific exceptions\&.
 .sp
 .RS 4
 .ie n \{\
@@ -861,7 +867,7 @@ Upstream version (\fB\-u\fR): [0\-9][\-+\&.:~a\-z0\-9A\-Z]*
 Debian revision (\fB\-r\fR): [0\-9][+\&.~a\-z0\-9A\-Z]*
 .RE
 .sp
-See the exact definition in Chapter 5 \- Control files and their fields of \(lqDebian Policy Manual\(rq\&.
+See the exact definition in Chapter 5 \- Control files and their fields of the \(lqDebian Policy Manual\(rq\&.
 .SH "DEBUG"
 .sp
 The character set in the environment variable \fB$DEBUG\fR determines the logging output level\&.
@@ -1028,8 +1034,32 @@ Copyright \(co 2014 Osamu Aoki <osamu@debian\&.org>
 MIT License
 .SH "SEE ALSO"
 .sp
-An detailed tutorial document focused on using the \fBdebmake\fR command is provided as a HTML file: /usr/share/doc/debmake/debmake\&.html \&.
+The debamake package provides following HTML documents:
 .sp
-Learn basics of Debian packaging with the \(lqDebian New Maintainers\*(Aq Guide\(rq at http://www\&.debian\&.org/doc/manuals/maint\-guide/ or with the \fBmaint\-guide\fR package\&.
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A simple tutorial:
+/usr/share/doc/debmake/debmake\&.html
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A full tutorial document for the Debian packaging with packaging examples:
+/usr/share/doc/debmake/maint\-guide\&.html
+.RE
+.sp
+Also, please read the original Debian New Maintainers\*(Aq Guide provided by the the \fBmaint\-guide\fR package\&.
 .sp
 See also \fBdpkg\-source\fR(1), \fBdeb\-control\fR(5), \fBdebhelper\fR(7), \fBdh\fR(1), \fBdpkg\-buildpackage\fR(1), \fBdebuild\fR(1), \fBquilt\fR(1), \fBdpkg\-depcheck\fR(1), \fBpdebuild\fR(1), \fBpbuilder\fR(8), \fBcowbuilder\fR(8), \fBgbp\-buildpackage\fR(1), \fBgbp\-pq\fR(1), and \fBgit\-pbuilder\fR(1) manpages\&.

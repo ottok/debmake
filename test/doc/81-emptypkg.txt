@@ -3,7 +3,7 @@
 
 Although executing the *debmake* command with the larger *-x*'[01234]' option in the upstream source adds new template files without overwriting the existing ones, it tends to leave too many unused ones and is quite messy.
 
-If you wish to get some template files without making mess in the upstream source tree, I recommend the following scheme with an empty directory, e.g., 'package/'.
+If you wish to get some template files without making mess in the upstream source tree, please consider the following scheme with an empty directory, e.g., 'package/'.
 
 ----
 include::../hello-c-0.0/ref/step101.log[]

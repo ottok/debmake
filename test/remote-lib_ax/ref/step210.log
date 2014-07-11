@@ -553,22 +553,22 @@ I:   3 %, ext = gitkeep
 I:   2 %, ext = m4
 I:   1 %, ext = vapi
 I:   0 %, ext = sh
-I:   0 %, ext = ac
 I:   0 %, ext = arpa
-I:   0 %, ext = mk
 I:   0 %, ext = python
-I:   0 %, ext = sub
-I:   0 %, ext = rules
-I:   0 %, ext = pc
-I:   0 %, ext = gir
-I:   0 %, ext = symbols
-I:   0 %, ext = sorted2
-I:   0 %, ext = po
-I:   0 %, ext = deps
+I:   0 %, ext = ac
+I:   0 %, ext = mk
 I:   0 %, ext = metadata
-I:   0 %, ext = skip
 I:   0 %, ext = sorted3
+I:   0 %, ext = deps
+I:   0 %, ext = pc
 I:   0 %, ext = guess
+I:   0 %, ext = po
+I:   0 %, ext = sorted2
+I:   0 %, ext = symbols
+I:   0 %, ext = gir
+I:   0 %, ext = skip
+I:   0 %, ext = rules
+I:   0 %, ext = sub
 I: check_all_licenses
 I: ...........................................................................
 ..............................................................................

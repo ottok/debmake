@@ -1,42 +1,42 @@
- $ cd hello-c-0~1406140702
+ $ cd hello-c-0~1407190458
  $ debuild
  dpkg-buildpackage -rfakeroot -D -us -uc -I -i
 dpkg-buildpackage: source package hello-c
-dpkg-buildpackage: source version 0~1406140702-1
+dpkg-buildpackage: source version 0~1407190458-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build hello-c-0~1406140702
+ dpkg-source -I -i --before-build hello-c-0~1407190458
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
    dh_testdir
    dh_auto_clean
-make[1]: Entering directory '/path/to/hello-c-0~1406140702'
+make[1]: Entering directory '/path/to/hello-c-0~1407190458'
 rm -f hello
-make[1]: Leaving directory '/path/to/hello-c-0~1406140702'
+make[1]: Leaving directory '/path/to/hello-c-0~1407190458'
    dh_clean
- dpkg-source -I -i -b hello-c-0~1406140702
+ dpkg-source -I -i -b hello-c-0~1407190458
 dpkg-source: info: using source format `3.0 (quilt)'
-dpkg-source: info: building hello-c using existing ./hello-c_0~1406140702.o...
-dpkg-source: info: building hello-c in hello-c_0~1406140702-1.debian.tar.xz...
-dpkg-source: info: building hello-c in hello-c_0~1406140702-1.dsc
+dpkg-source: info: building hello-c using existing ./hello-c_0~1407190458.o...
+dpkg-source: info: building hello-c in hello-c_0~1407190458-1.debian.tar.xz...
+dpkg-source: info: building hello-c in hello-c_0~1407190458-1.dsc
  debian/rules build
 dh build
    dh_testdir
    dh_auto_configure
    dh_auto_build
-make[1]: Entering directory '/path/to/hello-c-0~1406140702'
+make[1]: Entering directory '/path/to/hello-c-0~1407190458'
 gcc -Wall -o hello hello.c
-make[1]: Leaving directory '/path/to/hello-c-0~1406140702'
+make[1]: Leaving directory '/path/to/hello-c-0~1407190458'
    dh_auto_test
  fakeroot debian/rules binary
 dh binary
    dh_testroot
    dh_prep
    dh_auto_install
-make[1]: Entering directory '/path/to/hello-c-0~1406140702'
-install -D hello /path/to/hello-c-0~1406140702/debian/hello-c/usr/bin/hello...
-make[1]: Leaving directory '/path/to/hello-c-0~1406140702'
+make[1]: Entering directory '/path/to/hello-c-0~1407190458'
+install -D hello /path/to/hello-c-0~1407190458/debian/hello-c/usr/bin/hello...
+make[1]: Leaving directory '/path/to/hello-c-0~1407190458'
    dh_installdocs
    dh_installchangelogs
    dh_perl
@@ -50,10 +50,10 @@ make[1]: Leaving directory '/path/to/hello-c-0~1406140702'
    dh_gencontrol
    dh_md5sums
    dh_builddeb
-dpkg-deb: building package `hello-c' in `../hello-c_0~1406140702-1_amd64.de...
- dpkg-genchanges  >../hello-c_0~1406140702-1_amd64.changes
+dpkg-deb: building package `hello-c' in `../hello-c_0~1407190458-1_amd64.de...
+ dpkg-genchanges  >../hello-c_0~1407190458-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build hello-c-0~1406140702
+ dpkg-source -I -i --after-build hello-c-0~1407190458
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: hello-c source: superfluous-clutter-in-homepage <insert the upstream URL...
@@ -89,7 +89,7 @@ N:    The files paragraph in the machine readable copyright file references...
 N:    license, for which no standalone license paragraph exists.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible
@@ -103,7 +103,7 @@ N:    relocation" link flag. This package was likely not built with the
 N:    default Debian compiler flags defined by dpkg-buildflags. If built us...
 N:    dpkg-buildflags directly, be sure to import LDFLAGS.
 N:
-N:    Refer to http://wiki.debian.org/Hardening for details.
+N:    Refer to https://wiki.debian.org/Hardening for details.
 N:
 N:    Severity: normal, Certainty: certain
 N:
@@ -187,7 +187,7 @@ N:    this is very rare and not the same as a DFSG-free license. True publi...
 N:    domain software is generally limited to such special cases as a work
 N:    product of a United States government agency.
 N:
-N:    Refer to http://ftp-master.debian.org/REJECT-FAQ.html for details.
+N:    Refer to https://ftp-master.debian.org/REJECT-FAQ.html for details.
 N:
 N:    Severity: normal, Certainty: certain
 N:

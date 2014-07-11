@@ -1,5 +1,4 @@
-[[deb]]
-=== Debian package
+It's time to learn the basic rules of the Debian packaging.
 
 The Debian source package is a set of input files used to build the Debian binary package and is not a single file.
 
@@ -12,11 +11,11 @@ The non-native Debian package in the "*3.0 (quilt)*" format is the most normal D
 Some people promote to package even programs which have been written especially for Debian in the non-native package format with the above workflow while generating the required tarball without *debian/** files by oneself in advance. They claim that the use of non-native package format eases communication with the downstream distributions.
 
 [[workflow]]
-=== Debian packaging work flow
+=== Packaging workflow
 
-The Debian packaging work flow to create the Debian binary package involves generating several specifically named files (see <<name-version>>) as defined in the ``Debian Policy Manual''.
+The Debian packaging workflow to create the Debian binary package involves generating several specifically named files (see <<name-version>>) as defined in the ``Debian Policy Manual''.
 
-The oversimplified method for the Debian packaging work flow can be summarized in 5 steps as follows.
+The oversimplified method for the Debian packaging workflow can be summarized in 5 steps as follows.
 
 1. The upstream tarball is downloaded as the 'package-version'**.tar.gz** file.
 2. The upstream tarball is untared to create many files under the 'package-version'**/** directory.
@@ -34,7 +33,7 @@ The Debian package history file defining the upstream package version and the De
 *debian/copyright*::
 The copyright and license summary (see <<copyright>>)
 * Optional specification files under the *debian/** (see <<debianconf>>):
-* The *debmake* command invoked in the 'package-version/' directory provides the initial set of these template configuration files (go back to see <<quick>>).
+* The *debmake* command invoked in the 'package-version/' directory provides the initial set of these template configuration files.
 ** Required specification files are generated even with the *-x0* option.
 ** The *debmake* command does not overwrite any existing configuration files.
 * These files must be manually edited to their perfection according to the ``Debian Policy Manual'' and ``Debian Developer’s Reference''.
@@ -51,6 +50,9 @@ The copyright and license summary (see <<copyright>>)
 ** 'binarypackage_version-revision_arch'.*deb*
 ** ... (There may be multiple Debian binary package files.)
 ** 'package_version-revision_arch'.*changes*
+6. Check the quality of the Debian package with the *lintian* command. (recommemded)
+7. Sign the 'package_version-revision'.*dsc* and 'package_version-revision_arch'.*changes* with the *debsign* command using your private GPG key.
+8. Upload the set of the Debian source and binary package files with the *dput* command to the Debian archive.
 
 Here, please replace each part of the filename as:
 
