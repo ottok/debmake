@@ -194,23 +194,23 @@ def analyze(para):
             para['debs'][i]['depends'].update({'python'})
             para['build_depends'].update({'python-all'})
             for libpkg in para['lib']:
-                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         elif deb['type'] == 'python3':
             para['dh_with'].update({'python3'})
             para['debs'][i]['depends'].update({'python3'})
             para['override'].update({'python3'})
             para['build_depends'].update({'python3-all'})
             for libpkg in para['lib']:
-                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         elif deb['type'] == 'ruby':
             para['dh_with'].update({'ruby'}) # may not be needed
             para['debs'][i]['depends'].update({'ruby'})
             para['build_depends'].update({'ruby'})
             for libpkg in para['lib']:
-                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         elif deb['type'] == 'script':
             for libpkg in para['lib']:
-                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         else:
             pass
     #######################################################################
