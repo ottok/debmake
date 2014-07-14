@@ -172,6 +172,7 @@ fs = [
 'F_PLAIN7',
 'F_PLAIN8',
 'F_PLAIN9',
+'F_PLAIN10',
 'F_PLAIN0', # always match
 'F_EOF   ', # force EOF before processing the next line
 ]
@@ -326,6 +327,13 @@ formats[F_PLAIN9] = (
         all_entry_formats,
         {F_PLAIN9, F_BLNK}
         )
+
+formats[F_PLAIN10] = (
+        re.compile(r'^(?P<prefix>%)\s+(?P<text>.*)(?P<postfix>)$'),# texinfo.tex
+        all_entry_formats,
+        {F_PLAIN10, F_BLNK}
+        )
+
 # This is the last rule (always match, no blank line comes here)
 formats[F_PLAIN0] = (
         re.compile(r'^(?P<prefix>)(?P<text>.+)(?P<postfix>)$'),     # Text
