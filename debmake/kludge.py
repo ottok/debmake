@@ -107,6 +107,9 @@ def copydiff(mode):
     for file, (iptn, ptn) in file_to_pattern.items():
         iptn_to_ptn[iptn] = ptn
         iptn_to_files[iptn].append(file)
+        debmake.debug.debug('Dn: file="{}", iptn="{}", ptn="{}"'.format(file, iptn, ptn), type='n')
+    if nptn != len(iptn_to_ptn):
+        print("W: ***** Number of patterns unused: {} out of range(0, {}) *****".format(nptn - len(iptn_to_ptn), nptn), file=sys.stderr)
     ###########################################################################
     # scan copyright of the source tree and create license_new[]
     ###########################################################################
@@ -123,8 +126,11 @@ def copydiff(mode):
     ###########################################################################
     data = []
     for iptn in range(0, nptn):
-        ptn = iptn_to_ptn[iptn]
-        files = iptn_to_files[iptn]
+        if iptn in iptn_to_ptn.keys():
+            ptn = iptn_to_ptn[iptn]
+            files = iptn_to_files[iptn]
+        else:
+            print('W: ***** Pattern #{:02}: "{}" unused, reorder debian/copyright *****'.format(iptn, patterns[iptn]), file=sys.stderr)
         for file in files:
             old = licenses_old[file]
             if file in licenses_new.keys():
