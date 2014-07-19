@@ -1,3 +1,17 @@
+debmake (4.1.2-1) unstable; urgency=medium
+
+  * Refine the binNMU safe version range (analyze.py).
+  * Support the DFSG packaging via uscan+copyright.
+  * Extract copyright from texinfo.tex.
+  * Warn (not fail) for the broken order in the debian/copyright
+    for the -k option.
+  * Support autoconf exception for GPL-3.0+.
+  * Update the document and split it into 2.
+    - Debmake tutorial: debmake.html
+    - Debian Maintainers' Guide with debmake: maint-guide.html
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 19 Jul 2014 14:28:40 +0900
+
 debmake (4.1.1-1) unstable; urgency=medium
 
   * Support non-currentdir tarball. Closes: #752206
