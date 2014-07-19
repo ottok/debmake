@@ -38,8 +38,8 @@ I: build_type = Perl ExtUtils::MakeMaker
 I: scan source for copyright+license text and file extensions
 I:  43 %, ext = t
 I:  29 %, ext = perl
-I:  14 %, ext = debug
 I:  14 %, ext = yml
+I:  14 %, ext = debug
 I: check_all_licenses
 I: ............
 I: check_all_licenses completed for 12 files.
@@ -103,7 +103,7 @@ t/10open.t ......... ok
 t/20tail.t ......... ok
 t/30name_change.t .. ok
 All tests successful.
-Files=3, Tests=15, 66 wallclock secs ( 0.05 usr  0.02 sys +  0.15 cusr  0.0...
+Files=3, Tests=15, 63 wallclock secs ( 0.03 usr  0.01 sys +  0.14 cusr  0.0...
 Result: PASS
 make[1]: Leaving directory '/path/to/file-tail-0.99.3'
  fakeroot debian/rules binary
@@ -165,7 +165,7 @@ N:    The files paragraph in the machine readable copyright file references...
 N:    license, for which no standalone license paragraph exists.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible

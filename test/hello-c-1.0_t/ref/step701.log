@@ -1,4 +1,4 @@
- $ tar -tJf hello-c_0~1407190458-1.debian.tar.xz
+ $ tar -tJf hello-c_0~1407251518-1.debian.tar.xz
 debian/
 debian/compat
 debian/changelog
@@ -11,7 +11,7 @@ debian/source/
 debian/source/format
 debian/patches/
 debian/patches/series
- $ tar -tzf hello-c-0~1407190458.tar.gz
-hello-c-0~1407190458/
-hello-c-0~1407190458/Makefile
-hello-c-0~1407190458/hello.c
+ $ tar -tzf hello-c-0~1407251518.tar.gz
+hello-c-0~1407251518/
+hello-c-0~1407251518/Makefile
+hello-c-0~1407251518/hello.c

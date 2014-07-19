@@ -4,7 +4,7 @@ D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-W: -u "0.0" != auto set value "0~1407190457"
+W: -u "0.0" != auto set value "0~1407251517"
 I: pkg="package", ver="0.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/package"
@@ -13,7 +13,7 @@ I: $ rsync -aCv --link-dest=/path/to/package package/. package-0.0
 sending incremental file list
 ./
 
-sent 57 bytes  received 19 bytes  152.00 bytes/sec
+sent 60 bytes  received 19 bytes  158.00 bytes/sec
 total size is 0  speedup is 0.00
 I: $ tar --exclude='package-0.0/debian' --anchored --exclude-caches --exclu...
 package-0.0/

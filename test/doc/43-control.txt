@@ -76,4 +76,3 @@ In order to transition smoothly, the *-dev* package must follow one of the follo
 
 See http://www.debian.org/doc/debian-policy/ch-sharedlibs.html[Chapter 8 - Shared libraries] of the ``Debian Policy Manual''.
 
-

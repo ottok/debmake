@@ -78,10 +78,12 @@ Please make yourself ready to read the pertinent part of the official Debian doc
 
 If this guide contradicts with the official Debian documentation, they are correct. Please file a bug report on the *debmake* package using the *reportbug* command.
 
-The following is an alternative tutorial document which you may read along with this guide:
+Here are alternative tutorial documents which you may read along with this guide:
 
 * ``Debian Packaging Tutorial''
 ** http://www.debian.org/doc/packaging-manuals/packaging-tutorial/
+* ``Ubuntu Packaging Guide'' (Ubuntu is Debian based.)
+** http://packaging.ubuntu.com/html/
 
 [[help]]
 === Help resources
@@ -121,6 +123,8 @@ Please realize the situation of the Debian archive.
 * Unfortunately, some packages lacks appropriate level of attention by the maintainer.
 
 Thus, contributions to packages already in the archive are far more appreciated (and more likely to receive sponsorship for the uploading) by other maintainers.
+
+TIP: The *wnpp-alert* command from the *devscripts* package can check for installed packages up for adoption or orphaned.
 
 [[approaches]]
 === Contribution approaches
@@ -170,6 +174,7 @@ Here:
 ** https://www.debian.org/distrib/packages[Debian packages] web page
 ** https://wiki.debian.org/Teams[Teams]
 * For is_orphaned(), is_RFA(), and is_ITPed_by_others(); check:
+** The output of the *wnpp-alert* command.
 ** https://www.debian.org/devel/wnpp/[Work-Needing and Prospective Packages]
 ** https://bugs.debian.org/cgi-bin/pkgreport.cgi?pkg=wnpp;dist=unstable[Debian Bug report logs: Bugs in pseudo-package wnpp in unstable]
 ** http://wnpp.debian.net/[Debian Packages that Need Lovin']

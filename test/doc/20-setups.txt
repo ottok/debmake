@@ -96,10 +96,12 @@ See *quilt*(1) and file:///usr/share/doc/quilt/quilt.html[How To Survive With Ma
 
 See <<modpkg>> for example usages.
 
-[[debsign-setup]]
-=== debsign
+[[devscripts-setup]]
+=== devscripts
 
 The *debsign* command, included in the *devscripts* package, is used to sign the Debian package with your private GPG key.
+
+The *debuild* command, included in the *devscripts* package, builds the binary package and check them with the *lintian* command.  It is useful to have verbose outputs from the *lintian* command.
 
 You can setup these by the *~/.devscripts* as follows.
 

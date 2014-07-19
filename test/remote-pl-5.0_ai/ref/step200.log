@@ -149,7 +149,7 @@ Building Acme-Hello
 t/0-signature.t .. ok
 t/1-basic.t ...... ok
 All tests successful.
-Files=2, Tests=4,  0 wallclock secs ( 0.05 usr  0.00 sys +  0.06 cusr  0.00...
+Files=2, Tests=4,  0 wallclock secs ( 0.04 usr  0.00 sys +  0.05 cusr  0.00...
 Result: PASS
  fakeroot debian/rules binary
 dh binary
@@ -211,7 +211,7 @@ N:    The files paragraph in the machine readable copyright file references...
 N:    license, for which no standalone license paragraph exists.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible

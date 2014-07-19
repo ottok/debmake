@@ -53,11 +53,19 @@ include::51-build.txt[]
 
 include::52-debug.txt[]
 
-include::53-symbols.txt[]
+include::53-lib.txt[]
 
 include::54-multiarch.txt[]
 
-include::55-harden.txt[]
+include::55-symbols.txt[]
+
+include::56-harden.txt[]
+
+include::57-bug.txt[]
+
+include::58-debconf.txt[]
+
+include::59-pkgtest.txt[]
 
 [[tips]]
 == Tips
@@ -115,6 +123,7 @@ include::86-multipkg.txt[]
 
 include::87-libpkg.txt[]
 
+include::88-this.txt[]
 
 [[manpage]]
 include::99-manpage.txt[]

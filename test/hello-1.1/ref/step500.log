@@ -105,7 +105,20 @@ N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
 N:
-W: hello-data: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c: hardening-no-relro usr/bin/hello
+N:
+N:    This package provides an ELF binary that lacks the "read-only
+N:    relocation" link flag. This package was likely not built with the
+N:    default Debian compiler flags defined by dpkg-buildflags. If built us...
+N:    dpkg-buildflags directly, be sure to import LDFLAGS.
+N:
+N:    Refer to https://wiki.debian.org/Hardening for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
 N:
 N:    Bug numbers can only contain digits.
 N:
@@ -116,7 +129,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-data: new-package-should-close-itp-bug
+W: hello-c: new-package-should-close-itp-bug
 N:
 N:    This package appears to be the first packaging of a new upstream
 N:    software package (there is only one changelog entry and the Debian
@@ -133,7 +146,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-E: hello-data: changelog-is-dh_make-template
+E: hello-c: changelog-is-dh_make-template
 N:
 N:    The changelog file has an instruction left by dh_make, which has not
 N:    been removed. Example:
@@ -147,7 +160,7 @@ N:    Severity: important, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-data: copyright-has-url-from-dh_make-boilerplate
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
 N:
 N:    There is "url://example.com" in your copyright file. This was most
 N:    likely a remnant from the dh_make template.
@@ -162,7 +175,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-W: hello-data: copyright-without-copyright-notice
+W: hello-c: copyright-without-copyright-notice
 N:
 N:    The copyright file for this package does not appear to contain a
 N:    copyright notice. You should copy the copyright notice from the upstr...
@@ -189,6 +202,99 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
+W: hello-c: extended-description-line-too-long
+N:
+N:    One or more lines in the extended part of the "Description:" field ha...
+N:    been found to contain more than 80 characters. For the benefit of use...
+N:    of 80x25 terminals, it is recommended that the lines do not exceed 80...
+N:    characters.
+N:
+N:    Refer to Debian Policy Manual section 3.4.1 (The single line synopsis...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: using-first-person-in-description line 15: we
+N:
+N:    You should avoid the use of first person ("I will do this..." or "We
+N:    recommend..."). The computer is not a person and the description does...
+N:    not speak for the maintainer or maintainers. Instead, use a more neut...
+N:    construction and try to rephrase into factual statements about the
+N:    package.
+N:
+N:    For example, rather than saying "I don't recommend this package if yo...
+N:    are short on memory," say something like "this package is not suitabl...
+N:    for low-memory systems."
+N:
+N:    Severity: minor, Certainty: possible
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: capitalization-error-in-description GTK GTK+
+N:
+N:    Lintian found a possible capitalization error in the package
+N:    description. Lintian has a list of common capitalization errors,
+N:    primarily of upstream projects, that it looks for. It does not have a...
+N:    dictionary like a spelling checker does.
+N:
+N:    This is a particularly picky check of capitalization in package
+N:    descriptions, since they're very visible to end users, but it will ha...
+N:    false positives for project names used in a context where they should...
+N:    lowercase, such as package names or executable names.
+N:
+N:    Severity: minor, Certainty: wild-guess
+N:
+N:    Check: description, Type: binary, udeb
+N:
+I: hello-c: capitalization-error-in-description Gnome GNOME
+E: hello-c: section-is-dh_make-template
+N:
+N:    The "Section:" field in this package's control file is set to unknown...
+N:    This is not a valid section, and usually means a dh_make template
+N:    control file was used and never modified to set the correct section.
+N:
+N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
+N:
+N:    Severity: serious, Certainty: certain
+N:
+N:    Check: fields, Type: binary, udeb, source
+N:
+W: hello-c: superfluous-clutter-in-homepage <insert the upstream URL, if re...
+W: hello-c: bad-homepage <insert the upstream URL, if relevant>
+W: hello-c: binary-without-manpage usr/bin/hello
+N:
+N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games should
+N:    have a manual page
+N:
+N:    Note that though the man program has the capability to check for seve...
+N:    program names in the NAMES section, each of these programs should hav...
+N:    its own manual page (a symbolic link to the appropriate manual page i...
+N:    sufficient) because other manual page viewers such as xman or tkman
+N:    don't support this.
+N:
+N:    If the name of the man page differs from the binary by case, man may ...
+N:    able to find it anyway; however, it is still best practice to make th...
+N:    case of the man page match the case of the binary.
+N:
+N:    If the man pages are provided by another package on which this packag...
+N:    depends, lintian may not be able to determine that man pages are
+N:    available. In this case, after confirming that all binaries do have m...
+N:    pages after this package and its dependencies are installed, please a...
+N:    a lintian override.
+N:
+N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for details...
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: manpages, Type: binary
+N:
+W: hello-data: wrong-bug-number-in-closes l3:#nnnn
+W: hello-data: new-package-should-close-itp-bug
+E: hello-data: changelog-is-dh_make-template
+W: hello-data: copyright-has-url-from-dh_make-boilerplate
+W: hello-data: copyright-without-copyright-notice
 I: hello-data: extended-description-is-probably-too-short
 N:
 N:    The extended description (the lines after the first line of the
@@ -207,17 +313,6 @@ N:
 N:    Check: description, Type: binary, udeb
 N:
 E: hello-data: section-is-dh_make-template
-N:
-N:    The "Section:" field in this package's control file is set to unknown...
-N:    This is not a valid section, and usually means a dh_make template
-N:    control file was used and never modified to set the correct section.
-N:
-N:    Refer to Debian Policy Manual section 2.4 (Sections) for details.
-N:
-N:    Severity: serious, Certainty: certain
-N:
-N:    Check: fields, Type: binary, udeb, source
-N:
 W: hello-data: superfluous-clutter-in-homepage <insert the upstream URL, if...
 W: hello-data: bad-homepage <insert the upstream URL, if relevant>
 W: hello-data: executable-not-elf-or-script usr/share/hello/hello.data
@@ -268,99 +363,4 @@ E: hello-sh: section-is-dh_make-template
 W: hello-sh: superfluous-clutter-in-homepage <insert the upstream URL, if r...
 W: hello-sh: bad-homepage <insert the upstream URL, if relevant>
 W: hello-sh: binary-without-manpage usr/bin/hello-sh
-N:
-N:    Each binary in /usr/bin, /usr/sbin, /bin, /sbin or /usr/games should
-N:    have a manual page
-N:
-N:    Note that though the man program has the capability to check for seve...
-N:    program names in the NAMES section, each of these programs should hav...
-N:    its own manual page (a symbolic link to the appropriate manual page i...
-N:    sufficient) because other manual page viewers such as xman or tkman
-N:    don't support this.
-N:
-N:    If the name of the man page differs from the binary by case, man may ...
-N:    able to find it anyway; however, it is still best practice to make th...
-N:    case of the man page match the case of the binary.
-N:
-N:    If the man pages are provided by another package on which this packag...
-N:    depends, lintian may not be able to determine that man pages are
-N:    available. In this case, after confirming that all binaries do have m...
-N:    pages after this package and its dependencies are installed, please a...
-N:    a lintian override.
-N:
-N:    Refer to Debian Policy Manual section 12.1 (Manual pages) for details...
-N:
-N:    Severity: normal, Certainty: possible
-N:
-N:    Check: manpages, Type: binary
-N:
-W: hello-c: hardening-no-relro usr/bin/hello
-N:
-N:    This package provides an ELF binary that lacks the "read-only
-N:    relocation" link flag. This package was likely not built with the
-N:    default Debian compiler flags defined by dpkg-buildflags. If built us...
-N:    dpkg-buildflags directly, be sure to import LDFLAGS.
-N:
-N:    Refer to https://wiki.debian.org/Hardening for details.
-N:
-N:    Severity: normal, Certainty: certain
-N:
-N:    Check: binaries, Type: binary, udeb
-N:
-W: hello-c: wrong-bug-number-in-closes l3:#nnnn
-W: hello-c: new-package-should-close-itp-bug
-E: hello-c: changelog-is-dh_make-template
-W: hello-c: copyright-has-url-from-dh_make-boilerplate
-W: hello-c: copyright-without-copyright-notice
-W: hello-c: extended-description-line-too-long
-N:
-N:    One or more lines in the extended part of the "Description:" field ha...
-N:    been found to contain more than 80 characters. For the benefit of use...
-N:    of 80x25 terminals, it is recommended that the lines do not exceed 80...
-N:    characters.
-N:
-N:    Refer to Debian Policy Manual section 3.4.1 (The single line synopsis...
-N:    for details.
-N:
-N:    Severity: normal, Certainty: certain
-N:
-N:    Check: description, Type: binary, udeb
-N:
-I: hello-c: using-first-person-in-description line 15: we
-N:
-N:    You should avoid the use of first person ("I will do this..." or "We
-N:    recommend..."). The computer is not a person and the description does...
-N:    not speak for the maintainer or maintainers. Instead, use a more neut...
-N:    construction and try to rephrase into factual statements about the
-N:    package.
-N:
-N:    For example, rather than saying "I don't recommend this package if yo...
-N:    are short on memory," say something like "this package is not suitabl...
-N:    for low-memory systems."
-N:
-N:    Severity: minor, Certainty: possible
-N:
-N:    Check: description, Type: binary, udeb
-N:
-I: hello-c: capitalization-error-in-description GTK GTK+
-N:
-N:    Lintian found a possible capitalization error in the package
-N:    description. Lintian has a list of common capitalization errors,
-N:    primarily of upstream projects, that it looks for. It does not have a...
-N:    dictionary like a spelling checker does.
-N:
-N:    This is a particularly picky check of capitalization in package
-N:    descriptions, since they're very visible to end users, but it will ha...
-N:    false positives for project names used in a context where they should...
-N:    lowercase, such as package names or executable names.
-N:
-N:    Severity: minor, Certainty: wild-guess
-N:
-N:    Check: description, Type: binary, udeb
-N:
-I: hello-c: capitalization-error-in-description Gnome GNOME
-E: hello-c: section-is-dh_make-template
-W: hello-c: superfluous-clutter-in-homepage <insert the upstream URL, if re...
-W: hello-c: bad-homepage <insert the upstream URL, if relevant>
-W: hello-c: binary-without-manpage usr/bin/hello
 Finished running lintian.

@@ -1,4 +1,4 @@
- $ dpkg -c hello-c_0~1407190458-1_amd64.deb
+ $ dpkg -c hello-c_0~1407251518-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/bin/

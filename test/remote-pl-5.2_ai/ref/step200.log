@@ -4,21 +4,21 @@ D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 I: $ /usr/bin/wget http://search.cpan.org/CPAN/authors/id/C/CO/COPPERLY/Per...
---2014-06-14 16:09:51--  http://search.cpan.org/CPAN/authors/id/C/CO/COPPER...
+--2014-07-26 00:22:08--  http://search.cpan.org/CPAN/authors/id/C/CO/COPPER...
 Resolving search.cpan.org (search.cpan.org)... 207.171.7.49, 207.171.7.59
 Connecting to search.cpan.org (search.cpan.org)|207.171.7.49|:80... connect...
 HTTP request sent, awaiting response... 302 Found
 Location: http://www.cpan.org/authors/id/C/CO/COPPERLY/Perl-Tutorial-0.001....
---2014-06-14 16:09:51--  http://www.cpan.org/authors/id/C/CO/COPPERLY/Perl-...
+--2014-07-26 00:22:08--  http://www.cpan.org/authors/id/C/CO/COPPERLY/Perl-...
 Resolving www.cpan.org (www.cpan.org)... 2607:f238:3::91:1, 207.171.7.91, 2...
 Connecting to www.cpan.org (www.cpan.org)|2607:f238:3::91:1|:80... connecte...
 HTTP request sent, awaiting response... 200 OK
 Length: 9120 (8.9K) [application/x-gzip]
 Saving to: ‘Perl-Tutorial-0.001.tar.gz’
 
-100%[======================================================================...
+100%[======================================>] 9,120       --.-K/s   in 0s
 
-2014-06-14 16:09:52 (19.1 MB/s) - ‘Perl-Tutorial-0.001.tar.gz’ saved [9120/...
+2014-07-26 00:22:08 (82.3 MB/s) - ‘Perl-Tutorial-0.001.tar.gz’ saved [9120/...
 
 I: pkg="perl-tutorial", ver="0.001", rev="1"
 I: untar the upstream tarball
@@ -53,10 +53,10 @@ I: analyze the source tree
 I: build_type = Perl ExtUtils::MakeMaker
 I: scan source for copyright+license text and file extensions
 I:  33 %, ext = perl
-I:  17 %, ext = ini
 I:  17 %, ext = pod
-I:  17 %, ext = t
+I:  17 %, ext = ini
 I:  17 %, ext = yml
+I:  17 %, ext = t
 I: check_all_licenses
 I: ........
 I: check_all_licenses completed for 8 files.
@@ -105,8 +105,8 @@ Writing Makefile for Perl::Tutorial
 Writing MYMETA.yml and MYMETA.json
    dh_auto_build
 make[1]: Entering directory '/path/to/perl-tutorial-0.001'
-cp lib/Perl/Tutorial.pm blib/lib/Perl/Tutorial.pm
 cp lib/Perl/Tutorial/HelloWorld.pod blib/lib/Perl/Tutorial/HelloWorld.pod
+cp lib/Perl/Tutorial.pm blib/lib/Perl/Tutorial.pm
 Manifying blib/man3/Perl::Tutorial::HelloWorld.3pm
 Manifying blib/man3/Perl::Tutorial.3pm
 make[1]: Leaving directory '/path/to/perl-tutorial-0.001'
@@ -114,7 +114,7 @@ make[1]: Leaving directory '/path/to/perl-tutorial-0.001'
 make[1]: Entering directory '/path/to/perl-tutorial-0.001'
 PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-e" "test_harnes...
 t/release-pod-syntax.t .. skipped: these tests are for release candidate te...
-Files=1, Tests=0,  0 wallclock secs ( 0.04 usr  0.01 sys +  0.04 cusr  0.00...
+Files=1, Tests=0,  0 wallclock secs ( 0.05 usr  0.00 sys +  0.02 cusr  0.00...
 Result: NOTESTS
 make[1]: Leaving directory '/path/to/perl-tutorial-0.001'
  fakeroot debian/rules binary
@@ -172,7 +172,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: perl-tutorial source: syntax-error-in-dep5-copyright line 42: Continuati...
+W: perl-tutorial source: syntax-error-in-dep5-copyright line 46: Continuati...
 N:
 N:    The machine-readable copyright file didn't pass Debian control file
 N:    syntax check.
@@ -181,7 +181,7 @@ N:    This issue may hide other issues as Lintian skips some checks on the
 N:    file in this case.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible

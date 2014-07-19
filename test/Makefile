@@ -25,6 +25,7 @@ doc:
 	$(MAKE) clean
 	$(MAKE) -C doc
 	cp -f doc/debmake.html ../doc/debmake.html
+	cp -f doc/maint-guide.html ../doc/maint-guide.html
 	cp -f doc/debmake.1 ../manpages/debmake.1
 	$(MAKE) clean
 	$(MAKE) tar
