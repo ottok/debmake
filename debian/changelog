@@ -1,3 +1,9 @@
+debmake (4.1.3-1) unstable; urgency=medium
+
+  * Include maint-guide.html in package. 
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 26 Jul 2014 00:33:04 +0900
+
 debmake (4.1.2-1) unstable; urgency=medium
 
   * Refine the binNMU safe version range (analyze.py).

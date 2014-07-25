@@ -35,6 +35,7 @@ desc/specin.long
 desc/specin.short
 doc/debmake.html
 doc/examples.tar.xz
+doc/maint-guide.html
 extra0/changelog
 extra0/rules
 extra0desc_long/_long
