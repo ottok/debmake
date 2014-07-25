@@ -17,7 +17,7 @@ There is also the *debmake* manpage which explains all the command options.  It 
 If you are new to the Debian packaging, do not worry about the details and just get the big picture instead.  Please read the more detailed guide such as link:maint-guide.html[Debian Maintainers' Guide with debmake].
 
 [[feature-overview]]
-== Featurs overview
+== Feature overview
 
 The *debmake* command is intended to replace functions offered historically by *deb-make* footnote:[This new *debmake* package starts its version from *4.0* to avoid version overlaps with its predecessor provided the *deb-make* command.] and *dh_make* commands.
 
@@ -40,7 +40,7 @@ Its features include:
 ** the non-native Debian packages from the VCS snapshot
 ** seamless work with *debuild*, *pdebuild*, etc.
 
-Thses are realized with the following approaches:
+These are realized with the following approaches:
 
 * It doesn't overwrite existing configuration files in the *debian/* directory.
 * It always sets most of the obvious option states and values to reasonable defaults.
@@ -64,7 +64,7 @@ TIP: Make sure to protect the arguments of the *-b*, *-f*, *-l*, and *-w* option
 
 TIP: The non-native Debian package is the normal Debian package.
 
-NOTE: The generation of the *debian/copyright* file, and the outputs from the *-c* and *-k* options involve hulistic operations on the copyright and license information.  They may produce some errouneous results.
+NOTE: The generation of the *debian/copyright* file, and the outputs from the *-c* and *-k* options involve heuristic operations on the copyright and license information.  They may produce some erroneous results.
 
 [[simple]]
 == Binary package

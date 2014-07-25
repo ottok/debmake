@@ -4,7 +4,7 @@ Let's start with an example of creating a simple Debian package.
 
 === hello-c
 
-Let's consider a simple C source *hello-c* with the upstream version *1.0* following the *$(DESTDIR)* feature of the http://www.gnu.org/prep/standards/[GNU Coding Standards] and http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard[FHS] for the file ionstallation path as an example.
+Let's consider a simple C source *hello-c* with the upstream version *1.0* following the *$(DESTDIR)* feature of the http://www.gnu.org/prep/standards/[GNU Coding Standards] and http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard[FHS] for the file installation path as an example.
 
 The C source *hello.c* is a very simple one.
 
@@ -30,14 +30,14 @@ include::../hello-c-1.0/ref/step101.log[]
 [[debmake]]
 === debmake
 
-The *debmake* command is the helper script for the Debian packaging. Let's note its 4 most important featurs. footnote::[See link:debmake.html[Debmake tutorial] for the extensive list of featurs.]
+The *debmake* command is the helper script for the Debian packaging. Let's note its 4 most important features. footnote::[See link:debmake.html[Debmake tutorial] for the extensive list of features.]
 
 * It always sets most of the obvious option states and values to reasonable defaults.
 * It doesn't overwrite existing configuration files in the *debian/* directory.
 * It supports the *multiarch* package.
-* It creates good template files such as the *debian/copyright* file complient to *DEP-5*.
+* It creates good template files such as the *debian/copyright* file complaint to *DEP-5*.
 
-These 4 featurs make Debian packaging simple and modern.  Let's use this *debmake* command.
+These 4 features make Debian packaging simple and modern.  Let's use this *debmake* command.
 
 === Big picture
 
@@ -69,7 +69,7 @@ The *debmake* command generates all these template files based on the command li
 * The source package name: *hello-c*
 * The upstream version: *1.0*
 * The binary package name: *hello-c*
-* The Debian revison: *1*
+* The Debian revision: *1*
 * The package type: *bin* (the ELF binary executable package)
 * The *-x* option: *-x1* (default for the single binary package)
 

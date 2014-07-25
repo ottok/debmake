@@ -54,7 +54,7 @@ For the safe https://wiki.debian.org/binNMU[binNMU], the dependency among binary
 [[libnames]]
 ==== The library package name
 
-Let's consider that the upstream source tatrball of the *lib*'foo' library is updated from *lib*'foo-7.0'*.tar.gz* to *lib*'foo-8.0'*.tar.gz* with the new SONAME major version.
+Let's consider that the upstream source tarball of the *lib*'foo' library is updated from *lib*'foo-7.0'*.tar.gz* to *lib*'foo-8.0'*.tar.gz* with the new SONAME major version.
 
 In order to distinguish the SONAME major version, their binary library pakages are named as *lib*'foo7' and *lib*'foo8' respectively. 
 
@@ -62,7 +62,7 @@ You need to transition all dependent packages using https://wiki.debian.org/binN
 
 In order to transition smoothly, the *-dev* package must follow one of the following naming rules:
 
-* Use the *unversiond -dev* package name: *lib*'foo'*-dev*
+* Use the *unversioned -dev* package name: *lib*'foo'*-dev*
 ** This is the normal rule.
 ** Only one version of the library package is allowed in the archive.
 ** This is good idea if the number of dependent packages are limited.

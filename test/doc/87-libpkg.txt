@@ -79,7 +79,7 @@ sys::[head -n5  ../remote-lib_a/ref/step220.log]
  ...
 ----
 
-This generats the following source tree. (Too large to list here.)
+This generates the following source tree. (Too large to list here.)
 
 ----
 sys::[head -n15  ../remote-lib_a/ref/step400.log]
@@ -137,7 +137,7 @@ include::../remote-lib_a/ref/step408.log[]
 
 Let's record packaging result into VCS.
 
-(Hmmmm.... importing upstream with pristine-tar first is better but let's not worry now.)
+(Hmmm.... importing upstream with pristine-tar first is better but let's not worry now.)
 
 ----
 sys::[head -n15  ../remote-lib_a/ref/step410.log]

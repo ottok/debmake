@@ -120,7 +120,7 @@ Please realize the situation of the Debian archive.
 
 * Debian already has packages for most kinds of programs.
 * The number of packages already in the Debian archive is several tens of times greater than that of active maintainers.
-* Unfortunately, some packages lacks appropriate level of attention by the maintainer.
+* Unfortunately, some packages lack appropriate level of attention by the maintainer.
 
 Thus, contributions to packages already in the archive are far more appreciated (and more likely to receive sponsorship for the uploading) by other maintainers.
 

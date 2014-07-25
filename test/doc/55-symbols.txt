@@ -1,3 +1,4 @@
+[[symbols]]
 === Library symbols
 
 The symbols support in the *dpkg* introduced to Debian *lenny* (5.0, May 2009) helps us to manage the backward ABI compatibility of the library package with the same package name.  The *DEBIAN/symbols* file in the binary package provides the minimal version associated to each symbol. 

@@ -1,7 +1,7 @@
 [[k-option]]
 === debmake -k
 
-When updating a package for the new upstream release, the *debmake* command can varify the content of the existing *debian/copyright* file against the copyright and license situation of the entire updated source tree.
+When updating a package for the new upstream release, the *debmake* command can verify the content of the existing *debian/copyright* file against the copyright and license situation of the entire updated source tree.
 
 ----
  $ cd package-vcs

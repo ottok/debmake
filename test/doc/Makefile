@@ -30,6 +30,7 @@ clean:
 	-rm -f $(GENTXT)
 	-rm -f *.html
 	-rm -f debmake.1
+	-rm -f *~
 
 remote: new
 	scp $(MANUAL1).html people.debian.org:~osamu/public_html/$(MANUAL1).html

@@ -1,3 +1,4 @@
+[[debsnap]]
 === Package history
 
 For Debian source packages named '<source-package>' recorded in the http://snapshot.debian.org/[snapshot.debian.org] archive, an initial git repository with all of the Debian version history can be generated as follows.

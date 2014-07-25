@@ -15,7 +15,7 @@ The development of the *debmake* package is done on this *devel* branch:
 ** Update the 'version-rev' string in the *debian/changelog* as if this is the non-native Debian package: *dch -r*
 ** Update the 'version' string in the *debmake/\_\_init__.py*.
 
-After everuthing is completed, you package the source as follows.
+After everything is completed, you package the source as follows.
 
 ----
  $ cd test; make; make clean; cd -
