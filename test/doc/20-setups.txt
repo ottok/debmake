@@ -106,8 +106,9 @@ The *debuild* command, included in the *devscripts* package, builds the binary p
 You can setup these by the *~/.devscripts* as follows.
 
 ----
-DEBSIGN_KEYID='Your_GPG_keyID'
-DEBUILD_LINTIAN_OPTS=-i -I --show-overrides
+DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -us -uc"
+DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
+DEBSIGN_KEYID="Your_GPG_keyID"
 ----
 
 Currently, RSA key with 4096 bits is good idea.  See http://keyring.debian.org/creating-key.html[Creating a new GPG key].

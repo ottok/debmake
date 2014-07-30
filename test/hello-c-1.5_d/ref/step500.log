@@ -8,7 +8,7 @@ dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
  dpkg-source -I -i --before-build hello-c-1.5
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
-dh clean --with "autoreconf"
+dh clean --with autoreconf
    dh_testdir
    dh_auto_clean
    dh_autoreconf_clean
@@ -19,9 +19,12 @@ dpkg-source: info: building hello-c using existing ./hello-c_1.5.orig.tar.g...
 dpkg-source: info: building hello-c in hello-c_1.5-1.debian.tar.xz
 dpkg-source: info: building hello-c in hello-c_1.5-1.dsc
  debian/rules build
-dh build --with "autoreconf"
+dh build --with autoreconf
    dh_testdir
-   dh_autoreconf
+   debian/rules override_dh_autoreconf
+make[1]: Entering directory '/path/to/hello-c-1.5'
+dh_autoreconf --as-needed
+make[1]: Leaving directory '/path/to/hello-c-1.5'
    dh_auto_configure
 configure: WARNING: unrecognized options: --disable-maintainer-mode
 checking for a BSD-compatible install... /usr/bin/install -c
@@ -60,7 +63,7 @@ make[1]: Leaving directory '/path/to/hello-c-1.5'
 make[1]: Entering directory '/path/to/hello-c-1.5'
 make[1]: Leaving directory '/path/to/hello-c-1.5'
  fakeroot debian/rules binary
-dh binary --with "autoreconf"
+dh binary --with autoreconf
    dh_testroot
    dh_prep
    dh_auto_install
@@ -70,6 +73,12 @@ make[2]: Entering directory '/path/to/hello-c-1.5'
   /usr/bin/install -c hello '/path/to/hello-c-1.5/debian/hello-c/usr/bin'
 make[2]: Nothing to be done for 'install-data-am'.
 make[2]: Leaving directory '/path/to/hello-c-1.5'
+make[1]: Leaving directory '/path/to/hello-c-1.5'
+   debian/rules override_dh_install
+make[1]: Entering directory '/path/to/hello-c-1.5'
+dh_install --list-missing -X.la -X.pyc -X.pyo
+Can't stat debian/tmp: No such file or directory
+ at /usr/bin/dh_install line 245.
 make[1]: Leaving directory '/path/to/hello-c-1.5'
    dh_installdocs
    dh_installchangelogs

@@ -33,13 +33,19 @@ Thanks to this abstraction of the *dh* command footnote:[This simplicity is avai
 
 .Simple *debian/rules*:
 ----
+#!/usr/bin/make -f
+#DH_VERBOSE = 1
+
 %:
 	dh $@
 ----
 
-Essentially, this *dh* command calls all required *dh_** commands at the right moment.
+Essentially, this *dh* command functions as the sequencer to call all required *dh_** commands at the right moment.
 
 NOTE: The *debmake* command sets the *debian/control* file with "*Build-Depends: debhelper (>=9)*".
+
+TIP: Setting "`DH_VERBOSE = 1`" outputs every command that modifies files on
+the build system.  Also it enables verbose build logs for some build systems.
 
 [[customrules]]
 ==== Customized debian/rules

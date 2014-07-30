@@ -51,6 +51,10 @@ The copyright and license summary (see <<copyright>>)
 ** ... (There may be multiple Debian binary package files.)
 ** 'package_version-revision_arch'.*changes*
 6. Check the quality of the Debian package with the *lintian* command. (recommemded)
+* Follow the rejection guideline from https://ftp-master.debian.org/[ftp-master].
+** https://ftp-master.debian.org/REJECT-FAQ.html[REJECT-FAQ]
+** https://ftp-master.debian.org/NEW-checklist.html[NEW checklist]
+** https://ftp-master.debian.org/#lintianrejects[Lintian Autorejects] (https://ftp-master.debian.org/static/lintian.tags[lintian tag list])
 7. Sign the 'package_version-revision'.*dsc* and 'package_version-revision_arch'.*changes* with the *debsign* command using your private GPG key.
 8. Upload the set of the Debian source and binary package files with the *dput* command to the Debian archive.
 

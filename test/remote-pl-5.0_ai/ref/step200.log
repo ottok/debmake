@@ -149,7 +149,7 @@ Building Acme-Hello
 t/0-signature.t .. ok
 t/1-basic.t ...... ok
 All tests successful.
-Files=2, Tests=4,  0 wallclock secs ( 0.04 usr  0.00 sys +  0.05 cusr  0.00...
+Files=2, Tests=4,  0 wallclock secs ( 0.05 usr  0.00 sys +  0.05 cusr  0.01...
 Result: PASS
  fakeroot debian/rules binary
 dh binary

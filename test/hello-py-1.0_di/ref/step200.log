@@ -3,7 +3,7 @@
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 4ced45b] initial commit
+[master (root-commit) 0a50bde] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -72,7 +72,7 @@ I: pwd = "/path/to/hello-py-1.0"
 I: parse binary package settings: :python3
 I: binary package=hello-py Type=python3 / Arch=all M-A=foreign
 I: analyze the source tree
-I: build_type = Python3 distutils
+I: build_type =
 I: scan source for copyright+license text and file extensions
 I:  67 %, ext = python
 I:  33 %, ext = in
@@ -105,100 +105,85 @@ dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
  dpkg-source -I -i --before-build hello-py-1.0
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
-dh clean --with "python3"
-   dh_testdir
-   debian/rules override_dh_auto_clean
-make[1]: Entering directory '/path/to/hello-py-1.0'
-rm -rf build
-make[1]: Leaving directory '/path/to/hello-py-1.0'
-   dh_clean
+dh clean --with python3 --buildsystem=pybuild
+   dh_testdir -O--buildsystem=pybuild
+   dh_auto_clean -O--buildsystem=pybuild
+I: pybuild base:170: python3.4 setup.py clean
+running clean
+removing '/path/to/hello-py-1.0/.pybuild/pythonX.Y_3.4/build' (and everythi...
+'build/bdist.linux-x86_64' does not exist -- can't clean it
+'build/scripts-3.4' does not exist -- can't clean it
+   dh_clean -O--buildsystem=pybuild
  dpkg-source -I -i -b hello-py-1.0
 dpkg-source: info: using source format `3.0 (quilt)'
 dpkg-source: info: building hello-py using existing ./hello-py_1.0.orig.tar...
 dpkg-source: info: building hello-py in hello-py_1.0-1.debian.tar.xz
 dpkg-source: info: building hello-py in hello-py_1.0-1.dsc
  debian/rules build
-dh build --with "python3"
-   dh_testdir
-   dh_auto_configure
-   debian/rules override_dh_auto_build
-make[1]: Entering directory '/path/to/hello-py-1.0'
-set -ex; for python in  python3; do \
-    $python setup.py build; \
-done
-+ python3 setup.py build
+dh build --with python3 --buildsystem=pybuild
+   dh_testdir -O--buildsystem=pybuild
+   dh_auto_configure -O--buildsystem=pybuild
+I: pybuild base:170: python3.4 setup.py config
+running config
+   dh_auto_build -O--buildsystem=pybuild
+I: pybuild base:170: /usr/bin/python3 setup.py build
 running build
 running build_py
-creating build
-creating build/lib
-creating build/lib/hello-py
-copying hello-py/__init__.py -> build/lib/hello-py
+creating /path/to/hello-py-1.0/.pybuild/pythonX.Y_3.4/build/hello-py
+copying hello-py/__init__.py -> /path/to/hello-py-1.0/.pybuild/pythonX.Y_3....
 running build_scripts
+creating build
 creating build/scripts-3.4
 copying and adjusting scripts/hello -> build/scripts-3.4
 changing mode of build/scripts-3.4/hello from 644 to 755
-make[1]: Leaving directory '/path/to/hello-py-1.0'
-   dh_auto_test
+   dh_auto_test -O--buildsystem=pybuild
+I: pybuild base:170: cd /path/to/hello-py-1.0/.pybuild/pythonX.Y_3.4/build;...
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+OK
  fakeroot debian/rules binary
-dh binary --with "python3"
-   dh_testroot
-   dh_prep
-   debian/rules override_dh_auto_install
-make[1]: Entering directory '/path/to/hello-py-1.0'
-set -ex; for python in  python3; do \
-    $python setup.py install \
-        --root=debian/hello-py\
-        --force\
-        --install-layout=deb; \
-done
-+ python3 setup.py install --root=debian/hello-py --force --install-layout=...
+dh binary --with python3 --buildsystem=pybuild
+   dh_testroot -O--buildsystem=pybuild
+   dh_prep -O--buildsystem=pybuild
+   dh_auto_install -O--buildsystem=pybuild
+I: pybuild base:170: /usr/bin/python3 setup.py install --root /path/to/hell...
 running install
 running build
 running build_py
 running build_scripts
 running install_lib
-creating debian/hello-py
-creating debian/hello-py/usr
-creating debian/hello-py/usr/lib
-creating debian/hello-py/usr/lib/python3
-creating debian/hello-py/usr/lib/python3/dist-packages
-creating debian/hello-py/usr/lib/python3/dist-packages/hello-py
-copying build/lib/hello-py/__init__.py -> debian/hello-py/usr/lib/python3/d...
-byte-compiling debian/hello-py/usr/lib/python3/dist-packages/hello-py/__ini...
+creating /path/to/hello-py-1.0/debian/hello-py/usr
+creating /path/to/hello-py-1.0/debian/hello-py/usr/lib
+creating /path/to/hello-py-1.0/debian/hello-py/usr/lib/python3.4
+creating /path/to/hello-py-1.0/debian/hello-py/usr/lib/python3.4/dist-packa...
+creating /path/to/hello-py-1.0/debian/hello-py/usr/lib/python3.4/dist-packa...
+copying /path/to/hello-py-1.0/.pybuild/pythonX.Y_3.4/build/hello-py/__init_...
+byte-compiling /path/to/hello-py-1.0/debian/hello-py/usr/lib/python3.4/dist...
 running install_scripts
-creating debian/hello-py/usr/bin
-copying build/scripts-3.4/hello -> debian/hello-py/usr/bin
-changing mode of debian/hello-py/usr/bin/hello to 755
+creating /path/to/hello-py-1.0/debian/hello-py/usr/bin
+copying build/scripts-3.4/hello -> /path/to/hello-py-1.0/debian/hello-py/us...
+changing mode of /path/to/hello-py-1.0/debian/hello-py/usr/bin/hello to 755...
 running install_egg_info
-Writing debian/hello-py/usr/lib/python3/dist-packages/hello_py-1.0.egg-info...
-make[1]: Leaving directory '/path/to/hello-py-1.0'
-   dh_installdocs
-   dh_installchangelogs
-   dh_python3
-   dh_perl
-   dh_link
-   dh_compress
-   dh_fixperms
-   dh_installdeb
-   dh_gencontrol
-   dh_md5sums
-   dh_builddeb
+Writing /path/to/hello-py-1.0/debian/hello-py/usr/lib/python3.4/dist-packag...
+   dh_installdocs -O--buildsystem=pybuild
+   dh_installchangelogs -O--buildsystem=pybuild
+   dh_python3 -O--buildsystem=pybuild
+   dh_perl -O--buildsystem=pybuild
+   dh_link -O--buildsystem=pybuild
+   dh_compress -O--buildsystem=pybuild
+   dh_fixperms -O--buildsystem=pybuild
+   dh_installdeb -O--buildsystem=pybuild
+   dh_gencontrol -O--buildsystem=pybuild
+   dh_md5sums -O--buildsystem=pybuild
+   dh_builddeb -O--buildsystem=pybuild
 dpkg-deb: building package `hello-py' in `../hello-py_1.0-1_all.deb'.
  dpkg-genchanges  >../hello-py_1.0-1_amd64.changes
 dpkg-genchanges: including full source code in upload
  dpkg-source -I -i --after-build hello-py-1.0
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
-E: hello-py source: python3-depends-but-no-python3-helper hello-py
-N:
-N:    The source package declares a dependency on ${python3:Depends} in the...
-N:    given binary package's debian/control entry. However, debian/rules
-N:    doesn't call any helper that would generate this substitution variabl...
-N:
-N:    Severity: serious, Certainty: possible
-N:
-N:    Check: debhelper, Type: source
-N:
 W: hello-py source: superfluous-clutter-in-homepage <insert the upstream UR...
 N:
 N:    The "Homepage:" field in this package's control file contains

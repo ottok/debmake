@@ -17,16 +17,13 @@ include /usr/share/dpkg/default.mk
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-
 # main packaging script based on dh7 syntax
 %:
         dh $@
 
 # debmake generated override targets
-# See dpkg-architecture(1) to set multiarch path as needed.
-#DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-#
-# This is example for Cmake (See http://bugs.debian.org/641051 )
+## DEB_HOST_MULTIARCH set by include /usr/share/dpkg/default.mk
+## This is example for Cmake (See http://bugs.debian.org/641051 )
 #override_dh_auto_configure:
 #       dh_auto_configure -- \
 #       -DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
