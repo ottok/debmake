@@ -27,6 +27,7 @@ import os
 import re
 import sys
 import subprocess
+import debmake.grep
 import debmake.read
 import debmake.compat
 import debmake.copyright
@@ -276,12 +277,16 @@ def analyze(para):
             para['override'].update({'multiarch'})
     # Python distutils
     elif os.path.isfile('setup.py'):
-        with open('setup.py', 'r') as f:
-            line = f.readline()
-        if re.search('python3', line):
+        if debmake.grep.grep('setup.py', 'python3', 0, 1):
             # http://docs.python.org/3/distutils/
             para['dh_with'].update({'python3'})
-            para['build_depends'].update({'python3-all', 'dh-python'})
+            if debmake.grep.grep('setup.py', r'from\s+setuptools\s+import\s+setup'):
+                para['build_depends'].update({'python3-all', 'dh-python', 'python3-setuptools'})
+            elif debmake.grep.grep('setup.py', r'from\s+distutils.core\s+import\s+setup'):
+                para['build_depends'].update({'python3-all', 'dh-python'})
+            else:
+                print('W: neither distutils nor setuptools.  check setup.py.', file=sys.stderr)
+                para['build_depends'].update({'python3-all', 'dh-python'})
             para['dh_buildsystem'] = 'pybuild'
             if 'python2' in para['dh_with']:
                 para['build_depends'].update({'python-all'})
@@ -290,11 +295,17 @@ def analyze(para):
                     para['desc'] = description('python3', para['base_path'])
                 if para['desc_long'] =='':
                     para['desc_long'] = description_long('python3', para['base_path'])
-        elif re.search('python', line):
+        elif debmake.grep.grep('setup.py', 'python', 0, 1):
             # http://docs.python.org/2/distutils/
             para['dh_with'].update({'python2'})
             para['build_type']      = 'Python distutils'
-            para['build_depends'].update({'python-all'})
+            if debmake.grep.grep('setup.py', r'from\s+setuptools\s+import\s+setup'):
+                para['build_depends'].update({'python3-all', 'dh-python', 'python-setuptools'})
+            elif debmake.grep.grep('setup.py', r'from\s+distutils.core\s+import\s+setup'):
+                para['build_depends'].update({'python3-all', 'dh-python'})
+            else:
+                print('W: neither distutils nor setuptools.  check setup.py.', file=sys.stderr)
+                para['build_depends'].update({'python3-all', 'dh-python'})
             if 'python3' in para['dh_with']:
                 para['build_depends'].update({'python3-all', 'dh-python'})
                 para['dh_buildsystem'] = 'pybuild'
