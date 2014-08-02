@@ -6,7 +6,7 @@
 @EXPORT@
 # main packaging script based on dh7 syntax
 %:
-	dh $@ @DHWITH@
+	dh $@ @DHWITH@ @DHBUILDSYSTEM@
 
 # debmake generated override targets
 @OVERRIDE@

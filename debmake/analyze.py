@@ -186,25 +186,20 @@ def analyze(para):
             else:
                 para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
         elif deb['type'] == 'perl':
-            para['debs'][i]['depends'].update({'perl'}) # may not be needed
             for libpkg in para['lib']:
                 para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
         elif deb['type'] == 'python':
-            #para['dh_with'].update({'python2'}) # may not be needed
-            para['debs'][i]['depends'].update({'python'})
+            para['dh_with'].update({'python2'}) # better to be explicit
             para['build_depends'].update({'python-all'})
             for libpkg in para['lib']:
                 para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         elif deb['type'] == 'python3':
             para['dh_with'].update({'python3'})
-            para['debs'][i]['depends'].update({'python3'})
-            para['override'].update({'python3'})
-            para['build_depends'].update({'python3-all'})
+            para['build_depends'].update({'python3-all', 'dh-python'})
             for libpkg in para['lib']:
                 para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         elif deb['type'] == 'ruby':
             para['dh_with'].update({'ruby'}) # may not be needed
-            para['debs'][i]['depends'].update({'ruby'})
             para['build_depends'].update({'ruby'})
             for libpkg in para['lib']:
                 para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
@@ -217,6 +212,7 @@ def analyze(para):
     # auto-set build system by files in the base directory
     #######################################################################
     para['build_type'] = '' # reset value
+    para['dh_buildsystem'] = '' # normally not needed
     # check if '*.pro' for Qmake project exist in advance. 
     pro = glob.glob('*.pro')
     if pro:
@@ -285,9 +281,10 @@ def analyze(para):
         if re.search('python3', line):
             # http://docs.python.org/3/distutils/
             para['dh_with'].update({'python3'})
-            para['build_type']      = 'Python3 distutils'
-            para['build_depends'].update({'python3-all'})
-            para['override'].update({'python3'})
+            para['build_depends'].update({'python3-all', 'dh-python'})
+            para['dh_buildsystem'] = 'pybuild'
+            if 'python2' in para['dh_with']:
+                para['build_depends'].update({'python-all'})
             if para['spec']:
                 if para['desc'] == '':
                     para['desc'] = description('python3', para['base_path'])
@@ -295,10 +292,12 @@ def analyze(para):
                     para['desc_long'] = description_long('python3', para['base_path'])
         elif re.search('python', line):
             # http://docs.python.org/2/distutils/
-            if debmake.compat.compat(para['compat']) < 9:
-                para['dh_with'].update({'python2'})
+            para['dh_with'].update({'python2'})
             para['build_type']      = 'Python distutils'
             para['build_depends'].update({'python-all'})
+            if 'python3' in para['dh_with']:
+                para['build_depends'].update({'python3-all', 'dh-python'})
+                para['dh_buildsystem'] = 'pybuild'
             if para['spec']:
                 if para['desc'] == '':
                     para['desc'] = description('python', para['base_path'])
@@ -393,17 +392,20 @@ def analyze(para):
         if setmultiarch and para['build_type'][0:9] != 'Autotools':
             para['override'].update({'multiarch'})
     #######################################################################
-    # interpreter: warn binary dependency etc. if they are top 3 popular files
-    popular('perl', '-b":perl, ..." missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
-    popular('python', '-b":python, ..." or -b":python3" missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
-    popular('ruby', '-b":ruby, ..." missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
-    #######################################################################
-    # set build dependency if --with requests (to be safe)
+    # set build dependency and override if --with python2/python3
     #######################################################################
     if 'python2' in para['dh_with']:
         para['build_depends'].update({'python-all'})
+        para['override'].update({'pythons'})
     if 'python3' in para['dh_with']:
-        para['build_depends'].update({'python3-all'})
+        para['build_depends'].update({'python3-all', 'dh-python'})
+        para['override'].update({'pythons'})
+    #######################################################################
+    # interpreter: warn binary dependency etc. if they are top 3 popular files
+    #######################################################################
+    popular('perl', '-b":perl, ..." missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
+    popular('python', '-b":python, ..." or -b":python3" missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
+    popular('ruby', '-b":ruby, ..." missing. Continue?', para['debs'], para['extcountlist'], para['yes'])
     #######################################################################
     return para
 

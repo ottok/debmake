@@ -111,8 +111,8 @@ def debian(para):
         build_dir = 'debian/tmp'
     if 'dbg' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(para['dh_strip']).rstrip() + '\n\n'
-    if 'python3' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'python3').format(build_dir).strip() + '\n\n'
+    if 'pythons' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'pythons').format(build_dir).strip() + '\n\n'
     if 'multiarch' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n\n'
     if 'java' in para['override']:
@@ -127,7 +127,11 @@ def debian(para):
     if para['dh_with'] == set(): # no dh_with
         substlist['@DHWITH@'] = ''
     else:
-        substlist['@DHWITH@'] = '--with "{}"'.format(','.join(para['dh_with']))
+        substlist['@DHWITH@'] = '--with {}'.format(','.join(para['dh_with']))
+    if para['dh_buildsystem'] == '': # no --buildsystem
+        substlist['@DHBUILDSYSTEM@'] = ''
+    else:
+        substlist['@DHBUILDSYSTEM@'] = '--buildsystem={}'.format(para['dh_buildsystem'])
     confdir = para['base_path'] + '/share/debmake/extra0/'
     debmake.sed.sed(confdir, 'debian/', substlist, package) # changelog, rules
     os.chmod('debian/rules', 0o755)
