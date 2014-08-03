@@ -233,12 +233,20 @@ def analyze(para):
         para['dh_with'].update({'autoreconf'})
         para['build_type']      = 'Autotools with autoreconf'
         para['build_depends'].update({'dh-autoreconf'})
+        if os.path.isfile('autogen.sh'):
+            para['override'].update({'autogen'})
+        else:
+            para['override'].update({'autoreconf'})
     elif os.path.isfile('configure.in') and \
             os.path.isfile('Makefile.am') and \
             not ('autotools-dev' in para['dh_with']):
         para['dh_with'].update({'autoreconf'})
         para['build_type']      = 'Autotools with autoreconf (old)'
         para['build_depends'].update({'dh-autoreconf'})
+        if os.path.isfile('autogen.sh'):
+            para['override'].update({'autogen'})
+        else:
+            para['override'].update({'autoreconf'})
         print('W: Use of configure.in has been deprecated since 2001.', file=sys.stderr)
     elif os.path.isfile('configure.ac') and \
             os.path.isfile('Makefile.am') and \

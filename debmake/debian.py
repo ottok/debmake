@@ -109,16 +109,20 @@ def debian(para):
         build_dir = 'debian/' + para['debs'][0]['package']
     else:
         build_dir = 'debian/tmp'
+    if 'autogen' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'autogen').rstrip() + '\n\n'
+    if 'autoreconf' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'autoreconf').rstrip() + '\n\n'
     if 'dbg' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(para['dh_strip']).rstrip() + '\n\n'
-    if 'pythons' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'pythons').format(build_dir).strip() + '\n\n'
-    if 'multiarch' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n\n'
     if 'java' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n\n'
     if 'judge' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'judge').rstrip() + '\n\n'
+    if 'multiarch' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n\n'
+    if 'pythons' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'pythons').rstrip() + '\n\n'
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################

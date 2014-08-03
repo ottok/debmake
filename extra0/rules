@@ -3,8 +3,11 @@
 # output every command that modifies files on the build system.
 #DH_VERBOSE = 1
 
-@EXPORT@
-# main packaging script based on dh7 syntax
+# see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
+@EXPORT@# main packaging script based on dh7 syntax
 %:
 	dh $@ @DHWITH@ @DHBUILDSYSTEM@
 
