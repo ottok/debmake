@@ -771,7 +771,7 @@ asciidoc.install(2);
 <span id="author">Osamu Aoki</span><br />
 <span id="email"><code>&lt;<a href="mailto:osamu@debian.org">osamu@debian.org</a>&gt;</code></span><br />
 <span id="revnumber">version 2.0~pre1,</span>
-<span id="revdate">2014-07-26</span>
+<span id="revdate">2014-08-04</span>
 <div id="toc">
   <div id="toctitle">Table of Contents</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1276,7 +1276,7 @@ The number of packages already in the Debian archive is several tens of times gr
 </li>
 <li>
 <p>
-Unfortunately, some packages lacks appropriate level of attention by the maintainer.
+Unfortunately, some packages lack appropriate level of attention by the maintainer.
 </p>
 </li>
 </ul></div>
@@ -1765,8 +1765,9 @@ fi</code></pre>
 <div class="paragraph"><p>You can setup these by the <strong>~/.devscripts</strong> as follows.</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>DEBSIGN_KEYID='Your_GPG_keyID'
-DEBUILD_LINTIAN_OPTS=-i -I --show-overrides</code></pre>
+<pre><code>DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -us -uc"
+DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
+DEBSIGN_KEYID="Your_GPG_keyID"</code></pre>
 </div></div>
 <div class="paragraph"><p>Currently, RSA key with 4096 bits is good idea.  See <a href="http://keyring.debian.org/creating-key.html">Creating a new GPG key</a>.</p></div>
 </div>
@@ -1934,7 +1935,7 @@ Specialized HTTP caching proxy using the <strong>apt-cacher-ng</strong> package.
 <div class="paragraph"><p>Let&#8217;s start with an example of creating a simple Debian package.</p></div>
 <div class="sect2">
 <h3 id="_hello_c">hello-c</h3>
-<div class="paragraph"><p>Let&#8217;s consider a simple C source <strong>hello-c</strong> with the upstream version <strong>1.0</strong> following the <strong>$(DESTDIR)</strong> feature of the <a href="http://www.gnu.org/prep/standards/">GNU Coding Standards</a> and <a href="http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard">FHS</a> for the file ionstallation path as an example.</p></div>
+<div class="paragraph"><p>Let&#8217;s consider a simple C source <strong>hello-c</strong> with the upstream version <strong>1.0</strong> following the <strong>$(DESTDIR)</strong> feature of the <a href="http://www.gnu.org/prep/standards/">GNU Coding Standards</a> and <a href="http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard">FHS</a> for the file installation path as an example.</p></div>
 <div class="paragraph"><p>The C source <strong>hello.c</strong> is a very simple one.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -1985,7 +1986,7 @@ distclean: clean
 </div>
 <div class="sect2">
 <h3 id="debmake">debmake</h3>
-<div class="paragraph"><p>The <strong>debmake</strong> command is the helper script for the Debian packaging. Let&#8217;s note its 4 most important featurs. <span class="footnote"><br />[See <a href="debmake.html">Debmake tutorial</a> for the extensive list of featurs.]<br /></span></p></div>
+<div class="paragraph"><p>The <strong>debmake</strong> command is the helper script for the Debian packaging. Let&#8217;s note its 4 most important features. <span class="footnote"><br />[See <a href="debmake.html">Debmake tutorial</a> for the extensive list of features.]<br /></span></p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -2004,11 +2005,11 @@ It supports the <strong>multiarch</strong> package.
 </li>
 <li>
 <p>
-It creates good template files such as the <strong>debian/copyright</strong> file complient to <strong>DEP-5</strong>.
+It creates good template files such as the <strong>debian/copyright</strong> file complaint to <strong>DEP-5</strong>.
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>These 4 featurs make Debian packaging simple and modern.  Let&#8217;s use this <strong>debmake</strong> command.</p></div>
+<div class="paragraph"><p>These 4 features make Debian packaging simple and modern.  Let&#8217;s use this <strong>debmake</strong> command.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_big_picture">Big picture</h3>
@@ -2094,7 +2095,7 @@ The binary package name: <strong>hello-c</strong>
 </li>
 <li>
 <p>
-The Debian revison: <strong>1</strong>
+The Debian revision: <strong>1</strong>
 </p>
 </li>
 <li>
@@ -2132,16 +2133,13 @@ include /usr/share/dpkg/default.mk
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-
 # main packaging script based on dh7 syntax
 %:
         dh $@
 
 # debmake generated override targets
-# See dpkg-architecture(1) to set multiarch path as needed.
-#DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-#
-# This is example for Cmake (See http://bugs.debian.org/641051 )
+## DEB_HOST_MULTIARCH set by include /usr/share/dpkg/default.mk
+## This is example for Cmake (See http://bugs.debian.org/641051 )
 #override_dh_auto_configure:
 #       dh_auto_configure -- \
 #       -DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)</code></pre>
@@ -2554,6 +2552,30 @@ Create the Debian binary package using <strong>dpkg-deb</strong>(1), and <strong
 <p>
 Check the quality of the Debian package with the <strong>lintian</strong> command. (recommemded)
 </p>
+<div class="ulist"><ul>
+<li>
+<p>
+Follow the rejection guideline from <a href="https://ftp-master.debian.org/">ftp-master</a>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://ftp-master.debian.org/REJECT-FAQ.html">REJECT-FAQ</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://ftp-master.debian.org/NEW-checklist.html">NEW checklist</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://ftp-master.debian.org/#lintianrejects">Lintian Autorejects</a> (<a href="https://ftp-master.debian.org/static/lintian.tags">lintian tag list</a>)
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
 </li>
 <li>
 <p>
@@ -2770,16 +2792,28 @@ The <strong>dh</strong> command is normally used as the front-end to the build s
 <div class="listingblock">
 <div class="title">Simple <strong>debian/rules</strong>:</div>
 <div class="content">
-<pre><code>%:
+<pre><code>#!/usr/bin/make -f
+#DH_VERBOSE = 1
+
+%:
         dh $@</code></pre>
 </div></div>
-<div class="paragraph"><p>Essentially, this <strong>dh</strong> command calls all required <strong>dh_</strong>* commands at the right moment.</p></div>
+<div class="paragraph"><p>Essentially, this <strong>dh</strong> command functions as the sequencer to call all required <strong>dh_</strong>* commands at the right moment.</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
 <div class="title">Note</div>
 </td>
 <td class="content">The <strong>debmake</strong> command sets the <strong>debian/control</strong> file with "<strong>Build-Depends: debhelper (&gt;=9)</strong>".</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">Setting "<code>DH_VERBOSE = 1</code>" outputs every command that modifies files on
+the build system.  Also it enables verbose build logs for some build systems.</td>
 </tr></table>
 </div>
 </div>
@@ -2989,14 +3023,14 @@ List all file paths (relative to <strong>debian/tmp</strong>) in the correspondi
 </div>
 <div class="sect3">
 <h4 id="libnames">The library package name</h4>
-<div class="paragraph"><p>Let&#8217;s consider that the upstream source tatrball of the <strong>lib</strong><em>foo</em> library is updated from <strong>lib</strong><em>foo-7.0</em><strong>.tar.gz</strong> to <strong>lib</strong><em>foo-8.0</em><strong>.tar.gz</strong> with the new SONAME major version.</p></div>
+<div class="paragraph"><p>Let&#8217;s consider that the upstream source tarball of the <strong>lib</strong><em>foo</em> library is updated from <strong>lib</strong><em>foo-7.0</em><strong>.tar.gz</strong> to <strong>lib</strong><em>foo-8.0</em><strong>.tar.gz</strong> with the new SONAME major version.</p></div>
 <div class="paragraph"><p>In order to distinguish the SONAME major version, their binary library pakages are named as <strong>lib</strong><em>foo7</em> and <strong>lib</strong><em>foo8</em> respectively.</p></div>
 <div class="paragraph"><p>You need to transition all dependent packages using <a href="https://wiki.debian.org/binNMU">binNMU</a> by working with the <a href="https://wiki.debian.org/Teams/ReleaseTeam">release team</a>.</p></div>
 <div class="paragraph"><p>In order to transition smoothly, the <strong>-dev</strong> package must follow one of the following naming rules:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-Use the <strong>unversiond -dev</strong> package name: <strong>lib</strong><em>foo</em><strong>-dev</strong>
+Use the <strong>unversioned -dev</strong> package name: <strong>lib</strong><em>foo</em><strong>-dev</strong>
 </p>
 <div class="ulist"><ul>
 <li>
@@ -3870,7 +3904,7 @@ Copy configuration template files as needed to the filenames matching their pert
 </li>
 <li>
 <p>
-<strong>hello-</strong><em>version</em><strong>.tar.gz.sig</strong> (detatched signature)
+<strong>hello-</strong><em>version</em><strong>.tar.gz.sig</strong> (detached signature)
 </p>
 </li>
 </ul></div>
@@ -4271,12 +4305,12 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="paragraph"><p>For  Autotools based packages under the <strong>debhelper</strong> package (compat&gt;=9), this path setting is automatically taken care by the <strong>dh_auto_configure</strong> command.</p></div>
+<div class="paragraph"><p>For Autotools based packages under the <strong>debhelper</strong> package (compat&gt;=9), this path setting is automatically taken care by the <strong>dh_auto_configure</strong> command.</p></div>
 <div class="paragraph"><p>For other packages with non-supported build systems, you need to manually adjust the install path as follows.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-If <strong>./configure</strong> is used in the part of <strong>override_dh_auto_configure</strong> target in <strong>debian/rules</strong>, make sure to replace it with "<strong>dh_auto_configure --</strong>" while retargeting the install path from <strong>/usr/lib/</strong> to <strong>/usr/lib/$(DEB_HOST_MULTIARCH)/</strong>.
+If <strong>./configure</strong> is used in the part of <strong>override_dh_auto_configure</strong> target in <strong>debian/rules</strong>, make sure to replace it with "<strong>dh_auto_configure --</strong>" while re-targeting the install path from <strong>/usr/lib/</strong> to <strong>/usr/lib/$(DEB_HOST_MULTIARCH)/</strong>.
 </p>
 </li>
 <li>
@@ -4364,7 +4398,7 @@ cellspacing="0" cellpadding="4">
 </div>
 </div>
 <div class="sect2">
-<h3 id="_library_symbols">Library symbols</h3>
+<h3 id="symbols">Library symbols</h3>
 <div class="paragraph"><p>The symbols support in the <strong>dpkg</strong> introduced to Debian <strong>lenny</strong> (5.0, May 2009) helps us to manage the backward ABI compatibility of the library package with the same package name.  The <strong>DEBIAN/symbols</strong> file in the binary package provides the minimal version associated to each symbol.</p></div>
 <div class="paragraph"><p>The oversimplified method for the library packaging is as follows.</p></div>
 <div class="ulist"><ul>
@@ -4826,7 +4860,7 @@ The <strong>systemd</strong> packaging practice documentation on <a href="http:/
 </ul></div>
 </div>
 <div class="sect2">
-<h3 id="_package_history">Package history</h3>
+<h3 id="debsnap">Package history</h3>
 <div class="paragraph"><p>For Debian source packages named <em>&lt;source-package&gt;</em> recorded in the <a href="http://snapshot.debian.org/">snapshot.debian.org</a> archive, an initial git repository with all of the Debian version history can be generated as follows.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -5086,7 +5120,7 @@ The command to login to the <strong>sid</strong> chroot to modify it
 </div>
 <div class="sect2">
 <h3 id="newrevision">New Debian revision</h3>
-<div class="paragraph"><p>Let&#8217;s assume that a bug report <strong>#</strong><em>bug_number</em> was filed against your package, and it describes a problem that you can solve by editting <strong>buggy</strong> file in the upstream source.  Here&#8217;s what you need to do to create a new Debian revision of the package with the <strong>bugname.patch</strong> file recording the fix.</p></div>
+<div class="paragraph"><p>Let&#8217;s assume that a bug report <strong>#</strong><em>bug_number</em> was filed against your package, and it describes a problem that you can solve by editing <strong>buggy</strong> file in the upstream source.  Here&#8217;s what you need to do to create a new Debian revision of the package with the <strong>bugname.patch</strong> file recording the fix.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ dquilt new bugname.patch
@@ -5256,7 +5290,7 @@ The command to login to the <strong>sid</strong> chroot to modify it
 </div>
 <div class="sect2">
 <h3 id="k-option">debmake -k</h3>
-<div class="paragraph"><p>When updating a package for the new upstream release, the <strong>debmake</strong> command can varify the content of the existing <strong>debian/copyright</strong> file against the copyright and license situation of the entire updated source tree.</p></div>
+<div class="paragraph"><p>When updating a package for the new upstream release, the <strong>debmake</strong> command can verify the content of the existing <strong>debian/copyright</strong> file against the copyright and license situation of the entire updated source tree.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ cd package-vcs
@@ -5802,7 +5836,7 @@ hello-c-0.9/hello.c</code></pre>
 Initialized empty Git repository in /path/to/hello-c/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 8a3983c] initial commit
+[master (root-commit) 19763ae] initial commit
  2 files changed, 21 insertions(+)
  create mode 100644 Makefile
  create mode 100644 hello.c
@@ -5816,11 +5850,11 @@ D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-I: pkg="hello-c", ver="0~1407251518", rev="1"
+I: pkg="hello-c", ver="0~1408031520", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-c"
 I: pwd = "/path/to"
-I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1407251518...
+I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1408031520...
 sending incremental file list
  ...
 I: debmake -x "1" ...
@@ -5828,7 +5862,7 @@ I: debmake -x "1" ...
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: upon return to the shell, current directory becomes /path/to/hello-c
-I: please execute "cd /path/to/hello-c-0~1407251518" before building the bi...
+I: please execute "cd /path/to/hello-c-0~1408031520" before building the bi...
 I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 </div></div>
 <div class="paragraph"><p>Let’s inspect files.</p></div>
@@ -5840,7 +5874,7 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 ├── hello-c
 │   ├── hello.c
 │   └── Makefile
-├── hello-c-0~1407251518
+├── hello-c-0~1408031520
 │   ├── debian
 │   │   ├── changelog
 │   │   ├── compat
@@ -5856,8 +5890,8 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 │   │   └── watch
 │   ├── hello.c
 │   └── Makefile
-├── hello-c_0~1407251518.orig.tar.gz -&gt; hello-c-0~1407251518.tar.gz
-└── hello-c-0~1407251518.tar.gz
+├── hello-c_0~1408031520.orig.tar.gz -&gt; hello-c-0~1408031520.tar.gz
+└── hello-c-0~1408031520.tar.gz
 
 5 directories, 16 files</code></pre>
 </div></div>
@@ -5865,24 +5899,24 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 <div class="ulist"><ul>
 <li>
 <p>
-the snapshot upstream tarball: <strong>hello-0~1407251518.tar.gz</strong> (<strong>hello-c_0~1407251518.orig.tar.gz</strong>)
+the snapshot upstream tarball: <strong>hello-0~1408031520.tar.gz</strong> (<strong>hello-c_0~1408031520.orig.tar.gz</strong>)
 </p>
 </li>
 <li>
 <p>
-the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-0~1407251518/</strong>*
+the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-0~1408031520/</strong>*
 </p>
 </li>
 <li>
 <p>
-the cleaned VCS directory: <strong>hello-c-0~1407251518/</strong>*
+the cleaned VCS directory: <strong>hello-c-0~1408031520/</strong>*
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-0~1407251518/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
+<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-0~1408031520/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ cd hello-c-0~1407251518
+<pre><code> $ cd hello-c-0~1408031520
  $ debuild
  dpkg-buildpackage -rfakeroot -D -us -uc -I -i
  ...
@@ -5904,20 +5938,20 @@ Finished running lintian.</code></pre>
  $ tree -L 1
 .
 ├── hello-c
-├── hello-c-0~1407251518
-├── hello-c_0~1407251518-1_amd64.build
-├── hello-c_0~1407251518-1_amd64.changes
-├── hello-c_0~1407251518-1_amd64.deb
-├── hello-c_0~1407251518-1.debian.tar.xz
-├── hello-c_0~1407251518-1.dsc
-├── hello-c_0~1407251518.orig.tar.gz -&gt; hello-c-0~1407251518.tar.gz
-└── hello-c-0~1407251518.tar.gz
+├── hello-c-0~1408031520
+├── hello-c_0~1408031520-1_amd64.build
+├── hello-c_0~1408031520-1_amd64.changes
+├── hello-c_0~1408031520-1_amd64.deb
+├── hello-c_0~1408031520-1.debian.tar.xz
+├── hello-c_0~1408031520-1.dsc
+├── hello-c_0~1408031520.orig.tar.gz -&gt; hello-c-0~1408031520.tar.gz
+└── hello-c-0~1408031520.tar.gz
 
 2 directories, 7 files</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ dpkg -c hello-c_0~1407251518-1_amd64.deb
+<pre><code> $ dpkg -c hello-c_0~1408031520-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/bin/
@@ -5931,7 +5965,7 @@ drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
 </div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ tar -tJf hello-c_0~1407251518-1.debian.tar.xz
+<pre><code> $ tar -tJf hello-c_0~1408031520-1.debian.tar.xz
 debian/
 debian/compat
 debian/changelog
@@ -5944,22 +5978,22 @@ debian/source/
 debian/source/format
 debian/patches/
 debian/patches/series
- $ tar -tzf hello-c-0~1407251518.tar.gz
-hello-c-0~1407251518/
-hello-c-0~1407251518/Makefile
-hello-c-0~1407251518/hello.c</code></pre>
+ $ tar -tzf hello-c-0~1408031520.tar.gz
+hello-c-0~1408031520/
+hello-c-0~1408031520/Makefile
+hello-c-0~1408031520/hello.c</code></pre>
 </div></div>
 <div class="paragraph"><p>Your development branch holding the working upstream source tree and the <strong>debian/</strong>* files is the <strong>devel</strong> branch.</p></div>
 <div class="paragraph"><p>The following will import generated Debian packages to <strong>master</strong>, <strong>upstream</strong>, and <strong>pristine-tar</strong> branches. (These are the 3 typical branches used by the <strong>gbp</strong> command.)</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ cd hello-c
- $ git-import-dsc ../hello-c_0~1407251518-1.dsc  \
+ $ git-import-dsc ../hello-c_0~1408031520-1.dsc  \
                   --pristine-tar --create-missing-branches
-gbp:info: Tag upstream/0_1407251518 not found, importing Upstream tarball
+gbp:info: Tag upstream/0_1408031520 not found, importing Upstream tarball
 gbp:info: Creating missing branch 'upstream'
-pristine-tar: committed hello-c_0~1407251518.orig.tar.gz.delta to branch pr...
-gbp:info: Version '0~1407251518-1' imported under 'hello-c'
+pristine-tar: committed hello-c_0~1408031520.orig.tar.gz.delta to branch pr...
+gbp:info: Version '0~1408031520-1' imported under 'hello-c'
  $ git branch
 * devel
   master
@@ -6020,7 +6054,7 @@ hello_SOURCES = hello.c</code></pre>
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) cd58086] initial commit
+[master (root-commit) 96c17d9] initial commit
  3 files changed, 21 insertions(+)
  create mode 100644 Makefile.am
  create mode 100644 configure.ac
@@ -6136,13 +6170,13 @@ the cleaned VCS directory: <strong>vcsdir/</strong>*
  dpkg-buildpackage -rfakeroot -D -us -uc -I -i
  ...
  fakeroot debian/rules clean
-dh clean --with "autoreconf"
+dh clean --with autoreconf
  ...
  debian/rules build
-dh build --with "autoreconf"
+dh build --with autoreconf
  ...
  fakeroot debian/rules binary
-dh binary --with "autoreconf"
+dh binary --with autoreconf
  ...
 Finished running lintian.</code></pre>
 </div></div>
@@ -6316,7 +6350,7 @@ if __name__ == '__main__':
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 4ced45b] initial commit
+[master (root-commit) 0a50bde] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -6426,7 +6460,7 @@ Source: hello-py
 Section: unknown
 Priority: extra
 Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
-Build-Depends: debhelper (&gt;=9), python3-all
+Build-Depends: debhelper (&gt;=9), dh-python, python3-all
 Standards-Version: 3.9.5
 Homepage: &lt;insert the upstream URL, if relevant&gt;
 X-Python3-Version: &gt;= 3.2
@@ -6434,7 +6468,7 @@ X-Python3-Version: &gt;= 3.2
 Package: hello-py
 Architecture: all
 Multi-Arch: foreign
-Depends: python3, ${misc:Depends}, ${python3:Depends}
+Depends: ${misc:Depends}, ${python3:Depends}
 Description: Hello Python
  Hello Python program.</code></pre>
 </div></div>
@@ -6447,7 +6481,7 @@ Version: 1.0-1
 Architecture: all
 Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
 Installed-Size: 49
-Depends: python3, python3:any (&gt;= 3.3.2-2~)
+Depends: python3:any (&gt;= 3.3.2-2~), python3
 Section: unknown
 Priority: extra
 Multi-Arch: foreign
@@ -6666,7 +6700,6 @@ include /usr/share/dpkg/default.mk
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-
 # main packaging script based on dh7 syntax
 %:
         dh $@
@@ -6825,8 +6858,8 @@ drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/lib/
 drwxr-xr-x root/root ...  ./usr/lib/debug/
 drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/
-drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/e8/
--rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/e8/2aa333b2d6018bcf7c6b...
+drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/21/
+-rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/21/77116880cc0f2cd95f50...
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c-dbg/
@@ -7080,7 +7113,7 @@ I: $ wrap-and-sort</code></pre>
  ... (snip)
  ...</code></pre>
 </div></div>
-<div class="paragraph"><p>This generats the following source tree. (Too large to list here.)</p></div>
+<div class="paragraph"><p>This generates the following source tree. (Too large to list here.)</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ tree
@@ -7388,7 +7421,7 @@ override_dh_test:
  $ rm -f libkkc2.prerm</code></pre>
 </div></div>
 <div class="paragraph"><p>Let&#8217;s record packaging result into VCS.</p></div>
-<div class="paragraph"><p>(Hmmmm&#8230;. importing upstream with pristine-tar first is better but let&#8217;s not worry now.)</p></div>
+<div class="paragraph"><p>(Hmmm&#8230;. importing upstream with pristine-tar first is better but let&#8217;s not worry now.)</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ cd ../
@@ -7727,7 +7760,7 @@ Update the <em>version</em> string in the <strong>debmake/__init__.py</strong>.
 </ul></div>
 </li>
 </ul></div>
-<div class="paragraph"><p>After everuthing is completed, you package the source as follows.</p></div>
+<div class="paragraph"><p>After everything is completed, you package the source as follows.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ cd test; make; make clean; cd -

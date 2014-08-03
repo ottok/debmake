@@ -237,7 +237,7 @@ def debs(binaryspec, package, monoarch, dh_with):
         elif t == 'lib': # library
             dp.update({'${shlibs:Depends}'})
         elif t == 'perl': # dh_perl(1)
-            dp.update({'${perl:Depends}', 'perl'})
+            dp.update({'${perl:Depends}'})
         elif t == 'python': # dh_python2
             dp.update({'${python:Depends}'})
         elif t == 'python3': # dh_python3
