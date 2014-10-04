@@ -189,7 +189,9 @@ cd /tmp/buildd/*/debian/..
 /bin/bash < /dev/tty > /dev/tty 2> /dev/tty
 ----
 
-NOTE: All these scripts need to be world executable: `-rwxr-xr-x 1 root root`
+NOTE: All these scripts need to be set world executable: `-rwxr-xr-x 1 root root`.
+
+NOTE: The *ccache* cache directory */var/cache/pbuilder/ccache* needs to be set world writable: `-rwxrwxrwx 1 root root` for the *pbuilder* command.  You should be aware of associated security concerns.
 
 [[gbp-setup]]
 === git-buildpackage
