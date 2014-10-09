@@ -1,16 +1,16 @@
  $ tar -tJf perl-tutorial_0.001-1.debian.tar.xz
 debian/
-debian/compat
-debian/changelog
-debian/watch
-debian/control
-debian/copyright
-debian/README.Debian
 debian/rules
+debian/compat
+debian/control
+debian/watch
+debian/copyright
 debian/source/
 debian/source/format
+debian/README.Debian
 debian/patches/
 debian/patches/series
+debian/changelog
  $ tar -tzf Perl-Tutorial-0.001.tar.gz
 Perl-Tutorial-0.001
 Perl-Tutorial-0.001/README

@@ -1,6 +1,5 @@
  $ cd ..
  $ cat hello-c.build-dep.log
-  bison
   cmake-data
   dh-autoreconf
   gawk
@@ -10,16 +9,14 @@
   libfakeroot:amd64
   libfreetype6-dev
   libglib2.0-dev
-  libgpg-error-dev
   libgtk-3-dev
   libgtk2.0-dev
   liblocale-gettext-perl
   libltdl-dev:amd64
-  libnspr4-dev
   libwayland-dev
-  libxml2-dev:amd64
+  make-guile
   mime-support
   perl-modules
-  valac-0.24
+  valac-0.26
   xfonts-utils
   xtrans-dev

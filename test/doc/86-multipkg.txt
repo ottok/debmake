@@ -68,7 +68,7 @@ include::../hello-1.1/ref/step402.log[]
 
 Now we know what files are generated in the *debian/tmp* directory.
 
-Let's start with the fresh source tree and build package from there.
+Let's start with the fresh source tree and build package from there.  Let's skip generating tutorial comment lines by using the *-Q* option.
 
 .The *debmake* execution (2nd stage)
 ----

@@ -1,11 +1,11 @@
  $ cd ..
  $ debuild
- dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package hello-c
 dpkg-buildpackage: source version 1.0-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build hello-c-1.0
+ dpkg-source -i --before-build hello-c-1.0
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
@@ -15,7 +15,7 @@ make[1]: Entering directory '/path/to/hello-c-1.0'
 rm -f hello
 make[1]: Leaving directory '/path/to/hello-c-1.0'
    dh_clean
- dpkg-source -I -i -b hello-c-1.0
+ dpkg-source -i -b hello-c-1.0
 dpkg-source: info: using source format `3.0 (quilt)'
 dpkg-source: info: building hello-c using existing ./hello-c_1.0.orig.tar.g...
 dpkg-source: info: building hello-c in hello-c_1.0-1.debian.tar.xz
@@ -58,7 +58,7 @@ dpkg-deb: building package `hello-c' in `../hello-c_1.0-1_amd64.deb'.
 dpkg-deb: building package `hello-c-dbg' in `../hello-c-dbg_1.0-1_amd64.deb...
  dpkg-genchanges  >../hello-c_1.0-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build hello-c-1.0
+ dpkg-source -i --after-build hello-c-1.0
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: hello-c source: superfluous-clutter-in-homepage <insert the upstream URL...
@@ -88,6 +88,30 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
+W: hello-c source: file-without-copyright-information debian/README.Debian
+N:
+N:    The source tree contains a file which was not matched by any of the
+N:    Files paragraphs in debian/copyright. Either adjust existing wildcard...
+N:    to match that file or add a new Files paragraph.
+N:
+N:    Refer to
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: hello-c source: file-without-copyright-information debian/changelog
+W: hello-c source: file-without-copyright-information debian/clean
+W: hello-c source: file-without-copyright-information debian/compat
+W: hello-c source: file-without-copyright-information debian/control
+W: hello-c source: file-without-copyright-information debian/copyright
+W: hello-c source: file-without-copyright-information debian/hello-c.instal...
+W: hello-c source: file-without-copyright-information debian/patches/series...
+W: hello-c source: file-without-copyright-information debian/rules
+W: hello-c source: file-without-copyright-information debian/source/format
+W: hello-c source: file-without-copyright-information debian/watch
 W: hello-c source: missing-license-paragraph-in-dep5-copyright __unknown__ ...
 N:
 N:    The files paragraph in the machine readable copyright file references...
@@ -101,20 +125,45 @@ N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
 N:
-W: hello-c: hardening-no-relro usr/bin/hello
+W: hello-c source: out-of-date-standards-version 3.9.5 (current is 3.9.6)
 N:
-N:    This package provides an ELF binary that lacks the "read-only
-N:    relocation" link flag. This package was likely not built with the
-N:    default Debian compiler flags defined by dpkg-buildflags. If built us...
-N:    dpkg-buildflags directly, be sure to import LDFLAGS.
+N:    The source package refers to a Standards-Version older than the one t...
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field...
+N:    appropriately.
 N:
-N:    Refer to https://wiki.debian.org/Hardening for details.
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Vers...
+N:    control field. However, please remember to update this field next tim...
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist...
+N:    for details.
 N:
 N:    Severity: normal, Certainty: certain
 N:
+N:    Check: standards-version, Type: source
+N:
+W: hello-c-dbg: debug-file-with-no-debug-symbols usr/lib/debug/.build-id/e5...
+N:
+N:    The binary is installed as a detached "debug symbols" ELF file, but i...
+N:    does not appear to have debug information associated with it.
+N:
+N:    Implementation detail: Lintian currently checks for the ".debug_line"...
+N:    section, which is a part of the DWARF standard.
+N:
+N:    Refer to http://bugs.debian.org/668437 for details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
 N:    Check: binaries, Type: binary, udeb
 N:
-W: hello-c: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
 N:
 N:    Bug numbers can only contain digits.
 N:
@@ -125,7 +174,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-c: new-package-should-close-itp-bug
+W: hello-c-dbg: new-package-should-close-itp-bug
 N:
 N:    This package appears to be the first packaging of a new upstream
 N:    software package (there is only one changelog entry and the Debian
@@ -142,7 +191,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-E: hello-c: changelog-is-dh_make-template
+E: hello-c-dbg: changelog-is-dh_make-template
 N:
 N:    The changelog file has an instruction left by dh_make, which has not
 N:    been removed. Example:
@@ -156,7 +205,7 @@ N:    Severity: important, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-c: copyright-has-url-from-dh_make-boilerplate
+W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
 N:
 N:    There is "url://example.com" in your copyright file. This was most
 N:    likely a remnant from the dh_make template.
@@ -171,7 +220,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-W: hello-c: copyright-without-copyright-notice
+W: hello-c-dbg: copyright-without-copyright-notice
 N:
 N:    The copyright file for this package does not appear to contain a
 N:    copyright notice. You should copy the copyright notice from the upstr...
@@ -198,6 +247,26 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
+W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL, i...
+W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
+W: hello-c: hardening-no-relro usr/bin/hello
+N:
+N:    This package provides an ELF binary that lacks the "read-only
+N:    relocation" link flag. This package was likely not built with the
+N:    default Debian compiler flags defined by dpkg-buildflags. If built us...
+N:    dpkg-buildflags directly, be sure to import LDFLAGS.
+N:
+N:    Refer to https://wiki.debian.org/Hardening for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: binaries, Type: binary, udeb
+N:
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c: new-package-should-close-itp-bug
+E: hello-c: changelog-is-dh_make-template
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
+W: hello-c: copyright-without-copyright-notice
 W: hello-c: extended-description-line-too-long
 N:
 N:    One or more lines in the extended part of the "Description:" field ha...
@@ -286,25 +355,4 @@ N:    Severity: normal, Certainty: possible
 N:
 N:    Check: manpages, Type: binary
 N:
-W: hello-c-dbg: debug-file-with-no-debug-symbols usr/lib/debug/.build-id/21...
-N:
-N:    The binary is installed as a detached "debug symbols" ELF file, but i...
-N:    does not appear to have debug information associated with it.
-N:
-N:    Implementation detail: Lintian currently checks for the ".debug_line"...
-N:    section, which is a part of the DWARF standard.
-N:
-N:    Refer to http://bugs.debian.org/668437 for details.
-N:
-N:    Severity: normal, Certainty: possible
-N:
-N:    Check: binaries, Type: binary, udeb
-N:
-W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
-W: hello-c-dbg: new-package-should-close-itp-bug
-E: hello-c-dbg: changelog-is-dh_make-template
-W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
-W: hello-c-dbg: copyright-without-copyright-notice
-W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL, i...
-W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
 Finished running lintian.

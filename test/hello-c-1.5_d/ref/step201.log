@@ -21,7 +21,6 @@
 ├── Makefile
 ├── Makefile.am
 ├── Makefile.in
-├── missing
-└── stamp-h1
+└── missing
 
-1 directory, 22 files
+1 directory, 21 files

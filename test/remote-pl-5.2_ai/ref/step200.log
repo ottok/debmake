@@ -4,21 +4,21 @@ D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 I: $ /usr/bin/wget http://search.cpan.org/CPAN/authors/id/C/CO/COPPERLY/Per...
---2014-08-04 00:25:07--  http://search.cpan.org/CPAN/authors/id/C/CO/COPPER...
+--2014-10-13 00:27:09--  http://search.cpan.org/CPAN/authors/id/C/CO/COPPER...
 Resolving search.cpan.org (search.cpan.org)... 207.171.7.49, 207.171.7.59
 Connecting to search.cpan.org (search.cpan.org)|207.171.7.49|:80... connect...
 HTTP request sent, awaiting response... 302 Found
 Location: http://www.cpan.org/authors/id/C/CO/COPPERLY/Perl-Tutorial-0.001....
---2014-08-04 00:25:07--  http://www.cpan.org/authors/id/C/CO/COPPERLY/Perl-...
-Resolving www.cpan.org (www.cpan.org)... 2607:f238:3::91:1, 207.171.7.91, 2...
+--2014-10-13 00:27:10--  http://www.cpan.org/authors/id/C/CO/COPPERLY/Perl-...
+Resolving www.cpan.org (www.cpan.org)... 2607:f238:3::91:1, 94.242.223.198,...
 Connecting to www.cpan.org (www.cpan.org)|2607:f238:3::91:1|:80... connecte...
 HTTP request sent, awaiting response... 200 OK
 Length: 9120 (8.9K) [application/x-gzip]
 Saving to: ‘Perl-Tutorial-0.001.tar.gz’
 
-100%[=============================================>] 9,120       --.-K/s   ...
+100%[======================================>] 9,120       --.-K/s   in 0s
 
-2014-08-04 00:25:07 (66.4 MB/s) - ‘Perl-Tutorial-0.001.tar.gz’ saved [9120/...
+2014-10-13 00:27:11 (25.2 MB/s) - ‘Perl-Tutorial-0.001.tar.gz’ saved [9120/...
 
 I: pkg="perl-tutorial", ver="0.001", rev="1"
 I: untar the upstream tarball
@@ -53,9 +53,9 @@ I: analyze the source tree
 I: build_type = Perl ExtUtils::MakeMaker
 I: scan source for copyright+license text and file extensions
 I:  33 %, ext = perl
-I:  17 %, ext = t
-I:  17 %, ext = pod
 I:  17 %, ext = yml
+I:  17 %, ext = pod
+I:  17 %, ext = t
 I:  17 %, ext = ini
 I: check_all_licenses
 I: ........
@@ -69,28 +69,28 @@ I: creating => debian/control
 I: creating => debian/copyright
 I: creating => debian/changelog
 I: creating => debian/rules
+I: creating => debian/README.Debian
 I: creating => debian/compat
 I: creating => debian/watch
-I: creating => debian/README.Debian
 I: creating => debian/source/format
 I: creating => debian/source/local-options
 I: creating => debian/patches/series
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: debuild
- dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package perl-tutorial
 dpkg-buildpackage: source version 0.001-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build perl-tutorial-0.001
+ dpkg-source -i --before-build perl-tutorial-0.001
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
    dh_testdir
    dh_auto_clean
    dh_clean
- dpkg-source -I -i -b perl-tutorial-0.001
+ dpkg-source -i -b perl-tutorial-0.001
 dpkg-source: info: using source format `3.0 (quilt)'
 dpkg-source: info: building perl-tutorial using existing ./perl-tutorial_0....
 dpkg-source: info: building perl-tutorial in perl-tutorial_0.001-1.debian.t...
@@ -101,20 +101,21 @@ dh build
    dh_auto_configure
 Checking if your kit is complete...
 Looks good
+Generating a Unix-style Makefile
 Writing Makefile for Perl::Tutorial
 Writing MYMETA.yml and MYMETA.json
    dh_auto_build
 make[1]: Entering directory '/path/to/perl-tutorial-0.001'
-cp lib/Perl/Tutorial.pm blib/lib/Perl/Tutorial.pm
 cp lib/Perl/Tutorial/HelloWorld.pod blib/lib/Perl/Tutorial/HelloWorld.pod
+cp lib/Perl/Tutorial.pm blib/lib/Perl/Tutorial.pm
 Manifying blib/man3/Perl::Tutorial.3pm
 Manifying blib/man3/Perl::Tutorial::HelloWorld.3pm
 make[1]: Leaving directory '/path/to/perl-tutorial-0.001'
    dh_auto_test
 make[1]: Entering directory '/path/to/perl-tutorial-0.001'
-PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-e" "test_harnes...
+PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-MTest::Harness"...
 t/release-pod-syntax.t .. skipped: these tests are for release candidate te...
-Files=1, Tests=0,  1 wallclock secs ( 0.06 usr  0.00 sys +  0.04 cusr  0.00...
+Files=1, Tests=0,  0 wallclock secs ( 0.01 usr +  0.00 sys =  0.01 CPU)
 Result: NOTESTS
 make[1]: Leaving directory '/path/to/perl-tutorial-0.001'
  fakeroot debian/rules binary
@@ -123,8 +124,6 @@ dh binary
    dh_prep
    dh_auto_install
 make[1]: Entering directory '/path/to/perl-tutorial-0.001'
-Manifying blib/man3/Perl::Tutorial.3pm
-Manifying blib/man3/Perl::Tutorial::HelloWorld.3pm
 Installing /path/to/perl-tutorial-0.001/debian/perl-tutorial/usr/share/perl...
 Installing /path/to/perl-tutorial-0.001/debian/perl-tutorial/usr/share/perl...
 Installing /path/to/perl-tutorial-0.001/debian/perl-tutorial/usr/share/man/...
@@ -144,7 +143,7 @@ make[1]: Leaving directory '/path/to/perl-tutorial-0.001'
 dpkg-deb: building package `perl-tutorial' in `../perl-tutorial_0.001-1_all...
  dpkg-genchanges  >../perl-tutorial_0.001-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build perl-tutorial-0.001
+ dpkg-source -i --after-build perl-tutorial-0.001
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: perl-tutorial source: superfluous-clutter-in-homepage <insert the upstre...
@@ -174,7 +173,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: perl-tutorial source: syntax-error-in-dep5-copyright line 46: Continuati...
+W: perl-tutorial source: syntax-error-in-dep5-copyright line 47: Continuati...
 N:
 N:    The machine-readable copyright file didn't pass Debian control file
 N:    syntax check.
@@ -189,6 +188,30 @@ N:
 N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
+N:
+W: perl-tutorial source: out-of-date-standards-version 3.9.5 (current is 3....
+N:
+N:    The source package refers to a Standards-Version older than the one t...
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field...
+N:    appropriately.
+N:
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Vers...
+N:    control field. However, please remember to update this field next tim...
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: standards-version, Type: source
 N:
 W: perl-tutorial: wrong-bug-number-in-closes l3:#nnnn
 N:

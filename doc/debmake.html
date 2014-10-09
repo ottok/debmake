@@ -771,7 +771,7 @@ asciidoc.install(2);
 <span id="author">Osamu Aoki</span><br />
 <span id="email"><code>&lt;<a href="mailto:osamu@debian.org">osamu@debian.org</a>&gt;</code></span><br />
 <span id="revnumber">version 2.0~pre1,</span>
-<span id="revdate">2014-08-04</span>
+<span id="revdate">2014-10-13</span>
 <div id="toc">
   <div id="toctitle">Table of Contents</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1459,7 +1459,7 @@ See <a href="maint-guide2.html#emptypkg">Cherry-pick templates</a> for the cherr
 </div>
 <div class="sect2">
 <h3 id="_synopsis">SYNOPSIS</h3>
-<div class="paragraph"><p><strong>debmake</strong>  [<strong>-h</strong>]  [<strong>-c</strong> | <strong>-k</strong>] [<strong>-n</strong> | <strong>-a</strong> <em>package-version</em><strong>.orig.tar.gz</strong> | <strong>-d</strong> | <strong>-t</strong> ] [<strong>-p</strong> <em>package</em>] [<strong>-u</strong> <em>version</em>] [<strong>-r</strong> <em>revision</em>] [<strong>-z</strong> <em>extension</em>] [<strong>-b</strong> "<em>binarypackage</em><em><span class=":__type__">, &#8230;</span></em>]" [<strong>-e</strong> <em>foo@example.org</em>] [<strong>-f</strong> "<em>firstname lastname</em>"] [<strong>-i</strong> "<em>buildtool</em>" | <strong>-j</strong>] [<strong>-l</strong> <em>license_file</em>] [<strong>-m</strong>] [<strong>-o</strong> <em>file</em>] [<strong>-q</strong>] [<strong>-s</strong>] [<strong>-v</strong>] [<strong>-w</strong> "<em>addon, &#8230;</em>"] [<strong>-x</strong> [01234]] [<strong>-y</strong>]</p></div>
+<div class="paragraph"><p><strong>debmake</strong>  [<strong>-h</strong>]  [<strong>-c</strong> | <strong>-k</strong>] [<strong>-n</strong> | <strong>-a</strong> <em>package-version</em><strong>.orig.tar.gz</strong> | <strong>-d</strong> | <strong>-t</strong> ] [<strong>-p</strong> <em>package</em>] [<strong>-u</strong> <em>version</em>] [<strong>-r</strong> <em>revision</em>] [<strong>-z</strong> <em>extension</em>] [<strong>-b</strong> "<em>binarypackage</em><em><span class=":__type__">, &#8230;</span></em>]" [<strong>-e</strong> <em>foo@example.org</em>] [<strong>-f</strong> "<em>firstname lastname</em>"] [<strong>-i</strong> "<em>buildtool</em>" | <strong>-j</strong>] [<strong>-l</strong> <em>license_file</em>] [<strong>-m</strong>] [<strong>-o</strong> <em>file</em>] [<strong>-q</strong>] [<strong>-s</strong>] [<strong>-v</strong>] [<strong>-w</strong> "<em>addon, &#8230;</em>"] [<strong>-x</strong> [01234]] [<strong>-y</strong>] [<strong>-Q</strong>]</p></div>
 </div>
 <div class="sect2">
 <h3 id="_description">DESCRIPTION</h3>
@@ -1855,6 +1855,14 @@ generate extra configuration files as templates.
 force "yes" for all prompts. (without option: "ask [Y/n]"; doubled option: force "no")
 </p>
 </dd>
+<dt class="hdlist1">
+<strong>-Q</strong>, <strong>--quiet</strong>
+</dt>
+<dd>
+<p>
+quiet tutorial comment lines marked with <strong>&#35;&#35;&#35;</strong> in template files
+</p>
+</dd>
 </dl></div>
 </div>
 </div>
@@ -1934,6 +1942,7 @@ etc.
 </div>
 <div class="sect2">
 <h3 id="_caveat">CAVEAT</h3>
+<div class="paragraph"><p><strong>debmake</strong> is meant to provide template files for the package maintainer to work on.  Comment lines started by <strong>&#35;&#35;&#35;</strong> are the tutorial text.  You must remove or edit such comment lines before uploading to the Debian archive.</p></div>
 <div class="paragraph"><p>There  are some limitations for what characters may be used as a part of the Debian package.  The most notable limitation is the prohibition of uppercase letters in the package name.  Here is the summary in the regular expression.</p></div>
 <div class="ulist"><ul>
 <li>
@@ -2068,7 +2077,8 @@ A full tutorial document for the Debian packaging with packaging examples: <a hr
 <div id="footer">
 <div id="footer-text">
 Version 2.0~pre1<br />
-Last updated 2014-07-26 23:33:15 JST
+Last updated
+ 2014-07-26 23:33:15 JST
 </div>
 </div>
 </body>

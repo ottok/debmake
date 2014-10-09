@@ -1,11 +1,11 @@
  $ cd hello-world
-/home/osamu/src/debmake/debmake/test/bin/CD: line 4: cd: hello-world: No su...
+/media/osamu/f00eab04-2e60-414d-bb90-9220843b2652/home/osamu/vcs-maint/debm...
  $ debmake -s -b':ruby' -t -u 1.2.0 -i debuild
 D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-W: -u "1.2.0" != auto set value "0~1406140710"
+W: -u "1.2.0" != auto set value "0~1410121527"
 I: pkg="hello-world", ver="1.2.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-world"
@@ -18,19 +18,19 @@ sent 404 bytes  received 55 bytes  918.00 bytes/sec
 total size is 5,139  speedup is 11.20
 I: $ tar --exclude='hello-world-1.2.0/debian' --anchored --exclude-caches -...
 hello-world-1.2.0/
-hello-world-1.2.0/hello-world.gemspec
 hello-world-1.2.0/LICENSE
-hello-world-1.2.0/Rakefile
+hello-world-1.2.0/hello-world.gemspec
 hello-world-1.2.0/README.rdoc
 hello-world-1.2.0/test/
 hello-world-1.2.0/test/helper.rb
 hello-world-1.2.0/test/test_hello-world.rb
+hello-world-1.2.0/.document
 hello-world-1.2.0/VERSION
-hello-world-1.2.0/lib/
-hello-world-1.2.0/lib/hello-world.rb
 hello-world-1.2.0/bin/
 hello-world-1.2.0/bin/hello-world
-hello-world-1.2.0/.document
+hello-world-1.2.0/lib/
+hello-world-1.2.0/lib/hello-world.rb
+hello-world-1.2.0/Rakefile
 I: hello-world-1.2.0.tar.gz tarball made
 I: pwd = "/path/to/hello-world-1.2.0"
 I: *** start packaging in "hello-world-1.2.0". ***
@@ -44,10 +44,10 @@ I: analyze the source tree
 I: build_type = Unknown
 I: scan source for copyright+license text and file extensions
 I:  43 %, ext = ruby
-I:  14 %, ext = gemspec
-I:  14 %, ext = document
 I:  14 %, ext = rdoc
+I:  14 %, ext = gemspec
 I:  14 %, ext = gitignore
+I:  14 %, ext = document
 I: check_all_licenses
 I: ..........
 I: check_all_licenses completed for 10 files.
@@ -60,40 +60,40 @@ I: creating => debian/control
 I: creating => debian/copyright
 I: creating => debian/changelog
 I: creating => debian/rules
+I: creating => debian/README.Debian
 I: creating => debian/compat
 I: creating => debian/watch
-I: creating => debian/README.Debian
 I: creating => debian/source/format
 I: creating => debian/source/local-options
 I: creating => debian/patches/series
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: debuild
- dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package hello-world
 dpkg-buildpackage: source version 1.2.0-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build hello-world-1.2.0
+ dpkg-source -i --before-build hello-world-1.2.0
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
-dh clean --with "ruby"
+dh clean --with ruby
    dh_testdir
    dh_auto_clean
    dh_clean
- dpkg-source -I -i -b hello-world-1.2.0
+ dpkg-source -i -b hello-world-1.2.0
 dpkg-source: info: using source format `3.0 (quilt)'
 dpkg-source: info: building hello-world using existing ./hello-world_1.2.0....
 dpkg-source: info: building hello-world in hello-world_1.2.0-1.debian.tar.x...
 dpkg-source: info: building hello-world in hello-world_1.2.0-1.dsc
  debian/rules build
-dh build --with "ruby"
+dh build --with ruby
    dh_testdir
    dh_auto_configure
    dh_auto_build
    dh_auto_test
  fakeroot debian/rules binary
-dh binary --with "ruby"
+dh binary --with ruby
    dh_testroot
    dh_prep
    dh_auto_install
@@ -111,9 +111,19 @@ dpkg-gencontrol: warning: Depends field of package hello-world: unknown sub...
 dpkg-deb: building package `hello-world' in `../hello-world_1.2.0-1_all.deb...
  dpkg-genchanges  >../hello-world_1.2.0-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build hello-world-1.2.0
+ dpkg-source -i --after-build hello-world-1.2.0
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
+E: hello-world source: missing-build-dependency-for-dh-addon ruby => gem2de...
+N:
+N:    The source package appears to be using a dh addon but doesn't build
+N:    depend on the package that actually provides it. If it uses it, it mu...
+N:    build depend on it.
+N:
+N:    Severity: important, Certainty: possible
+N:
+N:    Check: debhelper, Type: source
+N:
 W: hello-world source: superfluous-clutter-in-homepage <insert the upstream...
 N:
 N:    The "Homepage:" field in this package's control file contains
@@ -141,7 +151,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: hello-world source: syntax-error-in-dep5-copyright line 34: Continuation...
+W: hello-world source: syntax-error-in-dep5-copyright line 39: Continuation...
 N:
 N:    The machine-readable copyright file didn't pass Debian control file
 N:    syntax check.
@@ -150,12 +160,36 @@ N:    This issue may hide other issues as Lintian skips some checks on the
 N:    file in this case.
 N:
 N:    Refer to
-N:    http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ for...
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
 N:    details.
 N:
 N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
+N:
+W: hello-world source: out-of-date-standards-version 3.9.5 (current is 3.9....
+N:
+N:    The source package refers to a Standards-Version older than the one t...
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field...
+N:    appropriately.
+N:
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Vers...
+N:    control field. However, please remember to update this field next tim...
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: standards-version, Type: source
 N:
 W: hello-world: wrong-bug-number-in-closes l3:#nnnn
 N:

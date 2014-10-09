@@ -239,6 +239,12 @@ Argument may need to be quoted to protect from the shell.
             action = 'count', 
             default = 0, 
             help = 'force "yes" for all prompts')
+    p.add_argument(
+            '-Q', 
+            '--quiet', 
+            action = 'store_true', 
+            default = False, 
+            help='quiet tutorial comment lines marked with ### in template files')
     args = p.parse_args()
 #######################################################################
 # Set parameter values
@@ -294,6 +300,7 @@ Argument may need to be quoted to protect from the shell.
     para['yes']             = min(args.yes, 2)  # -y
                             # 0: ask, 1: yes, 2: no
     para['targz']           = args.targz        # -z
+    para['quiet']           = args.quiet        # -Q
     ############################################# -o
     if args.option:
         exec(debmake.read.read(args.option))

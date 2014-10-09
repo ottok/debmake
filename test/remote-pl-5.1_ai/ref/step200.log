@@ -38,8 +38,8 @@ I: build_type = Perl ExtUtils::MakeMaker
 I: scan source for copyright+license text and file extensions
 I:  43 %, ext = t
 I:  29 %, ext = perl
-I:  14 %, ext = yml
 I:  14 %, ext = debug
+I:  14 %, ext = yml
 I: check_all_licenses
 I: ............
 I: check_all_licenses completed for 12 files.
@@ -52,28 +52,28 @@ I: creating => debian/control
 I: creating => debian/copyright
 I: creating => debian/changelog
 I: creating => debian/rules
+I: creating => debian/README.Debian
 I: creating => debian/compat
 I: creating => debian/watch
-I: creating => debian/README.Debian
 I: creating => debian/source/format
 I: creating => debian/source/local-options
 I: creating => debian/patches/series
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: debuild
- dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package file-tail
 dpkg-buildpackage: source version 0.99.3-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build file-tail-0.99.3
+ dpkg-source -i --before-build file-tail-0.99.3
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
    dh_testdir
    dh_auto_clean
    dh_clean
- dpkg-source -I -i -b file-tail-0.99.3
+ dpkg-source -i -b file-tail-0.99.3
 dpkg-source: info: using source format `3.0 (quilt)'
 dpkg-source: info: building file-tail using existing ./file-tail_0.99.3.ori...
 dpkg-source: info: building file-tail in file-tail_0.99.3-1.debian.tar.xz
@@ -89,6 +89,7 @@ with the code. To install with debugging enabled, use:
 perl Makefile.PL LOGIT
 Checking if your kit is complete...
 Looks good
+Generating a Unix-style Makefile
 Writing Makefile for File::Tail
 Writing MYMETA.yml and MYMETA.json
    dh_auto_build
@@ -98,12 +99,12 @@ Manifying blib/man3/File::Tail.3pm
 make[1]: Leaving directory '/path/to/file-tail-0.99.3'
    dh_auto_test
 make[1]: Entering directory '/path/to/file-tail-0.99.3'
-PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-e" "test_harnes...
+PERL_DL_NONLAZY=1 /usr/bin/perl "-MExtUtils::Command::MM" "-MTest::Harness"...
 t/10open.t ......... ok
 t/20tail.t ......... ok
 t/30name_change.t .. ok
 All tests successful.
-Files=3, Tests=15, 64 wallclock secs ( 0.05 usr  0.01 sys +  0.15 cusr  0.0...
+Files=3, Tests=15, 66 wallclock secs ( 0.03 usr  0.01 sys +  0.10 cusr  0.0...
 Result: PASS
 make[1]: Leaving directory '/path/to/file-tail-0.99.3'
  fakeroot debian/rules binary
@@ -129,7 +130,7 @@ make[1]: Leaving directory '/path/to/file-tail-0.99.3'
 dpkg-deb: building package `file-tail' in `../file-tail_0.99.3-1_all.deb'.
  dpkg-genchanges  >../file-tail_0.99.3-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build file-tail-0.99.3
+ dpkg-source -i --after-build file-tail-0.99.3
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: file-tail source: superfluous-clutter-in-homepage <insert the upstream U...
@@ -159,6 +160,28 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
+W: file-tail source: file-without-copyright-information debian/README.Debia...
+N:
+N:    The source tree contains a file which was not matched by any of the
+N:    Files paragraphs in debian/copyright. Either adjust existing wildcard...
+N:    to match that file or add a new Files paragraph.
+N:
+N:    Refer to
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: file-tail source: file-without-copyright-information debian/changelog
+W: file-tail source: file-without-copyright-information debian/compat
+W: file-tail source: file-without-copyright-information debian/control
+W: file-tail source: file-without-copyright-information debian/copyright
+W: file-tail source: file-without-copyright-information debian/patches/seri...
+W: file-tail source: file-without-copyright-information debian/rules
+W: file-tail source: file-without-copyright-information debian/source/forma...
+W: file-tail source: file-without-copyright-information debian/watch
 W: file-tail source: missing-license-paragraph-in-dep5-copyright __unknown_...
 N:
 N:    The files paragraph in the machine readable copyright file references...
@@ -171,6 +194,30 @@ N:
 N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
+N:
+W: file-tail source: out-of-date-standards-version 3.9.5 (current is 3.9.6)...
+N:
+N:    The source package refers to a Standards-Version older than the one t...
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field...
+N:    appropriately.
+N:
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Vers...
+N:    control field. However, please remember to update this field next tim...
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: standards-version, Type: source
 N:
 W: file-tail: wrong-bug-number-in-closes l3:#nnnn
 N:

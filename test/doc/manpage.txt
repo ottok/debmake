@@ -9,7 +9,7 @@ debmake - program to make the Debian source package
 
 == SYNOPSIS
 
-*debmake*  [*-h*]  [*-c* | *-k*] [*-n* | *-a* 'package-version'*.orig.tar.gz* | *-d* | *-t* ] [*-p* 'package'] [*-u* 'version'] [*-r* 'revision'] [*-z* 'extension'] [*-b* "'binarypackage'[:__type__]__, ...__]" [*-e* 'foo@example.org'] [*-f* "'firstname lastname'"] [*-i* "'buildtool'" | *-j*] [*-l* 'license_file'] [*-m*] [*-o* 'file'] [*-q*] [*-s*] [*-v*] [*-w* "'addon, ...'"] [*-x* [01234]] [*-y*]
+*debmake*  [*-h*]  [*-c* | *-k*] [*-n* | *-a* 'package-version'*.orig.tar.gz* | *-d* | *-t* ] [*-p* 'package'] [*-u* 'version'] [*-r* 'revision'] [*-z* 'extension'] [*-b* "'binarypackage'[:__type__]__, ...__]" [*-e* 'foo@example.org'] [*-f* "'firstname lastname'"] [*-i* "'buildtool'" | *-j*] [*-l* 'license_file'] [*-m*] [*-o* 'file'] [*-q*] [*-s*] [*-v*] [*-w* "'addon, ...'"] [*-x* [01234]] [*-y*] [*-Q*]
 
 
 == DESCRIPTION
@@ -187,6 +187,10 @@ Existing configuration files are never overwritten.  If you wish to update some 
 *-y*, *--yes*::
 force "yes" for all prompts. (without option: "ask [Y/n]"; doubled option: force "no")
 
+*-Q*, *--quiet*::
+quiet tutorial comment lines marked with *&#35;&#35;&#35;* in template files
+
+
 == EXAMPLES
 
 For  a  well  behaving  source, you can build a good-for-local-use installable single Debian binary package easily with one command.  Test install of such a package
@@ -227,6 +231,8 @@ Packaging may require installation of some additional specialty helper packages.
 * etc.
 
 == CAVEAT
+
+*debmake* is meant to provide template files for the package maintainer to work on.  Comment lines started by *&#35;&#35;&#35;* are the tutorial text.  You must remove or edit such comment lines before uploading to the Debian archive.
 
 There  are some limitations for what characters may be used as a part of the Debian package.  The most notable limitation is the prohibition of uppercase letters in the package name.  Here is the summary in the regular expression.
 

@@ -1,4 +1,4 @@
  $ tar -xvzmf hello-c-0.9.tar.gz
 hello-c-0.9/
-hello-c-0.9/Makefile
 hello-c-0.9/hello.c
+hello-c-0.9/Makefile

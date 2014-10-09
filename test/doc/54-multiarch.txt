@@ -11,7 +11,7 @@ You should read the following references in detail.
 ** https://wiki.debian.org/Multiarch[Debian multiarch support]
 ** https://wiki.debian.org/Multiarch/Implementation[Multiarch/Implementation]
 
-The multiarch is enabled by using the *<triplet>* value such as *i386-linux-gnu* and *x86_64-linux-gnu* in the the install path of shared libraries as */usr/lib/<triplet>/*, etc.. The actual *<triplet>* value is dynamically set into the *$(DEB_HOST_MULTIARCH)* variable by the *dpkg-architecture* command for each build.  The inclusion of */usr/share/dpkg/default.mk* in the *debian/rules* file as described in <<buildflags>> ensures to set the *$(DEB_HOST_MULTIARCH)* variable even when running *debian/rules* directly without the *dpkg-buildpackage* command.
+The multiarch is enabled by using the *<triplet>* value such as *i386-linux-gnu* and *x86_64-linux-gnu* in the the install path of shared libraries as */usr/lib/<triplet>/*, etc.. The actual *<triplet>* value is dynamically set into the *$(DEB_HOST_MULTIARCH)* variable by the *dpkg-architecture* command for each build.  The inclusion of */usr/share/dpkg/architecture.mk* in the *debian/rules* file as described in <<variablesrules>> ensures to set the *$(DEB_HOST_MULTIARCH)* variable even when running *debian/rules* directly without the *dpkg-buildpackage* command.
 
 ==== The multiarch library path
 

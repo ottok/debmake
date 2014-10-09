@@ -17,6 +17,11 @@ all:
 	$(MAKE) ref
 	$(MAKE) doc
 
+pkg:
+	sudo apt-get update
+	sudo apt-get build-dep debmake
+	sudo apt-get install asciidoc tree dh-autoreconf dh-python
+
 remote:
 	$(MAKE) clean
 	$(MAKE) -C doc remote

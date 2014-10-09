@@ -8,8 +8,8 @@ I: untar the upstream tarball
 I: pwd = "/path/to"
 I: $ tar -xvzf hello-c-1.0.tar.gz
 hello-c-1.0/
-hello-c-1.0/Makefile
 hello-c-1.0/hello.c
+hello-c-1.0/Makefile
 I: untared hello-c-1.0.tar.gz.
 I: tar -tzf hello-c-1.0.tar.gz|grep -v /.
 I: pwd = "/path/to/hello-c-1.0"
@@ -37,26 +37,26 @@ I: creating => debian/control
 I: creating => debian/copyright
 I: creating => debian/changelog
 I: creating => debian/rules
+I: creating => debian/README.Debian
 I: creating => debian/compat
 I: creating => debian/watch
-I: creating => debian/README.Debian
 I: creating => debian/source/format
 I: creating => debian/source/local-options
 I: creating => debian/patches/series
-I: creating => debian/hello-c.postinst
+I: creating => debian/hello-c.links
 I: creating => debian/clean
 I: creating => debian/hello-c.postrm
-I: creating => debian/hello-c.preinst
 I: creating => debian/hello-c.menu
 I: creating => debian/hello-c.prerm
-I: creating => debian/hello-c.links
+I: creating => debian/hello-c.preinst
+I: creating => debian/hello-c.postinst
 I: creating => debian/hello-c.install
-I: creating => debian/hello-c.docs
-I: creating => debian/hello-c.info
-I: creating => debian/hello-c.examples
-I: creating => debian/hello-c.manpages
-I: skipping :: debian/hello-c.install (file exists)
 I: creating => debian/hello-c.doc-base
+I: skipping :: debian/hello-c.install (file exists)
+I: creating => debian/hello-c.docs
+I: creating => debian/hello-c.manpages
+I: creating => debian/hello-c.examples
+I: creating => debian/hello-c.info
 I: run "debmake -x3" to get more template files
 I: $ wrap-and-sort
 I: $ fakeroot dpkg-depcheck -m -C -o ../hello-c.depcheck.log -f -catch-alte...

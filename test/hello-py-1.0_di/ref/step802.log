@@ -3,8 +3,8 @@ Package: hello-py
 Version: 1.0-1
 Architecture: all
 Maintainer: "Firstname Lastname" <email.address@example.org>
-Installed-Size: 49
-Depends: python3:any (>= 3.3.2-2~), python3
+Installed-Size: 50
+Depends: python3, python3:any (>= 3.3.2-2~)
 Section: unknown
 Priority: extra
 Multi-Arch: foreign

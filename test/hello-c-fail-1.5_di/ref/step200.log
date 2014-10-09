@@ -49,6 +49,9 @@ config.status: executing depfiles commands
 make[3]: Entering directory '/path/to/hello-c-1.5'
 make  dist-gzip am__post_remove_distdir='@:'
 make[4]: Entering directory '/path/to/hello-c-1.5'
+(CDPATH="${ZSH_VERSION+.}:" && cd . && /bin/bash /path/to/hello-c-1.5/missi...
+rm -f stamp-h1
+touch config.h.in
 if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -exe...
 test -d "hello-c-1.5" || mkdir "hello-c-1.5"
 test -n "" \
@@ -165,13 +168,13 @@ make[4]: Entering directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[5]: Entering directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
- /bin/mkdir -p '/tmp/am-dc-5661//path/to/hello-c-1.5/hello-c-1.5/_inst/bin'...
-  /usr/bin/install -c hello '/tmp/am-dc-5661//path/to/hello-c-1.5/hello-c-1...
+ /bin/mkdir -p '/tmp/am-dc-26903//path/to/hello-c-1.5/hello-c-1.5/_inst/bin...
+  /usr/bin/install -c hello '/tmp/am-dc-26903//path/to/hello-c-1.5/hello-c-...
 make[5]: Nothing to be done for 'install-data-am'.
 make[5]: Leaving directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
- ( cd '/tmp/am-dc-5661//path/to/hello-c-1.5/hello-c-1.5/_inst/bin' && rm -f...
+ ( cd '/tmp/am-dc-26903//path/to/hello-c-1.5/hello-c-1.5/_inst/bin' && rm -...
 make[4]: Leaving directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/hello-c-1.5/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/hello-c-1.5/hello-c-1.5/_build'

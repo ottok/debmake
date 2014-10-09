@@ -1,5 +1,5 @@
  $ rm -rf hello-1.1
- $ debmake -b'-c,-c-dbg,-data:data,-sh:script' -a hello-1.1.tar.gz
+ $ debmake -Q -b'-c,-c-dbg,-data:data,-sh:script' -a hello-1.1.tar.gz
 D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
@@ -9,10 +9,10 @@ I: untar the upstream tarball
 I: pwd = "/path/to"
 I: $ tar -xvzf hello-1.1.tar.gz
 hello-1.1/
-hello-1.1/Makefile
-hello-1.1/hello.data
 hello-1.1/hello-sh
 hello-1.1/hello.c
+hello-1.1/Makefile
+hello-1.1/hello.data
 I: untared hello-1.1.tar.gz.
 I: tar -tzf hello-1.1.tar.gz|grep -v /.
 I: pwd = "/path/to/hello-1.1"
@@ -29,8 +29,8 @@ I: binary package=hello-sh Type=script / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = make
 I: scan source for copyright+license text and file extensions
-I:  50 %, ext = data
 I:  50 %, ext = c
+I:  50 %, ext = data
 I: check_all_licenses
 I: ....
 I: check_all_licenses completed for 4 files.
@@ -43,26 +43,26 @@ I: creating => debian/control
 I: creating => debian/copyright
 I: creating => debian/changelog
 I: creating => debian/rules
+I: creating => debian/README.Debian
 I: creating => debian/compat
 I: creating => debian/watch
-I: creating => debian/README.Debian
 I: creating => debian/source/format
 I: creating => debian/source/local-options
 I: creating => debian/patches/series
-I: creating => debian/hello-c.postinst
+I: creating => debian/hello-c.links
 I: creating => debian/clean
 I: creating => debian/hello-c.postrm
-I: creating => debian/hello-c.preinst
 I: creating => debian/hello-c.menu
 I: creating => debian/hello-c.prerm
-I: creating => debian/hello-c.links
+I: creating => debian/hello-c.preinst
+I: creating => debian/hello-c.postinst
 I: creating => debian/hello-c.install
-I: creating => debian/hello-c.docs
-I: creating => debian/hello-c.info
-I: creating => debian/hello-c.examples
-I: creating => debian/hello-c.manpages
-I: skipping :: debian/hello-c.install (file exists)
 I: creating => debian/hello-c.doc-base
+I: skipping :: debian/hello-c.install (file exists)
+I: creating => debian/hello-c.docs
+I: creating => debian/hello-c.manpages
+I: creating => debian/hello-c.examples
+I: creating => debian/hello-c.info
 I: creating => debian/hello-data.install
 I: creating => debian/hello-sh.install
 I: run "debmake -x3" to get more template files

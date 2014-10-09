@@ -1,12 +1,12 @@
  $ cd ./blhc
-/home/osamu/src/debmake/debmake/test/bin/CD: line 4: cd: ./blhc: No such fi...
+/media/osamu/f00eab04-2e60-414d-bb90-9220843b2652/home/osamu/vcs-maint/debm...
  $ debmake -b':perl' -t -p blhc -u 0.4 -s -i debuild
 D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 W: -p "blhc" != auto set value ""
-W: -u "0.4" != auto set value "0~1408031525"
+W: -u "0.4" != auto set value "0~1410121527"
 I: pkg="blhc", ver="0.4", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/blhc"
@@ -15,70 +15,72 @@ I: $ rsync -aCv --link-dest=/path/to/blhc blhc/. blhc-0.4
 sending incremental file list
 created directory blhc-0.4
 
-sent 1,461 bytes  received 46 bytes  3,014.00 bytes/sec
-total size is 229,544  speedup is 152.32
+sent 1,506 bytes  received 46 bytes  3,104.00 bytes/sec
+total size is 224,571  speedup is 144.70
 I: $ tar --exclude='blhc-0.4/debian' --anchored --exclude-caches --exclude-...
 blhc-0.4/
-blhc-0.4/Build.PL
-blhc-0.4/t/
-blhc-0.4/t/tests.t
-blhc-0.4/t/logs/
-blhc-0.4/t/logs/gcc
-blhc-0.4/t/logs/debian-hardening-wrapper-pbuilder
-blhc-0.4/t/logs/buildd-architecture
-blhc-0.4/t/logs/configure-check
-blhc-0.4/t/logs/debian-cmake-2
-blhc-0.4/t/logs/arch-ia64
-blhc-0.4/t/logs/buildd-architecture-old
-blhc-0.4/t/logs/buildd-verbose-build
-blhc-0.4/t/logs/ignore-flag-ldflags
-blhc-0.4/t/logs/libtool
-blhc-0.4/t/logs/good-library
-blhc-0.4/t/logs/arch-mipsel
-blhc-0.4/t/logs/empty
-blhc-0.4/t/logs/arch-amd64
-blhc-0.4/t/logs/bad-library
-blhc-0.4/t/logs/debian-hardening-wrapper-old-build-depends
-blhc-0.4/t/logs/buildd-dpkg-dev
-blhc-0.4/t/logs/debug-build
-blhc-0.4/t/logs/bad
-blhc-0.4/t/logs/bad-cflags
-blhc-0.4/t/logs/arch-avr32
-blhc-0.4/t/logs/qt4
-blhc-0.4/t/logs/ada
-blhc-0.4/t/logs/dpkg-buildpackage-architecture-old
-blhc-0.4/t/logs/cc
-blhc-0.4/t/logs/debian-hardening-wrapper
-blhc-0.4/t/logs/good-all
-blhc-0.4/t/logs/debian-cmake
-blhc-0.4/t/logs/buildd-package-details
-blhc-0.4/t/logs/ignore-flag
-blhc-0.4/t/logs/good
-blhc-0.4/t/logs/bad-ldflags
-blhc-0.4/t/logs/good-pie
-blhc-0.4/t/logs/good-multiline
-blhc-0.4/t/logs/buildd-dpkg-dev-old
-blhc-0.4/t/logs/verbose-build
-blhc-0.4/t/logs/false-positives
-blhc-0.4/t/logs/ignore-line
-blhc-0.4/t/logs/ada-pbuilder
-blhc-0.4/t/logs/bad-multiline
-blhc-0.4/t/logs/configure
-blhc-0.4/t/logs/make
-blhc-0.4/t/logs/buildd-dpkg-dev-missing
-blhc-0.4/t/logs/debian-cmake-ok
-blhc-0.4/t/logs/arch-i386
-blhc-0.4/t/logs/g++
-blhc-0.4/t/logs/debian
-blhc-0.4/t/logs/c++
-blhc-0.4/t/logs/bad-cppflags
-blhc-0.4/t/logs/good-bindnow
-blhc-0.4/COPYING
-blhc-0.4/bin/
-blhc-0.4/bin/blhc
 blhc-0.4/NEWS
 blhc-0.4/README
 blhc-0.4/MANIFEST
+blhc-0.4/Build.PL
+blhc-0.4/bin/
+blhc-0.4/bin/blhc
+blhc-0.4/COPYING
+blhc-0.4/t/
+blhc-0.4/t/logs/
+blhc-0.4/t/logs/debug-build
+blhc-0.4/t/logs/c++
+blhc-0.4/t/logs/ada-pbuilder
+blhc-0.4/t/logs/configure-check
+blhc-0.4/t/logs/qt4
+blhc-0.4/t/logs/debian-hardening-wrapper
+blhc-0.4/t/logs/good-multiline
+blhc-0.4/t/logs/buildd-dpkg-fstack-protector
+blhc-0.4/t/logs/good-bindnow
+blhc-0.4/t/logs/bad-multiline
+blhc-0.4/t/logs/bad
+blhc-0.4/t/logs/bad-cppflags
+blhc-0.4/t/logs/arch-amd64
+blhc-0.4/t/logs/libtool
+blhc-0.4/t/logs/arch-mipsel
+blhc-0.4/t/logs/debian-cmake-ok
+blhc-0.4/t/logs/g++
+blhc-0.4/t/logs/buildd-dpkg-dev
+blhc-0.4/t/logs/buildd-dpkg-fstack-protector-missing
+blhc-0.4/t/logs/false-positives
+blhc-0.4/t/logs/debian-cmake
+blhc-0.4/t/logs/debian-hardening-wrapper-old-build-depends
+blhc-0.4/t/logs/dpkg-buildpackage-architecture-old
+blhc-0.4/t/logs/debian-cmake-2
+blhc-0.4/t/logs/ignore-line
+blhc-0.4/t/logs/gcc
+blhc-0.4/t/logs/arch-ia64
+blhc-0.4/t/logs/bad-ldflags
+blhc-0.4/t/logs/buildd-architecture
+blhc-0.4/t/logs/empty
+blhc-0.4/t/logs/arch-i386
+blhc-0.4/t/logs/buildd-verbose-build
+blhc-0.4/t/logs/good-library
+blhc-0.4/t/logs/make
+blhc-0.4/t/logs/good-pie
+blhc-0.4/t/logs/ada
+blhc-0.4/t/logs/good
+blhc-0.4/t/logs/bad-cflags
+blhc-0.4/t/logs/verbose-build
+blhc-0.4/t/logs/buildd-package-details
+blhc-0.4/t/logs/cc
+blhc-0.4/t/logs/configure
+blhc-0.4/t/logs/ignore-flag
+blhc-0.4/t/logs/debian-hardening-wrapper-pbuilder
+blhc-0.4/t/logs/buildd-dpkg-dev-missing
+blhc-0.4/t/logs/buildd-dpkg-dev-old
+blhc-0.4/t/logs/buildd-architecture-old
+blhc-0.4/t/logs/arch-avr32
+blhc-0.4/t/logs/ignore-flag-ldflags
+blhc-0.4/t/logs/debian
+blhc-0.4/t/logs/bad-library
+blhc-0.4/t/logs/good-all
+blhc-0.4/t/tests.t
 I: blhc-0.4.tar.gz tarball made
 I: pwd = "/path/to/blhc-0.4"
 I: *** start packaging in "blhc-0.4". ***
@@ -91,12 +93,12 @@ I: binary package=blhc Type=perl / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Perl Module::Build
 I: scan source for copyright+license text and file extensions
+I:  33 %, ext = gitignore
 I:  33 %, ext = perl
 I:  33 %, ext = t
-I:  33 %, ext = gitignore
 I: check_all_licenses
-I: .........................................................
-I: check_all_licenses completed for 57 files.
+I: ...........................................................
+I: check_all_licenses completed for 59 files.
 I: bunch_all_licenses
 I: format_all_licenses
 I: make debian/* template files
@@ -106,28 +108,28 @@ I: creating => debian/control
 I: creating => debian/copyright
 I: creating => debian/changelog
 I: creating => debian/rules
+I: creating => debian/README.Debian
 I: creating => debian/compat
 I: creating => debian/watch
-I: creating => debian/README.Debian
 I: creating => debian/source/format
 I: creating => debian/source/local-options
 I: creating => debian/patches/series
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: debuild
- dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package blhc
 dpkg-buildpackage: source version 0.4-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build blhc-0.4
+ dpkg-source -i --before-build blhc-0.4
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
    dh_testdir
    dh_auto_clean
    dh_clean
- dpkg-source -I -i -b blhc-0.4
+ dpkg-source -i -b blhc-0.4
 dpkg-source: info: using source format `3.0 (quilt)'
 dpkg-source: info: building blhc using existing ./blhc_0.4.orig.tar.gz
 dpkg-source: info: building blhc in blhc_0.4-1.debian.tar.xz
@@ -136,25 +138,29 @@ dpkg-source: info: building blhc in blhc_0.4-1.dsc
 dh build
    dh_testdir
    dh_auto_configure
+Module::Build will be removed from the Perl core distribution in the next m...
 WARNING: the following files are missing in your kit:
         META.json
         META.yml
 Please inform the author.
 
 Created MYMETA.yml and MYMETA.json
-Creating new 'Build' script for 'blhc' version '0.04'
+Creating new 'Build' script for 'blhc' version '0.05'
    dh_auto_build
+Module::Build will be removed from the Perl core distribution in the next m...
 Building blhc
    dh_auto_test
+Module::Build will be removed from the Perl core distribution in the next m...
 t/tests.t .. ok
 All tests successful.
-Files=1, Tests=214,  4 wallclock secs ( 0.06 usr  0.00 sys +  3.78 cusr  0....
+Files=1, Tests=218,  3 wallclock secs ( 0.04 usr  0.00 sys +  2.42 cusr  0....
 Result: PASS
  fakeroot debian/rules binary
 dh binary
    dh_testroot
    dh_prep
    dh_auto_install
+Module::Build will be removed from the Perl core distribution in the next m...
 Building blhc
 Installing /path/to/blhc-0.4/debian/blhc/usr/share/man/man1/blhc.1p
 Installing /path/to/blhc-0.4/debian/blhc/usr/bin/blhc
@@ -172,7 +178,7 @@ Installing /path/to/blhc-0.4/debian/blhc/usr/bin/blhc
 dpkg-deb: building package `blhc' in `../blhc_0.4-1_all.deb'.
  dpkg-genchanges  >../blhc_0.4-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build blhc-0.4
+ dpkg-source -i --after-build blhc-0.4
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: blhc source: superfluous-clutter-in-homepage <insert the upstream URL, i...
@@ -202,7 +208,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
-W: blhc source: syntax-error-in-dep5-copyright line 103: Continuation line ...
+W: blhc source: syntax-error-in-dep5-copyright line 106: Continuation line ...
 N:
 N:    The machine-readable copyright file didn't pass Debian control file
 N:    syntax check.
@@ -217,6 +223,30 @@ N:
 N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
+N:
+W: blhc source: out-of-date-standards-version 3.9.5 (current is 3.9.6)
+N:
+N:    The source package refers to a Standards-Version older than the one t...
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field...
+N:    appropriately.
+N:
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Vers...
+N:    control field. However, please remember to update this field next tim...
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: standards-version, Type: source
 N:
 W: blhc: wrong-bug-number-in-closes l3:#nnnn
 N:

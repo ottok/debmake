@@ -1,42 +1,42 @@
- $ cd hello-c-0~1408031520
+ $ cd hello-c-0~1410121525
  $ debuild
- dpkg-buildpackage -rfakeroot -D -us -uc -I -i
+ dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package hello-c
-dpkg-buildpackage: source version 0~1408031520-1
+dpkg-buildpackage: source version 0~1410121525-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -I -i --before-build hello-c-0~1408031520
+ dpkg-source -i --before-build hello-c-0~1410121525
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
    dh_testdir
    dh_auto_clean
-make[1]: Entering directory '/path/to/hello-c-0~1408031520'
+make[1]: Entering directory '/path/to/hello-c-0~1410121525'
 rm -f hello
-make[1]: Leaving directory '/path/to/hello-c-0~1408031520'
+make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
    dh_clean
- dpkg-source -I -i -b hello-c-0~1408031520
+ dpkg-source -i -b hello-c-0~1410121525
 dpkg-source: info: using source format `3.0 (quilt)'
-dpkg-source: info: building hello-c using existing ./hello-c_0~1408031520.o...
-dpkg-source: info: building hello-c in hello-c_0~1408031520-1.debian.tar.xz...
-dpkg-source: info: building hello-c in hello-c_0~1408031520-1.dsc
+dpkg-source: info: building hello-c using existing ./hello-c_0~1410121525.o...
+dpkg-source: info: building hello-c in hello-c_0~1410121525-1.debian.tar.xz...
+dpkg-source: info: building hello-c in hello-c_0~1410121525-1.dsc
  debian/rules build
 dh build
    dh_testdir
    dh_auto_configure
    dh_auto_build
-make[1]: Entering directory '/path/to/hello-c-0~1408031520'
+make[1]: Entering directory '/path/to/hello-c-0~1410121525'
 gcc -Wall -o hello hello.c
-make[1]: Leaving directory '/path/to/hello-c-0~1408031520'
+make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
    dh_auto_test
  fakeroot debian/rules binary
 dh binary
    dh_testroot
    dh_prep
    dh_auto_install
-make[1]: Entering directory '/path/to/hello-c-0~1408031520'
-install -D hello /path/to/hello-c-0~1408031520/debian/hello-c/usr/bin/hello...
-make[1]: Leaving directory '/path/to/hello-c-0~1408031520'
+make[1]: Entering directory '/path/to/hello-c-0~1410121525'
+install -D hello /path/to/hello-c-0~1410121525/debian/hello-c/usr/bin/hello...
+make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
    dh_installdocs
    dh_installchangelogs
    dh_perl
@@ -50,10 +50,10 @@ make[1]: Leaving directory '/path/to/hello-c-0~1408031520'
    dh_gencontrol
    dh_md5sums
    dh_builddeb
-dpkg-deb: building package `hello-c' in `../hello-c_0~1408031520-1_amd64.de...
- dpkg-genchanges  >../hello-c_0~1408031520-1_amd64.changes
+dpkg-deb: building package `hello-c' in `../hello-c_0~1410121525-1_amd64.de...
+ dpkg-genchanges  >../hello-c_0~1410121525-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -I -i --after-build hello-c-0~1408031520
+ dpkg-source -i --after-build hello-c-0~1410121525
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: hello-c source: superfluous-clutter-in-homepage <insert the upstream URL...
@@ -83,6 +83,28 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: fields, Type: binary, udeb, source
 N:
+W: hello-c source: file-without-copyright-information debian/README.Debian
+N:
+N:    The source tree contains a file which was not matched by any of the
+N:    Files paragraphs in debian/copyright. Either adjust existing wildcard...
+N:    to match that file or add a new Files paragraph.
+N:
+N:    Refer to
+N:    https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ fo...
+N:    details.
+N:
+N:    Severity: normal, Certainty: possible
+N:
+N:    Check: source-copyright, Type: source
+N:
+W: hello-c source: file-without-copyright-information debian/changelog
+W: hello-c source: file-without-copyright-information debian/compat
+W: hello-c source: file-without-copyright-information debian/control
+W: hello-c source: file-without-copyright-information debian/copyright
+W: hello-c source: file-without-copyright-information debian/patches/series...
+W: hello-c source: file-without-copyright-information debian/rules
+W: hello-c source: file-without-copyright-information debian/source/format
+W: hello-c source: file-without-copyright-information debian/watch
 W: hello-c source: missing-license-paragraph-in-dep5-copyright __unknown__ ...
 N:
 N:    The files paragraph in the machine readable copyright file references...
@@ -95,6 +117,30 @@ N:
 N:    Severity: normal, Certainty: possible
 N:
 N:    Check: source-copyright, Type: source
+N:
+W: hello-c source: out-of-date-standards-version 3.9.5 (current is 3.9.6)
+N:
+N:    The source package refers to a Standards-Version older than the one t...
+N:    was current at the time the package was created (according to the
+N:    timestamp of the latest debian/changelog entry). Please consider
+N:    updating the package to current Policy and setting this control field...
+N:    appropriately.
+N:
+N:    If the package is already compliant with the current standards, you
+N:    don't have to re-upload the package just to adjust the Standards-Vers...
+N:    control field. However, please remember to update this field next tim...
+N:    you upload the package.
+N:
+N:    See /usr/share/doc/debian-policy/upgrading-checklist.txt.gz in the
+N:    debian-policy package for a summary of changes in newer versions of
+N:    Policy.
+N:
+N:    Refer to https://www.debian.org/doc/debian-policy/upgrading-checklist...
+N:    for details.
+N:
+N:    Severity: normal, Certainty: certain
+N:
+N:    Check: standards-version, Type: source
 N:
 W: hello-c: hardening-no-relro usr/bin/hello
 N:
