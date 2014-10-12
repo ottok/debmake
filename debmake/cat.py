@@ -26,11 +26,17 @@ import os
 import sys
 #######################################################################
 # cat >file
-def cat(file, text, end=''):
+def cat(file, text, end='', quiet=False):
     if os.path.isfile(file) and os.stat(file).st_size != 0:
         # skip if a file exists and non-zero content
         print('I: skipping :: {} (file exists)'.format(file), file=sys.stderr)
         return
+    if quiet:
+        newtext = ''
+        for line in text.split('\n'):
+            if line[:3] != '###' or line[:4] == '####':
+                newtext += line + '\n'
+        text = newtext
     path = os.path.dirname(file)
     if path:
         os.makedirs(path, exist_ok=True)
@@ -43,5 +49,6 @@ def cat(file, text, end=''):
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    cat('testfile.tmp', 'fooo\nbarrrr\nbazzzzz')
+    cat('testfile0.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', quiet=False)
+    cat('testfile1.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', quiet=True)
 

@@ -1,3 +1,12 @@
+debmake (4.1.5-1) unstable; urgency=medium
+
+  * Add suggests for programs used in the documentation.
+  * Mark tutorial content lines with ### with warnings to remove 
+    them before uploading to the archive.  Add -Q option to do without
+    tutorial content lines.  Closes: #763535
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 13 Oct 2014 00:40:53 +0900
+
 debmake (4.1.4-1) unstable; urgency=medium
 
   * Use pybuild for python3. Closes: #704469

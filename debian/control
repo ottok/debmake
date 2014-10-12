@@ -14,11 +14,21 @@ Multi-Arch: foreign
 Depends: devscripts, dpkg-dev, rsync, ${misc:Depends}, ${python3:Depends}
 Recommends: build-essential, strace, wget | curl
 Suggests: autotools-dev,
+          ccache,
           cmake,
+          cowbuilder,
           dh-autoreconf,
           dh-python,
+          eatmydata,
           gem2deb,
+          git,
+          git-buildpackage,
+          gitk,
           javahelper,
+          lintian,
+          mc,
+          pbuilder,
+          quilt,
           rpm2cpio
 Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)

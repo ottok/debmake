@@ -1,2 +1,2 @@
-# Candidates as below and see dh_install(1).
-#usr/share/@BINPACKAGE@
+### Candidates as below and see dh_install(1).
+###usr/share/@BINPACKAGE@
