@@ -771,7 +771,7 @@ asciidoc.install(2);
 <span id="author">Osamu Aoki</span><br />
 <span id="email"><code>&lt;<a href="mailto:osamu@debian.org">osamu@debian.org</a>&gt;</code></span><br />
 <span id="revnumber">version 2.0~pre1,</span>
-<span id="revdate">2014-10-13</span>
+<span id="revdate">2014-10-14</span>
 <div id="toc">
   <div id="toctitle">Table of Contents</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -2131,8 +2131,8 @@ The <strong>-x</strong> option: <strong>-x1</strong> (default for the single bin
 #DH_VERBOSE = 1
 ###
 ### Define DEB_HOST_* and  DEB_BUILD_* variables using
-### dpkg-architecture(1) if they are used in the override_*
-### target scripts.  E.g.:
+### dpkg-architecture(1) if they are used in this file. E.g.:
+###DEB_HOST_MULTIARCH = $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 ###DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 ###
 ### Copy some variable definitions from pkg-info.mk and vendor.mk
@@ -2878,7 +2878,7 @@ the build system.  Also it enables verbose build logs for some build systems.</t
 <p>
   Set <strong>DEB_HOST_</strong>* and  <strong>DEB_BUILD_</strong>* variables.
  <br />
-  Only variables used explicitly in <strong>debian/rules</strong> need to be defined using <strong>dpkg-architecture</strong>.  So there is no need to include this in <strong>debian/rules</strong>.
+  Only variables used explicitly in <strong>debian/rules</strong> need to be defined using <strong>dpkg-architecture</strong>.  So there is no need to include <strong>architecture.mk</strong> in <strong>debian/rules</strong>.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -2888,7 +2888,7 @@ the build system.  Also it enables verbose build logs for some build systems.</t
 <p>
   Set <strong>CFLAGS</strong>, <strong>CPPFLAGS</strong>, <strong>CXXFLAGS</strong>, <strong>OBJCFLAGS</strong>, <strong>OBJCXXFLAGS</strong>, <strong>GCJFLAGS</strong>, <strong>FFLAGS</strong>, <strong>FCFLAGS</strong>, and <strong>LDFLAGS</strong> buildflag variables.
  <br />
-  These are normally exported by <strong>dh</strong> for the script in the <strong>override_</strong>** target.  So there is no need to include this in <strong>debian/rules</strong>.
+  These are normally exported by <strong>dh</strong> for the script in the <strong>override_</strong>** target.  So there is no need to include <strong>buildflags.mk</strong> in <strong>debian/rules</strong>.
 </p>
 </dd>
 </dl></div>
@@ -4296,18 +4296,27 @@ Debian wiki (Debian situation)
 </li>
 </ul></div>
 <div class="paragraph"><p>The multiarch is enabled by using the <strong>&lt;triplet&gt;</strong> value such as <strong>i386-linux-gnu</strong> and <strong>x86_64-linux-gnu</strong> in the the install path of shared libraries as <strong>/usr/lib/&lt;triplet&gt;/</strong>, etc..</p></div>
-<div class="paragraph"><p>The <strong>&lt;triplet&gt;</strong> value required by <strong>debhelper</strong> scripts is implicitly set in themselves.</p></div>
-<div class="paragraph"><p>The <strong>&lt;triplet&gt;</strong> value used in <strong>override_dh_</strong>* target scripts must be explicitly set in the <strong>debian/rules</strong> by the maintainer.  The <strong>&lt;triplet&gt;</strong> value is stored in <strong>$(DEB_HOST_MULTIARCH)</strong> variable in the following <strong>debian/rules</strong> snippet example:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <strong>&lt;triplet&gt;</strong> value required internally by <strong>debhelper</strong> scripts is implicitly set in themselves.  The mainainer doesn&#8217;t need to worry.
+</p>
+</li>
+<li>
+<p>
+The <strong>&lt;triplet&gt;</strong> value used in <strong>override_dh_</strong>* target scripts must be explicitly set in the <strong>debian/rules</strong> by the maintainer.  The <strong>&lt;triplet&gt;</strong> value is stored in <strong>$(DEB_HOST_MULTIARCH)</strong> variable in the following <strong>debian/rules</strong> snippet example:
+</p>
 <div class="listingblock">
 <div class="content">
 <pre><code>DEB_HOST_MULTIARCH = $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 ...
-
 override_dh_install:
         mkdir -p package1/lib/$(DEB_HOST_MULTIARCH)
         cp -dR tmp/lib/. package1/lib/$(DEB_HOST_MULTIARCH)</code></pre>
 </div></div>
-<div class="paragraph"><p>See <a href="#variablesrules">[variablesrules]</a>.</p></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>See <a href="#variablesrules">[variablesrules]</a> and <strong>dpkg-architecture</strong>.</p></div>
 <div class="sect3">
 <h4 id="_the_multiarch_library_path">The multiarch library path</h4>
 <div class="paragraph"><p>Debian policy requires to follow <a href="https://www.debian.org/doc/packaging-manuals/fhs/fhs-2.3.html">Filesystem Hierarchy Standard</a>.  Its <a href="https://www.debian.org/doc/packaging-manuals/fhs/fhs-2.3.html#USRLIBLIBRARIESFORPROGRAMMINGANDPA">/usr/lib : Libraries for programming and packages</a> states "<strong>/usr/lib</strong> includes object files, libraries, and internal binaries that are not intended to be executed directly by users or shell scripts."</p></div>
@@ -5873,7 +5882,7 @@ hello-c-0.9/hello.c</code></pre>
 Initialized empty Git repository in /path/to/hello-c/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 9ac4c0a] initial commit
+[master (root-commit) 4c36228] initial commit
  2 files changed, 21 insertions(+)
  create mode 100644 Makefile
  create mode 100644 hello.c
@@ -5887,11 +5896,11 @@ D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-I: pkg="hello-c", ver="0~1410131356", rev="1"
+I: pkg="hello-c", ver="0~1410131523", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-c"
 I: pwd = "/path/to"
-I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1410131356...
+I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1410131523...
 sending incremental file list
  ...
 I: debmake -x "1" ...
@@ -5899,7 +5908,7 @@ I: debmake -x "1" ...
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: upon return to the shell, current directory becomes /path/to/hello-c
-I: please execute "cd /path/to/hello-c-0~1410131356" before building the bi...
+I: please execute "cd /path/to/hello-c-0~1410131523" before building the bi...
 I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 </div></div>
 <div class="paragraph"><p>Let’s inspect files.</p></div>
@@ -5911,7 +5920,7 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 ├── hello-c
 │   ├── hello.c
 │   └── Makefile
-├── hello-c-0~1410131356
+├── hello-c-0~1410131523
 │   ├── debian
 │   │   ├── changelog
 │   │   ├── compat
@@ -5927,8 +5936,8 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 │   │   └── watch
 │   ├── hello.c
 │   └── Makefile
-├── hello-c_0~1410131356.orig.tar.gz -&gt; hello-c-0~1410131356.tar.gz
-└── hello-c-0~1410131356.tar.gz
+├── hello-c_0~1410131523.orig.tar.gz -&gt; hello-c-0~1410131523.tar.gz
+└── hello-c-0~1410131523.tar.gz
 
 5 directories, 16 files</code></pre>
 </div></div>
@@ -5936,24 +5945,24 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 <div class="ulist"><ul>
 <li>
 <p>
-the snapshot upstream tarball: <strong>hello-0~1410131356.tar.gz</strong> (<strong>hello-c_0~1410131356.orig.tar.gz</strong>)
+the snapshot upstream tarball: <strong>hello-0~1410131523.tar.gz</strong> (<strong>hello-c_0~1410131523.orig.tar.gz</strong>)
 </p>
 </li>
 <li>
 <p>
-the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-0~1410131356/</strong>*
+the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-0~1410131523/</strong>*
 </p>
 </li>
 <li>
 <p>
-the cleaned VCS directory: <strong>hello-c-0~1410131356/</strong>*
+the cleaned VCS directory: <strong>hello-c-0~1410131523/</strong>*
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-0~1410131356/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
+<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-0~1410131523/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ cd hello-c-0~1410131356
+<pre><code> $ cd hello-c-0~1410131523
  $ debuild
  dpkg-buildpackage -rfakeroot -D -us -uc -i
  ...
@@ -5975,20 +5984,20 @@ Finished running lintian.</code></pre>
  $ tree -L 1
 .
 ├── hello-c
-├── hello-c-0~1410131356
-├── hello-c_0~1410131356-1_amd64.build
-├── hello-c_0~1410131356-1_amd64.changes
-├── hello-c_0~1410131356-1_amd64.deb
-├── hello-c_0~1410131356-1.debian.tar.xz
-├── hello-c_0~1410131356-1.dsc
-├── hello-c_0~1410131356.orig.tar.gz -&gt; hello-c-0~1410131356.tar.gz
-└── hello-c-0~1410131356.tar.gz
+├── hello-c-0~1410131523
+├── hello-c_0~1410131523-1_amd64.build
+├── hello-c_0~1410131523-1_amd64.changes
+├── hello-c_0~1410131523-1_amd64.deb
+├── hello-c_0~1410131523-1.debian.tar.xz
+├── hello-c_0~1410131523-1.dsc
+├── hello-c_0~1410131523.orig.tar.gz -&gt; hello-c-0~1410131523.tar.gz
+└── hello-c-0~1410131523.tar.gz
 
 2 directories, 7 files</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ dpkg -c hello-c_0~1410131356-1_amd64.deb
+<pre><code> $ dpkg -c hello-c_0~1410131523-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/bin/
@@ -6002,7 +6011,7 @@ drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
 </div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ tar -tJf hello-c_0~1410131356-1.debian.tar.xz
+<pre><code> $ tar -tJf hello-c_0~1410131523-1.debian.tar.xz
 debian/
 debian/patches/
 debian/patches/series
@@ -6015,22 +6024,22 @@ debian/README.Debian
 debian/compat
 debian/watch
 debian/copyright
- $ tar -tzf hello-c-0~1410131356.tar.gz
-hello-c-0~1410131356/
-hello-c-0~1410131356/Makefile
-hello-c-0~1410131356/hello.c</code></pre>
+ $ tar -tzf hello-c-0~1410131523.tar.gz
+hello-c-0~1410131523/
+hello-c-0~1410131523/Makefile
+hello-c-0~1410131523/hello.c</code></pre>
 </div></div>
 <div class="paragraph"><p>Your development branch holding the working upstream source tree and the <strong>debian/</strong>* files is the <strong>devel</strong> branch.</p></div>
 <div class="paragraph"><p>The following will import generated Debian packages to <strong>master</strong>, <strong>upstream</strong>, and <strong>pristine-tar</strong> branches. (These are the 3 typical branches used by the <strong>gbp</strong> command.)</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ cd hello-c
- $ git-import-dsc ../hello-c_0~1410131356-1.dsc  \
+ $ git-import-dsc ../hello-c_0~1410131523-1.dsc  \
                   --pristine-tar --create-missing-branches
-gbp:info: Tag upstream/0_1410131356 not found, importing Upstream tarball
+gbp:info: Tag upstream/0_1410131523 not found, importing Upstream tarball
 gbp:info: Creating missing branch 'upstream'
-pristine-tar: committed hello-c_0~1410131356.orig.tar.gz.delta to branch pr...
-gbp:info: Version '0~1410131356-1' imported under 'hello-c'
+pristine-tar: committed hello-c_0~1410131523.orig.tar.gz.delta to branch pr...
+gbp:info: Version '0~1410131523-1' imported under 'hello-c'
  $ git branch
 * devel
   master
@@ -6091,7 +6100,7 @@ hello_SOURCES = hello.c</code></pre>
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) ef54390] initial commit
+[master (root-commit) 32c68a6] initial commit
  3 files changed, 21 insertions(+)
  create mode 100644 Makefile.am
  create mode 100644 configure.ac
@@ -6387,7 +6396,7 @@ if __name__ == '__main__':
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 24f4e27] initial commit
+[master (root-commit) 38039fe] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -8461,7 +8470,7 @@ A full tutorial document for the Debian packaging with packaging examples: <a hr
 <div id="footer-text">
 Version 2.0~pre1<br />
 Last updated
- 2014-10-13 17:20:59 JST
+ 2014-10-14 00:14:43 JST
 </div>
 </div>
 </body>
