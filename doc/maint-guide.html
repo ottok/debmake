@@ -2130,11 +2130,12 @@ The <strong>-x</strong> option: <strong>-x1</strong> (default for the single bin
 ### Output every command that modifies files on the build system.
 #DH_VERBOSE = 1
 ###
-### Make debian/rules to behave like dpkg-buildpackage.
-### See /usr/share/doc/debmake/maint-guide.html#variablesrules
-###include /usr/share/dpkg/architecture.mk
+### Define DEB_HOST_* and  DEB_BUILD_* variables using
+### dpkg-architecture(1) if they are used in the override_*
+### target scripts.  E.g.:
+###DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 ###
-### Copy variable definition lines in pkg-info.mk and vendor.mk
+### Copy some variable definitions from pkg-info.mk and vendor.mk
 ### under /usr/share/dpkg/ to here if they are useful.
 ###
 ### See FEATURE AREAS in dpkg-buildflags(1)
@@ -2151,7 +2152,6 @@ The <strong>-x</strong> option: <strong>-x1</strong> (default for the single bin
         dh $@
 
 ### debmake generated override targets
-### DEB_HOST_MULTIARCH set by include /usr/share/dpkg/default.mk
 ### This is example for Cmake (See http://bugs.debian.org/641051 )
 ###override_dh_auto_configure:
 ###     dh_auto_configure -- \
@@ -2331,21 +2331,21 @@ The <strong>hello-c_1.0-1_amd64.changes</strong> is the meta data file for the D
 <div class="content">
 <pre><code> $ tar -tJf hello-c_1.0-1.debian.tar.xz
 debian/
-debian/rules
-debian/compat
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/copyright
+debian/changelog
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
+debian/compat
+debian/watch
+debian/copyright
  $ tar -tzf hello-c-1.0.tar.gz
 hello-c-1.0/
-hello-c-1.0/hello.c
-hello-c-1.0/Makefile</code></pre>
+hello-c-1.0/Makefile
+hello-c-1.0/hello.c</code></pre>
 </div></div>
 <div class="paragraph"><p>The <strong>hello-c_1.0-1_amd64.deb</strong> contains the files to be installed as follows.</p></div>
 <div class="listingblock">
@@ -2354,14 +2354,14 @@ hello-c-1.0/Makefile</code></pre>
 <pre><code> $ dpkg -c hello-c_1.0-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz
-drwxr-xr-x root/root ...  ./usr/bin/
--rwxr-xr-x root/root ...  ./usr/bin/hello</code></pre>
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright</code></pre>
 </div></div>
 <div class="admonitionblock">
 <table><tr>
@@ -2878,7 +2878,7 @@ the build system.  Also it enables verbose build logs for some build systems.</t
 <p>
   Set <strong>DEB_HOST_</strong>* and  <strong>DEB_BUILD_</strong>* variables.
  <br />
-  These are normally exported by <strong>dpkg-buildpackages</strong>.
+  Only variables used explicitly in <strong>debian/rules</strong> need to be defined using <strong>dpkg-architecture</strong>.  So there is no need to include this in <strong>debian/rules</strong>.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -2888,11 +2888,11 @@ the build system.  Also it enables verbose build logs for some build systems.</t
 <p>
   Set <strong>CFLAGS</strong>, <strong>CPPFLAGS</strong>, <strong>CXXFLAGS</strong>, <strong>OBJCFLAGS</strong>, <strong>OBJCXXFLAGS</strong>, <strong>GCJFLAGS</strong>, <strong>FFLAGS</strong>, <strong>FCFLAGS</strong>, and <strong>LDFLAGS</strong> buildflag variables.
  <br />
-  These are normally exported by <strong>dh</strong> for the script in the <strong>override_</strong>** target.
+  These are normally exported by <strong>dh</strong> for the script in the <strong>override_</strong>** target.  So there is no need to include this in <strong>debian/rules</strong>.
 </p>
 </dd>
 </dl></div>
-<div class="paragraph"><p>If you wish to use some of these useful variables, copy relevant codes to <strong>debian/rules</strong> to keep <strong>debian/rules</strong> simple.</p></div>
+<div class="paragraph"><p>If you wish to use some of these useful variables in <strong>debian/rules</strong>, copy relevant codes to <strong>debian/rules</strong> or write simpler alternatives in it.  Please keep <strong>debian/rules</strong> simple.</p></div>
 <div class="paragraph"><p>For example, you can add an extra option to <strong>CONFIGURE_FLAGS</strong> for <strong>linux-any</strong> target architectures by adding the followings to <strong>debian/rules</strong>:</p></div>
 <div class="listingblock">
 <div class="content">
@@ -2902,15 +2902,7 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
 CONFIGURE_FLAGS += --enable-wayland
 endif</code></pre>
 </div></div>
-<div class="paragraph"><p>See <strong>dpkg-buildflags</strong>(8) and read the files in the <strong>/usr/share/dpkg</strong> directory.</p></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">Adding "<code>include /usr/share/dpkg/architecture.mk</code>" to <strong>debian/rules</strong> allows us to use <strong>debian/rules</strong> for the quick test building.  But it is good idea to remove it for the released package since the official build always use <strong>dpkg-buildpackages</strong>.</td>
-</tr></table>
-</div>
+<div class="paragraph"><p>See <a href="#multiarch">[multiarch]</a>, <strong>dpkg-architecture</strong>(1) and <strong>dpkg-buildflags</strong>(1).</p></div>
 </div>
 </div>
 <div class="sect2">
@@ -4303,7 +4295,19 @@ Debian wiki (Debian situation)
 </ul></div>
 </li>
 </ul></div>
-<div class="paragraph"><p>The multiarch is enabled by using the <strong>&lt;triplet&gt;</strong> value such as <strong>i386-linux-gnu</strong> and <strong>x86_64-linux-gnu</strong> in the the install path of shared libraries as <strong>/usr/lib/&lt;triplet&gt;/</strong>, etc.. The actual <strong>&lt;triplet&gt;</strong> value is dynamically set into the <strong>$(DEB_HOST_MULTIARCH)</strong> variable by the <strong>dpkg-architecture</strong> command for each build.  The inclusion of <strong>/usr/share/dpkg/architecture.mk</strong> in the <strong>debian/rules</strong> file as described in <a href="#variablesrules">[variablesrules]</a> ensures to set the <strong>$(DEB_HOST_MULTIARCH)</strong> variable even when running <strong>debian/rules</strong> directly without the <strong>dpkg-buildpackage</strong> command.</p></div>
+<div class="paragraph"><p>The multiarch is enabled by using the <strong>&lt;triplet&gt;</strong> value such as <strong>i386-linux-gnu</strong> and <strong>x86_64-linux-gnu</strong> in the the install path of shared libraries as <strong>/usr/lib/&lt;triplet&gt;/</strong>, etc..</p></div>
+<div class="paragraph"><p>The <strong>&lt;triplet&gt;</strong> value required by <strong>debhelper</strong> scripts is implicitly set in themselves.</p></div>
+<div class="paragraph"><p>The <strong>&lt;triplet&gt;</strong> value used in <strong>override_dh_</strong>* target scripts must be explicitly set in the <strong>debian/rules</strong> by the maintainer.  The <strong>&lt;triplet&gt;</strong> value is stored in <strong>$(DEB_HOST_MULTIARCH)</strong> variable in the following <strong>debian/rules</strong> snippet example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>DEB_HOST_MULTIARCH = $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+...
+
+override_dh_install:
+        mkdir -p package1/lib/$(DEB_HOST_MULTIARCH)
+        cp -dR tmp/lib/. package1/lib/$(DEB_HOST_MULTIARCH)</code></pre>
+</div></div>
+<div class="paragraph"><p>See <a href="#variablesrules">[variablesrules]</a>.</p></div>
 <div class="sect3">
 <h4 id="_the_multiarch_library_path">The multiarch library path</h4>
 <div class="paragraph"><p>Debian policy requires to follow <a href="https://www.debian.org/doc/packaging-manuals/fhs/fhs-2.3.html">Filesystem Hierarchy Standard</a>.  Its <a href="https://www.debian.org/doc/packaging-manuals/fhs/fhs-2.3.html#USRLIBLIBRARIESFORPROGRAMMINGANDPA">/usr/lib : Libraries for programming and packages</a> states "<strong>/usr/lib</strong> includes object files, libraries, and internal binaries that are not intended to be executed directly by users or shell scripts."</p></div>
@@ -5811,36 +5815,36 @@ Finished running lintian.</code></pre>
 <pre><code> $ dpkg -c hello-c_0.9-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz
-drwxr-xr-x root/root ...  ./usr/bin/
--rwxr-xr-x root/root ...  ./usr/bin/hello</code></pre>
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="title">The binary package contents of version 0.9:</div>
 <div class="content">
 <pre><code> $ tar -tJf hello-c_0.9-1.debian.tar.xz
 debian/
-debian/rules
-debian/compat
-debian/control
-debian/watch
-debian/copyright
-debian/source/
-debian/source/format
-debian/README.Debian
 debian/patches/
 debian/patches/0001-destdir.patch
 debian/patches/series
+debian/control
 debian/changelog
+debian/rules
+debian/source/
+debian/source/format
+debian/README.Debian
+debian/compat
+debian/watch
+debian/copyright
  $ tar -tzf hello-c-0.9.tar.gz
 hello-c-0.9/
-hello-c-0.9/hello.c
-hello-c-0.9/Makefile</code></pre>
+hello-c-0.9/Makefile
+hello-c-0.9/hello.c</code></pre>
 </div></div>
 </div>
 </div>
@@ -5869,7 +5873,7 @@ hello-c-0.9/Makefile</code></pre>
 Initialized empty Git repository in /path/to/hello-c/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 02e85ec] initial commit
+[master (root-commit) 9ac4c0a] initial commit
  2 files changed, 21 insertions(+)
  create mode 100644 Makefile
  create mode 100644 hello.c
@@ -5883,11 +5887,11 @@ D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-I: pkg="hello-c", ver="0~1410121525", rev="1"
+I: pkg="hello-c", ver="0~1410131356", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-c"
 I: pwd = "/path/to"
-I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1410121525...
+I: $ rsync -aCv --link-dest=/path/to/hello-c hello-c/. hello-c-0~1410131356...
 sending incremental file list
  ...
 I: debmake -x "1" ...
@@ -5895,7 +5899,7 @@ I: debmake -x "1" ...
 I: run "debmake -x2" to get more template files
 I: $ wrap-and-sort
 I: upon return to the shell, current directory becomes /path/to/hello-c
-I: please execute "cd /path/to/hello-c-0~1410121525" before building the bi...
+I: please execute "cd /path/to/hello-c-0~1410131356" before building the bi...
 I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 </div></div>
 <div class="paragraph"><p>Let’s inspect files.</p></div>
@@ -5907,7 +5911,7 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 ├── hello-c
 │   ├── hello.c
 │   └── Makefile
-├── hello-c-0~1410121525
+├── hello-c-0~1410131356
 │   ├── debian
 │   │   ├── changelog
 │   │   ├── compat
@@ -5923,8 +5927,8 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 │   │   └── watch
 │   ├── hello.c
 │   └── Makefile
-├── hello-c_0~1410121525.orig.tar.gz -&gt; hello-c-0~1410121525.tar.gz
-└── hello-c-0~1410121525.tar.gz
+├── hello-c_0~1410131356.orig.tar.gz -&gt; hello-c-0~1410131356.tar.gz
+└── hello-c-0~1410131356.tar.gz
 
 5 directories, 16 files</code></pre>
 </div></div>
@@ -5932,24 +5936,24 @@ I: with dpkg-buildpackage (or debuild, pdebuild, sbuild, ...).</code></pre>
 <div class="ulist"><ul>
 <li>
 <p>
-the snapshot upstream tarball: <strong>hello-0~1410121525.tar.gz</strong> (<strong>hello-c_0~1410121525.orig.tar.gz</strong>)
+the snapshot upstream tarball: <strong>hello-0~1410131356.tar.gz</strong> (<strong>hello-c_0~1410131356.orig.tar.gz</strong>)
 </p>
 </li>
 <li>
 <p>
-the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-0~1410121525/</strong>*
+the snapshot upstream source tree with template files generated by the <strong>debmake</strong> command: <strong>hello-c-0~1410131356/</strong>*
 </p>
 </li>
 <li>
 <p>
-the cleaned VCS directory: <strong>hello-c-0~1410121525/</strong>*
+the cleaned VCS directory: <strong>hello-c-0~1410131356/</strong>*
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-0~1410121525/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
+<div class="paragraph"><p>For the proper packaging, you are required to make further modification using these auto-generated template files in the <strong>hello-c-0~1410131356/debian</strong> directory. For learning purpose, let&#8217;s leave such details and move on. You can create a non-native Debian package using the <strong>debuild</strong> command (or its equivalent) in this source tree.</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ cd hello-c-0~1410121525
+<pre><code> $ cd hello-c-0~1410131356
  $ debuild
  dpkg-buildpackage -rfakeroot -D -us -uc -i
  ...
@@ -5971,62 +5975,62 @@ Finished running lintian.</code></pre>
  $ tree -L 1
 .
 ├── hello-c
-├── hello-c-0~1410121525
-├── hello-c_0~1410121525-1_amd64.build
-├── hello-c_0~1410121525-1_amd64.changes
-├── hello-c_0~1410121525-1_amd64.deb
-├── hello-c_0~1410121525-1.debian.tar.xz
-├── hello-c_0~1410121525-1.dsc
-├── hello-c_0~1410121525.orig.tar.gz -&gt; hello-c-0~1410121525.tar.gz
-└── hello-c-0~1410121525.tar.gz
+├── hello-c-0~1410131356
+├── hello-c_0~1410131356-1_amd64.build
+├── hello-c_0~1410131356-1_amd64.changes
+├── hello-c_0~1410131356-1_amd64.deb
+├── hello-c_0~1410131356-1.debian.tar.xz
+├── hello-c_0~1410131356-1.dsc
+├── hello-c_0~1410131356.orig.tar.gz -&gt; hello-c-0~1410131356.tar.gz
+└── hello-c-0~1410131356.tar.gz
 
 2 directories, 7 files</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ dpkg -c hello-c_0~1410121525-1_amd64.deb
+<pre><code> $ dpkg -c hello-c_0~1410131356-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz
-drwxr-xr-x root/root ...  ./usr/bin/
--rwxr-xr-x root/root ...  ./usr/bin/hello</code></pre>
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content">
-<pre><code> $ tar -tJf hello-c_0~1410121525-1.debian.tar.xz
+<pre><code> $ tar -tJf hello-c_0~1410131356-1.debian.tar.xz
 debian/
-debian/rules
-debian/compat
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/copyright
+debian/changelog
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
- $ tar -tzf hello-c-0~1410121525.tar.gz
-hello-c-0~1410121525/
-hello-c-0~1410121525/hello.c
-hello-c-0~1410121525/Makefile</code></pre>
+debian/compat
+debian/watch
+debian/copyright
+ $ tar -tzf hello-c-0~1410131356.tar.gz
+hello-c-0~1410131356/
+hello-c-0~1410131356/Makefile
+hello-c-0~1410131356/hello.c</code></pre>
 </div></div>
 <div class="paragraph"><p>Your development branch holding the working upstream source tree and the <strong>debian/</strong>* files is the <strong>devel</strong> branch.</p></div>
 <div class="paragraph"><p>The following will import generated Debian packages to <strong>master</strong>, <strong>upstream</strong>, and <strong>pristine-tar</strong> branches. (These are the 3 typical branches used by the <strong>gbp</strong> command.)</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ cd hello-c
- $ git-import-dsc ../hello-c_0~1410121525-1.dsc  \
+ $ git-import-dsc ../hello-c_0~1410131356-1.dsc  \
                   --pristine-tar --create-missing-branches
-gbp:info: Tag upstream/0_1410121525 not found, importing Upstream tarball
+gbp:info: Tag upstream/0_1410131356 not found, importing Upstream tarball
 gbp:info: Creating missing branch 'upstream'
-pristine-tar: committed hello-c_0~1410121525.orig.tar.gz.delta to branch pr...
-gbp:info: Version '0~1410121525-1' imported under 'hello-c'
+pristine-tar: committed hello-c_0~1410131356.orig.tar.gz.delta to branch pr...
+gbp:info: Version '0~1410131356-1' imported under 'hello-c'
  $ git branch
 * devel
   master
@@ -6087,7 +6091,7 @@ hello_SOURCES = hello.c</code></pre>
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 6cea3b5] initial commit
+[master (root-commit) ef54390] initial commit
  3 files changed, 21 insertions(+)
  create mode 100644 Makefile.am
  create mode 100644 configure.ac
@@ -6134,7 +6138,8 @@ Removing configure
 Removing depcomp
 Removing hello-c-1.5.tar.gz
 Removing install-sh
-Removing missing</code></pre>
+Removing missing
+Removing stamp-h1</code></pre>
 </div></div>
 <div class="paragraph"><p>Let’s inspect files.</p></div>
 <div class="listingblock">
@@ -6235,43 +6240,43 @@ Finished running lintian.</code></pre>
 <pre><code> $ dpkg -c hello-c_1.5-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz
-drwxr-xr-x root/root ...  ./usr/bin/
--rwxr-xr-x root/root ...  ./usr/bin/hello</code></pre>
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ tar -tJf hello-c_1.5-1.debian.tar.xz
 debian/
-debian/rules
-debian/compat
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/copyright
+debian/changelog
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
+debian/compat
+debian/watch
+debian/copyright
  $ tar -tzf hello-c-1.5.tar.gz
 hello-c-1.5/
-hello-c-1.5/install-sh
-hello-c-1.5/missing
-hello-c-1.5/depcomp
-hello-c-1.5/aclocal.m4
-hello-c-1.5/compile
-hello-c-1.5/configure.ac
 hello-c-1.5/config.h.in
-hello-c-1.5/hello.c
 hello-c-1.5/Makefile.am
+hello-c-1.5/Makefile.in
+hello-c-1.5/hello.c
 hello-c-1.5/configure
-hello-c-1.5/Makefile.in</code></pre>
+hello-c-1.5/depcomp
+hello-c-1.5/missing
+hello-c-1.5/configure.ac
+hello-c-1.5/install-sh
+hello-c-1.5/compile
+hello-c-1.5/aclocal.m4</code></pre>
 </div></div>
 <div class="paragraph"><p>Your development branch holding the real upstream source tree is the <strong>devel</strong> branch.</p></div>
 <div class="paragraph"><p>The following will import generated Debian packages to <strong>master</strong>, <strong>upstream</strong>, and <strong>pristine-tar</strong> branches.</p></div>
@@ -6382,7 +6387,7 @@ if __name__ == '__main__':
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) fadb74d] initial commit
+[master (root-commit) 24f4e27] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -6429,12 +6434,6 @@ Removing dist/</code></pre>
 <pre><code> $ dpkg -c hello-py_1.0-1_all.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
-drwxr-xr-x root/root ...  ./usr/share/
-drwxr-xr-x root/root ...  ./usr/share/doc/
-drwxr-xr-x root/root ...  ./usr/share/doc/hello-py/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-py/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-py/README.Debian
--rw-r--r-- root/root ...  ./usr/share/doc/hello-py/changelog.Debian.gz
 drwxr-xr-x root/root ...  ./usr/bin/
 -rwxr-xr-x root/root ...  ./usr/bin/hello
 drwxr-xr-x root/root ...  ./usr/lib/
@@ -6442,33 +6441,39 @@ drwxr-xr-x root/root ...  ./usr/lib/python3/
 drwxr-xr-x root/root ...  ./usr/lib/python3/dist-packages/
 -rw-r--r-- root/root ...  ./usr/lib/python3/dist-packages/hello_py-1.0.egg-...
 drwxr-xr-x root/root ...  ./usr/lib/python3/dist-packages/hello-py/
--rw-r--r-- root/root ...  ./usr/lib/python3/dist-packages/hello-py/__init__...</code></pre>
+-rw-r--r-- root/root ...  ./usr/lib/python3/dist-packages/hello-py/__init__...
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-py/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-py/changelog.Debian.gz
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-py/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-py/copyright</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="content">
 <pre><code> $ tar -tJf hello-py_1.0-1.debian.tar.xz
 debian/
-debian/rules
-debian/compat
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/copyright
+debian/changelog
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
+debian/compat
+debian/watch
+debian/copyright
  $ tar -tzf hello-py-1.0.tar.gz
 hello-py-1.0/
-hello-py-1.0/scripts/
-hello-py-1.0/scripts/hello
+hello-py-1.0/MANIFEST.in
 hello-py-1.0/MANIFEST
 hello-py-1.0/PKG-INFO
 hello-py-1.0/hello-py/
 hello-py-1.0/hello-py/__init__.py
 hello-py-1.0/setup.py
-hello-py-1.0/MANIFEST.in</code></pre>
+hello-py-1.0/scripts/
+hello-py-1.0/scripts/hello</code></pre>
 </div></div>
 <div class="paragraph"><p>Let&#8217;s check the generated control file content.</p></div>
 <div class="listingblock">
@@ -6513,7 +6518,7 @@ Version: 1.0-1
 Architecture: all
 Maintainer: "Firstname Lastname" &lt;email.address@example.org&gt;
 Installed-Size: 50
-Depends: python3, python3:any (&gt;= 3.3.2-2~)
+Depends: python3:any (&gt;= 3.3.2-2~), python3
 Section: unknown
 Priority: extra
 Multi-Arch: foreign
@@ -6834,26 +6839,26 @@ Finished running lintian.</code></pre>
 <div class="content">
 <pre><code> $ tar -tJf hello_1.1-1.debian.tar.xz
 debian/
-debian/hello-data.install
-debian/rules
-debian/compat
-debian/hello-sh.install
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/hello-c.install
+debian/hello-sh.install
+debian/changelog
 debian/clean
-debian/copyright
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
+debian/compat
+debian/hello-data.install
+debian/watch
+debian/hello-c.install
+debian/copyright
  $ tar -tzf hello-1.1.tar.gz
 hello-1.1/
 hello-1.1/hello-sh
-hello-1.1/hello.c
 hello-1.1/Makefile
+hello-1.1/hello.c
 hello-1.1/hello.data</code></pre>
 </div></div>
 <div class="listingblock">
@@ -6862,47 +6867,47 @@ hello-1.1/hello.data</code></pre>
 <pre><code> $ dpkg -c hello-c_1.1-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-c/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-c/changelog.Debian.gz
-drwxr-xr-x root/root ...  ./usr/bin/
--rwxr-xr-x root/root ...  ./usr/bin/hello
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/README.Debian
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c/copyright
  $ dpkg -c hello-c-dbg_1.1-1_amd64.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
-drwxr-xr-x root/root ...  ./usr/share/
-drwxr-xr-x root/root ...  ./usr/share/doc/
-drwxr-xr-x root/root ...  ./usr/share/doc/hello-c-dbg/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/changelog.Debian.gz
 drwxr-xr-x root/root ...  ./usr/lib/
 drwxr-xr-x root/root ...  ./usr/lib/debug/
 drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/
 drwxr-xr-x root/root ...  ./usr/lib/debug/.build-id/e5/
 -rw-r--r-- root/root ...  ./usr/lib/debug/.build-id/e5/0948fb440ec9f6ffcf37...
+drwxr-xr-x root/root ...  ./usr/share/
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-c-dbg/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/changelog.Debian.gz
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-c-dbg/copyright
  $ dpkg -c hello-data_1.1-1_all.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
 drwxr-xr-x root/root ...  ./usr/share/
-drwxr-xr-x root/root ...  ./usr/share/doc/
-drwxr-xr-x root/root ...  ./usr/share/doc/hello-data/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-data/copyright
--rw-r--r-- root/root ...  ./usr/share/doc/hello-data/changelog.Debian.gz
 drwxr-xr-x root/root ...  ./usr/share/hello/
 -rwxr-xr-x root/root ...  ./usr/share/hello/hello.data
+drwxr-xr-x root/root ...  ./usr/share/doc/
+drwxr-xr-x root/root ...  ./usr/share/doc/hello-data/
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-data/changelog.Debian.gz
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-data/copyright
  $ dpkg -c hello-sh_1.1-1_all.deb
 drwxr-xr-x root/root ...  ./
 drwxr-xr-x root/root ...  ./usr/
+drwxr-xr-x root/root ...  ./usr/bin/
+-rwxr-xr-x root/root ...  ./usr/bin/hello-sh
 drwxr-xr-x root/root ...  ./usr/share/
 drwxr-xr-x root/root ...  ./usr/share/doc/
 drwxr-xr-x root/root ...  ./usr/share/doc/hello-sh/
--rw-r--r-- root/root ...  ./usr/share/doc/hello-sh/copyright
 -rw-r--r-- root/root ...  ./usr/share/doc/hello-sh/changelog.Debian.gz
-drwxr-xr-x root/root ...  ./usr/bin/
--rwxr-xr-x root/root ...  ./usr/bin/hello-sh</code></pre>
+-rw-r--r-- root/root ...  ./usr/share/doc/hello-sh/copyright</code></pre>
 </div></div>
 <div class="admonitionblock">
 <table><tr>
@@ -8456,7 +8461,7 @@ A full tutorial document for the Debian packaging with packaging examples: <a hr
 <div id="footer-text">
 Version 2.0~pre1<br />
 Last updated
- 2014-07-24 23:22:26 JST
+ 2014-10-13 17:20:59 JST
 </div>
 </div>
 </body>
