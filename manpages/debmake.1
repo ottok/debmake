@@ -2,12 +2,12 @@
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 08/04/2014
+.\"      Date: 10/13/2014
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE 4.0
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "08/04/2014" "DEBMAKE 4\&.0" "Debmake Manual"
+.TH "DEBMAKE" "1" "10/13/2014" "DEBMAKE 4\&.0" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 debmake \- program to make the Debian source package
 .SH "SYNOPSIS"
 .sp
-\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR]
+\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR] [\fB\-Q\fR]
 .SH "DESCRIPTION"
 .sp
 \fBdebmake\fR helps to build the Debian package from the upstream source\&. Normally, this is done as follows:
@@ -683,6 +683,13 @@ suffix\&.
 .RS 4
 force "yes" for all prompts\&. (without option: "ask [Y/n]"; doubled option: force "no")
 .RE
+.PP
+\fB\-Q\fR, \fB\-\-quiet\fR
+.RS 4
+quiet tutorial comment lines marked with
+\fB###\fR
+in template files
+.RE
 .SH "EXAMPLES"
 .sp
 For a well behaving source, you can build a good\-for\-local\-use installable single Debian binary package easily with one command\&. Test install of such a package generated in this way offers a good alternative to traditional "\fBmake install\fR" to the \fB/usr/local\fR directory since the Debian package can be removed cleanly by the "\fBdpkg \-P\fR \fI\&...\fR" command\&. Here are some examples of how to build such test packages\&. (These should work in most cases\&. If the \fB\-d\fR does not work, try \fB\-t\fR instead\&.)
@@ -820,6 +827,8 @@ package\&.
 etc\&.
 .RE
 .SH "CAVEAT"
+.sp
+\fBdebmake\fR is meant to provide template files for the package maintainer to work on\&. Comment lines started by \fB###\fR are the tutorial text\&. You must remove or edit such comment lines before uploading to the Debian archive\&.
 .sp
 There are some limitations for what characters may be used as a part of the Debian package\&. The most notable limitation is the prohibition of uppercase letters in the package name\&. Here is the summary in the regular expression\&.
 .sp

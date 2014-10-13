@@ -1,2 +1,3 @@
+### Vala source requires this.
 VALAFLAGS:=$(foreach w,$(CPPFLAGS) $(CFLAGS) $(LDFLAGS),-X $(w))
 
