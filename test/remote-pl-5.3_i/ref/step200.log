@@ -6,7 +6,7 @@ D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
 W: -p "blhc" != auto set value ""
-W: -u "0.4" != auto set value "0~1410131358"
+W: -u "0.4" != auto set value "0~1410131525"
 I: pkg="blhc", ver="0.4", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/blhc"
@@ -93,8 +93,8 @@ I: binary package=blhc Type=perl / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = Perl Module::Build
 I: scan source for copyright+license text and file extensions
-I:  33 %, ext = t
 I:  33 %, ext = gitignore
+I:  33 %, ext = t
 I:  33 %, ext = perl
 I: check_all_licenses
 I: ...........................................................
@@ -153,7 +153,7 @@ Building blhc
 Module::Build will be removed from the Perl core distribution in the next m...
 t/tests.t .. ok
 All tests successful.
-Files=1, Tests=218,  2 wallclock secs ( 0.04 usr  0.00 sys +  2.34 cusr  0....
+Files=1, Tests=218,  3 wallclock secs ( 0.03 usr  0.00 sys +  2.36 cusr  0....
 Result: PASS
  fakeroot debian/rules binary
 dh binary

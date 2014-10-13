@@ -60,8 +60,6 @@ gcc  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security  -Wl,...
 make[2]: Leaving directory '/path/to/hello-c-1.5'
 make[1]: Leaving directory '/path/to/hello-c-1.5'
    dh_auto_test
-make[1]: Entering directory '/path/to/hello-c-1.5'
-make[1]: Leaving directory '/path/to/hello-c-1.5'
  fakeroot debian/rules binary
 dh binary --with autoreconf
    dh_testroot

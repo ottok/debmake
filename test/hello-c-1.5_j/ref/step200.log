@@ -145,7 +145,6 @@ make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Nothing to be done for 'dvi'.
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
-make[4]: Nothing to be done for 'check'.
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[5]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
@@ -164,13 +163,13 @@ make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[5]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
- /bin/mkdir -p '/tmp/am-dc-21943//path/to/vcsdir/hello-c-1.5/_inst/bin'
-  /usr/bin/install -c hello '/tmp/am-dc-21943//path/to/vcsdir/hello-c-1.5/_...
+ /bin/mkdir -p '/tmp/am-dc-24780//path/to/vcsdir/hello-c-1.5/_inst/bin'
+  /usr/bin/install -c hello '/tmp/am-dc-24780//path/to/vcsdir/hello-c-1.5/_...
 make[5]: Nothing to be done for 'install-data-am'.
 make[5]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
- ( cd '/tmp/am-dc-21943//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f hel...
+ ( cd '/tmp/am-dc-24780//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f hel...
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
@@ -243,10 +242,10 @@ I: analyze the source tree
 I: build_type = Autotools with autoreconf
 I: scan source for copyright+license text and file extensions
 I:  33 %, ext = c
-I:  17 %, ext = in
-I:  17 %, ext = am
 I:  17 %, ext = ac
+I:  17 %, ext = in
 I:  17 %, ext = m4
+I:  17 %, ext = am
 I: check_all_licenses
 I: ...........
 I: check_all_licenses completed for 11 files.

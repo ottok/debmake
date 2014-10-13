@@ -5,7 +5,7 @@ D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-W: -u "1.2.0" != auto set value "0~1410131359"
+W: -u "1.2.0" != auto set value "0~1410131525"
 I: pkg="hello-world", ver="1.2.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-world"
@@ -44,10 +44,10 @@ I: analyze the source tree
 I: build_type = Unknown
 I: scan source for copyright+license text and file extensions
 I:  43 %, ext = ruby
-I:  14 %, ext = document
-I:  14 %, ext = gemspec
 I:  14 %, ext = rdoc
+I:  14 %, ext = document
 I:  14 %, ext = gitignore
+I:  14 %, ext = gemspec
 I: check_all_licenses
 I: ..........
 I: check_all_licenses completed for 10 files.

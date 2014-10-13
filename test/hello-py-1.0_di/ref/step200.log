@@ -3,7 +3,7 @@
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) 24f4e27] initial commit
+[master (root-commit) 38039fe] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in

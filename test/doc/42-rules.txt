@@ -80,12 +80,12 @@ Some variable definitions useful for customizing *debian/rules* can be found in 
 *architecture.mk*::
   Set **DEB_HOST_*** and  **DEB_BUILD_*** variables.
   +
-  Only variables used explicitly in *debian/rules* need to be defined using *dpkg-architecture*.  So there is no need to include this in *debian/rules*.
+  Only variables used explicitly in *debian/rules* need to be defined using *dpkg-architecture*.  So there is no need to include *architecture.mk* in *debian/rules*.
 
 *buildflags.mk*::
   Set *CFLAGS*, *CPPFLAGS*, *CXXFLAGS*, *OBJCFLAGS*, *OBJCXXFLAGS*, *GCJFLAGS*, *FFLAGS*, *FCFLAGS*, and *LDFLAGS* buildflag variables.
   +
-  These are normally exported by *dh* for the script in the *override_*** target.  So there is no need to include this in *debian/rules*.
+  These are normally exported by *dh* for the script in the *override_*** target.  So there is no need to include *buildflags.mk* in *debian/rules*.
 
 If you wish to use some of these useful variables in *debian/rules*, copy relevant codes to *debian/rules* or write simpler alternatives in it.  Please keep *debian/rules* simple.
 

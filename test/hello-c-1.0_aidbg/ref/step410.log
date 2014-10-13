@@ -227,7 +227,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: standards-version, Type: source
 N:
-W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c: wrong-bug-number-in-closes l3:#nnnn
 N:
 N:    Bug numbers can only contain digits.
 N:
@@ -238,7 +238,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-c-dbg: new-package-should-close-itp-bug
+W: hello-c: new-package-should-close-itp-bug
 N:
 N:    This package appears to be the first packaging of a new upstream
 N:    software package (there is only one changelog entry and the Debian
@@ -255,7 +255,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-E: hello-c-dbg: changelog-is-dh_make-template
+E: hello-c: changelog-is-dh_make-template
 N:
 N:    The changelog file has an instruction left by dh_make, which has not
 N:    been removed. Example:
@@ -269,7 +269,7 @@ N:    Severity: important, Certainty: certain
 N:
 N:    Check: changelog-file, Type: binary
 N:
-W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
+W: hello-c: copyright-has-url-from-dh_make-boilerplate
 N:
 N:    There is "url://example.com" in your copyright file. This was most
 N:    likely a remnant from the dh_make template.
@@ -284,7 +284,7 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-W: hello-c-dbg: copyright-without-copyright-notice
+W: hello-c: copyright-without-copyright-notice
 N:
 N:    The copyright file for this package does not appear to contain a
 N:    copyright notice. You should copy the copyright notice from the upstr...
@@ -311,29 +311,6 @@ N:    Severity: normal, Certainty: certain
 N:
 N:    Check: copyright-file, Type: binary
 N:
-W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL, i...
-W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
-W: hello-c-dbg: empty-binary-package
-N:
-N:    This binary package appears to be empty, and its description does not...
-N:    say that it's a metapackage or a transitional package. This is often ...
-N:    to problems with updating debhelper *.install files during package
-N:    renames or similar problems where installation rules don't put files ...
-N:    the correct place.
-N:
-N:    If the package is deliberately empty, please mention in the package l...
-N:    description one of the phrases "metapackage", "dummy", "dependency
-N:    package", or "empty package".
-N:
-N:    Severity: important, Certainty: wild-guess
-N:
-N:    Check: files, Type: binary, udeb
-N:
-W: hello-c: wrong-bug-number-in-closes l3:#nnnn
-W: hello-c: new-package-should-close-itp-bug
-E: hello-c: changelog-is-dh_make-template
-W: hello-c: copyright-has-url-from-dh_make-boilerplate
-W: hello-c: copyright-without-copyright-notice
 W: hello-c: extended-description-line-too-long
 N:
 N:    One or more lines in the extended part of the "Description:" field ha...
@@ -413,5 +390,28 @@ N:
 N:    Check: scripts, Type: binary
 N:
 W: hello-c: maintainer-script-empty prerm
+W: hello-c-dbg: wrong-bug-number-in-closes l3:#nnnn
+W: hello-c-dbg: new-package-should-close-itp-bug
+E: hello-c-dbg: changelog-is-dh_make-template
+W: hello-c-dbg: copyright-has-url-from-dh_make-boilerplate
+W: hello-c-dbg: copyright-without-copyright-notice
+W: hello-c-dbg: superfluous-clutter-in-homepage <insert the upstream URL, i...
+W: hello-c-dbg: bad-homepage <insert the upstream URL, if relevant>
+W: hello-c-dbg: empty-binary-package
+N:
+N:    This binary package appears to be empty, and its description does not...
+N:    say that it's a metapackage or a transitional package. This is often ...
+N:    to problems with updating debhelper *.install files during package
+N:    renames or similar problems where installation rules don't put files ...
+N:    the correct place.
+N:
+N:    If the package is deliberately empty, please mention in the package l...
+N:    description one of the phrases "metapackage", "dummy", "dependency
+N:    package", or "empty package".
+N:
+N:    Severity: important, Certainty: wild-guess
+N:
+N:    Check: files, Type: binary, udeb
+N:
 Finished running lintian.
 I: please inspect the build results.

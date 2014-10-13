@@ -13,20 +13,19 @@ You should read the following references in detail.
 
 The multiarch is enabled by using the *<triplet>* value such as *i386-linux-gnu* and *x86_64-linux-gnu* in the the install path of shared libraries as */usr/lib/<triplet>/*, etc..
 
-The *<triplet>* value required by *debhelper* scripts is implicitly set in themselves.
+* The *<triplet>* value required internally by *debhelper* scripts is implicitly set in themselves.  The mainainer doesn't need to worry.
 
-The *<triplet>* value used in **override_dh_*** target scripts must be explicitly set in the *debian/rules* by the maintainer.  The *<triplet>* value is stored in *$(DEB_HOST_MULTIARCH)* variable in the following *debian/rules* snippet example:
-
+* The *<triplet>* value used in **override_dh_*** target scripts must be explicitly set in the *debian/rules* by the maintainer.  The *<triplet>* value is stored in *$(DEB_HOST_MULTIARCH)* variable in the following *debian/rules* snippet example:
++
 ----
 DEB_HOST_MULTIARCH = $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 ...
-
 override_dh_install:
 	mkdir -p package1/lib/$(DEB_HOST_MULTIARCH)
 	cp -dR tmp/lib/. package1/lib/$(DEB_HOST_MULTIARCH)
 ----
 
-See <<variablesrules>>.
+See <<variablesrules>> and *dpkg-architecture*.
 
 ==== The multiarch library path
 

@@ -18,8 +18,8 @@ I: binary package=hello-sh Type=script / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = make
 I: scan source for copyright+license text and file extensions
-I:  50 %, ext = c
 I:  50 %, ext = data
+I:  50 %, ext = c
 I: check_all_licenses
 I: ....
 I: check_all_licenses completed for 4 files.
