@@ -10,8 +10,8 @@ I: pwd = "/path/to"
 I: $ tar -xvzf hello-1.1.tar.gz
 hello-1.1/
 hello-1.1/hello-sh
-hello-1.1/hello.c
 hello-1.1/Makefile
+hello-1.1/hello.c
 hello-1.1/hello.data
 I: untared hello-1.1.tar.gz.
 I: tar -tzf hello-1.1.tar.gz|grep -v /.
@@ -29,8 +29,8 @@ I: binary package=hello-sh Type=script / Arch=all M-A=foreign
 I: analyze the source tree
 I: build_type = make
 I: scan source for copyright+license text and file extensions
-I:  50 %, ext = c
 I:  50 %, ext = data
+I:  50 %, ext = c
 I: check_all_licenses
 I: ....
 I: check_all_licenses completed for 4 files.

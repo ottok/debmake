@@ -1,16 +1,16 @@
  $ tar -tJf file-tail_0.99.3-1.debian.tar.xz
 debian/
-debian/rules
-debian/compat
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/copyright
+debian/changelog
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
+debian/compat
+debian/watch
+debian/copyright
  $ tar -tzf File-Tail-0.99.3.tar.gz
 File-Tail-0.99.3/
 File-Tail-0.99.3/META.yml

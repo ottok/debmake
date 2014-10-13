@@ -9,8 +9,8 @@ I: untar the upstream tarball
 I: pwd = "/path/to"
 I: $ tar -xvzf hello-c-1.0.tar.gz
 hello-c-1.0/
-hello-c-1.0/hello.c
 hello-c-1.0/Makefile
+hello-c-1.0/hello.c
 I: untared hello-c-1.0.tar.gz.
 I: tar -tzf hello-c-1.0.tar.gz|grep -v /.
 I: pwd = "/path/to/hello-c-1.0"

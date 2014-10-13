@@ -1,23 +1,23 @@
  $ tar -tJf hello_1.1-1.debian.tar.xz
 debian/
-debian/hello-data.install
-debian/rules
-debian/compat
-debian/hello-sh.install
+debian/patches/
+debian/patches/series
 debian/control
-debian/watch
-debian/hello-c.install
+debian/hello-sh.install
+debian/changelog
 debian/clean
-debian/copyright
+debian/rules
 debian/source/
 debian/source/format
 debian/README.Debian
-debian/patches/
-debian/patches/series
-debian/changelog
+debian/compat
+debian/hello-data.install
+debian/watch
+debian/hello-c.install
+debian/copyright
  $ tar -tzf hello-1.1.tar.gz
 hello-1.1/
 hello-1.1/hello-sh
-hello-1.1/hello.c
 hello-1.1/Makefile
+hello-1.1/hello.c
 hello-1.1/hello.data

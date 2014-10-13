@@ -1,42 +1,42 @@
- $ cd hello-c-0~1410121525
+ $ cd hello-c-0~1410131356
  $ debuild
  dpkg-buildpackage -rfakeroot -D -us -uc -i
 dpkg-buildpackage: source package hello-c
-dpkg-buildpackage: source version 0~1410121525-1
+dpkg-buildpackage: source version 0~1410131356-1
 dpkg-buildpackage: source distribution UNRELEASED
 dpkg-buildpackage: source changed by "Firstname Lastname" <email.address@ex...
- dpkg-source -i --before-build hello-c-0~1410121525
+ dpkg-source -i --before-build hello-c-0~1410131356
 dpkg-buildpackage: host architecture amd64
  fakeroot debian/rules clean
 dh clean
    dh_testdir
    dh_auto_clean
-make[1]: Entering directory '/path/to/hello-c-0~1410121525'
+make[1]: Entering directory '/path/to/hello-c-0~1410131356'
 rm -f hello
-make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
+make[1]: Leaving directory '/path/to/hello-c-0~1410131356'
    dh_clean
- dpkg-source -i -b hello-c-0~1410121525
+ dpkg-source -i -b hello-c-0~1410131356
 dpkg-source: info: using source format `3.0 (quilt)'
-dpkg-source: info: building hello-c using existing ./hello-c_0~1410121525.o...
-dpkg-source: info: building hello-c in hello-c_0~1410121525-1.debian.tar.xz...
-dpkg-source: info: building hello-c in hello-c_0~1410121525-1.dsc
+dpkg-source: info: building hello-c using existing ./hello-c_0~1410131356.o...
+dpkg-source: info: building hello-c in hello-c_0~1410131356-1.debian.tar.xz...
+dpkg-source: info: building hello-c in hello-c_0~1410131356-1.dsc
  debian/rules build
 dh build
    dh_testdir
    dh_auto_configure
    dh_auto_build
-make[1]: Entering directory '/path/to/hello-c-0~1410121525'
+make[1]: Entering directory '/path/to/hello-c-0~1410131356'
 gcc -Wall -o hello hello.c
-make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
+make[1]: Leaving directory '/path/to/hello-c-0~1410131356'
    dh_auto_test
  fakeroot debian/rules binary
 dh binary
    dh_testroot
    dh_prep
    dh_auto_install
-make[1]: Entering directory '/path/to/hello-c-0~1410121525'
-install -D hello /path/to/hello-c-0~1410121525/debian/hello-c/usr/bin/hello...
-make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
+make[1]: Entering directory '/path/to/hello-c-0~1410131356'
+install -D hello /path/to/hello-c-0~1410131356/debian/hello-c/usr/bin/hello...
+make[1]: Leaving directory '/path/to/hello-c-0~1410131356'
    dh_installdocs
    dh_installchangelogs
    dh_perl
@@ -50,10 +50,10 @@ make[1]: Leaving directory '/path/to/hello-c-0~1410121525'
    dh_gencontrol
    dh_md5sums
    dh_builddeb
-dpkg-deb: building package `hello-c' in `../hello-c_0~1410121525-1_amd64.de...
- dpkg-genchanges  >../hello-c_0~1410121525-1_amd64.changes
+dpkg-deb: building package `hello-c' in `../hello-c_0~1410131356-1_amd64.de...
+ dpkg-genchanges  >../hello-c_0~1410131356-1_amd64.changes
 dpkg-genchanges: including full source code in upload
- dpkg-source -i --after-build hello-c-0~1410121525
+ dpkg-source -i --after-build hello-c-0~1410131356
 dpkg-buildpackage: full upload (original source is included)
 Now running lintian...
 W: hello-c source: superfluous-clutter-in-homepage <insert the upstream URL...

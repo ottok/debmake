@@ -80,14 +80,14 @@ Some variable definitions useful for customizing *debian/rules* can be found in 
 *architecture.mk*::
   Set **DEB_HOST_*** and  **DEB_BUILD_*** variables.
   +
-  These are normally exported by *dpkg-buildpackages*.
+  Only variables used explicitly in *debian/rules* need to be defined using *dpkg-architecture*.  So there is no need to include this in *debian/rules*.
 
 *buildflags.mk*::
   Set *CFLAGS*, *CPPFLAGS*, *CXXFLAGS*, *OBJCFLAGS*, *OBJCXXFLAGS*, *GCJFLAGS*, *FFLAGS*, *FCFLAGS*, and *LDFLAGS* buildflag variables.
   +
-  These are normally exported by *dh* for the script in the *override_*** target.
+  These are normally exported by *dh* for the script in the *override_*** target.  So there is no need to include this in *debian/rules*.
 
-If you wish to use some of these useful variables, copy relevant codes to *debian/rules* to keep *debian/rules* simple.
+If you wish to use some of these useful variables in *debian/rules*, copy relevant codes to *debian/rules* or write simpler alternatives in it.  Please keep *debian/rules* simple.
 
 For example, you can add an extra option to *CONFIGURE_FLAGS* for *linux-any* target architectures by adding the followings to *debian/rules*:
 
@@ -99,7 +99,5 @@ CONFIGURE_FLAGS += --enable-wayland
 endif
 ----
 
-See *dpkg-buildflags*(8) and read the files in the */usr/share/dpkg* directory.
-
-TIP: Adding "`include /usr/share/dpkg/architecture.mk`" to *debian/rules* allows us to use *debian/rules* for the quick test building.  But it is good idea to remove it for the released package since the official build always use *dpkg-buildpackages*.
+See <<multiarch>>, *dpkg-architecture*(1) and *dpkg-buildflags*(1).
 

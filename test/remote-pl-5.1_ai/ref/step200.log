@@ -104,7 +104,7 @@ t/10open.t ......... ok
 t/20tail.t ......... ok
 t/30name_change.t .. ok
 All tests successful.
-Files=3, Tests=15, 66 wallclock secs ( 0.03 usr  0.01 sys +  0.10 cusr  0.0...
+Files=3, Tests=15, 66 wallclock secs ( 0.02 usr  0.00 sys +  0.08 cusr  0.0...
 Result: PASS
 make[1]: Leaving directory '/path/to/file-tail-0.99.3'
  fakeroot debian/rules binary

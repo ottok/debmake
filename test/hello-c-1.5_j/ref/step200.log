@@ -47,9 +47,6 @@ config.status: executing depfiles commands
 make[3]: Entering directory '/path/to/vcsdir'
 make  dist-gzip am__post_remove_distdir='@:'
 make[4]: Entering directory '/path/to/vcsdir'
-(CDPATH="${ZSH_VERSION+.}:" && cd . && /bin/bash /path/to/vcsdir/missing au...
-rm -f stamp-h1
-touch config.h.in
 if test -d "hello-c-1.5"; then find "hello-c-1.5" -type d ! -perm -200 -exe...
 test -d "hello-c-1.5" || mkdir "hello-c-1.5"
 test -n "" \
@@ -148,6 +145,7 @@ make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Nothing to be done for 'dvi'.
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
+make[4]: Nothing to be done for 'check'.
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[5]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
@@ -166,13 +164,13 @@ make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[5]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
- /bin/mkdir -p '/tmp/am-dc-24313//path/to/vcsdir/hello-c-1.5/_inst/bin'
-  /usr/bin/install -c hello '/tmp/am-dc-24313//path/to/vcsdir/hello-c-1.5/_...
+ /bin/mkdir -p '/tmp/am-dc-21943//path/to/vcsdir/hello-c-1.5/_inst/bin'
+  /usr/bin/install -c hello '/tmp/am-dc-21943//path/to/vcsdir/hello-c-1.5/_...
 make[5]: Nothing to be done for 'install-data-am'.
 make[5]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
- ( cd '/tmp/am-dc-24313//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f hel...
+ ( cd '/tmp/am-dc-21943//path/to/vcsdir/hello-c-1.5/_inst/bin' && rm -f hel...
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Entering directory '/path/to/vcsdir/hello-c-1.5/_build'
 make[4]: Leaving directory '/path/to/vcsdir/hello-c-1.5/_build'
@@ -220,17 +218,17 @@ I: untar the upstream tarball
 I: pwd = "/path/to"
 I: $ tar -xvzf hello-c-1.5.tar.gz
 hello-c-1.5/
-hello-c-1.5/install-sh
-hello-c-1.5/missing
-hello-c-1.5/depcomp
-hello-c-1.5/aclocal.m4
-hello-c-1.5/compile
-hello-c-1.5/configure.ac
 hello-c-1.5/config.h.in
-hello-c-1.5/hello.c
 hello-c-1.5/Makefile.am
-hello-c-1.5/configure
 hello-c-1.5/Makefile.in
+hello-c-1.5/hello.c
+hello-c-1.5/configure
+hello-c-1.5/depcomp
+hello-c-1.5/missing
+hello-c-1.5/configure.ac
+hello-c-1.5/install-sh
+hello-c-1.5/compile
+hello-c-1.5/aclocal.m4
 I: untared hello-c-1.5.tar.gz.
 I: tar -tzf hello-c-1.5.tar.gz|grep -v /.
 I: pwd = "/path/to/hello-c-1.5"
@@ -247,8 +245,8 @@ I: scan source for copyright+license text and file extensions
 I:  33 %, ext = c
 I:  17 %, ext = in
 I:  17 %, ext = am
-I:  17 %, ext = m4
 I:  17 %, ext = ac
+I:  17 %, ext = m4
 I: check_all_licenses
 I: ...........
 I: check_all_licenses completed for 11 files.

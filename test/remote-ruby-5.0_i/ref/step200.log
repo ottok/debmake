@@ -1,11 +1,11 @@
  $ cd hello-world
-/media/osamu/f00eab04-2e60-414d-bb90-9220843b2652/home/osamu/vcs-maint/debm...
+/home/osamu/vcs-maint/debmake/debmake/test/bin/CD: line 4: cd: hello-world:...
  $ debmake -s -b':ruby' -t -u 1.2.0 -i debuild
 D: /usr/bin/debmake started
 D: PYTHONPATH = /usr/bin:/usr/lib/python3.4:/usr/lib/python3.4/plat-x86_64-...
 I: set parameters
 I: sanity check of parameters
-W: -u "1.2.0" != auto set value "0~1410121527"
+W: -u "1.2.0" != auto set value "0~1410131359"
 I: pkg="hello-world", ver="1.2.0", rev="1"
 I: make the upstream tarball with "tar --exclude=debian"
 I: pwd = "/path/to/hello-world"
@@ -14,22 +14,22 @@ I: $ rsync -aCv --link-dest=/path/to/hello-world hello-world/. hello-world-...
 sending incremental file list
 created directory hello-world-1.2.0
 
-sent 404 bytes  received 55 bytes  918.00 bytes/sec
-total size is 5,139  speedup is 11.20
+sent 389 bytes  received 55 bytes  888.00 bytes/sec
+total size is 5,139  speedup is 11.57
 I: $ tar --exclude='hello-world-1.2.0/debian' --anchored --exclude-caches -...
 hello-world-1.2.0/
 hello-world-1.2.0/LICENSE
-hello-world-1.2.0/hello-world.gemspec
-hello-world-1.2.0/README.rdoc
-hello-world-1.2.0/test/
-hello-world-1.2.0/test/helper.rb
-hello-world-1.2.0/test/test_hello-world.rb
-hello-world-1.2.0/.document
 hello-world-1.2.0/VERSION
 hello-world-1.2.0/bin/
 hello-world-1.2.0/bin/hello-world
 hello-world-1.2.0/lib/
 hello-world-1.2.0/lib/hello-world.rb
+hello-world-1.2.0/.document
+hello-world-1.2.0/README.rdoc
+hello-world-1.2.0/test/
+hello-world-1.2.0/test/helper.rb
+hello-world-1.2.0/test/test_hello-world.rb
+hello-world-1.2.0/hello-world.gemspec
 hello-world-1.2.0/Rakefile
 I: hello-world-1.2.0.tar.gz tarball made
 I: pwd = "/path/to/hello-world-1.2.0"
@@ -44,10 +44,10 @@ I: analyze the source tree
 I: build_type = Unknown
 I: scan source for copyright+license text and file extensions
 I:  43 %, ext = ruby
-I:  14 %, ext = rdoc
-I:  14 %, ext = gemspec
-I:  14 %, ext = gitignore
 I:  14 %, ext = document
+I:  14 %, ext = gemspec
+I:  14 %, ext = rdoc
+I:  14 %, ext = gitignore
 I: check_all_licenses
 I: ..........
 I: check_all_licenses completed for 10 files.

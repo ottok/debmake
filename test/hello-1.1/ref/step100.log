@@ -1,6 +1,6 @@
  $ tar -xvzmf hello-1.1.tar.gz
 hello-1.1/
 hello-1.1/hello-sh
-hello-1.1/hello.c
 hello-1.1/Makefile
+hello-1.1/hello.c
 hello-1.1/hello.data

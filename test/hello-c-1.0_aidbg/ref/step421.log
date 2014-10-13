@@ -7,11 +7,12 @@
 ### Output every command that modifies files on the build system.
 #DH_VERBOSE = 1
 ###
-### Make debian/rules to behave like dpkg-buildpackage.
-### See /usr/share/doc/debmake/maint-guide.html#variablesrules
-###include /usr/share/dpkg/architecture.mk
+### Define DEB_HOST_* and  DEB_BUILD_* variables using
+### dpkg-architecture(1) if they are used in the override_*
+### target scripts.  E.g.:
+###DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 ###
-### Copy variable definition lines in pkg-info.mk and vendor.mk
+### Copy some variable definitions from pkg-info.mk and vendor.mk
 ### under /usr/share/dpkg/ to here if they are useful.
 ###
 ### See FEATURE AREAS in dpkg-buildflags(1)

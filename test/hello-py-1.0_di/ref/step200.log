@@ -3,7 +3,7 @@
 Initialized empty Git repository in /path/to/vcsdir/.git/
  $ git add .
  $ git commit -m "initial commit"
-[master (root-commit) fadb74d] initial commit
+[master (root-commit) 24f4e27] initial commit
  6 files changed, 93 insertions(+)
  create mode 100644 MANIFEST
  create mode 100644 MANIFEST.in
@@ -53,14 +53,14 @@ I: untar the upstream tarball
 I: pwd = "/path/to"
 I: $ tar -xvzf hello-py-1.0.tar.gz
 hello-py-1.0/
-hello-py-1.0/scripts/
-hello-py-1.0/scripts/hello
+hello-py-1.0/MANIFEST.in
 hello-py-1.0/MANIFEST
 hello-py-1.0/PKG-INFO
 hello-py-1.0/hello-py/
 hello-py-1.0/hello-py/__init__.py
 hello-py-1.0/setup.py
-hello-py-1.0/MANIFEST.in
+hello-py-1.0/scripts/
+hello-py-1.0/scripts/hello
 I: untared hello-py-1.0.tar.gz.
 I: tar -tzf hello-py-1.0.tar.gz|grep -v /.
 I: pwd = "/path/to/hello-py-1.0"
