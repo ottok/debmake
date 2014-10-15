@@ -28,9 +28,9 @@ A clean *sid* distribution chroot environment can be used as follows.
 ** *gbp buildpackage*
 * The command to update the *sid* chroot
 ** *pbuilder --update*
-** *git-pbuilder --update*
+** *git-pbuilder update*
 * The command to login to the *sid* chroot to modify it
-** *git-pbuilder --login --save-after-login*
+** *git-pbuilder login --save-after-login*
 
 An arbitrary 'dist' distribution environment can be used as follows.
 
@@ -45,14 +45,14 @@ An arbitrary 'dist' distribution environment can be used as follows.
 ** *gbp buildpackage --git-dist=*'dist'
 * The command to update the 'dist' chroot
 ** *pbuilder update --basepath=/var/cache/pbuilder/base-*'dist'*.cow*
-** *DIST=*'dist' *git-pbuilder --update*
+** *DIST=*'dist' *git-pbuilder update*
 * The command to login to the *sid* chroot to modify it
 ** *pbuilder --login --basepath=/var/cache/pbuilder/base-*'dist'*.cow --save-after-login*
-** *DIST=*'dist' *git-pbuilder --login --save-after-login*
+** *DIST=*'dist' *git-pbuilder login --save-after-login*
 
-TIP: A custom environment with some pre-loaded packages needed for the new experimental packages, this *git-pbuilder --login --save-after-login* command is quite handy.
+TIP: A custom environment with some pre-loaded packages needed for the new experimental packages, this *git-pbuilder login --save-after-login* command is quite handy.
 
-TIP: If your old chroot is missing packages such as *eatmydata*, *ccache*, and *lintian*, you may want to install these with the *git-pbuilder --login --save-after-login* command.
+TIP: If your old chroot is missing packages such as *eatmydata*, *ccache*, and *lintian*, you may want to install these with the *git-pbuilder login --save-after-login* command.
 
 TIP: The chroot filesystem can be cloned simply by copying with "*cp -a base-*'dist'*.cow base-*'customdist'*.cow*".  The new chroot can be accessed as "*gbp buildpackage --git-dist=*'customdist'" and "*DIST=*'customdist' *git-pbuilder ...*".
 
