@@ -78,3 +78,5 @@ include::../hello-c-0.9_q/ref/step700.log[]
 include::../hello-c-0.9_q/ref/step701.log[]
 ----
 
+TIP: Use of the *gbp pq* command provides the equivalent functionality of the patch set management without using *dquilt*.
+

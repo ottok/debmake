@@ -142,9 +142,9 @@ BUILDRESULT=../
 EXTRAPACKAGES="ccache lintian eatmydata"
 # enable eatmydata for pbuilder
 if [ -z "$LD_PRELOAD" ]; then
-  LD_PRELOAD=/usr/lib/libeatmydata/libeatmydata.so
+  LD_PRELOAD=libeatmydata.so
 else
-  LD_PRELOAD="$LD_PRELOAD":/usr/lib/libeatmydata/libeatmydata.so
+  LD_PRELOAD="$LD_PRELOAD":libeatmydata.so
 fi
 export LD_PRELOAD
 # enable ccache for pbuilder
@@ -154,6 +154,10 @@ BINDMOUNTS="${CCACHE_DIR}"
 # parallel make
 DEBBUILDOPTS=-j8
 -----
+
+NOTE: Due to https://bugs.debian.org/606542[Bug #606542], you need to manually install *EXTRAPACKAGES* into the chroot.  See <<chroot>>.
+
+NOTE: The above requires to install *eatmydata* (>=82-2) inside and outside of the chroot.
 
 NOTE: The parallel *make* may fail for some existing packages.
 
