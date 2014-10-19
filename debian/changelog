@@ -1,3 +1,11 @@
+debmake (4.1.8-1) unstable; urgency=medium
+
+  * Add sanity check for copyright lines.  Closes: #767666
+  * Update template for autogen.sh
+  * Work around os.getlogin. Closes: #769392
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 19 Oct 2014 23:45:07 +0900
+
 debmake (4.1.7-1) unstable; urgency=medium
 
   * Minor adjustment to debian/rules template etc. for
