@@ -152,14 +152,16 @@ export PATH="/usr/lib/ccache:${PATH}"
 export CCACHE_DIR="/var/cache/pbuilder/ccache"
 BINDMOUNTS="${CCACHE_DIR}"
 # parallel make
-DEBBUILDOPTS=-j8
+#DEBBUILDOPTS=-j8
 -----
 
 NOTE: Due to https://bugs.debian.org/606542[Bug #606542], you need to manually install *EXTRAPACKAGES* into the chroot.  See <<chroot>>.
 
 NOTE: The above requires to install *eatmydata* (>=82-2) inside and outside of the chroot.
 
-NOTE: The parallel *make* may fail for some existing packages.
+NOTE: A symlink from */root/.pbuilderrc* to */home/<user>/.pbuilderrc* may help for the consistent experience.
+
+NOTE: The parallel *make* may fail for some existing packages and may make the build log difficult to read,
 
 Let's create a hook scripts as follows.
 
