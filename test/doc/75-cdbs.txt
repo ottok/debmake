@@ -9,7 +9,7 @@ For many simple packages, the *dh* command alone allows us to make a simple and 
 
 NOTE: ``The *CDBS* magically does the job for me with less typing'' nor ``I don't understand the new *dh* syntax'' cannot be the excuse to keep using the *CDBS* system.
 
-For some complicated packages such as GNOME related ones, the *CDBS* is used with reasons and offers some value to the packagers.  If this is the case, please do not bother converting from the *CDBS* to the *dh* syntax.
+For some complicated packages such as GNOME related ones, the *CDBS* is leveraged to automate their uniform packaging by the current maintainers with reasons.  If this is the case, please do not bother converting from the *CDBS* to the *dh* syntax.
 
 NOTE: If you are working with a https://wiki.debian.org/Teams[team] of maintainers, please follow the established practice of the team.
 
