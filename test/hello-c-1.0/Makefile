@@ -29,7 +29,7 @@ test:
 	export PROJECT="$$(cat $(BASEDIR)/project)" ; \
 	script -e -q -c $(BASEDIR)/$$i.cmd $(BASEDIR)/$$i.raw ; \
 	ERR=$$? ; \
-	sed -e '1d' $(BASEDIR)/$$i.raw | col -b -x | \
+	cat $(BASEDIR)/$$i.raw | col -b -x | \
 	sed -e 's#$(TESTDIR)#/path/to#g' | \
 	sed -e '$(FILTER)' > $(BASEDIR)/$$i.log ; \
 	if [ x$$ERR != x0 ]; then exit 1 ; fi ; \
