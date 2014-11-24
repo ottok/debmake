@@ -44,7 +44,9 @@ def para(para):
         debmail = os.getlogin() + '@localhost'
     debfullname = env('DEBFULLNAME')
     if not debfullname:
-        debfullname = pwd.getpwnam(os.getlogin())[4].split(',')[0]
+        # os.getlogin may not work well: #769392 
+        #debfullname = pwd.getpwnam(os.getlogin())[4].split(',')[0]
+        debfullname =  pwd.getpwuid(os.getuid())[4].split(',')[0]
 
 #######################################################################
 # command line setting
