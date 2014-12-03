@@ -1,0 +1,23 @@
+From: Osamu Aoki <osamu@debian.org>
+Date: Mon, 24 Nov 2014 15:15:40 +0900
+Subject: Work around os.getlogin: #769392
+
+---
+ debmake/para.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/debmake/para.py b/debmake/para.py
+index 6dbecda..60269a8 100755
+--- a/debmake/para.py
++++ b/debmake/para.py
+@@ -44,7 +44,9 @@ def para(para):
+         debmail = os.getlogin() + '@localhost'
+     debfullname = env('DEBFULLNAME')
+     if not debfullname:
+-        debfullname = pwd.getpwnam(os.getlogin())[4].split(',')[0]
++        # os.getlogin may not work well: #769392 
++        #debfullname = pwd.getpwnam(os.getlogin())[4].split(',')[0]
++        debfullname =  pwd.getpwuid(os.getuid())[4].split(',')[0]
+ 
+ #######################################################################
+ # command line setting
