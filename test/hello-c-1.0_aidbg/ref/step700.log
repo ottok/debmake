@@ -1,2 +1,0 @@
- $ dpkg -c *.deb
-dpkg-deb: error: failed to read archive `*.deb': No such file or directory

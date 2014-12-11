@@ -1,2 +1,0 @@
-# make deb
-L "pdebuild"

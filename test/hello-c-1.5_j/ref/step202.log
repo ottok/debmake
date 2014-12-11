@@ -1,5 +1,0 @@
- $ cat hello-c.install.log
-usr/bin/hello
-usr/share/doc/hello-c/README.Debian
-usr/share/doc/hello-c/changelog.Debian.gz
-usr/share/doc/hello-c/copyright

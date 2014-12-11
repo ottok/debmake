@@ -1,7 +1,0 @@
- $ tree
-.
-├── configure.ac
-├── hello.c
-└── Makefile.am
-
-0 directories, 3 files

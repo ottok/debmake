@@ -1,6 +1,0 @@
- $ cat hello-c.build-dep.log
-  debhelper
-  libfakeroot:amd64
-  liblocale-gettext-perl
-  make-guile
-  perl-modules

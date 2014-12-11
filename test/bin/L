@@ -1,5 +1,0 @@
-#!/bin/bash
-# echo command and execute for logging
-echo " \$ $*"
-eval "$*"
-exit $?
