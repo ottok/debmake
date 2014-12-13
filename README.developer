@@ -2,19 +2,24 @@ If you are updating this source in the git repo, read on.
 
 1. Check-out devel branch
 2. Make modification
-3. Add new entry to the debian/changelog with new upstream version
+3. when debmake command line interface changes:
+      * update debmake-doc package
+      * generate a new debmake.1 file in its source
+      * copy generated debmake.1 file into manpages/debmake.1
+4. Add new entry to the debian/changelog with new upstream version
    dch create entry such as 4.1.1-2 --> change to 4.1.2-1
-4. Update debmake/__init__.py with new upstream version 4.1.2
-5. Build with
+5. Update debmake/__init__.py with new upstream version 4.1.2
+6. Build with
    debmake -d -y -b':py3' -i pdebuild
 
+(Under freeze for release, work on main branch)
 
-Please follow PEP-8
+Please follow PEP-8 as much as possible.
  * indent 4 spaces
  * 80 char/line
 
 Exceptions:
- * line for debug code -> single line
+ * line for debug code -> single line for eaze of "grep"
  * some regex (max 100 char/line) for readability
 
 Osamu
