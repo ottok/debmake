@@ -3,7 +3,7 @@ Section: devel
 Priority: extra
 Maintainer: Osamu Aoki <osamu@debian.org>
 Build-Depends: debhelper (>=9), dh-python, python3-all
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://anonscm.debian.org/gitweb/?p=collab-maint/debmake.git
 Vcs-Git: git://anonscm.debian.org/collab-maint/debmake.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/debmake.git
@@ -43,8 +43,8 @@ Description: helper script to make the Debian source package
  uploaded to the Debian archive.  By adding few options, this command can
  generate template files for the arbitrary combination of the multi-binary and
  multi-arch package, etc.  This includes making of the rules file for the -dbg
- package and the control file for the multi-arch library package.
+ package and the control file for the multiarch library package.
  .
  This debmake command also scans copyright and license texts in the source
  files to help crafting the proper DEP-5 compatible debian/copyright file.
- It runs licensecheck(1) and do much more.
+ It does more than what licensecheck(1) offers.

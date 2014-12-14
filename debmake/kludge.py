@@ -45,6 +45,7 @@ def copydiff(mode):
         lines = f.readlines()
     patterns_for_license = []
     license = ''
+    default_license = ''
     f_file = False
     f_cont = False
     f_license = False
@@ -59,6 +60,8 @@ def copydiff(mode):
             if patterns_for_license != [] and license != '':
                 for ptn in patterns_for_license:
                     patterns.append(ptn)
+                    if ptn == '*':
+                        default_license = license
                     iptn += 1 # 0, 1, 2, 3 ...
                     globbed_file_or_dirs = glob.glob(ptn)
                     if globbed_file_or_dirs:
@@ -137,6 +140,8 @@ def copydiff(mode):
                 new = licenses_new[file]
             else:
                 new = ''
+            if new == '_SAME_' and default_license != '':
+                new = default_license
             if old == new and mode <= 5:
                 printdiff = False # exact match
             elif old.lower() == new.lower() and mode <= 4:

@@ -27,7 +27,7 @@ import os
 import sys
 import debmake.cat
 #######################################################################
-def sed(confdir, destdir, substlist, package, mask='*', quiet=False):
+def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
     ###################################################################
     # confdir:   configuration file directory with / at the end
     # destdir:   destination directory with / at the end
@@ -45,14 +45,14 @@ def sed(confdir, destdir, substlist, package, mask='*', quiet=False):
             newfile = destdir + package + file[lconfdir+7:]
         else:
             newfile = destdir + file[lconfdir:]
-        debmake.cat.cat(newfile, text, quiet=quiet)
+        debmake.cat.cat(newfile, text, tutorial=tutorial)
     return
 
 #######################################################################
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    quiet = False
+    tutorial = False
     substlist = {
         '@BINPACKAGE@': 'binpackage',
         '@PACKAGE@': 'package',
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         '@EMAIL@': 'email@example.org',
         '@SHORTDATE@': '11 Jan. 2013',
     }
-    sed('../extra2/', 'debian/', substlist, 'package', quiet=quiet)
-    sed('../extra3/', 'debian/', substlist, 'package', quiet=quiet)
-    sed('../extra4/', 'debian/copyright-example/', substlist, 'package', quiet=quiet)
+    sed('../extra2/', 'debian/', substlist, 'package', tutorial=tutorial)
+    sed('../extra3/', 'debian/', substlist, 'package', tutorial=tutorial)
+    sed('../extra4/', 'debian/copyright-example/', substlist, 'package', tutorial=tutorial)
 

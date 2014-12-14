@@ -9,7 +9,7 @@
 .\" 2. List the path to this file in debian/<packagename>.manpages to
 .\"    install this manpage to the target binary package.
 .\"
-.\" First parameter, NAME, should be all caps
+.\" First parameter, @UCPACKAGE@, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
 .TH @UCPACKAGE@ SECTION "@SHORTDATE@"

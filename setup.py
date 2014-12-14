@@ -1,10 +1,26 @@
 #!/usr/bin/python3
 # vi:se ts=4 sts=4 et ai:
 from distutils.core import setup
+from distutils.command.clean import clean as clean_
 
 from debmake import __programname__, __version__
 
 import glob
+import subprocess
+
+class clean(clean_):
+    def run(self):
+        if self.dry_run:
+            return
+        subprocess.call('if [ -e setup.py ]; then rm -rf build dist debmake/__pycache__ MANIFEST; fi', shell=True) 
+        clean_.run(self)
+
+class deb(clean_):
+    def run(self):
+        if self.dry_run:
+            return
+        clean_.run(self)
+        subprocess.call('if [ -e setup.py ]; then debmake -d -y -b":py3" -i debuild; fi', shell=True) 
 
 setup(name=__programname__,
     version=__version__,
@@ -25,7 +41,6 @@ setup(name=__programname__,
         ('share/debmake/extra1patches', glob.glob('extra1patches/*')),
         ('share/debmake/extra1source', glob.glob('extra1source/*')),
         ('share/debmake/extra2bin', glob.glob('extra2bin/*')),
-        ('share/debmake/extra2binall', glob.glob('extra2binall/*')),
         ('share/debmake/extra2data', glob.glob('extra2data/*')),
         ('share/debmake/extra2dev', glob.glob('extra2dev/*')),
         ('share/debmake/extra2doc', glob.glob('extra2doc/*')),
@@ -34,7 +49,6 @@ setup(name=__programname__,
         ('share/debmake/extra2single', glob.glob('extra2single/*')),
         ('share/debmake/extra3', glob.glob('extra3/*')),
         ('share/debmake/extra4', glob.glob('extra4/*')),
-        ('share/doc/debmake', glob.glob('doc/*')),
         ('lib/debmake', glob.glob('desc/*')),
         ],
     classifiers = ['Development Status :: 3 - Alpha',
@@ -47,7 +61,8 @@ setup(name=__programname__,
         'Topic :: Utilities',
     ],
     platforms   = 'POSIX',
-    license     = 'MIT License'
+    license     = 'MIT License',
+    cmdclass={'clean': clean, 'deb': deb},
 )
 
 

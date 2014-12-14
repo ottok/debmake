@@ -4,7 +4,7 @@ README for debmake
 This is the new debmake program written in Python.  This provides convenient
 command to make a Debian package from the upstream VCS/tarball/source-tree.
 
-See the TUTORIAL file for the introductory guide.
+See the HTML files in the debmake-doc package for the introductory guide.
 
 LICENSE for the entire source
 -----------------------------
@@ -40,7 +40,7 @@ The author thanks previous efforts on this topic (GPL):
 FILES outside of extra/
 -----------------------
 
-  Copyright © 2013 Osamu Aoki <osamu@debian.org>
+  Copyright © 2013-2014 Osamu Aoki <osamu@debian.org>
 
 FILES in extra/
 ---------------
@@ -76,4 +76,4 @@ Non-Debian POSIX system with Python3 (user: ~/.local)
 Non-Debian POSIX system with Python3 (system: /usr/local)
  $ sudo python3 setup.py install
 
- -- Osamu Aoki <osamu@debian.org>  Sat, 20 Apr 2013 04:09:26 +0900
+ -- Osamu Aoki <osamu@debian.org>  Sun, 14 Dec 2014 16:44:28 +0000

@@ -1,4 +1,3 @@
 include MANIFEST.in
-include MANIFEST
 include manpages/*
 include TODO

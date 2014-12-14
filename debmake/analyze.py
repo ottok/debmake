@@ -179,10 +179,10 @@ def analyze(para):
             if pkg in pkgs:
                 para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
             else:
-                print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(para['bin'] + para['lib'])), file=sys.stderr)
+                print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
                 exit(1)
             pkgs.remove(pkg)
-            if pkgs == []:        
+            if len(para['dbg']) == 1:
                 para['dh_strip'] += '\tdh_strip --dbg-package={}\n'.format(deb['package'])
             else:
                 para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
@@ -233,6 +233,7 @@ def analyze(para):
         para['dh_with'].update({'autoreconf'})
         para['build_type']      = 'Autotools with autoreconf'
         para['build_depends'].update({'dh-autoreconf'})
+        para['export'].update({'autotools'})
         if os.path.isfile('autogen.sh'):
             para['override'].update({'autogen'})
         else:
@@ -243,6 +244,7 @@ def analyze(para):
         para['dh_with'].update({'autoreconf'})
         para['build_type']      = 'Autotools with autoreconf (old)'
         para['build_depends'].update({'dh-autoreconf'})
+        para['export'].update({'autotools'})
         if os.path.isfile('autogen.sh'):
             para['override'].update({'autogen'})
         else:
@@ -254,12 +256,14 @@ def analyze(para):
         para['dh_with'].update({'autotools-dev'})
         para['build_type']      = 'Autotools'
         para['build_depends'].update({'autotools-dev'})
+        para['export'].update({'autotools'})
     elif os.path.isfile('configure.in') and \
             os.path.isfile('Makefile.am') and \
             os.path.isfile('configure'):
         para['dh_with'].update({'autotools-dev'})
         para['build_type']      = 'Autotools (old)'
         para['build_depends'].update({'autotools-dev'})
+        para['export'].update({'autotools'})
         print('W: Use of configure.in has been deprecated since 2001.', file=sys.stderr)
     elif 'autoreconf' in para['dh_with']:
         print('E: missing configure.ac or Makefile.am required for "dh $@ --with autoreconf".', file=sys.stderr)
@@ -272,15 +276,17 @@ def analyze(para):
         para['build_type']      = 'configure'
         if setmultiarch:
             para['override'].update({'multiarch'})
-    # GNU coding standard with make
-    elif os.path.isfile('Makefile'):
-        para['build_type']      = 'make'
-        if setmultiarch:
-            para['override'].update({'multiarch'})
     # GNU coding standard with Cmake
     elif os.path.isfile('CMakeLists.txt'):
         para['build_type']      = 'Cmake'
         para['build_depends'].update({'cmake'})
+        para['export'].update({'cmake'})
+        if setmultiarch:
+            para['override'].update({'multiarch'})
+    # GNU coding standard with make
+    elif os.path.isfile('Makefile'):
+        para['build_type']      = 'make'
+        para['override'].update({'makefile'})
         if setmultiarch:
             para['override'].update({'multiarch'})
     # Python distutils
