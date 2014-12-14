@@ -1,12 +1,13 @@
 debmake for Debian
 ------------------
 
-The debmake command is helper script to generate basic Debian packaging files
-using debhelper version 9 or newer.  See README.tutorial, README.multi and
-debmake(1) for more.
+The debmake command is a helper script to generate basic Debian packaging files
+using debhelper version 9 or newer with multiarch conscious way.  See the
+debmake(1) manpage in this package and the HTML documentation provided in the
+debmake-doc package for more.
 
 The debmake command is written in python and is intended to replace functions
-offered by deb-make and dh_make commands.
+traditionally offered by deb-make and dh_make commands.
 
 This new debmake package has debmake as its command and starts its version from
 4.0 to avoid version overlaps.
@@ -23,40 +24,33 @@ The author thanks previous efforts on this topic:
 Rationale for debmake
 ---------------------
 
-debmake was created to address shortcomings of dh_make(1).
-
-The initial targets
--------------------
-
- * make functioning binary packages directly with no user input
-   - from upstream VCS (autotools, setup.py, ...)
-     - setup.py means auto conversion from PyPI 
-       https://pypi.python.org/pypi to Debian debs.
-     - make dist
-   - from upstream tarball
-   - help migration from native to non-native package
-   - multi-arch aware
- * make multi binary packages with flexible combinations
- * make packages with hardening turned on
- * efficient generation of debian/copyright
-   - use licensecheck(1) but do more
+debmake was created to address shortcomings of dh_make(1): Notably:
+ * semi-automatic scanning of copyright
+ * flexible combination of binary package types
+ * multiarch aware
+ * friendly for the hardening of compiler flags
+ * almost automatic process from the upstream VCS (autotools, setup.py, ...)
+ * help upstream to manage the non-native package
 
 The design guide line of debmake
 --------------------------------
 
  * Keep it simple.
- * Use the new dh syntax.  (No cdbs.)
+ * Use the new dh syntax.  (No cdbs nor any make file inclusion system)
  * The basic ability of dh_make (and its predecessor deb-make) should be
-   covered.  (debmake intends to replace them.)
- * The debmake command should require no or minimum arguments to do useful things.
- * The debmake command should help reviewing of the license for all source files.
+   covered.  (The debmake command intends to replace them.)
+ * The debmake command should require no or minimum arguments to do useful 
+   things.
+ * The debmake command should help reviewing of the license for all source 
+   files.
  * The program structure should be friendly for adding the GUI.
  * The native build system of the upstream source should be identified and
    utilized.
  * The debmake command should make it easy to create various combinations of
-   binary packages in multi-arch compatible ways.
+   binary packages in the multiarch compatible way.
  * The debmake command should not overwrite existing files by default.
- * The debmake command should not generate non-essential template files as default
-   except for the first run in which normal template files are generated.
+ * The debmake command should not generate non-essential template files as
+   default except for the first run in which normal template files are 
+   generated.
 
- -- Osamu Aoki <osamu@debian.org>  Sun, 12 Jan 2014 07:21:13 +0000
+ -- Osamu Aoki <osamu@debian.org>  Sun, 14 Dec 2014 17:11:26 +0000
