@@ -1,3 +1,8 @@
+### Define DEB_HOST_* and  DEB_BUILD_* variables using
+### dpkg-architecture(1) if they are used in this file. E.g.: 
+###DEB_HOST_MULTIARCH = $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+###DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+###
 ### See FEATURE AREAS in dpkg-buildflags(1)
 #export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 ###
@@ -6,4 +11,3 @@
 #export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 ### Package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
-

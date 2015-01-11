@@ -37,6 +37,14 @@ def cat(file, text, end='', quiet=False):
             if line[:3] != '###' or line[:4] == '####':
                 newtext += line + '\n'
         text = newtext
+    else:
+        newtext = ''
+        for line in text.split('\n'):
+            if line[:3] != '###' or line[:4] == '####':
+                newtext += line + '\n'
+            else:
+                newtext += line[2:] + '\n'
+        text = newtext
     path = os.path.dirname(file)
     if path:
         os.makedirs(path, exist_ok=True)

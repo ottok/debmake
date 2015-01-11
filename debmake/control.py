@@ -47,7 +47,10 @@ def control(para):
     if desc_long:
         desc_long_xtra = ''
     else:
-        desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long').rstrip()
+        if para['quiet']:
+            desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long_quiet').rstrip()
+        else:
+            desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long').rstrip()
     for i, deb in enumerate(para['debs']):
         desc_long_type = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/' + deb['type']).rstrip() 
         if ndebs == 1: # single binary

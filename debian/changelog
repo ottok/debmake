@@ -1,6 +1,8 @@
 debmake (4.1.8-1) UNRELEASED; urgency=medium
 
   * Split out debmake-doc for stretch.
+  * Support "make install --prefix=/usr" for Makefile. 
+  * Improve comment under the -Q option. 
 
  -- Osamu Aoki <osamu@debian.org>  Mon, 15 Dec 2014 06:41:15 +0900
 

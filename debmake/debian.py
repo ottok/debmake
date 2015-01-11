@@ -94,11 +94,17 @@ def debian(para):
     export_dir = para['base_path'] + '/share/debmake/extra0export/'
     substlist['@EXPORT@'] = ''
     if 'compiler' in para['export']:
-        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'compiler').rstrip() + '\n\n'
-    if 'java' in para['export']:
-        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'java').rstrip() + '\n\n'
-    if 'vala' in para['export']:
-        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'vala').rstrip() + '\n\n'
+        substlist['@EXPORT@'] += debmake.read.read(export_dir + 'compiler').rstrip() + '\n'
+        if not ('autotools' in para['export']):
+            substlist['@EXPORT@'] += debmake.read.read(export_dir + 'cflags').rstrip() + '\n'
+        if 'cmake' in para['export']:
+            substlist['@EXPORT@'] += debmake.read.read(export_dir + 'cmake').rstrip() + '\n'
+            para['override'].update({'cmake'})
+        if 'java' in para['export']:
+            substlist['@EXPORT@'] += debmake.read.read(export_dir + 'java').rstrip() + '\n'
+        if 'vala' in para['export']:
+            substlist['@EXPORT@'] += debmake.read.read(export_dir + 'vala').rstrip() + '\n'
+        substlist['@EXPORT@'] += '\n'
 
     #######################################################################
     # set override string
@@ -113,12 +119,16 @@ def debian(para):
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'autogen').rstrip() + '\n\n'
     if 'autoreconf' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'autoreconf').rstrip() + '\n\n'
+    if 'cmake' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'cmake').rstrip() + '\n\n'
     if 'dbg' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(para['dh_strip']).rstrip() + '\n\n'
     if 'java' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n\n'
     if 'judge' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'judge').rstrip() + '\n\n'
+    if 'makefile' in para['override']:
+        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'makefile').rstrip() + '\n\n'
     if 'multiarch' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'multiarch').rstrip() + '\n\n'
     if 'pythons' in para['override']:
@@ -127,7 +137,7 @@ def debian(para):
     # 4 configuration files which must exist (level=0)
     ###################################################################
     debmake.cat.cat('debian/control', debmake.control.control(para), quiet=para['quiet'])
-    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['cdata'], para['xml_html_files'], para['binary_files'], para['huge_files']), quiet=para['quiet'])
+    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['cdata'], para['xml_html_files'], para['binary_files'], para['huge_files'], quiet=para['quiet']), quiet=para['quiet'])
     if para['dh_with'] == set(): # no dh_with
         substlist['@DHWITH@'] = ''
     else:

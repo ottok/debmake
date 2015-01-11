@@ -860,7 +860,7 @@ def license_text(file, encoding='utf-8'):
 #######################################################################
 # main program
 #######################################################################
-def copyright(package_name, license_file_masks, data, xml_html_files, binary_files, huge_files, mode=0):
+def copyright(package_name, license_file_masks, data, xml_html_files, binary_files, huge_files, mode=0, quiet=False):
     # mode: 0: not -c, 1: -c simple, 2: -cc normal, 3: -ccc extensive
     #      -1: -cccc debug simple, -2 -ccccc debug normal -3 -cccccc debug extensive
     # make text to print
@@ -868,7 +868,11 @@ def copyright(package_name, license_file_masks, data, xml_html_files, binary_fil
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: {}
 Source: <url://example.com>
-###
+'''.format(package_name)
+    if quiet:
+        text += '\n'
+    else:
+        text += '''###
 ### Uncomment the following 2 lines to enable uscan to exclude non-DFSG components 
 ### Files-Excluded: command/non-dfsg.exe
 ###   docs/source/javascripts/jquery-1.7.1.min.js
@@ -884,7 +888,7 @@ Source: <url://example.com>
 ### Please avoid to pick license terms that are more restrictive than the
 ### packaged work, as it may make Debian's contributions unacceptable upstream.
 
-'''.format(package_name)
+'''
     for (licenseid, licensetext, files, copyright_lines) in data:
         # Files:
         text +=             'Files:     {}\n'.format('\n           '.join(files))

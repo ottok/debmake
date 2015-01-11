@@ -79,8 +79,8 @@ def main():
 #######################################################################
 # set parameters from commandline etc.
 #######################################################################
-    debmake.debug.debug('D: {} started'.format(sys.argv[0]))
-    debmake.debug.debug('D: PYTHONPATH = {} '.format(':'.join(sys.path)))
+    debmake.debug.debug('D: {} started'.format(sys.argv[0]), type='i')
+    debmake.debug.debug('D: PYTHONPATH = {} '.format(':'.join(sys.path)), type='i')
     print('I: set parameters', file=sys.stderr)
     para = {}
     para['cwd'] = os.getcwd()
@@ -123,7 +123,7 @@ def main():
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
         (nonlink_files, xml_html_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
         data = debmake.copyright.check_copyright(nonlink_files, mode=para['copyright'])
-        print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright']))
+        print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'],quiet=para['quiet']))
         return
 #######################################################################
 # -k: compare debian/copyright with the source and exit
