@@ -10,7 +10,12 @@ If you are updating this source in the git repo, read on.
    dch create entry such as 4.1.1-2 --> change to 4.1.2-1
 5. Update debmake/__init__.py with new upstream version 4.1.2
 6. Build with
-   debmake -d -y -b':py3' -i pdebuild
+   $ debmake -d -y -b':py3' -i pdebuild
+    or
+   $ python3 setup.py deb
+
+7. Clean source tree with
+   $ python3 setup.py clean
 
 (Under freeze for release, work on main branch)
 
