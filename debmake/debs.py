@@ -41,7 +41,8 @@ def debs(binaryspec, package, monoarch, dh_with):
     debs = [] # list
     pset = set()
     tset = set()
-    for x0 in binaryspec.split(','):
+    dropch = "'" + '"'
+    for x0 in binaryspec.strip(dropch).split(','):
         x = x0.strip()
         ###################################################################
         # split: y[0] = bin-package-name-marker y[1] = bin-package-type
