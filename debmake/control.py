@@ -47,8 +47,8 @@ def control(para):
     if desc_long:
         desc_long_xtra = ''
     else:
-        if para['quiet']:
-            desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long_quiet').rstrip()
+        if para['tutorial']:
+            desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long_tutorial').rstrip()
         else:
             desc_long_xtra = debmake.read.read(para['base_path'] + '/share/debmake/extra0desc_long/_long').rstrip()
     for i, deb in enumerate(para['debs']):

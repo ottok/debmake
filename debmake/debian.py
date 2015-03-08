@@ -136,8 +136,8 @@ def debian(para):
     ###################################################################
     # 4 configuration files which must exist (level=0)
     ###################################################################
-    debmake.cat.cat('debian/control', debmake.control.control(para), quiet=para['quiet'])
-    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['cdata'], para['xml_html_files'], para['binary_files'], para['huge_files'], quiet=para['quiet']), quiet=para['quiet'])
+    debmake.cat.cat('debian/control', debmake.control.control(para), tutorial=para['tutorial'])
+    debmake.cat.cat('debian/copyright', debmake.copyright.copyright(para['package'], para['license'], para['cdata'], para['xml_html_files'], para['binary_files'], para['huge_files'], tutorial=para['tutorial']), tutorial=para['tutorial'])
     if para['dh_with'] == set(): # no dh_with
         substlist['@DHWITH@'] = ''
     else:
@@ -147,7 +147,7 @@ def debian(para):
     else:
         substlist['@DHBUILDSYSTEM@'] = '--buildsystem={}'.format(para['dh_buildsystem'])
     confdir = para['base_path'] + '/share/debmake/extra0/'
-    debmake.sed.sed(confdir, 'debian/', substlist, package, quiet=para['quiet']) # changelog, rules
+    debmake.sed.sed(confdir, 'debian/', substlist, package, tutorial=para['tutorial']) # changelog, rules
     os.chmod('debian/rules', 0o755)
     ###################################################################
     # These should be created for the new source (level=1)
@@ -156,12 +156,12 @@ def debian(para):
     ###################################################################
     if extra >= 1:
         confdir = para['base_path'] + '/share/debmake/extra1/'
-        debmake.sed.sed(confdir, 'debian/', substlist, package, quiet=para['quiet'])
+        debmake.sed.sed(confdir, 'debian/', substlist, package, tutorial=para['tutorial'])
         confdir = para['base_path'] + '/share/debmake/extra1source/'
-        debmake.sed.sed(confdir, 'debian/source/', substlist, package, quiet=para['quiet'])
+        debmake.sed.sed(confdir, 'debian/source/', substlist, package, tutorial=para['tutorial'])
         if not para['native']:
             confdir = para['base_path'] + '/share/debmake/extra1patches/'
-            debmake.sed.sed(confdir, 'debian/patches/', substlist, package, quiet=para['quiet'])
+            debmake.sed.sed(confdir, 'debian/patches/', substlist, package, tutorial=para['tutorial'])
     ###################################################################
     # Optional files which is nice to be created for the new source (level=2)
     # Harmless but some interactive editting are desirable.
@@ -175,21 +175,21 @@ def debian(para):
     if extra >= 2:
         if len(para['debs']) == 1: # if single binary deb
             confdir = para['base_path'] + '/share/debmake/extra2single/'
-            debmake.sed.sed(confdir, 'debian/', substlist, package, quiet=para['quiet'])
+            debmake.sed.sed(confdir, 'debian/', substlist, package, tutorial=para['tutorial'])
         else: # if multi-binary debs
             confdir = para['base_path'] + '/share/debmake/extra2multi/'
-            debmake.sed.sed(confdir, 'debian/', substlist, package, quiet=para['quiet'])
+            debmake.sed.sed(confdir, 'debian/', substlist, package, tutorial=para['tutorial'])
             for deb in para['debs']:
                 substlist['@BINPACKAGE@'] = deb['package']
                 type = deb['type']
                 if type in binlist:
                     type = 'bin'
                 confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
-                debmake.sed.sed(confdir, 'debian/', substlist, deb['package'], quiet=para['quiet'])
+                debmake.sed.sed(confdir, 'debian/', substlist, deb['package'], tutorial=para['tutorial'])
                 if deb['package'] == docpackage:
                     type = 'doc'
                     confdir = para['base_path'] + '/share/debmake/extra2' + type + '/'
-                    debmake.sed.sed(confdir, 'debian/', substlist, deb['package'], quiet=para['quiet'])
+                    debmake.sed.sed(confdir, 'debian/', substlist, deb['package'], tutorial=para['tutorial'])
     ###################################################################
     # Rarely used optional files (level=3)
     # Provided as the dh_make compatibilities. (files with ".ex" postfix)
@@ -198,13 +198,13 @@ def debian(para):
     substlist['@BINPACKAGE@'] = package # just in case
     if extra >= 3:
         confdir = para['base_path'] + '/share/debmake/extra3/'
-        debmake.sed.sed(confdir, 'debian/', substlist, package, quiet=para['quiet'])
+        debmake.sed.sed(confdir, 'debian/', substlist, package, tutorial=para['tutorial'])
     ###################################################################
     # copyright file examples (level=4)
     ###################################################################
     if extra >= 4:
         confdir = para['base_path'] + '/share/debmake/extra4/'
-        debmake.sed.sed(confdir, 'debian/license-examples/', substlist, package, quiet=para['quiet'])
+        debmake.sed.sed(confdir, 'debian/license-examples/', substlist, package, tutorial=para['tutorial'])
     else:
         print('I: run "debmake -x{}" to get more template files'.format(extra + 1), file=sys.stderr)
     ###################################################################

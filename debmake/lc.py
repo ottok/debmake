@@ -684,7 +684,7 @@ r_libtool = pattern(r'''
 r_bison = pattern(r'''
     As a special exception, you may create a larger work that contains part or
     all of the Bison parser skeleton and distribute that work under terms of
-    your choice, so long as that work isn&apos;t itself a parser generator
+    your choice, so long as that work isn.t itself a parser generator
     using the skeleton or a modified version thereof as a parser skeleton.
     Alternatively, if you modify or redistribute the parser skeleton itself,
     you may \(at your option\) remove this special exception, which will cause
@@ -700,17 +700,25 @@ r_font = pattern(r'''
     version of the font, but you are not obligated to do so. If you do not wish
     to do so, delete this exception statement from your version.''', tail='')
 list_exceptions = [
-    ('autoconf', regex(r_autoconf1)),
-    ('autoconf', regex(r_autoconf2)),
-    ('autoconf', regex(r_autoconf3)),
-    ('libtool', regex(r_libtool)),
-    ('bison', regex(r_bison)),
-    ('font', regex(r_font)),
+    ('autoconf', regex(r_autoconf1), True),
+    ('autoconf', regex(r_autoconf2), True),
+    ('autoconf', regex(r_autoconf3), True),
+    ('libtool', regex(r_libtool), True),
+    ('bison', regex(r_bison), True),
+    ('font', regex(r_font), False),
 ]
 regex_exception = regex(r'exception')
 list_attribs = [
     ('The FSF address in the above text is the old one.', 
     regex(r'(?:675 Mass Ave|59 Temple Place|51 Franklin Steet|02139|02111-1307)')),
+]
+list_permissive = [
+    'PERMISSIVE',
+    'MIT',
+    'ISC',
+    'Zlib',
+    'BSD-2-Clause',
+    'BSD-3-Clause',
 ]
 ###############################################################################
 # GNU License text
@@ -775,23 +783,26 @@ def lc(norm_text, license_lines, mode):
     # mode = 0: mode for copyright file generation; same as mode == 2 for lc.py
     if mode == 0:
         mode = 2
-    # abs(mode) = 1: mode for the license scan (1 line; -c, -cccc)
+    # abs(mode) = 1: mode for the license scan (1 line output; -c, -cccc)
     # abs(mode) = 2: mode for the license scan (mode = 1 + license text; -cc, -ccccc)
     # abs(mode) = 3: mode for the license scan (mode = 2 + comments; -ccc, -cccccc)
     # abs(mode) = 4: mode for the license scan (mode = 3 + match text; debug only)
     # mode < 0: add pattern index id (for -cccc, -ccccc, -cccccc)
     # return: text to be placed after "License: "
+    # return: flag for permissive license
     #####################################################################################
-    # 1-line part
-    license = ''
-    id = ''
-    version = ''
-    suffix = ''
-    misc1 = ''
-    # not in the 1-line part
-    misc2 = set() # mode == 2 (add to copyright file)
-    misc3 = set() # mode == 3
-    match_text = '' # mode == 4 debug
+    # 1st-line part
+    license = '' # License type: GPL   BSD
+    id = ''      # "FULL_LICENSE" or   ""
+    version = '' #               3     -3-Clause
+    suffix = ''  #               +     ""
+    with_exception = ''   #  ' with ' + ... + ' exception'
+    permissive = False
+    # not in the 1st-line part
+    set_exceptions = set() # add exceptions found in the copyright text
+    set_attribs = set() # add attribute found in the copyright text
+    set_subtypes = set() # add invisible subtype to the normal license type="license + id + version + suffix" such as "BSD-3-Clause"
+    match_text = '' # mode == 4 used by debug
     if len(norm_text) == 0:
         license = '__NO_LICENSE_TEXT__'
         text = ''
@@ -870,19 +881,19 @@ def lc(norm_text, license_lines, mode):
                                 elif license[:3] == 'MIT' or license[:3] == 'ISC': 
                                     # MIT variants with optional noendorse
                                     if r0.group(v):
-                                        misc3.update({'no-endorsement clause'})
+                                        set_subtypes.update({'no-endorsement clause'})
                                 else: # SGI-B, DEC incorporating BSD's no-endorsement clause
                                     if not r0.group(v):
-                                        misc3.update({'no-endorsement clause'})
+                                        set_subtypes.update({'no-endorsement clause'})
                             elif v == 'incompatible':
                                 if r0.group(v):
-                                    misc3.update({'copyleft incompatibility concern'})
+                                    set_subtypes.update({'copyleft incompatibility concern'})
                             elif v == 'nowarranty':
                                 if not r0.group(v):
-                                    misc3.update({'nowarranty disclaimer'})
+                                    set_subtypes.update({'nowarranty disclaimer'})
                             elif v == 'requiredisclaimer':
                                 if r0.group(v):
-                                    misc3.update({'requiring nowarranty disclaimer'})
+                                    set_subtypes.update({'requiring nowarranty disclaimer'})
                             elif v == 'name':
                                 if r0.group(v):
                                     name = r0.group('name')
@@ -904,35 +915,38 @@ def lc(norm_text, license_lines, mode):
                             print('ERROR: {} missing: {} {}'.format(v, license, id))
                     # find only first match
                     break
-            for (type1, attrib1) in list_attribs:
-                r2 = attrib1.search(norm_text)
+            for (type_attribs, re_attribs) in list_attribs:
+                r2 = re_attribs.search(norm_text)
                 if r2:
-                    misc2.update({type1})
-            count1 = 0
-            for (type1, except1) in list_exceptions:
-                r2 = except1.search(norm_text)
+                    set_attribs.update({type_attribs})
+            # exception handling
+            for (type_exceptions, re_exceptions, perm) in list_exceptions:
+                r2 = re_exceptions.search(norm_text)
                 if r2:
-                    misc1 = type1
-                    count1 += 1
-            if count1 == 1:
-                misc1 = ' with ' + misc1 + ' exception'
-            elif count1 == 0:
+                    set_exceptions.update(type_exceptions)
+                    permissive |= perm
+            if len(set_exceptions) == 1:
+                with_exception = ' with ' + set_exceptions.pop() + ' exception'
+            elif len(set_exceptions) == 0:
                 r2 = regex_exception.search(norm_text)
                 if r2:
-                    misc1 = ' with unknown exception XXX FIXME XXX'
+                    with_exception = ' with unknown exception XXX FIXME XXX'
             else:
-                misc1 = ' with multiple exceptions XXX FIXME XXX'
+                with_exception = ' with multiple exceptions XXX FIXME XXX'
+            if with_exception == '':
+                if license + version in list_permissive:
+                    permissive = True
         else:
             license = '' # NO LICENSE TEXT
     if mode <= -1 and id !='':
         id = ':' + id
     else:
         id = ''
-    licenseid = license + version + suffix + id + misc1
+    licenseid = license + version + suffix + id + with_exception
     text = ''
     if abs(mode) >= 3: # output comments
-        if misc3:
-            text += '\n### !!! C: {}'.format('\n### !!! C: '.join(list(misc3)))
+        if set_subtypes:
+            text += '\n### !!! C: {}'.format('\n### !!! C: '.join(list(set_subtypes)))
     if abs(mode) >= 2: # Skip if simple
         # RFC-822 complian and empty lines replaced with " ."
         for line in license_lines:
@@ -941,8 +955,8 @@ def lc(norm_text, license_lines, mode):
                 text += '\n .'
             else:
                 text += '\n {}'.format(line)
-        if misc2:
-            text += '\n .\n {}'.format('\n '.join(list(misc2)))
+        if set_attribs:
+            text += '\n .\n {}'.format('\n '.join(list(set_attribs)))
         if license + version + suffix in licensefiles.keys():
             (filename, licensename) = licensefiles[license + version + suffix]
             text += "\n .\n On Debian systems, the complete text of the " + licensename + \
@@ -952,7 +966,7 @@ def lc(norm_text, license_lines, mode):
             text += '\n### !!! M: {}'.format(match_text)
         if norm_text:
             text += '\n### !!! T: {}'.format(norm_text)
-    return (licenseid, text)
+    return (licenseid, text, permissive)
 
 #########################################################################################
 def lc_sub(norm_text, mode):

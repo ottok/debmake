@@ -26,24 +26,24 @@ import os
 import sys
 #######################################################################
 # cat >file
-def cat(file, text, end='', quiet=False):
+def cat(file, text, end='', tutorial=False):
     if os.path.isfile(file) and os.stat(file).st_size != 0:
         # skip if a file exists and non-zero content
         print('I: skipping :: {} (file exists)'.format(file), file=sys.stderr)
         return
-    if quiet:
-        newtext = ''
-        for line in text.split('\n'):
-            if line[:3] != '###' or line[:4] == '####':
-                newtext += line + '\n'
-        text = newtext
-    else:
+    if tutorial:
         newtext = ''
         for line in text.split('\n'):
             if line[:3] != '###' or line[:4] == '####':
                 newtext += line + '\n'
             else:
                 newtext += line[2:] + '\n'
+        text = newtext
+    else:
+        newtext = ''
+        for line in text.split('\n'):
+            if line[:3] != '###' or line[:4] == '####':
+                newtext += line + '\n'
         text = newtext
     path = os.path.dirname(file)
     if path:
@@ -57,6 +57,6 @@ def cat(file, text, end='', quiet=False):
 # Test script
 #######################################################################
 if __name__ == '__main__':
-    cat('testfile0.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', quiet=False)
-    cat('testfile1.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', quiet=True)
+    cat('testfile0.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', tutorial=False)
+    cat('testfile1.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', tutorial=True)
 
