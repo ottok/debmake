@@ -182,7 +182,7 @@ def analyze(para):
                 print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
                 exit(1)
             pkgs.remove(pkg)
-            if pkgs == []:        
+            if len(para['dbg']) == 1:
                 para['dh_strip'] += '\tdh_strip --dbg-package={}\n'.format(deb['package'])
             else:
                 para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
