@@ -1,8 +1,12 @@
-debmake (4.1.8-1) UNRELEASED; urgency=medium
+debmake (4.1.8-1) experimental; urgency=medium
 
   * Split out debmake-doc for stretch.
-  * Support "make install --prefix=/usr" for Makefile. 
-  * Improve comment under the -Q option. 
+  * Support "make install --prefix=/usr" for Makefile as comment. 
+  * Drop -Q option and introduce -P and -T options.
+  * Treat permissive auto-generated files wisely.  Closes: #780134
+  * -k deals _SAME_ license case wisely.  Closes: #780135
+  * Package type "" defaults to bin.  Closes: #780136
+  * Use single # for tutorial content lines and clean them.
 
  -- Osamu Aoki <osamu@debian.org>  Mon, 15 Dec 2014 06:41:15 +0900
 
