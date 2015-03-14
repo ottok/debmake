@@ -1,5 +1,4 @@
-### This is example for Cmake (See http://bugs.debian.org/641051 )
-###override_dh_auto_configure:
-###	dh_auto_configure -- \
-###	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
-
+### Multiarch package requires library files to be installed to
+### /usr/lib/<triplet>/ .  If the build system does not support
+### $(DEB_HOST_MULTIARCH), you may need to override some targets such as
+### dh_auto_configure or dh_auto_install to use $(DEB_HOST_MULTIARCH) .

@@ -1,0 +1,3 @@
+### cmake doesn't use $(CPPFLAGS)
+#export CFLAGS += $(CPPFLAGS)
+#export CXXFLAGS += $(CPPFLAGS)

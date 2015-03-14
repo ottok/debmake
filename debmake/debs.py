@@ -41,7 +41,8 @@ def debs(binaryspec, package, monoarch, dh_with):
     debs = [] # list
     pset = set()
     tset = set()
-    for x0 in binaryspec.split(','):
+    dropch = "'" + '"'
+    for x0 in binaryspec.strip(dropch).split(','):
         x = x0.strip()
         ###################################################################
         # split: y[0] = bin-package-name-marker y[1] = bin-package-type
@@ -181,18 +182,20 @@ def debs(binaryspec, package, monoarch, dh_with):
                match_prefix(t, 'f'): # any foreign
                 a = 'any'
                 m = 'foreign'
-                if t =='':
+                if t == '':
                     t = 'bin'
             elif match_prefix(t, 'a'): # all
                 a = 'all'
                 m = 'foreign'
-                if t =='':
+                if t == '':
                     t = 'script'
             elif match_prefix(t, 'sa'): # same
                 a = 'any'
                 m = 'same'
-                if t =='':
+                if t == '':
                     t = 'lib'
+            elif t == '': # bin as default
+                pass
             else:
                 print('E: -b: {} has undefined type: {}'.format(p, t), file=sys.stderr)
                 exit(1)
@@ -212,11 +215,11 @@ def debs(binaryspec, package, monoarch, dh_with):
             elif 'python3' in dh_with:
                 a = 'all'
                 t = 'python3'
+            elif a == 'any': # bin as default 
+                t = 'bin'
             else:
-                if a == 'any':
-                    t = 'bin'
-                else:
-                    t = 'script'
+                print('E: -b: {} has arch={}, dh_with={} and null type.'.format(p, a, dh_with), file=sys.stderr)
+                exit(1)
         # t always have non NULL string value !
         ###################################################################
         # monoarch = non-multi-arch

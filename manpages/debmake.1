@@ -2,12 +2,12 @@
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 10/14/2014
+.\"      Date: 03/11/2015
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE 4.0
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "10/14/2014" "DEBMAKE 4\&.0" "Debmake Manual"
+.TH "DEBMAKE" "1" "03/11/2015" "DEBMAKE 4\&.0" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 debmake \- program to make the Debian source package
 .SH "SYNOPSIS"
 .sp
-\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR] [\fB\-Q\fR]
+\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR] [\fB\-P\fR] [\fB\-T\fR]
 .SH "DESCRIPTION"
 .sp
 \fBdebmake\fR helps to build the Debian package from the upstream source\&. Normally, this is done as follows:
@@ -684,11 +684,14 @@ suffix\&.
 force "yes" for all prompts\&. (without option: "ask [Y/n]"; doubled option: force "no")
 .RE
 .PP
-\fB\-Q\fR, \fB\-\-quiet\fR
+\fB\-P\fR, \fB\-\-pedantic\fR
 .RS 4
-quiet tutorial comment lines marked with
-\fB###\fR
-in template files
+pedantically check auto\-generated files\&.
+.RE
+.PP
+\fB\-T\fR, \fB\-\-tutorial\fR
+.RS 4
+output tutorial comment lines in template files\&.
 .RE
 .SH "EXAMPLES"
 .sp
@@ -828,7 +831,7 @@ etc\&.
 .RE
 .SH "CAVEAT"
 .sp
-\fBdebmake\fR is meant to provide template files for the package maintainer to work on\&. Comment lines started by \fB###\fR are the tutorial text\&. You must remove or edit such comment lines before uploading to the Debian archive\&.
+\fBdebmake\fR is meant to provide template files for the package maintainer to work on\&. Comment lines started by \fB#\fR contain the tutorial text\&. You must remove or edit such comment lines before uploading to the Debian archive\&.
 .sp
 There are some limitations for what characters may be used as a part of the Debian package\&. The most notable limitation is the prohibition of uppercase letters in the package name\&. Here is the summary in the regular expression\&.
 .sp
@@ -880,6 +883,17 @@ See the exact definition in Chapter 5 \- Control files and their fields of the \
 .SH "DEBUG"
 .sp
 The character set in the environment variable \fB$DEBUG\fR determines the logging output level\&.
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBi\fR: print information
+.RE
 .sp
 .RS 4
 .ie n \{\

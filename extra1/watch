@@ -1,4 +1,7 @@
 ### watch control file for uscan
+###
+# You must remove unused comment lines for the released package.
+###
 ### See uscan(1) for how to set this file properly
 ###  * uupdate(1) for upgrade a source code package
 ###  * gbp-import-orig(1) with --uscan for upgrade GIT repo
