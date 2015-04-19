@@ -139,9 +139,14 @@ def analyze(para):
     if len(para['debs']) != 1 and len(para['dev']) != len(para['lib']):
         print('E: # of "dev":{} != # of "lib": {}.'.format(len(para['dev']), len(para['lib'])), file=sys.stderr)
         exit(1)
-    if len(para['dbg']) != 0 and len(para['dbg']) != (len(para['bin']) + len(para['lib'])):
-        print('E: # of "dbg":{} != # of "bin+lib": {}.'.format(len(para['dev']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
-        exit(1)
+    if len(para['dbg']) == 1:
+        if (len(para['bin']) + len(para['lib'])) == 0:
+            print('E: # of "dbg":{} but # of "bin+lib": {}.'.format(len(para['dbg']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
+            exit(1)
+    elif len(para['dbg']) > 1:
+        if len(para['dbg']) != (len(para['bin']) + len(para['lib'])):
+            print('E: # of "dbg":{} != # of "bin+lib": {}.'.format(len(para['dbg']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
+            exit(1)
     if para['lib'] != []:
         setmultiarch = True
     elif para['bin'] != [] and len(para['debs']) == 1:
