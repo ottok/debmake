@@ -66,11 +66,9 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-__debian_policy__   = '3.9.5'   # debian policy version
-__debian_compat__   = '9'       # debhelper compatibility level in 
+__debian_policy__   = '3.9.6'   # debian policy version
+__debian_compat__   = '9'       # debhelper compat. level in 
                                 # debian/comapt
-                                # Adjust this to 8 or less if 
-                                # backporting to pre-wheezy
 
 #######################################################################
 # main program
