@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # vim:se tw=0 sts=4 ts=4 et ai:
 """
-Copyright © 2014 Osamu Aoki
+Copyright © 2014-2015 Osamu Aoki
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
@@ -44,8 +44,8 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.1.8'
-__copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
+__version__         = '4.2.0'
+__copyright__       = 'Copyright © 2014-2015 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -66,11 +66,9 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-__debian_policy__   = '3.9.5'   # debian policy version
-__debian_compat__   = '9'       # debhelper compatibility level in 
+__debian_policy__   = '3.9.6'   # debian policy version
+__debian_compat__   = '9'       # debhelper compat. level in 
                                 # debian/comapt
-                                # Adjust this to 8 or less if 
-                                # backporting to pre-wheezy
 
 #######################################################################
 # main program
@@ -123,14 +121,14 @@ def main():
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
         (nonlink_files, xml_html_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
         data = debmake.copyright.check_copyright(nonlink_files, mode=para['copyright'])
-        print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'],quiet=para['quiet']))
+        print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'], tutorial=para['tutorial']))
         return
 #######################################################################
 # -k: compare debian/copyright with the source and exit
 #######################################################################
     if para['kludge'] !=0:
         print('I: compare debian/copyright with the source', file=sys.stderr)
-        debmake.kludge.kludge(para['kludge'])
+        debmake.kludge.kludge(para['kludge'], para['pedantic'])
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree

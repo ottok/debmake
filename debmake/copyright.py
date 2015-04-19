@@ -351,6 +351,7 @@ re_dropline = re.compile(r'''(?:
         ^timestamp=|                        # timestamp line
         ^scriptversion=|                    # version line
         ^All\s+Rights\s+Reserved|           # possible leader
+        ^LICENSE:|                          # 
         ^written\s+by|
         ^This\s+file\s+is\s+part\s+of\s+GNU|
         ^Last\s+update:\s|
@@ -389,9 +390,10 @@ re_co = re.compile(r'(?:\\\(co|\(c\)|@copyright\{\})', re.IGNORECASE) # fake mat
 
 # search to allow leading jank words
 re_copyright_line = re.compile(r'''
-        (?:(?:Copyright|Copyr\.)(?:\s*©)?|
-        ©\s*(?:Copyright|Copyr\.)|
-        ©)\s*(?P<copyright>.*)$
+        (?:(?:Copyright|Copyr\.)\s*©\s*|
+        ©\s*(?:Copyright|Copyr\.)\s+|
+        (?:Copyright:?|Copyr\.)\s+|
+        ©\s*)(?P<copyright>[^\s].*)$
         ''', re.IGNORECASE | re.VERBOSE)
 
 def clean_copyright(line):
@@ -437,18 +439,26 @@ re_copyright_mark_maybe = re.compile(r'''
         (?:Copyright|Copyr\.|\(C\)|©|\\\(co) # fake )
         ''', re.IGNORECASE | re.VERBOSE)
 
+# matching line is excluded to be identified as copyright.
 re_copyright_mark_exclude = re.compile(r'''(?:
         [=?$]|                  # C MACRO
-        Copyright\s+holder|     # copyright holders ...
-        copyright\s+and\s+license| # copyright and license
-        Copyright[!-')-~]|      # no coding variables
-        Copyright:?$|           # ... copyright
+        [^h][-+*/_a-su-z0-9]\(C\)|  # C MACRO (but Copyright(C) is not included)
         if\s+\(C\)|             # C code
-        ^modified\s+version|    # ... of Copyright
-        [^h][-+*/_a-su-z0-9]\(C\)|  # C MACRO (but Copyright(C) is OK)
-        (?:def|if|return)\s.*\(C\)| # Python/C
         switch\s+\(C\)|         # C code
-        ^This\s                 # This ...  Copyright
+        (?:def|if|return)\s.*\(C\)| # Python/C
+        /Copyright|             # file name
+        Copyright[^\s(:]|       # text or variable name
+        Copyright:?$|           # text
+        Copyright\s+notice|     # text
+        Copyright\s+holder|     # text
+        Copyright\s+section|    # text
+        Copyright\s+stanza|     # text
+        copyright\s+file|       # text
+        copyright\s+and\s+license| # text
+        of\s+copyright| # text
+        their\s+copyright|    # text
+        the\s+copyright|    # text
+        ^This\s.*copyright      # text
         )''', re.IGNORECASE | re.VERBOSE)
 
 re_copyright_nomark_year = re.compile(r'''
@@ -520,6 +530,7 @@ re_license_end_nostart = re.compile(r'''(
         ^"""|^\'\'\'|                   # python block comment
         ^=cut|                          # perl
         ^---|^@@|                       # diff block
+        ^\.TH|                          # no .TH for manpage
         ^\.SH|                          # no .SH for manpage
         ^Who\sare\swe\?$|               # The Linux Foundation License templates
         ^-----------|                   # ./configure
@@ -529,6 +540,7 @@ re_license_end_nostart = re.compile(r'''(
         ^This\sfile\sis\smaintained|    # Automake files
         ^Do\sall\sthe\swork\sfor\sAutomake| # aclocal.m4 Automake
         ^Originally\s+written\s+by\+.{10,20}?\s+Please\s+send\spatches| # config.guess
+        ^Please\s+note\s+that\s+the| # Makefile.in.in (gettext)
         ^Please\s+send\s+patches\s+with|   # config.sub
         ^Please\s+send\s+patches\s+to|  # config.sub, config.guess
         ^if\s+not\s+1,\s+datestamp\s+to\s+the\s+version\s+number|  # configure.ac
@@ -559,6 +571,8 @@ def check_lines(lines):
     ##########################################################################
     for line in lines:
         line = line.strip()
+        if line == '.': # empty line only with . as empty
+            line = ''
         # set previous values
         xformat_state = format_state
         xcontent_state = content_state
@@ -699,10 +713,10 @@ def check_lines(lines):
         debmake.debug.debug('Da: {}'.format(line), type='a')
     if copyright_data == {} and license_lines == []:
         # no copyright and no license
-        copyright_data = {'__NO_COPYRIGHT_NOR_LICENSE__':(0, 0)}
+        copyright_data = {'__NO_COPYRIGHT_NOR_LICENSE__':(9999, 0)}
     elif copyright_data == {}:
         # no copyright and but with license (Maybe __UNKNOWN__ license)
-        copyright_data = {'__NO_COPYRIGHT__':(0, 0)}
+        copyright_data = {'__NO_COPYRIGHT__':(9999, 0)}
     return (copyright_data, license_lines)
 
 ###################################################################
@@ -730,26 +744,28 @@ def check_license(file, encoding='utf-8'):
 ###################################################################
 re_autofiles = re.compile(r'''(
         ^Makefile.in$| # Autotools
-        ^.*/Makefile.in$| # Autotools
+        ^.*/Makefile\.in$| # Autotools
         ^aclocal.m4$| # Autotools
         ^build-aux/.*$| # Autotools
         ^compile$| # Autotools
-        ^config.guess$| # Autotools
-        ^config.status$| # Autotools
-        ^config.sub$| # Autotools
+        ^config\.guess$| # Autotools
+        ^config\.status$| # Autotools
+        ^config\.sub$| # Autotools
+        ^config\.rpath$| # Autotools
         ^configure$| # Autotools
         ^depcomp$| # Autotools
         ^install-sh$| # Autotools
         ^libltdl/.*$| # Autotools
         ^libtool$| # Autotools
         ^ltmain.sh$| # Autotools
-        ^m4/.*$| # Autotools
         ^missing$| # Autotools
-        ^po/Makefile$| # Autotools
-        ^po/Makefile.in$| # Autotools
-        ^po/Makefile.in.in$| # Autotools
         ^py-compile$| # Autotools
         ^test-driver$| # Autotools
+        ^po/Makefile$| # Autotools (getttext)
+        ^po/Makefile\.in$| # Autotools (gettext)
+        ^po/Makefile\.in\.in$| # Autotools (gettext)
+        ^po/Makevars$| # Autotools (gettext)
+        ^m4/.*$        # Autotools (no | at the end)
         )''', re.IGNORECASE | re.VERBOSE)
 
 ###################################################################
@@ -767,6 +783,7 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
     licensetext0 = '\n Auto-generated file under the permissive license.'
     md5hash.update(licensetext0.encode())
     md5hashkey0 = md5hash.hexdigest()
+    license_cache[md5hashkey0] = ('__AUTO_PERMISSIVE__', licensetext0, True)
     if len(files) == 0:
         print('W: check_all_licenses(files) should have files', file=sys.stderr)
     if sys.hexversion >= 0x03030000: # Python 3.3 ...
@@ -777,6 +794,7 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
             if sys.hexversion >= 0x03030000: # Python 3.3 ...
                 print('.', file=sys.stderr, end='', flush=True)
             (copyright_data, license_lines) = check_license(file, encoding=encoding)
+            debmake.debug.debug('Dc: copyright_data  = {}'.format(copyright_data), type='c')
             norm_text = debmake.lc.normalize(license_lines)
             md5hash = hashlib.md5()
             md5hash.update(norm_text.encode())
@@ -785,12 +803,14 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
                 (licenseid, licensetext, permissive) = license_cache[md5hashkey]
             else:
                 (licenseid, licensetext, permissive) = debmake.lc.lc(norm_text, license_lines, mode)
-                if permissive and not pedantic:
-                    if re_autofiles.search(file):
-                        licenseid = '__AUTO_PERMISSIVE__'
-                        licensetext = licensetext0
-                        md5hashkey = md5hashkey0
                 license_cache[md5hashkey] = (licenseid, licensetext, permissive)
+            if not pedantic and permissive and re_autofiles.search(file):
+                debmake.debug.debug('Dl: LICENSE ID = __AUTO_PERMISSIVE__ from {}'.format(licenseid), type='l')
+                licenseid = '__AUTO_PERMISSIVE__'
+                licensetext = licensetext0
+                md5hashkey = md5hashkey0
+            else:
+                debmake.debug.debug('Dl: LICENSE ID = {}'.format(licenseid), type='l')
             adata.append((md5hashkey, copyright_data, licenseid, licensetext, file))
         else:
             print('W: check_all_licenses on non-existing file: {}'.format(file), file=sys.stderr)
@@ -823,7 +843,7 @@ def bunch_all_licenses(adata):
         sortkey = '{0:03} {1:02} {2} {3}'.format(max(0, 1000 - len(bunched_files)), min(99, len(licenseid)), licenseid, md5hashkey)
         bunched_files = sorted(bunched_files)
         copyright_list = []
-        for name, (year_min, year_max) in copyright_data.items():
+        for name, (year_min, year_max) in bunched_copyright_data.items():
             copyright_list.append((year_min, year_max, name))
         copyright_list = sorted(copyright_list)
         bdata.append((sortkey, bunched_files, copyright_list, licenseid, licensetext))

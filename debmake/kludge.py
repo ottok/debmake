@@ -34,7 +34,7 @@ import debmake.scanfiles
 
 re_round0 = re.compile(r'\.0')
 
-def copydiff(mode):
+def copydiff(mode, pedantic):
     ###########################################################################
     # parse existing debian/copyright against source tree
     ###########################################################################
@@ -117,7 +117,7 @@ def copydiff(mode):
     # scan copyright of the source tree and create license_new[]
     ###########################################################################
     (nonlink_files, xml_html_files, binary_files, huge_files, extcount, extcountlist) = debmake.scanfiles.scanfiles()
-    data_new = debmake.copyright.check_copyright(nonlink_files, mode=1)
+    data_new = debmake.copyright.check_copyright(nonlink_files, mode=1, pedantic=pedantic)
     licenses_new = {}
     for (licenseid, licensetext, files, copyright_lines) in data_new:
         licenseid = licenseid.strip()
@@ -157,8 +157,8 @@ def copydiff(mode):
             data.append((iptn, ptn, file, printdiff, old, new))
     return data
 
-def kludge(mode):
-    basedata = copydiff(mode)
+def kludge(mode, pedantic):
+    basedata = copydiff(mode, pedantic)
     iptn_group_data = []
     data = sorted(basedata, key=operator.itemgetter(0))
     for k, g in itertools.groupby(basedata, operator.itemgetter(0)):
