@@ -179,17 +179,19 @@ def analyze(para):
                 exit(1)
         elif deb['type'] == 'dbg':
             para['override'].update({'dbg'})
-            pkg = masterdbg(deb['package'])
             pkgs = para['bin'] + para['lib']
-            if pkg in pkgs:
-                para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
-            else:
-                print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
-                exit(1)
-            pkgs.remove(pkg)
             if len(para['dbg']) == 1:
+                for pkg in pkgs:
+                    para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
                 para['dh_strip'] += '\tdh_strip --dbg-package={}\n'.format(deb['package'])
             else:
+                pkg = masterdbg(deb['package'])
+                if pkg in pkgs:
+                    para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
+                else:
+                    print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
+                    exit(1)
+                pkgs.remove(pkg)
                 para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
         elif deb['type'] == 'perl':
             for libpkg in para['lib']:
@@ -285,7 +287,7 @@ def analyze(para):
     elif os.path.isfile('CMakeLists.txt'):
         para['build_type']      = 'Cmake'
         para['build_depends'].update({'cmake'})
-        para['export'].update({'cmake'})
+        para['override'].update({'cmake'})
         if setmultiarch:
             para['override'].update({'multiarch'})
     # GNU coding standard with make

@@ -1,13 +1,12 @@
-### Define DEB_HOST_* and  DEB_BUILD_* variables using
-### dpkg-architecture(1) if they are used in this file. E.g.: 
-###DEB_HOST_MULTIARCH = $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-###DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
-###
-### See FEATURE AREAS in dpkg-buildflags(1)
+### See FEATURE AREAS/ENVIRONMENT in dpkg-buildflags(1)
+### Apply all hardening options
 #export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-###
-### See ENVIRONMENT in dpkg-buildflags(1)
 ### Package maintainers to append CFLAGS
 #export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 ### Package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+###
+### With debhelper version 9 or newer, the dh command exports
+### all buildflags.  So there is no need to include the
+### /usr/share/dpkg/buildflags.mk file here if compat is 9 or newer.
+###

@@ -1,6 +1,6 @@
-### watch control file for uscan
-###
 # You must remove unused comment lines for the released package.
+###
+### watch control file for uscan
 ###
 ### See uscan(1) for how to set this file properly
 ###  * uupdate(1) for upgrade a source code package
