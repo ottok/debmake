@@ -24,6 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import os
 import sys
+import debmake.debug
 #######################################################################
 # cat >file
 def cat(file, text, end='', tutorial=False):
@@ -45,12 +46,14 @@ def cat(file, text, end='', tutorial=False):
             if line[:3] != '###' or line[:4] == '####':
                 newtext += line + '\n'
         text = newtext
+    text = text.rstrip() + '\n'
     path = os.path.dirname(file)
     if path:
         os.makedirs(path, exist_ok=True)
     with open(file, 'w') as f:
-        print(text, file=f, end=end)
         print('I: creating => {}'.format(file), file=sys.stderr)
+        print(text, file=f, end=end)
+        debmake.debug.debug('Dw: "{}"'.format(text), type='w')
     return
 
 #######################################################################
