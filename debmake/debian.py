@@ -95,16 +95,11 @@ def debian(para):
     substlist['@EXPORT@'] = ''
     if 'compiler' in para['export']:
         substlist['@EXPORT@'] += debmake.read.read(export_dir + 'compiler').rstrip() + '\n'
-        if not ('autotools' in para['export']):
-            substlist['@EXPORT@'] += debmake.read.read(export_dir + 'cflags').rstrip() + '\n'
-        if 'cmake' in para['export']:
-            substlist['@EXPORT@'] += debmake.read.read(export_dir + 'cmake').rstrip() + '\n'
-            para['override'].update({'cmake'})
         if 'java' in para['export']:
             substlist['@EXPORT@'] += debmake.read.read(export_dir + 'java').rstrip() + '\n'
         if 'vala' in para['export']:
             substlist['@EXPORT@'] += debmake.read.read(export_dir + 'vala').rstrip() + '\n'
-        substlist['@EXPORT@'] += '\n'
+    substlist['@EXPORT@'] += debmake.read.read(export_dir + 'misc').rstrip() + '\n\n'
 
     #######################################################################
     # set override string

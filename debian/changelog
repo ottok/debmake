@@ -1,3 +1,16 @@
+debmake (4.2.0-1) unstable; urgency=medium
+
+  * Allow single -dbg package case for bin+lib > 1.
+  * Fix copyright holder list generation. Closes: #782850 
+  * Delayed execution of dpkg-buildflags to make DEB_*_MAINT_APPEND
+    effective is activated only for Vala.
+  * No more CPPFLAGS workaround for cmake.
+  * Make template file messages more consistent.
+  * -b option argument drops white spaces .
+  * Refine the auto-generated file handling.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 19 Apr 2015 12:39:55 +0900
+
 debmake (4.1.8-1) experimental; urgency=medium
 
   * Split out debmake-doc for stretch.

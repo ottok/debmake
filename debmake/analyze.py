@@ -139,9 +139,14 @@ def analyze(para):
     if len(para['debs']) != 1 and len(para['dev']) != len(para['lib']):
         print('E: # of "dev":{} != # of "lib": {}.'.format(len(para['dev']), len(para['lib'])), file=sys.stderr)
         exit(1)
-    if len(para['dbg']) != 0 and len(para['dbg']) != (len(para['bin']) + len(para['lib'])):
-        print('E: # of "dbg":{} != # of "bin+lib": {}.'.format(len(para['dev']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
-        exit(1)
+    if len(para['dbg']) == 1:
+        if (len(para['bin']) + len(para['lib'])) == 0:
+            print('E: # of "dbg":{} but # of "bin+lib": {}.'.format(len(para['dbg']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
+            exit(1)
+    elif len(para['dbg']) > 1:
+        if len(para['dbg']) != (len(para['bin']) + len(para['lib'])):
+            print('E: # of "dbg":{} != # of "bin+lib": {}.'.format(len(para['dbg']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
+            exit(1)
     if para['lib'] != []:
         setmultiarch = True
     elif para['bin'] != [] and len(para['debs']) == 1:
@@ -174,17 +179,19 @@ def analyze(para):
                 exit(1)
         elif deb['type'] == 'dbg':
             para['override'].update({'dbg'})
-            pkg = masterdbg(deb['package'])
             pkgs = para['bin'] + para['lib']
-            if pkg in pkgs:
-                para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
-            else:
-                print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
-                exit(1)
-            pkgs.remove(pkg)
             if len(para['dbg']) == 1:
+                for pkg in pkgs:
+                    para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
                 para['dh_strip'] += '\tdh_strip --dbg-package={}\n'.format(deb['package'])
             else:
+                pkg = masterdbg(deb['package'])
+                if pkg in pkgs:
+                    para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
+                else:
+                    print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
+                    exit(1)
+                pkgs.remove(pkg)
                 para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
         elif deb['type'] == 'perl':
             for libpkg in para['lib']:
@@ -280,7 +287,7 @@ def analyze(para):
     elif os.path.isfile('CMakeLists.txt'):
         para['build_type']      = 'Cmake'
         para['build_depends'].update({'cmake'})
-        para['export'].update({'cmake'})
+        para['override'].update({'cmake'})
         if setmultiarch:
             para['override'].update({'multiarch'})
     # GNU coding standard with make
