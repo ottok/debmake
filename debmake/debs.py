@@ -258,8 +258,8 @@ def debs(binaryspec, package, monoarch, dh_with):
             exit(1)
         pset.update({p})
         if t in tset:
-            print('W: duplicate definition of package type "{}"'.format(t), file=sys.stderr)
             if t != 'dbg':
+                print('W: duplicate definition of package type "{}"'.format(t), file=sys.stderr)
                 print('W: *** manual modifiocation of debian/{}.install required ***'.format(p), file=sys.stderr)
         tset.update({t})
         ###################################################################
