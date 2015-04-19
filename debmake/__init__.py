@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # vim:se tw=0 sts=4 ts=4 et ai:
 """
-Copyright © 2014 Osamu Aoki
+Copyright © 2014-2015 Osamu Aoki
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
@@ -44,8 +44,8 @@ import debmake.untar
 #######################################################################
 
 __programname__     = 'debmake'
-__version__         = '4.1.8'
-__copyright__       = 'Copyright © 2014 Osamu Aoki <osamu@debian.org>'
+__version__         = '4.2.0'
+__copyright__       = 'Copyright © 2014-2015 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
