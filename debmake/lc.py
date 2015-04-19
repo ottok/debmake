@@ -485,9 +485,10 @@ r_PM1 = pattern(r'''
     A PARTICULAR PURPOSE.)?
     ''')
 r_PM2 = pattern(r'''
-    This file may be copied and used freely without restrictions.  It may be
-    used in projects which are not available under a GNU Public License, but
-    which still want to provide support for the GNU gettext functionality.
+    This file (?:may|can) be copied and used freely without restrictions.  It
+    (?:may|can) be used in projects which are not available under (?:a GNU|the 
+    GNU General) Public License,? but which still want to provide support for
+    the GNU gettext functionality.
     ''')
 r_PM3 = pattern(r'''
     This configure script is free software; the Free Software Foundation gives
