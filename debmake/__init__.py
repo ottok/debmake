@@ -123,14 +123,14 @@ def main():
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
         (nonlink_files, xml_html_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
         data = debmake.copyright.check_copyright(nonlink_files, mode=para['copyright'])
-        print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'],quiet=para['quiet']))
+        print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'], tutorial=para['tutorial']))
         return
 #######################################################################
 # -k: compare debian/copyright with the source and exit
 #######################################################################
     if para['kludge'] !=0:
         print('I: compare debian/copyright with the source', file=sys.stderr)
-        debmake.kludge.kludge(para['kludge'])
+        debmake.kludge.kludge(para['kludge'], para['pedantic'])
         return
 #######################################################################
 # sanity check parameters without digging deep into source tree
