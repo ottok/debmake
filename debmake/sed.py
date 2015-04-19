@@ -26,6 +26,7 @@ import glob
 import os
 import sys
 import debmake.cat
+import debmake.debug
 #######################################################################
 def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
     ###################################################################
@@ -37,6 +38,7 @@ def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
     ###################################################################
     lconfdir = len(confdir)
     for file in glob.glob(confdir + mask):
+        print('I: substituting => {}'.format(file), file=sys.stderr)
         with open(file, 'r') as f:
             text = f.read()
         for k in substlist.keys():
@@ -45,6 +47,7 @@ def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
             newfile = destdir + package + file[lconfdir+7:]
         else:
             newfile = destdir + file[lconfdir:]
+        debmake.debug.debug('Ds: "{}"'.format(text), type='s')
         debmake.cat.cat(newfile, text, tutorial=tutorial)
     return
 
