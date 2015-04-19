@@ -749,7 +749,7 @@ re_autofiles = re.compile(r'''(
         ^po/Makefile.in$| # Autotools
         ^po/Makefile.in.in$| # Autotools
         ^py-compile$| # Autotools
-        ^test-driver$| # Autotools
+        ^test-driver$ # Autotools (no | at the end)
         )''', re.IGNORECASE | re.VERBOSE)
 
 ###################################################################
