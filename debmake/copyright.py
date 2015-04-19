@@ -767,6 +767,7 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
     licensetext0 = '\n Auto-generated file under the permissive license.'
     md5hash.update(licensetext0.encode())
     md5hashkey0 = md5hash.hexdigest()
+    license_cache[md5hashkey0] = ('__AUTO_PERMISSIVE__', licensetext0, True)
     if len(files) == 0:
         print('W: check_all_licenses(files) should have files', file=sys.stderr)
     if sys.hexversion >= 0x03030000: # Python 3.3 ...
@@ -777,6 +778,7 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
             if sys.hexversion >= 0x03030000: # Python 3.3 ...
                 print('.', file=sys.stderr, end='', flush=True)
             (copyright_data, license_lines) = check_license(file, encoding=encoding)
+            debmake.debug.debug('Dc: copyright_data  = {}'.format(copyright_data), type='c')
             norm_text = debmake.lc.normalize(license_lines)
             md5hash = hashlib.md5()
             md5hash.update(norm_text.encode())
@@ -785,12 +787,14 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
                 (licenseid, licensetext, permissive) = license_cache[md5hashkey]
             else:
                 (licenseid, licensetext, permissive) = debmake.lc.lc(norm_text, license_lines, mode)
-                if permissive and not pedantic:
-                    if re_autofiles.search(file):
-                        licenseid = '__AUTO_PERMISSIVE__'
-                        licensetext = licensetext0
-                        md5hashkey = md5hashkey0
                 license_cache[md5hashkey] = (licenseid, licensetext, permissive)
+            if not pedantic and permissive and re_autofiles.search(file):
+                debmake.debug.debug('Dl: LICENSE ID = __AUTO_PERMISSIVE__ from {}'.format(licenseid), type='l')
+                licenseid = '__AUTO_PERMISSIVE__'
+                licensetext = licensetext0
+                md5hashkey = md5hashkey0
+            else:
+                debmake.debug.debug('Dl: LICENSE ID = {}'.format(licenseid), type='l')
             adata.append((md5hashkey, copyright_data, licenseid, licensetext, file))
         else:
             print('W: check_all_licenses on non-existing file: {}'.format(file), file=sys.stderr)
