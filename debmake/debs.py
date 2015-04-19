@@ -41,7 +41,7 @@ def debs(binaryspec, package, monoarch, dh_with):
     debs = [] # list
     pset = set()
     tset = set()
-    dropch = "'" + '"'
+    dropch = "'" + '"' + " " + "\t" + "\n"
     for x0 in binaryspec.strip(dropch).split(','):
         x = x0.strip()
         ###################################################################
