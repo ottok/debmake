@@ -823,7 +823,7 @@ def bunch_all_licenses(adata):
         sortkey = '{0:03} {1:02} {2} {3}'.format(max(0, 1000 - len(bunched_files)), min(99, len(licenseid)), licenseid, md5hashkey)
         bunched_files = sorted(bunched_files)
         copyright_list = []
-        for name, (year_min, year_max) in copyright_data.items():
+        for name, (year_min, year_max) in bunched_copyright_data.items():
             copyright_list.append((year_min, year_max, name))
         copyright_list = sorted(copyright_list)
         bdata.append((sortkey, bunched_files, copyright_list, licenseid, licensetext))
