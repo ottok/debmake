@@ -29,7 +29,7 @@ def compat(paracompat):
     # file:      path to the file
     ###################################################################
     if os.path.isfile('debian/compat'):
-        with open('debian/compat', 'r') as f:
+        with open('debian/compat', mode='r', encoding='utf-8') as f:
             number = int(f.read().strip())
     else:
         number = int(paracompat.strip())
