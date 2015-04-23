@@ -43,8 +43,10 @@ import debmake.untar
 # Basic package information
 #######################################################################
 
+__debian_policy__   = '3.9.6'   # debian policy version
+__debian_compat__   = '9'       # debian/comapt
 __programname__     = 'debmake'
-__version__         = '4.2.0'
+__version__         = '4.2.1'
 __copyright__       = 'Copyright © 2014-2015 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -66,9 +68,6 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-__debian_policy__   = '3.9.6'   # debian policy version
-__debian_compat__   = '9'       # debhelper compat. level in 
-                                # debian/comapt
 
 #######################################################################
 # main program
