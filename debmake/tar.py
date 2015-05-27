@@ -39,6 +39,10 @@ import debmake.yn
 ###########################################################################
 def tar(tarball, targz, srcdir, parent, yes):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
+    if os.path.isdir('.pc'):
+        print('E: .pc/ directory exists.  Stop "debmake -t ..."', file=sys.stderr)
+        print('E: Remove applied patches and remove .pc/ directory, first.', file=sys.stderr)
+        exit(1)
     #######################################################################
     # make distribution tarball using tar excluding debian/ directory
     # VCS tree are not copied.
