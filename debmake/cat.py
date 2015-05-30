@@ -50,7 +50,7 @@ def cat(file, text, end='', tutorial=False):
     path = os.path.dirname(file)
     if path:
         os.makedirs(path, exist_ok=True)
-    with open(file, 'w') as f:
+    with open(file, mode='w', encoding='utf-8') as f:
         print('I: creating => {}'.format(file), file=sys.stderr)
         print(text, file=f, end=end)
         debmake.debug.debug('Dw: "{}"'.format(text), type='w')

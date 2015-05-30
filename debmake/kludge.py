@@ -41,7 +41,7 @@ def copydiff(mode, pedantic):
     if not os.path.isfile('debian/copyright'):
         print('E: You need debian/copyright.')
         exit(1)
-    with open('debian/copyright', 'r') as f:
+    with open('debian/copyright', mode='r', encoding='utf-8') as f:
         lines = f.readlines()
     patterns_for_license = []
     license = ''

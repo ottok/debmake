@@ -39,7 +39,7 @@ def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
     lconfdir = len(confdir)
     for file in glob.glob(confdir + mask):
         print('I: substituting => {}'.format(file), file=sys.stderr)
-        with open(file, 'r') as f:
+        with open(file, mode='r', encoding='utf-8') as f:
             text = f.read()
         for k in substlist.keys():
             text = text.replace(k, substlist[k])

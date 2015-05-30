@@ -1021,7 +1021,7 @@ if __name__ == '__main__':
         print('lc.py file ...')
     for file in files:
         if os.path.isfile(file):
-            with open(file, 'r') as f:
+            with open(file, mode='r', encoding='utf-8') as f:
                 license_lines = f.readlines()
             while(license_lines[0].strip() == ''):
                 del license_lines[0]

@@ -1,3 +1,11 @@
+debmake (4.2.1-1) unstable; urgency=medium
+
+  * Force to use UTF-8 even in C locale. Closes: #783243
+  * Stop debmake -t if .pc directory exists. Closes: #786878
+  * Manpage refer to the debmake-doc package.
+
+ -- Osamu Aoki <osamu@debian.org>  Wed, 27 May 2015 22:31:16 +0900
+
 debmake (4.2.0-1) unstable; urgency=medium
 
   * Allow single -dbg package case for bin+lib > 1.

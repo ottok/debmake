@@ -240,7 +240,7 @@ Argument may need to be quoted to protect from the shell.
             '--yes',
             action = 'count', 
             default = 0, 
-            help = 'force "yes" for all prompts')
+            help = '"force yes" for all prompts')
     p.add_argument(
             '-P', 
             '--pedantic', 
