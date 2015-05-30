@@ -42,7 +42,7 @@ def grep(file, rtext, *range):
         else:
             lbgn = range[0]
             lend = range[1]
-        with open(file, 'r') as f:
+        with open(file, mode='r', encoding='utf-8') as f:
             for (i, l) in enumerate(f.readlines()):
                 if ( i >= lbgn ) and (( lend < 0 ) or ( lend > i)):
                     match = reg.search(l)

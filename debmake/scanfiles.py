@@ -139,7 +139,7 @@ re_ext = re.compile(r'\.(?P<ext>[^.]+)(?:\.in|\.gz|\.bz2|\.xz|\.Z\|.z|~)*$')
 # Check if binary file
 ###################################################################
 def typefile(file, blocksize=4048):
-    buff = open(file, 'rb').read(blocksize)
+    buff = open(file, mode='rb').read(blocksize)
     if b'<' == buff[:1]:
         return 2 # XML/SGML/HTML
     elif b'\x00' in buff:

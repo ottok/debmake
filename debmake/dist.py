@@ -47,7 +47,7 @@ def dist(para):
     #######################################################################
     elif os.path.isfile('setup.py'):
         # Python distutils
-        with open('setup.py', 'r') as f:
+        with open('setup.py', mode='r', encoding='utf-8') as f:
             line = f.readline()
         if re.search('python3', line):
             # http://docs.python.org/3/distutils/

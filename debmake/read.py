@@ -27,7 +27,7 @@ def read(file):
     ###################################################################
     # file:      path to the file
     ###################################################################
-    with open(file, 'r') as f:
+    with open(file, mode='r', encoding='utf-8') as f:
         text = f.read()
     return text
 

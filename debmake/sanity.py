@@ -103,7 +103,7 @@ def sanity(para):
         parent = os.path.basename(os.getcwd())
         # check changelog for package/version/revision (non-native package)
         if not para['native'] and os.path.isfile('debian/changelog'):
-            with open('debian/changelog', 'r') as f:
+            with open('debian/changelog', mode='r', encoding='utf-8') as f:
                 line = f.readline()
             pkgver = re.match('([^ \t]+)[ \t]+\(([^()]+)-([^-()]+)\)', line)
             if pkgver:
