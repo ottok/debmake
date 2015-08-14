@@ -1,11 +1,11 @@
 Metadata-Version: 1.1
 Name: debmake
-Version: 4.0.4
+Version: 4.2.1
 Summary: Debian package making utility
 Home-page: http://people.debian.org/~osamu/
 Author: Osamu Aoki
 Author-email: osamu@debian.org
-License: GNU General Public License v2 or later (GPLv2+)
+License: MIT License
 Description: Debian source package making utility to populate the debian directory.
 Platform: POSIX
 Classifier: Development Status :: 3 - Alpha
