@@ -1,3 +1,10 @@
+debmake (4.2.2-1) unstable; urgency=medium
+
+  * Typo fix: Closes: #793654 
+  * Do not exclude files agressively with "rsync -C".
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 14 Aug 2015 19:21:43 +0000
+
 debmake (4.2.1-1) unstable; urgency=medium
 
   * Force to use UTF-8 even in C locale. Closes: #783243
