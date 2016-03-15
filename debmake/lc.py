@@ -223,7 +223,7 @@ r_disclaimer_expat = pattern(r'''
     USE OR OTHER DEALINGS IN THE SOFTWARE. )
     ''', tail='')
 ### Expat
-list_main += [('MIT', 'Expat', regex(r_pemission_expat + r_notice_expat + r_disclaimer_expat),
+list_main += [('Expat', 'Expat', regex(r_pemission_expat + r_notice_expat + r_disclaimer_expat),
     ['head', 'tail', 'nowarranty'])]
 ###############################################################################
 # MIT: Generic (trained with xorg source data)
