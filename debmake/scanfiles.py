@@ -38,6 +38,9 @@ SKIP_FILES = [
         'ChangeLog',
         'changelog',
 ]       # Skip these files for scanning
+# The following files are scanned but if they are not-pedantic
+# and permissive license, they are skipped from listing in the
+# debian/copyright file. (this is in copyright.py)
 #        'INSTALL',
 #        'README',
 #        'README.txt',
