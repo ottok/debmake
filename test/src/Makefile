@@ -14,6 +14,8 @@ LC_ALL=C.UTF-8
 export LC_ALL
 
 all: test
+	# If different, next line returns non-zero(=ERROR)
+	diff -u $(PWD)/../.LICENSE.KEEP $(PWD)/../.LICENSE.LOG
 
 # Please place data from SPDX in src/dspdx/*
 spdx:
