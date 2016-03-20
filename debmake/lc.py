@@ -1144,7 +1144,7 @@ def lc(norm_text, license_lines, mode):
                 text += '\n .'
             else:
                 text += '\n {}'.format(line)
-        for (re_at, copy_at, license_at) in set_attribs:
+        for license_at in set_attribs:
             if license_at != '':
                 text += '\n .\n ' + license_at
         if license + version + suffix in licensefiles.keys():
