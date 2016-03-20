@@ -4,7 +4,7 @@ Source: http://git.debian.org/?p=collab-maint/debmake.git
 
 Files: *
 Copyright: 2014 Osamu Aoki
-License: MIT
+License: Expat
 
 Files: extra*/*
 Copyright: Jim Van Zandt <jrv@debian.org>
@@ -13,9 +13,9 @@ Copyright: Jim Van Zandt <jrv@debian.org>
 	Nils Naumann <naumann@unileoben.ac.at>
 	Jim Van Zandt <jrv@debian.org>
 	2014 Osamu Aoki <osamu@debian.org>
-License: MIT
+License: Expat
 
-License: MIT
+License: Expat
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation

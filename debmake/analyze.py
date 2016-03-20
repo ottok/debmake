@@ -195,7 +195,7 @@ def analyze(para):
                 para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
         elif deb['type'] == 'perl':
             for libpkg in para['lib']:
-                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version})'})
+                para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})
         elif deb['type'] == 'python':
             para['dh_with'].update({'python2'}) # better to be explicit
             para['build_depends'].update({'python-all'})
