@@ -1,0 +1,5 @@
+#%#%#%# This is copyright analyser test data by Osamu Aoki.
+#%#%#%# The following lines shall not be considered copyright statement.
+#%#%#%# 
+Distribute under GPL version 2 or later.
+
