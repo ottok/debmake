@@ -1,12 +1,17 @@
-debmake (4.2.2-1) unstable; urgency=medium
+debmake (4.2.3-1) unstable; urgency=medium
 
-  * Typo fix: Closes: #793654 
-  * Do not exclude files agressively with "rsync -C".
   * Use Expat over MIT.  Closes: #815182
   * Check additional terms like EFI exception and detect openSSL.
     Closes: #805130
   * Fix bugs for GPL autoconf exception.  #815621
   * Add self test suite.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 20 Mar 2016 22:38:08 +0900
+
+debmake (4.2.2-1) unstable; urgency=medium
+
+  * Typo fix: Closes: #793654 
+  * Do not exclude files agressively with "rsync -C".
 
  -- Osamu Aoki <osamu@debian.org>  Fri, 14 Aug 2015 19:21:43 +0000
 
