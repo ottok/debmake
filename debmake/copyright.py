@@ -486,6 +486,11 @@ re_license_start_maybe = re.compile(r'''(
         ^Permission\s|
         ^Redistribution\s|
         ^This\s|
+        ^GNU\s+General\s+Public\s+License\s+|                   # 1 liner GPL
+        ^GPL|                                                   # 1 liner GPL
+        ^LGPL|                                                  # 1 liner GPL
+        ^BSD|                                                   # 1 liner BSD
+        ^MIT|                                                   # 1 liner MIT
         ^Unless\s
         )''', re.IGNORECASE | re.VERBOSE)
 re_license_start_sure = re.compile(r'''(
