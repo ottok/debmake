@@ -1,3 +1,10 @@
+debmake (4.2.4-1) unstable; urgency=medium
+
+  * Fix license attribute (old FSF address).
+  * Add test case and refine license parse logic.
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 21 Mar 2016 02:34:35 +0900
+
 debmake (4.2.3-1) unstable; urgency=medium
 
   * Use Expat over MIT.  Closes: #815182

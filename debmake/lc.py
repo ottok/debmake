@@ -667,12 +667,16 @@ list_main += [('LGPL', 'VARIANT1', regex(r_under + r_LGPL + r_version1), [
     'version', 'later'])]
 list_main += [ ('LGPL', 'VARIANT2', regex(r_under + r_version2 + r_LGPL), [
     'version', 'later'])]
+list_main += [('LGPL', 'VARIANT3', regex(r_LGPL + r_version1), [
+    'version', 'later'])]
 
 list_sub += ['r_AGPL']
 r_AGPL = r'(?:GNU Affero General Public License|(?:GNU )?AGPL).? '
 list_main += [('AGPL', 'VARIANT1', regex(r_under + r_AGPL + r_version1), [
     'version', 'later'])]
 list_main += [ ('AGPL', 'VARIANT2', regex(r_under + r_version2 + r_AGPL), [
+    'version', 'later'])]
+list_main += [('AGPL', 'VARIANT3', regex(r_AGPL + r_version1), [
     'version', 'later'])]
 
 list_sub += ['r_GFDL']
@@ -681,12 +685,16 @@ list_main += [ ('GFDL', 'VARIANT1', regex(r_under + r_GFDL + r_version1), [
     'version', 'later'])]
 list_main += [ ('GFDL', 'VARIANT2', regex(r_under + r_version2 + r_GFDL), [
     'version', 'later'])]
+list_main += [ ('GFDL', 'VARIANT3', regex(r_GFDL + r_version1), [
+    'version', 'later'])]
 
 list_sub += ['r_GPL']
 r_GPL = r'(?:GNU General Public License|(?:GNU )?GPL).? '
 list_main += [ ('GPL', 'VARIANT1', regex(r_under + r_GPL + r_version1), [
     'version', 'later'])]
 list_main += [ ('GPL', 'VARIANT2', regex(r_under + r_version2 + r_GPL), [
+    'version', 'later'])]
+list_main += [ ('GPL', 'VARIANT3', regex(r_GPL + r_version1), [
     'version', 'later'])]
 
 list_sub += ['r_MPL']
@@ -695,12 +703,16 @@ list_main += [ ('MPL', 'VARIANT1', regex(r_under + r_MPL + r_version1), [
     'version', 'later'])]
 list_main += [ ('MPL', 'VARIANT2', regex(r_under + r_version2 + r_MPL), [
     'version', 'later'])]
+list_main += [ ('MPL', 'VARIANT3', regex(r_MPL + r_version1), [
+    'version', 'later'])]
 
 list_sub += ['r_Artistic']
 r_Artistic = r'Artistic License.? '
 list_main += [ ('Artistic', 'VARIANT1', regex(r_under + r_Artistic + r_version1),
     ['version', 'later'])]
 list_main += [ ('Artistic', 'VARIANT2', regex(r_under + r_version2 + r_Artistic),
+    ['version', 'later'])]
+list_main += [ ('Artistic', 'VARIANT3', regex(r_Artistic + r_version1),
     ['version', 'later'])]
 ###############################################################################
 # Reference to the package license
@@ -1132,7 +1144,7 @@ def lc(norm_text, license_lines, mode):
                 text += '\n .'
             else:
                 text += '\n {}'.format(line)
-        for (re_at, copy_at, license_at) in set_attribs:
+        for license_at in set_attribs:
             if license_at != '':
                 text += '\n .\n ' + license_at
         if license + version + suffix in licensefiles.keys():

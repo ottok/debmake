@@ -1,7 +1,10 @@
+@gplline.txt	GPL-2.0+:VARIANT3(version,later)
 @intel-bsd.txt	BSD_ACCOMPANY:VARIANT0()
 @intel-efi0.txt	BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI exception2
 @intel-efi1.txt	BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI exception1
 @intel-efi2.txt	_SAME_ACCOMPANY_:VARIANT0()
+@main.c.txt	LGPL-2.1+:VARIANT1(version,later)
+@oldfsf.c.txt	GPL-2.0+:VARIANT1(version,later)
 @openssl-code.txt	OpenSSL:SSLeay(name:ERIC YOUNG)
 @openssl-tool.txt	OpenSSL:OpenSSL(apachename,name:THE OpenSSL PROJECT)
 @spl-gpl2+.c.txt	GPL-2.0+:VARIANT1(version,later)
