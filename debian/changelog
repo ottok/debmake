@@ -1,8 +1,9 @@
-debmake (4.2.4-1) UNRELEASED; urgency=medium
+debmake (4.2.4-1) unstable; urgency=medium
 
-  * TEST BUILD
+  * Fix license attribute (old FSF address).
+  * Add test case and refine license parse logic.
 
- -- Osamu Aoki <osamu@debian.org>  Mon, 21 Mar 2016 02:05:25 +0900
+ -- Osamu Aoki <osamu@debian.org>  Mon, 21 Mar 2016 02:34:35 +0900
 
 debmake (4.2.3-1) unstable; urgency=medium
 
