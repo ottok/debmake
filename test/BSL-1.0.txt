@@ -1,0 +1,7 @@
+#%#%#%# This is copyright analyser test data by Osamu Aoki.
+#%#%#%# The following lines shall not be considered copyright statement.
+#%#%#%# 
+Copyright {{Joe Coder}} {{2004 - 2006}}.
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE_1_0.txt or copy at
+http://www.boost.org/LICENSE_1_0.txt)
