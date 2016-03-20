@@ -1,3 +1,9 @@
+debmake (4.2.4-1) UNRELEASED; urgency=medium
+
+  * TEST BUILD
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 21 Mar 2016 02:05:25 +0900
+
 debmake (4.2.3-1) unstable; urgency=medium
 
   * Use Expat over MIT.  Closes: #815182
