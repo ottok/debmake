@@ -1,3 +1,9 @@
+debmake (4.2.5-1) UNRELEASED; urgency=medium
+
+  * Fix slow regex for year/name split in the copyright line.
+
+ -- Osamu Aoki <osamu@debian.org>  Tue, 22 Mar 2016 08:18:59 +0000
+
 debmake (4.2.4-1) unstable; urgency=medium
 
   * Fix license attribute (old FSF address).
