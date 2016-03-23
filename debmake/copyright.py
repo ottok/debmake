@@ -1087,9 +1087,9 @@ if __name__ == '__main__':
         print('== file ==')
         print(file)
         print('== copyright ==')
-        print(copyright_lines)
+        print(copyright_lines, end='')
         print('== ID ==')
         print(licenseid)
-        print('== license_lines ==')
+        print('== license_lines ==', end='')
         print(text)
 
