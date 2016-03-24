@@ -547,6 +547,7 @@ re_license_end_nostart = re.compile(r'''(
         ^serial\s+[0-9]|                # aclocal.m4
         ^@configure_input@|             # ltversion.m4
         ^This\sfile\sis\smaintained|    # Automake files
+        ^Basic\sInstallation\s          # INSTALL
         ^Do\sall\sthe\swork\sfor\sAutomake| # aclocal.m4 Automake
         ^Originally\s+written\s+by\+.{10,20}?\s+Please\s+send\spatches| # config.guess
         ^Please\s+note\s+that\s+the| # Makefile.in.in (gettext)
