@@ -1011,11 +1011,11 @@ Source: <url://example.com>
         for fx in license_file_masks:
             license_files.update(set(glob.glob(fx)))
         for f in license_files:
-            text += '#----------------------------------------------------------------------------\n'
-            text += '# License file: {}\n'.format(f)
-            text += license_text(f)
-            text += '\n'
-
+            if os.path.isfile(f): # if only a real file
+                text += '#----------------------------------------------------------------------------\n'
+                text += '# License file: {}\n'.format(f)
+                text += license_text(f)
+                text += '\n'
     return text
 
 #######################################################################
