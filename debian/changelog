@@ -1,8 +1,17 @@
-debmake (4.2.5-1) UNRELEASED; urgency=medium
+debmake (4.2.5-1) unstable; urgency=medium
 
+  * Sort copyright by name. 
+  * Require LICENSE files to be real file. Closes: Closes: #819054
+  * Prety print .FULL_LICENSE test output of copyright.py.
   * Fix slow regex for year/name split in the copyright line.
+  * Drop consecutive blank lines.
+  * Refine copyright and license extractor.
+  * Add new non-ASCII and binary detector.
+  * Build test with FULL_LICENSE test output. 
+  * Update manpage to mention licensecheck.
+  * Allow C++ and C comment lines to be mixed.  Closes: #819321
 
- -- Osamu Aoki <osamu@debian.org>  Tue, 22 Mar 2016 08:18:59 +0000
+ -- Osamu Aoki <osamu@debian.org>  Fri, 25 Mar 2016 23:28:49 +0900
 
 debmake (4.2.4-1) unstable; urgency=medium
 
