@@ -424,8 +424,11 @@ C_EOF = -1 # override
 ###################################################################
 # pre-process line
 re_dropwords = re.compile(r'''(?:
-        ^[#\s]*timestamp=.*$|                   # timestamp line
-        ^[#\s]*scriptversion=.*$|               # version line
+        ^[:!;"'#%*\s]*timestamp=.*$|            # timestamp line
+        ^[:!;"'#%*\s]*scriptversion=.*$|        # version line
+        ^[:!;"'#%*\s]*\$Id:.*\$|                # CVS/RCS version
+        ^[:!;"'#%*\s]*-\*-\s+coding:.*-\*-.*$|  # EMACS
+        ^[:!;"'#%*\s]*vim?:.*$|                 # VIM/VI
         ^\.bp|                                  # manpage
         All\s+Rights?\s+Reserved.?|             # remove
         <BR>                                    # HTML
@@ -534,6 +537,9 @@ re_license_end_nostart = re.compile(r'''(
         [=?_]|                          # C MACRO code
         ^#if|                           # C CPP
         ^#include|                      # C CPP
+        ^static\s+.*=|                  # C
+        ^const\s+.*=|                   # C
+        ^struct\s+.*=|                  # C
         enum\s.*\s{|                    # C enum
         class\s.*\s{|                   # C++
         ^"""|^\'\'\'|                   # python block comment
