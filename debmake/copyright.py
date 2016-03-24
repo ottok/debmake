@@ -554,10 +554,7 @@ def get_year_range(years):
 # Parse name to remove junks
 #------------------------------------------------------------------
 re_name_drop = re.compile(r'''
-        by|
-        originally\s+by|
-        written\s+by|
-        (?:originally\s+)?written\s+by
+        (?:originally\s+)?(?:written\s+)?by
         ''', re.IGNORECASE | re.VERBOSE)
 
 re_fsf_addr = re.compile(r'^Free\s+Software\s+Foundation,\s+Inc\.',
@@ -636,9 +633,20 @@ def clean_license(license_lines, file):
             license_lines.append('')
         else:
             license_lines.append(line.strip())
-    while len(license_lines) > 0 and license_lines[0] == '':
-        del license_lines[0]
-    while len(license_lines) > 0 and license_lines[-1] == '':
+    # Drop consecutive blank lines
+    i = 0
+    f_blank = True
+    while i < len(license_lines):
+        if license_lines[i] == '':
+            if f_blank:
+                del license_lines[i]
+            else:
+                i = i + 1
+            f_blank = True
+        else:
+            f_blank = False
+            i = i + 1
+    if len(license_lines) > 0 and license_lines[-1] == '':
         del license_lines[-1]
     return license_lines
 
