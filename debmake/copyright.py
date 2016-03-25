@@ -35,13 +35,16 @@ import debmake.lc
 ###################################################################
 # Constants for sanity
 ###################################################################
+INITIAL_LINES = 1               # lines (if 1, first line only)
+MAX_INITIAL_LINE_LENGTH = 2048  # chars. >> MAX_*_LINE_LENGTH
+                                # check MAX_FILE_SIZE in scanfiles.py
 NORMAL_LINE_LENGTH = 64         # chars
 MAX_COPYRIGHT_LINE_LENGTH = 256 # chars
 MAX_COPYRIGHT_LINES = 256       # lines
-NORMAL_LICENSE_LINES = 32       # lines
 MAX_LICENSE_LINE_LENGTH = 1024  # chars
 MAX_LICENSE_LINES = 1024        # lines
-
+MAX_NON_ASCII = 0.25            # ratio
+MAX_BAD_LINES = 4               # lines
 ###################################################################
 # check_lines() uses following state parameters to scan and extract
 # in its MAIN-LOOP to generate:
@@ -79,7 +82,7 @@ fs = [
 'F_EOF   ', # force EOF before processing the next line
 ]
 # enum(fs)
-for i, name in enumerate(fs):
+for (i, name) in enumerate(fs):
     exec('{} = {}'.format(name.strip(), i))
 F_EOF = -1 # override
 
@@ -109,7 +112,7 @@ cs = [
 'C_EOF',   # EOF found at the end of line
 ]
 # enum(cs)
-for i, name in enumerate(cs):
+for (i, name) in enumerate(cs):
     exec('{} = {}'.format(name.strip(), i))
 C_EOF = -1 # override
 
@@ -268,17 +271,19 @@ formats[F_PLAIN0] = (
 #------------------------------------------------------------------
 # Extract copyright+license from a source file
 #------------------------------------------------------------------
-# pre-process line
-re_dropwords = re.compile(r'''(?:
-        ^[:!;"'#%*\s]*timestamp=.*$|            # timestamp line
-        ^[:!;"'#%*\s]*scriptversion=.*$|        # version line
-        ^[:!;"'#%*\s]*\$Id:.*\$|                # CVS/RCS version
-        ^[:!;"'#%*\s]*-\*-\s+coding:.*-\*-.*$|  # EMACS
-        ^[:!;"'#%*\s]*vim?:.*$|                 # VIM/VI
-        ^\.bp|                                  # manpage
+# pre-process line (drop anywhere)
+re_preprocess_drop = re.compile(r'''(?:
+        ^timestamp=.*$|                         # timestamp line
+        ^scriptversion=.*$|                     # version line
+        ^\$.*:.*\$|                             # CVS/RCS version
+        ^-\*-\s+coding:.*-\*-.*$|               # EMACS
+        ^vim?:.*$|                              # VIM/VI
         All\s+Rights?\s+Reserved.?|             # remove
-        <BR>                                    # HTML
+        <BR>|                                   # HTML
+        ^\.bp                                   # manpage
         )''', re.IGNORECASE | re.VERBOSE)
+# some of the above are duplicate of re_license_drop
+# removal in preproces ensures not to miss extracting the license section
 
 re_copyright_mark_maybe = re.compile(r'''
         (?:Copyright|Copyr\.|\(C\)|©|\\\(co) # fake )
@@ -411,9 +416,15 @@ re_license_end_nostart = re.compile(r'''(
         ^@include|                      # Texinfo
         ^@end|                          # Texinfo
         ^%\*\*|                         # Texinfo
-        ^Module Name:|                  # ASM
+        ^Module\s+Name|                 # ASM
+        ^Local\s+includes|              # C++ (aptitude)
+        ^System\s+includes|             # C++ (aptitude)
         ^Please\s+try\s+the\s+latest\s+version\s+of # Texinfo.tex
         )''', re.IGNORECASE | re.VERBOSE)
+
+# In the above and re_license_drop, please do not try to drop simple
+# "written by ..." or "originally written by ..." line.  That has negative impact.
+# !!! Better to be safe than sorry !!!
 
 # This should be also listed in re_license_start_sure
 re_license_end_next = re.compile(r'''(
@@ -469,6 +480,18 @@ def normalize_copyright_mark(copyright_line):
         print("W: no match @normalize_copyright_mark copyright_line={}".format(copyright_line), file=sys.stderr)
     return copyright_line
 
+#------------------------------------------------------------------
+# count non-ascii characters
+#------------------------------------------------------------------
+re_ascii = re.compile('[\s!-~]')
+
+def len_non_ascii(line):
+    non_ascii = re_ascii.sub('', line)
+    if non_ascii:
+        n_non_ascii = len(non_ascii)
+    else:
+        n_non_ascii = 0
+    return n_non_ascii
 ###################################################################
 # check_lines() uses followings in its POST-PROCESS to generate:
 #  * copyright_data (dictionary holding tuple)
@@ -477,8 +500,6 @@ def normalize_copyright_mark(copyright_line):
 #------------------------------------------------------------------
 # split copyright line into years and name
 #------------------------------------------------------------------
-re_ascii = re.compile('[\s!-~]')
-
 re_year_yn = re.compile(r'''^
         (?P<year>\d\d[-,.;\s\d]*):?\s*
         (?P<name>\D.*)$''', re.IGNORECASE | re.VERBOSE)
@@ -570,25 +591,23 @@ def normalize_name(name):
 #------------------------------------------------------------------
 # Analyze all copyright_lines into copyright_data
 #------------------------------------------------------------------
-def analyze_copyright(copyright_lines):
+def analyze_copyright(copyright_lines, file, utf8):
     #------------------------------------------------------------------
     # sanitize copyright_lines
     #------------------------------------------------------------------
     n_copyright_lines = len(copyright_lines)
     if n_copyright_lines > MAX_COPYRIGHT_LINES:
-        copyright_lines = [ "_TOO_MANY_LINES_({}lines) starting with: {}".format(n_copyright_lines, copyright_lines[0][0:NORMAL_LINE_LENGTH]) ]
+        copyright_lines = [ "_MANY_LINES_({}lines) in: {}".format(n_copyright_lines, file) ]
     for (i, copyright_line) in enumerate(copyright_lines):
         copyright_line = copyright_line.strip()
+        copyright_lines[i] = copyright_line
         n_copyright = len(copyright_line)
         if n_copyright > MAX_COPYRIGHT_LINE_LENGTH:
-            copyright_line = "_TOO_LONG_LINE_({}chars.) starting with: {}".format(n_copyright, copyright_line[0:NORMAL_LINE_LENGTH])
-        non_ascii = re_ascii.sub('', copyright_line)
-        if non_ascii:
-            n_non_ascii = len(non_ascii)
-        else:
-            n_non_ascii = 0
-        if n_copyright < (n_non_ascii * 4) and n_copyright > NORMAL_LINE_LENGTH:
-            copyright_line = "_TOO_MANY_NON_ASCII_({}chars. over {}chars. in one of lines) starting with: {}".format(n_non_ascii, n_copyright, copyright_line[0:NORMAL_LINE_LENGTH])
+            copyright_lines[i] = "_LONG_LINE_({}chars.) in: {}".format(n_copyright, file)
+        if not utf8:
+            n_non_ascii = len_non_ascii(copyright_line)
+            if (n_copyright * MAX_NON_ASCII) < n_non_ascii:
+                copyright_lines[i] = "_MANY_NON_ASCII_({}chars. over {}chars.) in: {}".format(n_non_ascii, n_copyright, file)
     copyright_data = {}
     for copyright_line in copyright_lines:
         (years, name) = split_years_name(copyright_line)
@@ -607,32 +626,51 @@ def analyze_copyright(copyright_lines):
 #------------------------------------------------------------------
 # Clean license
 #------------------------------------------------------------------
-def clean_license(license_lines, file):
+re_license_drop = re.compile(r'''
+        ^timestamp=.*$|             # timestamp line
+        ^scriptversion=.*$|         # version line
+        ^\$Id:.*\$|                 # CVS/RCS version
+        ^-\*-\s+coding:.*-\*-.*$|   # EMACS
+        ^vim?:.*$|                  # VIM/VI
+        ^@file.*$|                  # embedded texinfo
+        ^\\.*$                      # embedded texinfo?
+        ''', re.IGNORECASE | re.VERBOSE)
+# The above needs to be duplicated to be included in re_preprocess_drop
+
+def clean_license(license_lines, file, utf8):
     #------------------------------------------------------------------
     # sanitize license_lines
     #------------------------------------------------------------------
     n_license_lines = len(license_lines)
     if n_license_lines > MAX_LICENSE_LINES:
-        license_lines = [ "_TOO_MANY_LINES_({}lines) starting with: {}".format(n_license_lines, license_lines[0][0:NORMAL_LINE_LENGTH]) ]
+        license_lines = [ "_MANY_LINES_({}lines) starting with: {}".format(n_license_lines, license_lines[0][0:NORMAL_LINE_LENGTH]) ]
+    for (i, license_line) in enumerate(license_lines):
+        if license_line[0:len(file) + 1] == (file + ':'):
+            license_lines[i] = ''
+        license_lines[i] = re_license_drop.sub('', license_lines[i])
+    bad_lines = 0
     for (i, license_line) in enumerate(license_lines):
         license_line = license_line.strip()
+        license_lines[i] = license_line
         n_license = len(license_line)
         if n_license > MAX_LICENSE_LINE_LENGTH:
-            license_line = [ "_TOO_LONG_LINE_({}chars.) starting with: {}".format(n_license, license_line[0:NORMAL_LINE_LENGTH]) ]
-        non_ascii = re_ascii.sub('', license_line)
-        if non_ascii:
-            n_non_ascii = len(non_ascii)
-        else:
-            n_non_ascii = 0
-        if n_license < (n_non_ascii * 4) and n_license > NORMAL_LINE_LENGTH:
-            license_lines = "_TOO_MANY_NON_ASCII_({}chars. over {}chars. in one of lines) starting with: {}".format(n_non_ascii, n_license, license_line[0:NORMAL_LINE_LENGTH])
-    lines = license_lines
-    license_lines = []
-    for line in lines:
-        if line[0:len(file) + 1] == (file + ':'):
-            license_lines.append('')
-        else:
-            license_lines.append(line.strip())
+            bad_lines = bad_lines + 1
+            if bad_lines < MAX_BAD_LINES:
+                license_lines[i] = "_LONG_LINE_({}chars.) starting with: {}".format(n_license, license_line[0:NORMAL_LINE_LENGTH])
+            else:
+                license_lines[i] = "_LONG_LINE_({}chars.) ... truncated.: {}".format(n_license)
+                license_lines = license_lines[0:i+1]
+                break
+        if not utf8:
+            n_non_ascii = len_non_ascii(license_line)
+            if (n_license * MAX_NON_ASCII) < n_non_ascii:
+                bad_lines = bad_lines + 1
+                if bad_lines < MAX_BAD_LINES:
+                    license_lines[i] = "_MANY_NON_ASCII_({}chars. over {}chars.) starting with: {}".format(n_non_ascii, n_license, license_line[0:NORMAL_LINE_LENGTH])
+                else:
+                    license_lines[i] = "_MANY_NON_ASCII_({}chars. over {}chars.) ... truncated.".format(n_non_ascii, n_license)
+                    license_lines = license_lines[0:i+1]
+                    break
     # Drop consecutive blank lines
     i = 0
     f_blank = True
@@ -653,7 +691,7 @@ def clean_license(license_lines, file):
 ##########################################################################
 # Main text process loop over lines
 ##########################################################################
-def check_lines(lines, file):
+def check_lines(lines, file, utf8):
     copyright_found = False
     license_found = False
     format_state = F_BLNK
@@ -664,7 +702,7 @@ def check_lines(lines, file):
     ##########################################################################
     # MAIN-LOOP for lines (start)
     ##########################################################################
-    for line in lines:
+    for (i, line) in enumerate(lines):
         # set previous values
         xformat_state = format_state
         xcontent_state = content_state
@@ -677,13 +715,28 @@ def check_lines(lines, file):
         # pre-process line
         #------------------------------------------------------------------
         line = line.strip()
+        # drop magic line for debmake testing
+        if line[0:7] == "#%#%#%#":
+            line = ''
+        if i < INITIAL_LINES:
+            n = len(line)
+            if n > MAX_INITIAL_LINE_LENGTH:
+                copyright_lines.append("_INITIAL_LONG_LINE_({}chars.) in: {}".format(n, file))
+                license_lines.append("__INITIAL_LONG_LINE__ (binary file?)")
+                break
+            if not utf8:
+                n_non_ascii = len_non_ascii(line)
+                if (n * MAX_NON_ASCII) < n_non_ascii:
+                    copyright_lines.append("_INITIAL_NON_ASCII_LINE_({}chars.) in: {}".format(n, file))
+                    license_lines.append("__INITIAL_NON_ASCII_LINE__ (binary file?)")
+                    break
         if line[:1] == '+': # hack to drop patch (1 level)
             line = line[1:]
         if line == '.':     # empty line only with . as empty
             line = ''
         if line[:len(file)] == file:
             line = ""
-        line = re_dropwords.sub('', line)
+        line= re_preprocess_drop.sub('', line)
         line = line.strip()
         #------------------------------------------------------------------
         # procss line
@@ -812,8 +865,8 @@ def check_lines(lines, file):
     #------------------------------------------------------------------
     # analyze_copyright and clean_license
     #------------------------------------------------------------------
-    copyright_data = analyze_copyright(copyright_lines)
-    license_lines = clean_license(license_lines, file)
+    copyright_data = analyze_copyright(copyright_lines, file, utf8)
+    license_lines = clean_license(license_lines, file, utf8)
     debmake.debug.debug('Da: AUTHOR(s)/TRANSLATOR(s):', type='a')
     for line in author_lines:
         debmake.debug.debug('Da: {}'.format(line), type='a')
@@ -832,17 +885,19 @@ def check_license(file, encoding='utf-8'):
     ###################################################################
     # Start analyzing file (default encoding)
     ###################################################################
+    utf8 = True
     try:
         with open(file, 'r', encoding=encoding) as fd:
-            (copyright_data, license_lines) = check_lines(fd.readlines(), file)
+            (copyright_data, license_lines) = check_lines(fd.readlines(), file, utf8)
     ###################################################################
     # Fall back for analyzing file (latin-1 encoding)
     ###################################################################
     except UnicodeDecodeError as e:
+        utf8 = False
         print('W: Non-UTF-8 char found, using latin-1: {}'.format(file), file=sys.stderr)
         fd.close()
         with open(file, 'r', encoding='latin-1') as fd:
-            (copyright_data, license_lines) = check_lines(fd.readlines(), file)
+            (copyright_data, license_lines) = check_lines(fd.readlines(), file, utf8)
     return (copyright_data, license_lines)
 
 ###################################################################
@@ -1127,23 +1182,18 @@ if __name__ == '__main__':
         print ("self-test: copyright.py")
         print ("-- copyright:")
         print(copyright('foo', {'LICENSE*', 'COPYRIGHT'}, [], ['xml1.file', 'xml2.file'], ['binary1.file', 'binary2.file'], ['huge.file1', 'huge.file2']))
-        (copyright_data, license_lines) = check_lines(['#!/bin/sh', '# COPYRIGHT (C) 2015 FOO_BAR', '', '# this is license text 1', '#  this is 2nd line', '', 'REAL CODE'], 'filename')
+        (copyright_data, license_lines) = check_lines(['#!/bin/sh', '# COPYRIGHT (C) 2015 FOO_BAR', '', '# this is license text 1', '#  this is 2nd line', '', 'REAL CODE'], 'filename', True)
         print ("-- copyright_data:")
         print (copyright_data)
         print ("-- license_lines:")
         print (license_lines)
         print ("-- analyze_copyright:")
-        print(analyze_copyright(["1987-90 FOO bar","boo foo wooo 2001-12", "1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation, Inc." ]))
+        print(analyze_copyright(["1987-90 FOO bar","boo foo wooo 2001-12", "1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation, Inc." ], "FILENAME", True))
         print ("-- Free Software Foundation, Inc.:")
         X = 'Free Software Foundation, Inc. HHHHHHH'
         print(parse_name(X))
     else:
-        with open(file, 'r') as fd:
-            lines = fd.readlines()
-            while(lines[0][:5] == '#%#%#'):
-                # Skip header lines
-                del lines[0]
-            (copyright_data, license_lines) = check_lines(lines, file)
+        (copyright_data, license_lines) = check_license(file)
         copyright_lines = ''
         for name, (year_min, year_max) in sorted(dict.items(copyright_data)):
             if year_max == 0: # not found

@@ -145,10 +145,11 @@ def typefile(file, blocksize=4048):
     buff = open(file, mode='rb').read(blocksize)
     if b'<' == buff[:1]:
         return 2 # XML/SGML/HTML
-    elif b'\x00' in buff:
-        return 0 # Binary
-    elif b'\xff\xff' in buff:
-        return 0 # Binary
+# This code is disabled since we use UTF-8 decoding error as indicator
+#    elif b'\x00' in buff:
+#        return 0 # Binary
+#    elif b'\xff\xff' in buff:
+#        return 0 # Binary
     else:
         return 1 # Text
 
@@ -183,8 +184,8 @@ def get_all_files():
                 type_of_file = typefile(filepath)
                 if type_of_file == 2: # XML/SGML/HTML
                     xml_html_files.append(filepath)
-                elif type_of_file == 0: # Binary
-                    binary_files.append(filepath)
+#                elif type_of_file == 0: # Binary
+#                    binary_files.append(filepath)
                 elif os.path.getsize(filepath) > MAX_FILE_SIZE:
                     huge_files.append(filepath)
                 else: # type_of_file == 1 Text
