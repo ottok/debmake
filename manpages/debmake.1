@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
-.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 08/02/2015
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: 03/26/2016
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "08/02/2015" "DEBMAKE" "Debmake Manual"
+.TH "DEBMAKE" "1" "03/26/2016" "DEBMAKE" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -102,7 +102,7 @@ directory are manually adjusted\&.
 or
 \fBpdebuild\fR) is invoked in the
 \fIpackage\-version/\fR
-directory to make debian packages\&.
+directory to make Debian packages\&.
 .RE
 .sp
 Make sure to protect the arguments of the \fB\-b\fR, \fB\-f\fR, \fB\-l\fR, and \fB\-w\fR options from the shell interference by quoting them properly\&.
@@ -320,7 +320,7 @@ values:
 .IP \(bu 2.3
 .\}
 \fBdbg\fR: Debug symbol package (any, same) (alias:
-\fBdb\fR)
+\fBdb\fR) (deprecated for strech and after since the \-dbgsym package is automatically generated)
 .RE
 .sp
 .RS 4
@@ -836,6 +836,8 @@ etc\&.
 .sp
 \fBdebmake\fR is meant to provide template files for the package maintainer to work on\&. Comment lines started by \fB#\fR contain the tutorial text\&. You must remove or edit such comment lines before uploading to the Debian archive\&.
 .sp
+The license extraction and assignment process involves a lot of heuristics, it may fail in some cases\&. It is highly recommended to use other tools such as \fBlicensecheck\fR from the \fBdevscripts\fR package in conjunction with \fBdebmake\fR\&.
+.sp
 There are some limitations for what characters may be used as a part of the Debian package\&. The most notable limitation is the prohibition of uppercase letters in the package name\&. Here is the summary in the regular expression\&.
 .sp
 .RS 4
@@ -883,7 +885,11 @@ Debian revision (\fB\-r\fR): [0\-9][+\&.~a\-z0\-9A\-Z]*
 .RE
 .sp
 See the exact definition in Chapter 5 \- Control files and their fields of the \(lqDebian Policy Manual\(rq\&.
+.sp
+\fBdebmake\fR assumes relatively simple packaging cases\&. So all programs related to the interpreter are assumed to be "\fBArchitecture: all\fR"\&. This is not always true\&.
 .SH "DEBUG"
+.sp
+Please report bugs to \fBdebmake\fR using \fBreportbug\fR\&.
 .sp
 The character set in the environment variable \fB$DEBUG\fR determines the logging output level\&.
 .sp
@@ -1052,12 +1058,14 @@ Use this as:
 .if n \{\
 .RE
 .\}
+.sp
+See README\&.developer in the source for more\&.
 .SH "AUTHOR"
 .sp
 Copyright \(co 2014\-2015 Osamu Aoki <osamu@debian\&.org>
 .SH "LICENSE"
 .sp
-MIT License
+Expat License
 .SH "SEE ALSO"
 .sp
 The \fBdebmake\-doc\fR package provides the \(lqGuide for Debian Maintainers\(rq in the plain text, HTML and PDF formats under the \fB/usr/share/doc/debmake\-doc/\fR directory\&.
