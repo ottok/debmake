@@ -46,7 +46,7 @@ import debmake.untar
 __debian_policy__   = '3.9.6'   # debian policy version
 __debian_compat__   = '9'       # debian/comapt
 __programname__     = 'debmake'
-__version__         = '4.2.4'
+__version__         = '4.2.5'
 __copyright__       = 'Copyright © 2014-2015 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
