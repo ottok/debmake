@@ -1,3 +1,9 @@
+debmake (4.2.6-1) UNRELEASED; urgency=medium
+
+  * Split copyright.py. 
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 27 Mar 2016 19:07:46 +0900
+
 debmake (4.2.5-1) unstable; urgency=medium
 
   * Sort copyright by name. 
