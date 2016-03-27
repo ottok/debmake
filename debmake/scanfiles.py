@@ -184,8 +184,8 @@ def get_all_files():
                 type_of_file = typefile(filepath)
                 if type_of_file == 2: # XML/SGML/HTML
                     xml_html_files.append(filepath)
-#                elif type_of_file == 0: # Binary
-#                    binary_files.append(filepath)
+                elif type_of_file == 0: # Binary
+                    binary_files.append(filepath)
                 elif os.path.getsize(filepath) > MAX_FILE_SIZE:
                     huge_files.append(filepath)
                 else: # type_of_file == 1 Text

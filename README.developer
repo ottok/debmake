@@ -44,13 +44,15 @@ The source code can be tested by:
    Now all scripts such as copyright.py and lc.py can be executed
    independently from the command line for debugging.
 
- * copyright.py [-s|-c|-t|-i|--] <file>
+ * checkdep5.py [-s|-c|-t|-i|--] <file>
    
    * -s	 selftest
    * -c  extract copyright info as formatted text
    * -t  extract license info as plain text
    * -i  check license ID with extra info
    * --  check license ID and extract copyright (default)
+
+   Use "make test-dep5" and "make test-id" in test/src/Makefile to test.
 
  * lc.py [-][1|2|3|4|5|6] <files ...>
    check <files ...> for license ID in different mode of -c options in debmake
@@ -65,9 +67,9 @@ The source code can be tested by:
 
 Trouble shoot hints:
  * What to do for strange string contaminating license info?
-   => Fix check_lines()       in debmake/copyright.py
+   => Fix check_lines()       in debmake/checkdep5.py
  * What to do for incorrect range calculation for copyright years.
-   => Fix analyze_copyright() in debmake/copyright.py
+   => Fix analyze_copyright() in debmake/checkdep5.py
  * What to do for strange license type assignment?
    => Fix lc()                in debmake/lc.py
 
@@ -77,11 +79,11 @@ How copyright files are scanned by debmake in normal usage?
   -k option execution  --> debmake/kludge.py    kludge()
 
   -c option execution  +-> debmake/scanfiles.py scanfiles()
-                       +-> debmake/copyright.py check_copyright()
+                       +-> debmake/checkdep5.py checkdep5()
 
   normal execution     --> debmake/debian.py    debian()
                         +-> debmake/copyright.py copyright()
-                               Here, copyright() gets:
+                               Here, copyformat() gets:
                                  para['package']
                                  para['license']
                                  para['cdata']
@@ -90,24 +92,26 @@ How copyright files are scanned by debmake in normal usage?
                                  para['huge_files']
              These are set by debmake/analyze.py analyze(para) calling:
                                  -+--> debmake/scanfiles.py scanfiles()
-                                  +--> debmake/copyright.py check_copyright()
+                                  +--> debmake/checkdep5.py checkdep5()
 
 What does scanfiles() do?
   Scan all files in source tree and make list of files for each category:
     nonlink_files, xml_html_files, binary_files, huge_files
   extensions holds all file extention types
 
-What does check_copyright() do?
+What does checkdep5() do?
   Scan nonlink_files and return summary of copyright info as cdata
   by 3 step operations:
     adata = check_all_licenses()
     bdata = bunch_all_licenses(adata)
     cdata = format_all_licenses(bdata)
+          = [(licenseid, licensetext, files, copyright_lines), ...] 
 
 What does check_all_licenses() do?
   for each file:
-    (copyright_data, license_lines) = check_license(file, ...)
-      This extract copyright info section out of file using check_lines()
+    (copyright_data, license_lines) = checkdep5(file, ...)
+      This extract copyright iand license information section 
+      out of file using check_lines()
     norm_text = debmake.lc.normalize(license_lines)
       This normalize copyright info.
     (licenseid, licensetext, permissive) = debmake.lc.lc(norm_text, ...)
