@@ -131,9 +131,9 @@ formats[F_BLNK] = (
         )
 
 formats[F_QUOTE] = (
-        re.compile(r'^(?P<prefix>/\*)\**(?P<text>.*?)\**(?P<postfix>\*/)$'),  # C /*...*/
+        re.compile(r'^(?P<prefix>/\*)\**(?P<text>.*?)\**(?P<postfix>\*/)\s*(?://.*)?$'),  # C /*...*/ or C++ /*...*/  //...
         all_entry_formats,
-        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 
 # python block mode start with '''
@@ -170,31 +170,31 @@ formats[F_BLKQ0] = (
         {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
         )
 
-# C block mode start with /*
+# C block mode start with /* (But also C++ may)
 formats[F_BLKC] = (
         re.compile(r'^(?P<prefix>/\*)\s*\**(?P<text>.*)(?P<postfix>)$'),  # C /*...
         [F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0],
-        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKCE] = (
         re.compile(r'^(?P<prefix>\*|)(?P<text>.*?)\s*\**?(?P<postfix>\*/).*$'),  # C ...*/
         all_entry_formats,
-        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKC2] = (
         re.compile(r'^(?P<prefix>\*)\**?(?P<text>.*?)\**?(?P<postfix>\*)$'),  # C *...*
         [F_BLKCE, F_BLKC2],
-        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKC1] = (
         re.compile(r'^(?P<prefix>\*)\**?(?P<text>.*)(?P<postfix>)$'),  # C *...
         [F_BLKCE, F_BLKC1],
-        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKC0] = (
         re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>)$'),
         [F_BLKCE, F_BLKC0],
-        {F_QUOTE, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 
 # comment start with something
@@ -205,9 +205,9 @@ formats[F_PLAIN1] = (
         )
 
 formats[F_PLAIN2] = (
-        re.compile(r'^(?P<prefix>//)/*(?P<text>.*)(?P<postfix>)$'),  # C++ //
+        re.compile(r'^(?P<prefix>//)/*(?P<text>.*)(?P<postfix>)$'),  # C++ // or C(new)
         all_entry_formats,
-        {F_PLAIN2, F_BLNK}
+        {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 
 formats[F_PLAIN3] = (
