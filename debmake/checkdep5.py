@@ -127,142 +127,142 @@ formats = {} # dictionary
 # formats[*][1]: next format state allowed
 # formats[*][2]: format state allowed (persistent)
 formats[F_BLNK] = (
-        re.compile(r'^(?P<prefix>)(?P<text>)(?P<postfix>)$'),
+        re.compile(r'^(?P<prefix>)\s*(?P<text>)(?P<postfix>)$'),
         all_entry_formats,
         {F_BLNK}
         )
 
 formats[F_QUOTE] = (
-        re.compile(r'^(?P<prefix>/\*)\**(?P<text>.*?)\**(?P<postfix>\*/)\s*(?://.*)?$'),  # C /*...*/ or C++ /*...*/  //...
+        re.compile(r'^(?P<prefix>/\*+)\s*(?P<text>.*?)\s*(?P<postfix>\*+/)\s*(?://.*)?$'),  # C /*...*/ or C++ /*...*/  //...
         all_entry_formats,
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 
 # python block mode start with '''
 formats[F_BLKP] = (
-        re.compile(r'^.*?(?P<prefix>\'\'\')(?P<text>.*)(?P<postfix>)$'),  # Python
+        re.compile(r"^.*?(?P<prefix>''')\s*(?P<text>.*?)\s*(?P<postfix>)$"),  # Python
         [F_BLKPE, F_BLKP0],
         {F_BLKP, F_BLKPE, F_BLKP0, F_BLNK}
         )
 formats[F_BLKPE] = (
-        re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>\'\'\').*$'),  # Python
+        re.compile(r"^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>''').*$"),  # Python
         all_entry_formats,
         {F_BLKP, F_BLKPE, F_BLKP0, F_BLNK}
         )
 formats[F_BLKP0] = (
-        re.compile(r'^(?P<prefix>)\s*(?P<text>.*)\s*(?P<postfix>)$'),
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'),
         [F_BLKPE, F_BLKP0],
         {F_BLKP, F_BLKPE, F_BLKP0, F_BLNK}
         )
 
 # python block mode start with """
 formats[F_BLKQ] = (
-        re.compile(r'^.*?(?P<prefix>""")(?P<text>.*)(?P<postfix>)$'),  # Python
+        re.compile(r'^.*?(?P<prefix>""")\s*(?P<text>.*?)\s*(?P<postfix>)$'),  # Python
         [F_BLKQE, F_BLKQ0],
         {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
         )
 formats[F_BLKQE] = (
-        re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>""").*$'),  # Python
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>""").*$'),  # Python
         all_entry_formats,
         {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
         )
 formats[F_BLKQ0] = (
-        re.compile(r'^(?P<prefix>)\s*(?P<text>.*)\s*(?P<postfix>)$'),
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'),
         [F_BLKQE, F_BLKQ0],
         {F_BLKQ, F_BLKQE, F_BLKQ0, F_BLNK}
         )
 
 # C block mode start with /* (But also C++ may)
 formats[F_BLKC] = (
-        re.compile(r'^(?P<prefix>/\*)\s*\**(?P<text>.*)(?P<postfix>)$'),  # C /*...
+        re.compile(r'^(?P<prefix>/\*+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),  # C /*...
         [F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0],
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKCE] = (
-        re.compile(r'^(?P<prefix>\*|)(?P<text>.*?)\s*\**?(?P<postfix>\*/).*$'),  # C ...*/
+        re.compile(r'^(?P<prefix>\*+|)\s*(?P<text>.*?)\s*(?P<postfix>\*+/).*$'),  # C ...*/ or *...*/
         all_entry_formats,
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKC2] = (
-        re.compile(r'^(?P<prefix>\*)\**?(?P<text>.*?)\**?(?P<postfix>\*)$'),  # C *...*
+        re.compile(r'^(?P<prefix>\*+)\s*(?P<text>.*?)\s*(?P<postfix>\*+)$'),  # C *...*
         [F_BLKCE, F_BLKC2],
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKC1] = (
-        re.compile(r'^(?P<prefix>\*)\**?(?P<text>.*)(?P<postfix>)$'),  # C *...
+        re.compile(r'^(?P<prefix>\*+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),  # C *...
         [F_BLKCE, F_BLKC1],
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 formats[F_BLKC0] = (
-        re.compile(r'^(?P<prefix>)(?P<text>.*?)(?P<postfix>)$'),
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'), # bare lines
         [F_BLKCE, F_BLKC0],
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 
 # comment start with something
 formats[F_PLAIN1] = (
-        re.compile(r'^(?P<prefix>#)#*(?P<text>.*)(?P<postfix>)$'),   # Shell/Perl/Python
+        re.compile(r'^(?P<prefix>#+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),   # Shell/Perl/Python
         all_entry_formats,
         {F_PLAIN1, F_BLNK}
         )
 
 formats[F_PLAIN2] = (
-        re.compile(r'^(?P<prefix>//)/*(?P<text>.*)(?P<postfix>)$'),  # C++ // or C(new)
+        re.compile(r'^(?P<prefix>//+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),  # C++ // or C(new)
         all_entry_formats,
         {F_QUOTE, F_PLAIN2, F_BLKC, F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0, F_BLNK}
         )
 
 formats[F_PLAIN3] = (
-        re.compile(r'^(?P<prefix>--)-*(?P<text>.*)(?P<postfix>)$'),  # Lua --
+        re.compile(r'^(?P<prefix>--+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),  # Lua --
         all_entry_formats,
         {F_PLAIN3, F_BLNK}
         )
 
 formats[F_PLAIN4] = (
-        re.compile(r'^(?P<prefix>\.\\")(?P<text>.*)(?P<postfix>)$'), # manpage
+        re.compile(r'^(?P<prefix>\.\\")\s*(?P<text>.*?)\s*(?P<postfix>)$'), # manpage
         all_entry_formats,
         {F_PLAIN4, F_BLNK}
         )
 
 formats[F_PLAIN5] = (
-        re.compile(r'^(?P<prefix>@%:@)(?P<text>.*)(?P<postfix>)$'),  # autom4te.cache
+        re.compile(r'^(?P<prefix>@%:@)\s*(?P<text>.*?)\s*(?P<postfix>)$'),  # autom4te.cache
         all_entry_formats,
         {F_PLAIN5, F_BLNK}
         )
 
 formats[F_PLAIN6] = (
-        re.compile(r'^(?P<prefix>@c)\s+(?P<text>.*)(?P<postfix>)$'), # Texinfo @c
+        re.compile(r'^(?P<prefix>@c)\s*(?P<text>.*?)\s*(?P<postfix>)$'), # Texinfo @c
         all_entry_formats,
         {F_PLAIN6, F_BLNK}
         )
 
 formats[F_PLAIN7] = (
-        re.compile(r"^(?P<prefix>')(?P<text>.*)(?P<postfix>)$"),# Basic
+        re.compile(r"^(?P<prefix>')\s*(?P<text>.*?)\s*(?P<postfix>)$"),# Basic
         all_entry_formats,
         {F_PLAIN7, F_BLNK}
         )
 
 formats[F_PLAIN8] = (
-        re.compile(r'^(?P<prefix>;);*(?P<text>.*)(?P<postfix>)$'),# vim
+        re.compile(r'^(?P<prefix>;+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),# vim
         all_entry_formats,
         {F_PLAIN8, F_BLNK}
         )
 
 formats[F_PLAIN9] = (
-        re.compile(r'^(?P<prefix>dnl)\s+(?P<text>.*)(?P<postfix>)$'),# m4 dnl
+        re.compile(r'^(?P<prefix>dnl)\s*(?P<text>.*?)\s*(?P<postfix>)$'),# m4 dnl
         all_entry_formats,
         {F_PLAIN9, F_BLNK}
         )
 
 formats[F_PLAIN10] = (
-        re.compile(r'^(?P<prefix>%)\s+(?P<text>.*)(?P<postfix>)$'),# texinfo.tex
+        re.compile(r'^(?P<prefix>%)\s*(?P<text>.*?)\s*(?P<postfix>)$'),# texinfo.tex
         all_entry_formats,
         {F_PLAIN10, F_BLNK}
         )
 
 # This is the last rule (always match, no blank line comes here)
 formats[F_PLAIN0] = (
-        re.compile(r'^(?P<prefix>)(?P<text>.+)(?P<postfix>)$'),     # Text
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'),     # Text
         all_entry_formats,
         {F_PLAIN0, F_BLNK}
         )
