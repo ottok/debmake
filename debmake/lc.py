@@ -29,7 +29,8 @@ import re
 #     "the Apache Group for use in the Apache HTTP server project
 #      (http://www.apache.org/)"
 ###############################################################################
-LMAX = 1200 # max junk text (head and tail)
+LMAX_HEAD = 64*64   # max junk text in chars (head), 64lines*64chars
+LMAX_TAIL = 1024*64 # max junk text in chars (tail), 1024lines*64chars
 # order rules by specific to generic
 list_main = [] # main rule list = [(name, regex, [variable, ...]), ...]
 list_sub = []  # substring rule list for debug
@@ -45,8 +46,8 @@ def pattern(text, tail=' '):
     return text                             # pattern normally ends with ' '
 ###############################################################################
 # regular expression (head and tail given as non-greedy match)
-rhead0=r'^(?P<head>.{0,' + '{}'.format(LMAX) + r'}?)'
-rtail0=r'(?P<tail>.{0,'  + '{}'.format(LMAX) + r'}?)$'
+rhead0=r'^(?P<head>.{0,' + '{}'.format(LMAX_HEAD) + r'}?)'
+rtail0=r'(?P<tail>.{0,'  + '{}'.format(LMAX_TAIL) + r'}?)$'
 def regex(reg, rhead=rhead0, rtail=rtail0):
     return re.compile(rhead + reg + rtail, re.IGNORECASE)
 ###############################################################################
@@ -902,9 +903,9 @@ list_exceptions = [
 # attaributes
 ###############################################################################
 r_old_fsf = pattern(r'''
-    675 Mass Ave|
-    59 Temple Place|
-    51 Franklin Steet|
+    675\s+Mass\s+Ave|
+    59\s+Temple\s+Place|
+    51\s+Franklin\s+Steet|
     02139|
     02111-1307
     ''', tail='')
@@ -1165,8 +1166,8 @@ def lc_sub(norm_text, mode):
     # check license for debug regex pattern
     # license_lines: license lines to be checked (list)
     # mode: license check mode
-    # abs(mode) = 5 (single)
-    # abs(mode) = 6 (combination)
+    # abs(mode) = 5 (single regex match check)
+    # abs(mode) = 6 (combination regex match check)
     #####################################################################################
     text = ''
     for subx in list_sub:
