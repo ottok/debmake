@@ -331,22 +331,27 @@ r_pemission_expatG = pattern(r'''
 list_sub += ['r_notice_expatG']
 r_notice_expatG = pattern(r'''
     The above copyright notice(?:|s|\(s\)) (including the dates of first
-    publication )?and (?:this permission notice|either this permission notice
-    or a reference to http://oss.sgi.com/projects/FreeB/) (?:shall be
-    included|appear) in all copies(?: or substantial portions)?(?: of the
-    Software)?(?: and that both the above copyright notice(?:|s|\(s\)) and this
-    permission notice appear in supporting documentation)?.
+    publication )?and this permission notice (?:shall be included|appear) in
+    all copies(?: or substantial portions)?(?: of the Software)?(?: and that
+    both the above copyright notice(?:|s|\(s\)) and this permission notice
+    appear in supporting documentation)?.
     ''')
 # Expat variants = r_notice_expat with variants (requiredisclaimer)
 list_sub += ['r_notice_expatGRD']
 r_notice_expatGRD = pattern(r'''
     The above copyright notice(?:|s|\(s\)) (including the dates of first
-    publication )?and (?:this permission notice|either this permission notice
-    or a reference to http://oss.sgi.com/projects/FreeB/) \(including the next
-    paragraph\) (?:shall be included|appear) in all copies(?: or substantial
-    portions)?(?: of the Software)?(?: and that both the above copyright
-    notice(?:|s|\(s\)) and this permission notice appear in supporting
-    documentation)?.
+    publication )?and this permission notice \(including the next paragraph\)
+    (?:shall be included|appear) in all copies(?: or substantial portions)?(?:
+    of the Software)?(?: and that both the above copyright notice(?:|s|\(s\))
+    and this permission notice appear in supporting documentation)?.
+    ''')
+# SGI-B-2.0 (must be before MIT:GENERIC-WITH-NOENDORSE)
+list_sub += ['r_notice_sgi']
+r_notice_sgi = pattern(r'''
+    The above copyright notice including the dates of first publication and
+    either this permission notice or a reference to
+    http://oss.sgi.com/projects/FreeB/ shall be included in all copies or
+    substantial portions of the Software.
     ''')
 # Expat variants = r_disclaimer_expat with variants
 list_sub += ['r_disclaimer_expatG']
@@ -364,6 +369,11 @@ r_disclaimer_expatG = pattern(r'''
     THE|PERFORMANCE OF THIS) SOFTWARE\.
     ''')
 # noendorse (=BSD4) is not used in Expat but used in many old MIT licenses
+# SGI-B-2.0 (must be before MIT:GENERIC-WITH-NOENDORSE)
+list_main += [('SGI-B-2.0', 'WITH-NOENDORSE', regex(r_pemission_expatG +
+    r_notice_sgi + r_disclaimer_expatG + r_BSD4G), []), ]
+list_main += [('SGI-B-2.0', 'W/O-NOENDORSE', regex(r_pemission_expatG +
+    r_notice_sgi + r_disclaimer_expatG), []), ]
 # MIT Xorg variants with warranty
 list_main += [('MIT', 'GENERIC-WITH-NOENDORSE',
     regex(r_pemission_expatG + r_notice_expatG + r_disclaimer_expatG + r_BSD4G),
@@ -532,19 +542,6 @@ r_BSD3A = pattern(r'''
     ''')
 list_main += [('MIT', 'XORG+BSD', regex(r_pemission_expatG + r_BSD1G +r_BSD2G +r_BSD3A
     + r_BSD4G + r_BSDWG ), ['name', 'altname']), ]
-###############################################################################
-# SGI
-###############################################################################
-list_sub += ['r_notice_sgi']
-r_notice_sgi = pattern(r'''
-    The above copyright notice including the dates of first publication and
-    either this permission notice or a reference to
-    http://oss.sgi.com/projects/FreeB/ shall be included in all copies or
-    substantial portions of the Software.
-    ''')
-# SGI
-list_main += [('SGI-B-2.0', 'EXACT', regex(r_pemission_expatG + r_notice_sgi +
-    r_disclaimer_expatG + r_BSD4G), []), ]
 ###############################################################################
 # Mozilla
 ###############################################################################
