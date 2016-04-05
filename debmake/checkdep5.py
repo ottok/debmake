@@ -1200,20 +1200,9 @@ if __name__ == '__main__':
         else: # mode == 'dep5':
             # get cdata = sorted, the more bunched files, the earlier it is listed
             for (licenseid, licensetext, files, copyright_lines) in checkdep5(files, mode=-2):
-                #print('Files:     {}'.format('\n           '.join(sorted(files))))
-                #print('Copyright: {}'.format(copyright_lines[11:]), end='')
+                print('Files:     {}'.format('\n           '.join(sorted(files))))
+                print('Copyright: {}'.format(copyright_lines[11:]), end='')
                 #print('Sortkey:   {}'.format(sortkey))
-                #print('License:   {}{}'.format(licenseid, licensetext))
-                #print()
-                print('== file ==')
-                print(', '.join(files))
-                print('== copyright ==')
-                copyright_line_list = []
-                for copyright_line in copyright_lines.split('\n'):
-                    copyright_line_list.append(copyright_line[11:])
-                print('\n'.join(copyright_line_list), end='')
-                print('== ID ==')
-                print(licenseid)
-                print('== license_lines ==', end='')
-                print(licensetext)
-                print() # empty line
+                print('License:   {}{}'.format(licenseid, licensetext))
+                print()
+
