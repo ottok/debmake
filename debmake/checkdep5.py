@@ -57,21 +57,21 @@ MAX_BAD_LINES = 4               # lines
 # format state lists
 #------------------------------------------------------------------
 fs = [
-'F_BLNK  ', # blank line
-'F_QUOTE ',
-'F_BLKP  ',
-'F_BLKPE ',
-'F_BLKP0 ',
-'F_BLKQ  ',
-'F_BLKQE ',
-'F_BLKQ0 ',
-'F_BLKC  ',
-'F_BLKCE ',
-'F_BLKC2 ',
-'F_BLKC1 ',
-'F_BLKC0 ',
-'F_PLAIN1',
-'F_PLAIN2',
+'F_BLNK', # Blank line
+'F_QUOTE', # C /*...*/ in a line
+'F_BLKP', # Python triple-quote
+'F_BLKPE',
+'F_BLKP0',
+'F_BLKQ',
+'F_BLKQE', # Python triple-doublequote
+'F_BLKQ0',
+'F_BLKC',
+'F_BLKCE',
+'F_BLKC2', # C /* multilines */
+'F_BLKC1',
+'F_BLKC0',
+'F_PLAIN1', # Shell etc. #
+'F_PLAIN2', # C++ //
 'F_PLAIN3',
 'F_PLAIN4',
 'F_PLAIN5',
@@ -80,8 +80,12 @@ fs = [
 'F_PLAIN8',
 'F_PLAIN9',
 'F_PLAIN10',
-'F_PLAIN0', # always match
-'F_EOF   ', # force EOF before processing the next line
+'F_PLAIN11',
+'F_PLAIN12',
+'F_PLAIN0', # Before initial line), ignore until initial line
+'F_PLAIN0U', # After  initial line), use line as is
+'F_PLAIN0I', # After  initial line), ignore and insert blank line; or set EOF
+'F_EOF', # force EOF before processing the next line
 ]
 # enum(fs)
 for (i, name) in enumerate(fs):
@@ -95,9 +99,11 @@ F_BLKQE, F_BLKQ0,
 F_BLKCE, F_BLKC2, F_BLKC1, F_BLKC0,
 F_EOF}
 
+all_formats = set()
 all_entry_formats = set()
 for name in fs:
     id = eval(name.strip())
+    all_formats.add(id)
     if id not in all_non_entry_formats:
         all_entry_formats.add(id)
 
@@ -111,12 +117,11 @@ cs = [
 'C_AUTH',  # AUTHOR: like
 'C_AUTHB', # blank after C_AUTH
 'C_LICN',  # license found
-'C_EOF',   # EOF found at the end of line
+'C_LICNB', # blank after C_LICN
 ]
 # enum(cs)
 for (i, name) in enumerate(cs):
     exec('{} = {}'.format(name.strip(), i))
-C_EOF = -1 # override
 
 #------------------------------------------------------------------
 # format rule definitions
@@ -125,13 +130,15 @@ formats = {} # dictionary
 # define next format state
 # formats[*][0]: regex to match
 # formats[*][1]: next format state allowed
-# formats[*][2]: format state allowed (persistent)
-formats[F_BLNK] = (
-        re.compile(r'^(?P<prefix>)\s*(?P<text>)(?P<postfix>)$'),
-        all_entry_formats,
-        {F_BLNK}
-        )
+# formats[*][2]: format state allowed (set this to persistent_format at the initial valid line)
 
+# Blank line
+formats[F_BLNK] = (
+        re.compile(r"^(?P<prefix>)\s*(?P<text>)\s*(?P<postfix>)$"),  # Python
+        all_entry_formats,
+        all_entry_formats,
+        )
+# C /* ... */ in a line
 formats[F_QUOTE] = (
         re.compile(r'^(?P<prefix>/\*+)\s*(?P<text>.*?)\s*(?P<postfix>\*+/)\s*(?://.*)?$'),  # C /*...*/ or C++ /*...*/  //...
         all_entry_formats,
@@ -260,11 +267,37 @@ formats[F_PLAIN10] = (
         {F_PLAIN10, F_BLNK}
         )
 
-# This is the last rule (always match, no blank line comes here)
+formats[F_PLAIN11] = (
+        re.compile(r'^(?P<prefix>!+)\s*(?P<text>.*?)\s*(?P<postfix>)$'),# vim
+        all_entry_formats,
+        {F_PLAIN11, F_BLNK}
+        )
+
+formats[F_PLAIN12] = (
+        re.compile(r'^(?P<prefix>")\s*(?P<text>.*?)\s*(?P<postfix>)$'),# vim
+        all_entry_formats,
+        {F_PLAIN12, F_BLNK}
+        )
+
+# Last rule before initial line, no leading character
 formats[F_PLAIN0] = (
         re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'),     # Text
         all_entry_formats,
-        {F_PLAIN0, F_BLNK}
+        {F_PLAIN0U}
+        )
+
+# Last rule after initial line with no leading character, line as is with no leading character
+formats[F_PLAIN0U] = (
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'),     # Text
+        {F_PLAIN0U},
+        {} # never used
+        )
+
+# Last rule after initial line, practically blank line as blank line or EOF
+formats[F_PLAIN0I] = (
+        re.compile(r'^(?P<prefix>)\s*(?P<text>.*?)\s*(?P<postfix>)$'),     # Text
+        all_entry_formats,
+        {} # never used
         )
 
 ###################################################################
@@ -288,106 +321,13 @@ re_preprocess_drop = re.compile(r'''(?:
 # some of the above are duplicate of re_license_drop
 # removal in preproces ensures not to miss extracting the license section
 
-re_copyright_mark_maybe = re.compile(r'''
-        (?:Copyright|Copyr\.|\(C\)|©|\\\(co) # fake )
-        ''', re.IGNORECASE | re.VERBOSE)
-
-# matching line is excluded to be identified as copyright.
-re_copyright_mark_exclude = re.compile(r'''(?:
-        [=?$]|                  # C MACRO
-        [^h][-+*/_a-su-z0-9]\(C\)|  # C MACRO (but Copyright(C) is not included)
-        if\s+\(C\)|             # C code
-        switch\s+\(C\)|         # C code
-        (?:def|if|return)\s.*\(C\)| # Python/C
-        /Copyright|             # file name
-        Copyright[^\s(:]|       # text or variable name
-        Copyright:?$|           # text
-        Copyright\s+notice|     # text
-        Copyright\s+holder|     # text
-        Copyright\s+section|    # text
-        Copyright\s+stanza|     # text
-        copyright\s+file|       # text
-        copyright\s+and\s+license| # text
-        of\s+copyright| # text
-        their\s+copyright|    # text
-        the\s+copyright|    # text
-        ^This\s.*copyright      # text
-        )''', re.IGNORECASE | re.VERBOSE)
-
-re_copyright_nomark_year = re.compile(r'''
-        ^[12]\d\d\d
-        ''', re.IGNORECASE | re.VERBOSE)
-
-re_author_init = re.compile(r'''^(?:
-        authors?:?|
-        maintainers?:?|
-        translators?:?)
-        \s*(?P<author>.*)\s*$
-        ''', re.IGNORECASE | re.VERBOSE)
-
-re_author_init_exclude = re.compile(r'''(
-        ^authorization\s|
-        ^authors?\sbe\s|
-        ^authors?\sor\s
-        )''', re.IGNORECASE | re.VERBOSE)
-
-re_author_cont = re.compile(r'^(?:.*@.*\..*|[^ ]*(?: [^ ]*){1,4})$')
-
-re_license_start_maybe = re.compile(r'''(
-        \sare\s|
-        \sis\s|
-        ^Copying\s|
-        ^Everyone\s|
-        ^Licensed\s|
-        ^License\s|
-        ^Permission\s|
-        ^Redistribution\s|
-        ^This\s|
-        ^GNU\s+General\s+Public\s+License\s+|                   # 1 liner GPL
-        ^GPL|                                                   # 1 liner GPL
-        ^LGPL|                                                  # 1 liner GPL
-        ^BSD|                                                   # 1 liner BSD
-        ^MIT|                                                   # 1 liner MIT
-        ^Unless\s
-        )''', re.IGNORECASE | re.VERBOSE)
-re_license_start_sure = re.compile(r'''(
-        ^Copying\s+and\s+distribution\s+of\s+this\s+file|       # PERMISSIVE
-        ^Distributed\s+under\s+the\s+Boost\s+Software\s+License,|   # Boost
-        ^Everyone\s+is\s+permitted\s+to\s+copy\s+and\s+distribute|  # GNU FULL
-        ^Distribute\s+under\s[AL]?GPL\s+version|                # GPL short
-        ^Licensed\s+to\s+the\s+Apache\s+Software\s+Foundation|  #Apache-2.0_var1
-        ^Licensed\s+under\s+|                                   # ECL
-        ^Licensed\s+under\s+the\s+Apache\s+License|             #Apache-2.0_var2
-        ^License\s+Applicability.\s+Except\s+to\s+the\s+extent\s+portions|  # SGI
-        ^Permission\s+is\s+granted\s+to\s+copy,\s+distribute|   # GFDL 1.1
-        ^Permission\s+is\s+hereby\s+granted|                    # MIT
-        ^Permission\s+to\suse,\s+copy,\s+modify|                # ISC
-        ^Redistribution\s+and\s+use\s+in\s+source\s+and\s+binary\s+forms|   # Apache 1.0/BSD
-        ^The\s+contents\s+of\s+this\s+file|                     # ErlPL, ...
-        ^The\s+contents\s+of\s+this\s+file\s+are\s+subject\s+to| # MPL-1.0 1.1
-        ^This\s+.{2,40}\s+is\s+free\s+software|                 # makefile.in etc.
-        ^This\s+file\s+is\s+distributed\s+under\s+the\s+same\s+license\s+as\s+.{5,40}\.$| # same
-        ^This\s+library\s+is\s+free\s+software|                 # LGPL variants
-        ^This\s+license\s+is\s+a\s+modified\s+version\s+of\s+the|   # AGPL-1.0
-        ^This\s+program\s+can\s+redistributed|                  # LaTeX LPPL 1.0
-        ^This\s+program\s+is\s+free\s+software|                 # GPL variants
-        ^This\s+program\s+may\s+be\s+redistributed|             # LaTeX LPPL 1.1 1.2
-        ^This\s+software\s+is\s+furnished\s+under\s+license|    # DEC
-        ^This\s+software\s+is\s+provided\s+|                    # Zlib
-        ^This\s+Source\s+Code\s+Form\s+is\s+subject\s+to\s+the\s+terms\s+of| # MPL 2.0
-        ^This\s+work\s+is\s+distributed\s+under|                # W3C
-        ^This\s+work\s+may\s+be\s+redistributed|                # LaTeX LPPL 1.3
-        ^This\s+program\s+and\s+the\+accompanying\s+materials|  # INTEL
-        ^unless\s+explicitly\s+acquired\s+and\s+licensed        # Watcom
-        )''', re.IGNORECASE | re.VERBOSE)
-
-re_license_end_start = re.compile(r'''(
+re_license_end_always = re.compile(r'''(
         ^EOT$|^EOF$|^EOL$|^END$|        # shell <<EOF like lines
         ^msgid\s|                       # po/pot
         ^msgstr\s                       # po/pot
         )''', re.IGNORECASE | re.VERBOSE)
 
-re_license_end_nostart = re.compile(r'''(
+re_license_end_no_init = re.compile(r'''(
         [=?_]|                          # C MACRO code
         ^#if|                           # C CPP
         ^#include|                      # C CPP
@@ -425,6 +365,126 @@ re_license_end_nostart = re.compile(r'''(
         ^Please\s+try\s+the\s+latest\s+version\s+of # Texinfo.tex
         )''', re.IGNORECASE | re.VERBOSE)
 
+# Now line starting with Copyright (c)
+re_copyright_maybe = re.compile(r'''^\s*
+        (?:
+            (?:\(C\)|©)?\s*
+            (?:portions\s+|Partly\s+based\s+on\s+code\s+)?
+            (?:Copyright|Copyr\.)\s*
+            (?:\(C\)|©)?\s*
+        |(?:\(C\)|©)\s*
+        |\\\(co\s*
+        ) # for vim syntax highlighter
+        (?P<copyright>.*)$
+        ''', re.IGNORECASE | re.VERBOSE)
+
+# matching line is excluded to be identified as copyright.
+re_copyright_exclude = re.compile(r'''(?:
+        [=?$]|                  # C MACRO
+        YEAR|                   # template
+        YOUR\s+NAME|            # template
+        name\s+of\s+author|     # template
+        Copyright[^\s(:]|       # text or variable name
+        Copyright:?$|           # text
+        Copyright\s+notice|     # text
+        Copyright\s+holder|     # text
+        Copyright\s+section|    # text
+        Copyright\s+stanza|     # text
+        copyright\s+file|       # text
+        copyright\s+and\s+license # text
+        )''', re.IGNORECASE | re.VERBOSE)
+
+def copyright_start(line):
+    m1 = re_copyright_maybe.search(line)
+    m2 = re_copyright_exclude.search(line)
+    if m1 and not m2:
+        return m1.group('copyright').strip()
+    else:
+        return False
+
+re_author_maybe = re.compile(r'''^\s*(?:
+        authors?[\s:]|
+        maintainers?[\s:]|
+        translators?[\s:])
+        \s*(?P<author>.*)\s*$
+        ''', re.IGNORECASE | re.VERBOSE)
+
+re_author_exclude = re.compile(r'''(
+        ^authors?\sbe\s|
+        ^authors?\sor\s
+        )''', re.IGNORECASE | re.VERBOSE)
+
+def author_start(line):
+    m1 = re_author_maybe.search(line)
+    m2 = re_author_exclude.search(line)
+    if m1 and not m2:
+        return m1.group('author').strip()
+    else:
+        return False
+
+re_license = re.compile(r'''(
+        ^Copying\s+and\s+distribution\s+of\s+this\s+file|       # PERMISSIVE
+        ^Distributed\s+under\s+the\s+Boost\s+Software\s+License,|   # Boost
+        ^Everyone\s+is\s+permitted\s+to\s+copy\s+and\s+distribute|  # GNU FULL
+        ^Distribute\s+under\s[AL]?GPL\s+version|                # GPL short
+        ^Licensed\s+to\s+the\s+Apache\s+Software\s+Foundation|  #Apache-2.0_var1
+        ^Licensed\s+under\s+|                                   # ECL
+        ^Licensed\s+under\s+the\s+Apache\s+License|             #Apache-2.0_var2
+        ^License\s+Applicability.\s+Except\s+to\s+the\s+extent\s+portions|  # SGI
+        ^Permission\s+is\s+granted\s+to\s+copy,\s+distribute|   # GFDL 1.1
+        ^Permission\s+is\s+hereby\s+granted|                    # MIT
+        ^Permission\s+to\suse,\s+copy,\s+modify|                # ISC
+        ^Redistribution\s+and\s+use\s+in\s+source\s+and\s+binary\s+forms|   # Apache 1.0/BSD
+        ^The\s+contents\s+of\s+this\s+file|                     # ErlPL, ...
+        ^The\s+contents\s+of\s+this\s+file\s+are\s+subject\s+to| # MPL-1.0 1.1
+        ^This\s+.{2,40}\s+is\s+free\s+software|                 # makefile.in etc.
+        ^This\s+file\s+is\s+distributed\s+under\s+the\s+same\s+license\s+as\s+.{5,40}\.$| # same
+        ^This\s+library\s+is\s+free\s+software|                 # LGPL variants
+        ^This\s+license\s+is\s+a\s+modified\s+version\s+of\s+the|   # AGPL-1.0
+        ^This\s+program\s+can\s+redistributed|                  # LaTeX LPPL 1.0
+        ^This\s+program\s+is\s+free\s+software|                 # GPL variants
+        ^This\s+program\s+may\s+be\s+redistributed|             # LaTeX LPPL 1.1 1.2
+        ^This\s+software\s+is\s+furnished\s+under\s+license|    # DEC
+        ^This\s+software\s+is\s+provided\s+|                    # Zlib
+        ^This\s+Source\s+Code\s+Form\s+is\s+subject\s+to\s+the\s+terms\s+of| # MPL 2.0
+        ^This\s+work\s+is\s+distributed\s+under|                # W3C
+        ^This\s+work\s+may\s+be\s+redistributed|                # LaTeX LPPL 1.3
+        ^This\s+program\s+and\s+the\+accompanying\s+materials|  # INTEL
+        ^unless\s+explicitly\s+acquired\s+and\s+licensed        # Watcom
+        )''', re.IGNORECASE | re.VERBOSE)
+
+def license_start(line):
+    m1 = re_license.search(line)
+    return m1
+
+# COPY/AUTH continue? (FSF address etc.)
+re_no_year = re.compile(r'''
+        ^675\s+Mass\s+Ave|
+        ^59\s+Temple|
+        ^510\s+Third|                # Affero
+        ^51\s+Franklin               # last line without bar
+        ''', re.IGNORECASE | re.VERBOSE)
+
+# COPY/AUTH --> LICN
+re_license_maybe = re.compile(r'''(
+        ^Copying\s|
+        ^Everyone\s|
+        ^Licensed\s|
+        ^License\s|
+        ^Permission\s|
+        ^Redistribution\s|
+        ^This\s|
+        ^GNU\s+General\s+Public\s+License\s+|                   # 1 liner GPL
+        ^GPL|                                                   # 1 liner GPL
+        ^LGPL|                                                  # 1 liner GPL
+        ^BSD|                                                   # 1 liner BSD
+        ^MIT|                                                   # 1 liner MIT
+        ^Unless\s|
+        \sare\s|
+        \sis\s|
+        \sdistributed\s
+        )''', re.IGNORECASE | re.VERBOSE)
+
 # In the above and re_license_drop, please do not try to drop simple
 # "written by ..." or "originally written by ..." line.  That has negative impact.
 # !!! Better to be safe than sorry !!!
@@ -440,49 +500,24 @@ re_license_end_next = re.compile(r'''(
 #------------------------------------------------------------------
 # process line to identify new state based on above definitions
 #------------------------------------------------------------------
-def check_format_style(line, xformat_state):
+def check_format_style(line, xformat_state, persistent_format):
     # main process loop
     prefix = ''
     postfix = ''
     format_state = F_EOF
     formats_allowed = formats[xformat_state][1]
     for f in formats_allowed:
-        regex = formats[f][0]
-        m = regex.search(line)
-        if m:
-            line = m.group('text').strip()
-            prefix = m.group('prefix') # for debug output
-            postfix = m.group('postfix') # for debug output
-            format_state = f
-            break
+        if f in persistent_format:
+            regex = formats[f][0]
+            m = regex.search(line)
+            if m:
+                line = m.group('text').strip()
+                prefix = m.group('prefix') # for debug output
+                postfix = m.group('postfix') # for debug output
+                format_state = f
+                break
     debmake.debug.debug('Ds: format={}->{}, prefix="{}", postfix="{}": "{}"'.format(fs[xformat_state], fs[format_state], prefix, postfix, line), type='s')
     return (line, format_state)
-
-#------------------------------------------------------------------
-# Normalize line starting copyright_line
-#------------------------------------------------------------------
-# substitute: \(co or (c) or  @copyright{} -> ©
-re_co = re.compile(r'(?:\\\(co|\(c\)|@copyright\{\})', re.IGNORECASE) # fake match )
-
-# search to allow leading jank words
-re_copyright_mark = re.compile(r'''
-        (?:(?:Copyright|Copyr\.)\s*©\s*|
-        ©\s*(?:Copyright|Copyr\.)\s+|
-        (?:Copyright:?|Copyr\.)\s+|
-        ©\s*)(?P<copyright>[^\s].*)$
-        ''', re.IGNORECASE | re.VERBOSE)
-
-def normalize_copyright_mark(copyright_line):
-    # simplify '©' handling: no (c) from C MACRO here
-    copyright_line = re_co.sub('©', copyright_line)
-    # output after © or equivalents as copyright data
-    m = re_copyright_mark.search(copyright_line)
-    if m:
-        copyright_line = m.group('copyright').strip()
-    else:
-        print("W: no match @normalize_copyright_mark copyright_line={}".format(copyright_line), file=sys.stderr)
-    return copyright_line
-
 #------------------------------------------------------------------
 # count non-ascii characters
 #------------------------------------------------------------------
@@ -699,13 +734,24 @@ def clean_license(license_lines, file, utf8=True, pedantic=False):
     return license_lines
 
 ##########################################################################
+# format_string and content_string
+##########################################################################
+def format_string(format):
+    return ','.join(map(lambda f: fs[f], sorted(format)))
+
+def content_string(content):
+    return ','.join(map(lambda c:cs[c], sorted(content)))
+
+##########################################################################
 # Main text process loop over lines
 ##########################################################################
 def parse_lines(lines, file, utf8=True, pedantic=False):
-    copyright_found = False
-    license_found = False
-    format_state = F_BLNK
+    persistent_format = all_formats
+    valid_lines = 0 # increment if COPY or LICN found
+    format_state = F_PLAIN0
     content_state = C_INIT
+    format_found = set()
+    content_found = {C_INIT}
     copyright_lines = []
     license_lines = []
     author_lines = []
@@ -716,15 +762,10 @@ def parse_lines(lines, file, utf8=True, pedantic=False):
         # set previous values
         xformat_state = format_state
         xcontent_state = content_state
-        debmake.debug.debug('Db: begin xformat={}, xcontent={}, copyright={}, license={}: "{}"'.format(fs[xformat_state], cs[xcontent_state], copyright_found, license_found, line), type='b')
-        # If the last line is EOF marker, exit
-        if xcontent_state == C_EOF:
-            break
-        if xformat_state == F_EOF:
-            break
+        debmake.debug.debug('Db: begin xformat={}, xcontent={}, format_found={}, content_found={}: "{}"'.format(fs[xformat_state], cs[xcontent_state], format_string(format_found), content_string(content_found), line), type='b')
         if i > MAX_TOTAL_LINES:
             if license_lines != []:
-                license_lines.append("__MANY_TOTAL_LINES__({}lines) starting with: {}".format(i, line[0:NORMAL_LINE_LENGTH]))
+                license_lines.append("__MANY_TOTAL_LINES__({}lines) truncating at: {}".format(i, line[0:NORMAL_LINE_LENGTH]))
         #------------------------------------------------------------------
         # pre-process line
         #------------------------------------------------------------------
@@ -753,130 +794,146 @@ def parse_lines(lines, file, utf8=True, pedantic=False):
         line= re_preprocess_drop.sub('', line)
         line = line.strip()
         #------------------------------------------------------------------
-        # procss line
+        # procss line (Now line does not have formatting characters)
         #------------------------------------------------------------------
-        (line, format_state) = check_format_style(line, xformat_state)
-        if xcontent_state == C_INIT:
-            persistent_format = [] # unset
-        else: # xcontent_state != C_INIT
-            if persistent_format == []:
-                persistent_format = formats[xformat_state][2] # set
-            elif format_state not in persistent_format:
-                break
-            else:
-                pass
+        (line, format_state) = check_format_style(line, xformat_state, persistent_format)
+        # If the line is EOF, exit
+        if format_state == F_EOF:
+            break
+        if xcontent_state != C_INIT:
+            format_found |= {format_state}
         #------------------------------------------------------------------
-        if xcontent_state in [C_COPY, C_COPYB, C_AUTH, C_AUTHB]:
-            match_author_init = re_author_init.search(line)
-        if xcontent_state in [C_INIT, C_LICN]:
-            match_author_init = re_author_init.search(line)
-            match_author_init_exclude = re_author_init_exclude.search(line)
+        # MAIN IF BRANCHING
         #------------------------------------------------------------------
-        if re_license_end_start.search(line): # end no matter what
-            debmake.debug.debug('Dm: license_end_start: "{}"'.format(line), type='m')
+        # ending ?
+        if re_license_end_always.search(line): # end no matter what
+            debmake.debug.debug('Dm: license_end_always: "{}"'.format(line), type='m')
             break
         elif xcontent_state != C_INIT and \
-                re_license_end_nostart.search(line):
-            debmake.debug.debug('Dm: xcontent_state != C_INIT and license_end_nostart: "{}"'.format(line), type='m')
+                re_license_end_no_init.search(line):
+            debmake.debug.debug('Dm: xcontent_state != C_INIT and license_end_no_init: "{}"'.format(line), type='m')
             break
-        elif xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and \
-                re_copyright_mark_maybe.search(line) and \
-                (not re_copyright_mark_exclude.search(line)): # copyright_start_sure
-            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and copyright_start_sure: "{}"'.format(line), type='m')
-            # copyright marked line
-            line = normalize_copyright_mark(line)
-            copyright_lines.append(line)
-            copyright_found = True
-            content_state = C_COPY
-        elif xcontent_state == C_COPY and re_copyright_nomark_year.search(line):
-            debmake.debug.debug('Dm: copyright_nomark_year: "{}"'.format(line), type='m')
-            if len(copyright_lines) == 0:
-                copyright_lines = [ line ]
-            elif copyright_lines[-1][-1:] == ',' and line[:1] in '0123456789':
-                copyright_lines[-1] = (copyright_lines[-1] + line).strip()
+        # blank line
+        elif line == '':
+            if xcontent_state == C_COPY:
+                debmake.debug.debug('Dm: C_COPY + blank line', type='m')
+                content_state = C_COPYB
+                content_found |= {C_COPYB}
+            elif xcontent_state == C_LICN:
+                debmake.debug.debug('Dm: C_LICN + blank line', type='m')
+                license_lines.append(line)
+                content_state = C_LICNB
+                content_found |= {C_LICNB}
+            elif xcontent_state == C_AUTH:
+                debmake.debug.debug('Dm: C_AUTH + blank line', type='m')
+                content_state = C_AUTHB
+                content_found |= {C_AUTHB}
             else:
+                debmake.debug.debug('Dm: repeated blank lines', type='m')
+        # starting a new section (C_INIT->... and others->...)
+        elif xcontent_state != C_LICN and copyright_start(line):
+            debmake.debug.debug('Dm: xcontent_state != C_LICN and copyright_start: "{}"'.format(line), type='m')
+            line = copyright_start(line)
+            if line:
                 copyright_lines.append(line)
-            copyright_found = True
             content_state = C_COPY
-        elif xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and \
-                re_license_start_sure.search(line):
-            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_COPY, C_COPYB, C_AUTH, C_AUTHB] and license_start_sure: "{}"'.format(line), type='m')
+            content_found |= {C_COPY}
+            valid_lines += 1
+            if valid_lines == 1: # The first valid line after C_INIT
+                persistent_format = formats[format_state][2] # set
+                debmake.debug.debug('Dm: persistent: "{}"'.format(format_string(persistent_format)), type='m')
+        elif xcontent_state != C_LICN and author_start(line): # author_start_sure
+            debmake.debug.debug('Dm: xcontent_state != C_LICN and author_start: "{}"'.format(line), type='m')
+            line = author_start(line)
+            if line:
+                author_lines.append(line)
+            content_state = C_AUTH
+            content_found |= {C_AUTH}
+            valid_lines += 1
+            if valid_lines == 1: # The first valid line after C_INIT
+                persistent_format = formats[format_state][2] # set
+                debmake.debug.debug('Dm: persistent: "{}"'.format(format_string(persistent_format)), type='m')
+        elif license_start(line):
+            debmake.debug.debug('Dm: license_start_sure: "{}"'.format(line), type='m')
             license_lines.append(line)
-            license_found = True
+            content_state = C_LICN
+            content_found |= {C_LICN}
+            valid_lines += 1
+            if valid_lines == 1: # The first valid line after C_INIT
+                persistent_format = formats[format_state][2] # set
+                debmake.debug.debug('Dm: persistent: "{}"'.format(format_string(persistent_format)), type='m')
             if re_license_end_next.search(line):
-                content_state = C_EOF
-            else:
-                content_state = C_LICN
-        elif xcontent_state in [C_COPY, C_COPYB, C_AUTH, C_AUTHB] and \
-                match_author_init:
-            debmake.debug.debug('Dm: xcontent_state in [C_COPY, C_COPYB, C_AUTH, C_AUTHB] and author_init: "{}"'.format(line), type='m')
-            content_state = C_AUTH
-            author_lines.append(match_author_init.group('author'))
-        elif xcontent_state in [C_INIT, C_LICN] and (not match_author_init_exclude) and \
-                match_author_init:
-            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_LICN] and author_init: "{}"'.format(line), type='m')
-            content_state = C_AUTH
-            author_lines.append(match_author_init.group('author'))
-        elif xcontent_state == C_INIT:
-            debmake.debug.debug('Dm: xcontent_state == C_INIT: "{}"'.format(line), type='m')
-            content_state = C_INIT
-        elif xcontent_state in [C_AUTH, C_AUTHB] and \
-                re_author_cont.search(line):
-            debmake.debug.debug('Dm: xcontent_state in [C_AUTH, C_AUTHB] and author_cont: "{}"'.format(line), type='m')
-            author_lines.append(line)
-            content_state = C_AUTH
-        elif xcontent_state in [C_COPY, C_AUTH] and \
-                re_license_start_maybe.search(line):
-            debmake.debug.debug('Dm: xcontent_state in [C_COPY, C_AUTH] and license_start_maybe: "{}"'.format(line), type='m')
+                break
+        # special transitions: COPY/AUTH --> LICN
+        elif xcontent_state in [C_COPY, C_AUTH] and re_license_maybe.search(line):
+            debmake.debug.debug('Dm: xcontent_state in [C_INIT, C_COPY, C_AUTH] and license_maybe: "{}"'.format(line), type='m')
             license_lines.append(line)
             license_found = True
             content_state = C_LICN
-        elif xcontent_state == C_COPY and line == '':
-            debmake.debug.debug('Dm: C_COPY + blank line', type='m')
-            content_state = C_COPYB
-        elif xcontent_state == C_COPY: # line != ''
-            debmake.debug.debug('Dm: C_COPY + non-blank line: "{}"'.format(line), type='m')
+            content_found |= {C_LICN}
+        elif xcontent_state == C_LICN: # line != ''
+            debmake.debug.debug('Dm: C_LICN + non-blank line: "{}"'.format(line), type='m')
+            license_lines.append(line)
+            content_state = C_LICN
+            content_found |= {C_LICN}
+        # All C_INIT -> other section transitions have been exhausted
+        elif xcontent_state == C_INIT:
+            debmake.debug.debug('Dm: C_INIT cont, ignore: "{}"'.format(line), type='m')
+            content_state = C_INIT
+            content_found |= {C_INIT}
+        elif xcontent_state == C_COPY:
+            debmake.debug.debug('Dm: copyright_cont: "{}"'.format(line), type='m')
             if len(copyright_lines) == 0:
                 copyright_lines = [ line ]
-            elif copyright_lines[-1][-1:] == '-' and line[:1] not in '0123456789':
-                copyright_lines[-1] = (copyright_lines[-1][:-1] + line).strip()
-            else:
+            elif re_no_year.search(line):
                 copyright_lines[-1] = (copyright_lines[-1] + ' ' + line).strip()
+            elif copyright_lines[-1][-1:] == ',' and line[:1] in '0123456789':
+                copyright_lines[-1] = (copyright_lines[-1] + line).strip()
+            elif line[:1] not in '0123456789':
+                copyright_lines[-1] = (copyright_lines[-1] + ' ' + line).strip()
+            else:
+                copyright_lines.append(line)
             content_state = C_COPY
-        elif xcontent_state == C_COPYB and line == '':
-            debmake.debug.debug('Dm: C_COPYB + blank line', type='m')
-            content_state = C_COPYB
+            content_found |= {C_COPY}
+        elif xcontent_state == C_AUTH:
+            debmake.debug.debug('Dm: author_cont: "{}"'.format(line), type='m')
+            if len(author_lines) == 0:
+                author_lines = [ line ]
+            elif re_no_year.search(line):
+                author_lines[-1] = (author_lines[-1] + ' ' + line).strip()
+            elif author_lines[-1][-1:] == ',' and line[:1] in '0123456789':
+                author_lines[-1] = (author_lines[-1] + line).strip()
+            elif line[:1] not in '0123456789':
+                author_lines[-1] = (author_lines[-1] + ' ' + line).strip()
+            else:
+                author_lines.append(line)
+            content_state = C_AUTH
+            content_found |= {C_AUTH}
+        elif xcontent_state == C_AUTH: # line != ''
+            debmake.debug.debug('Dm: C_AUTH + non-blank line: "{}"'.format(line), type='m')
+            author_lines.append(line)
+            content_state = C_AUTH
+            content_found |= {C_AUTH}
         elif xcontent_state == C_COPYB: # line != ''
             debmake.debug.debug('Dm: C_COPYB + non-blank line: "{}"'.format(line), type='m')
             license_lines.append(line)
-            license_found = True
             content_state = C_LICN
-        elif xcontent_state == C_LICN:
-            debmake.debug.debug('Dm: xcontent_state == C_LICN: "{}"'.format(line), type='m')
+            content_found |= {C_LICN}
+        elif xcontent_state == C_LICNB: # line != ''
+            debmake.debug.debug('Dm: C_LICNB + non-blank line: "{}"'.format(line), type='m')
             license_lines.append(line)
-            license_found = True
             content_state = C_LICN
-        elif xcontent_state == C_AUTH:
-            debmake.debug.debug('Dm: xcontent_state == C_AUTH: "{}"'.format(line), type='m')
-            author_lines.append(line)
-            content_state = C_AUTH
-        elif xcontent_state == C_AUTHB and license_found:
-            debmake.debug.debug('Dm: xcontent_state == C_AUTHB and license_found, copyright={}, license={}: "{}"'.format(copyright_found, license_found, line), type='m')
-            content_state = C_EOF
-        elif xcontent_state == C_AUTHB and copyright_found:
-            debmake.debug.debug('Dm: xcontent_state == C_AUTHB and copyright_found, copyright={}, license={}: "{}"'.format(copyright_found, license_found, line), type='m')
+            content_found |= {C_LICN}
+        elif xcontent_state == C_AUTHB: # line != ''
+            debmake.debug.debug('Dm: C_AUTHB + non-blank line: "{}"'.format(line), type='m')
             license_lines.append(line)
-            license_found = True
             content_state = C_LICN
-        elif xcontent_state == C_AUTHB:
-            debmake.debug.debug('Dm: xcontent_state == C_AUTHB, copyright={}, license={}: "{}"'.format(copyright_found, license_found, line), type='m')
-            author_lines.append(line)
-            content_state = C_AUTH
+            content_found |= {C_LICN}
         else: # should not be here
-            print('W: !!!!! format={}->{}, content={}->{}, copyright={}, license={}: "{}"'.format(fs[xformat_state], fs[format_state], cs[xcontent_state], cs[content_state], copyright_found, license_found, line), file=sys.stderr)
+            print('W: !!!!! format={}->{}, content={}->{}, format_found={}, content_found={}: "{}"'.format(fs[xformat_state], fs[format_state], cs[xcontent_state], cs[content_state], format_string(format_found), content_string(content_found), line), file=sys.stderr)
             print('W: !!!!! assertion error, exit loop !!!!!', file=sys.stderr)
             break
-        debmake.debug.debug('De: *end* format={}->{}, content={}->{}, copyright={}, license={}: "{}"'.format(fs[xformat_state], fs[format_state], cs[xcontent_state], cs[content_state], copyright_found, license_found, line), type='e')
+        debmake.debug.debug('De: *end* format={}->{}, content={}->{}, format_found={}, content_found={}: "{}"'.format(fs[xformat_state], fs[format_state], cs[xcontent_state], cs[content_state], format_string(format_found), content_string(content_found), line), type='e')
     ##########################################################################
     # MAIN-LOOP (end)
     ##########################################################################
