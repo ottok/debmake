@@ -1,8 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
-Text
-
+/*
 Copyright (c) 1995-1999 The Apache Group. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -49,4 +48,6 @@ behalf of the Apache Group and was originally based on public domain software
 written at the National Center for Supercomputing Applications, University of
 Illinois, Urbana-Champaign. For more information on the Apache Group and the
 Apache HTTP server project, please see http://www.apache.org/.
+*/
 
+FOO BAR

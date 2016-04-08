@@ -2,7 +2,7 @@
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
 Standard License Header
-
+/*
 License Applicability. Except to the extent portions of this file are made
 subject to an alternative license as permitted in the SGI Free Software License
 B, Version 1.1 (the "License"), the contents of this file are subject only to
@@ -24,5 +24,5 @@ release date], developed by Silicon Graphics, Inc. The Original Code is
 Copyright (c) [dates of first publication, as appearing in the Notice in the
 Original Code] Silicon Graphics, Inc. Copyright in any portions created by
 third parties is as indicated elsewhere herein. All Rights Reserved.
-
+*/
 Who are we?

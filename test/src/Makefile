@@ -42,7 +42,9 @@ mit:
 	@if [ ! -f copyright ]; then \
 	echo "Please place "copyright" file from xorg-common package"; \
 	fi
-	cd .. ; sed -n -e '1,47p' -e '53,$$p' src/copyright > copyright-clean
+	cd .. ; \
+	sed -n -e '1,47p' -e '53,$$p' src/copyright | \
+	grep -v "^SGI FREE SOFTWARE LICENSE B" > copyright-clean
 	cd ..; src/split copyright-clean
 	rm -f ../copyright-clean
 

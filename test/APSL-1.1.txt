@@ -1,8 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
-Standard License Header
-
+/********************************************************************
 Portions Copyright (c) 1999-2000 Apple Computer, Inc. All Rights Reserved.
 
 This file contains Original Code and/or Modifications of Original Code as
@@ -17,5 +16,5 @@ OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES, INCLUDING WITHOUT
 LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
 OR NON- INFRINGEMENT. Please see the License for the specific language
 governing rights and limitations under the License.
-
+***********************************************************************/
 Who are we?

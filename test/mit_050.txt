@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1992 by Rich Murphey <Rich@Rice.edu>
 Copyright 1993 by David Dawes <dawes@xfree86.org>
 
@@ -24,3 +25,6 @@ CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+*/
+
+BOGUS LINE

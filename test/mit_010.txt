@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1997 Digital Equipment Corporation.
 All rights reserved.
 
@@ -31,3 +32,6 @@ transferred hereby.
    if advised of the possibility of such damage.
 
 
+*/
+
+BOGUS LINE

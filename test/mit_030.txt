@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 (c)Copyright 1988,1991 Adobe Systems Incorporated.
 All rights reserved.
 
@@ -33,3 +34,6 @@ Adobe, PostScript, and Display PostScript are trademarks of Adobe Systems
 Incorporated which may be registered in certain jurisdictions.
 
 
+*/
+
+BOGUS LINE

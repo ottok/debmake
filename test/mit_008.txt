@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1987-1991, 1993 by Digital Equipment Corporation, Maynard, Massachusetts.
 Copyright 1991 Massachusetts Institute of Technology, Cambridge, Massachusetts.
 Copyright 1991, 1993 Olivetti Research Limited, Cambridge, England.
@@ -24,3 +25,6 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 
+*/
+
+BOGUS LINE

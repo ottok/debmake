@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1989 Network Computing Devices, Inc., Mountain View, California.
 
 Permission to use, copy, modify, and distribute this software and its
@@ -14,3 +15,6 @@ suitability of this software for any purpose.  It is provided "as is"
 without express or implied warranty.
 
 
+*/
+
+BOGUS LINE
