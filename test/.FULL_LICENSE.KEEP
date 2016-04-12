@@ -716,7 +716,7 @@ License:   AGPL-1.0+:FULL_LICENSE
  12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 Files:     AGPL-3.0+.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2016 foo bar bogus
 License:   AGPL-3.0+:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU Affero General Public License as published by the Free
@@ -731,7 +731,7 @@ License:   AGPL-3.0+:VARIANT1(version,later)
  with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Files:     AGPL-3.0.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2000 bozo boozer
 License:   AGPL-3.0:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU Affero General Public License as published by the Free
@@ -1546,7 +1546,7 @@ License:   Apache-2.0:EXTRA(version)
   can be found in `/usr/share/common-licenses/Apache-2.0'.
 
 Files:     Apache-2.0_var2.txt
-Copyright: __NO_COPYRIGHT__ in: Apache-2.0_var2.txt
+Copyright: 1999 foo bar
 License:   Apache-2.0:EXTRA(version)
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use
  this file except in compliance with the License. You may obtain a copy of the
@@ -1618,7 +1618,7 @@ License:   BSD-2-Clause-NETBSD:EXACT(name:name=THE NETBSD FOUNDATION, INC. AND C
  OF SUCH DAMAGE.
 
 Files:     BSD-2-Clause.txt
-Copyright: <YEAR>, <OWNER>
+Copyright: 2020 Baz Lightyear
 License:   BSD-2-Clause:EXACT(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -1642,7 +1642,7 @@ License:   BSD-2-Clause:EXACT(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files:     BSD-3-Clause-Clear.txt
-Copyright: [xxxx]-[xxxx] [Owner Organization]
+Copyright: 1990-1999 Bogus Program Co-op
 License:   BSD-3-Clause-Clear:GENERIC(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted (subject to the limitations in the disclaimer
@@ -1673,7 +1673,7 @@ License:   BSD-3-Clause-Clear:GENERIC(name:name=THE COPYRIGHT HOLDERS AND CONTRI
  OF SUCH DAMAGE.
 
 Files:     BSD-3-Clause.txt
-Copyright: <YEAR>, <OWNER>
+Copyright: 2000 John Doe
 License:   BSD-3-Clause:EXACT(:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -1704,7 +1704,7 @@ License:   BSD-3-Clause:EXACT(:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  License can be found in `/usr/share/common-licenses/BSD'.
 
 Files:     BSD-4-Clause-UC.txt
-Copyright: [various years] The Regents of the University of California. All rights reserved.
+Copyright: 1960-2020 The Regents of the University of California. All rights reserved.
 License:   BSD-4-Clause-UC:EXACT(name:name=THE REGENTS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -1736,7 +1736,7 @@ License:   BSD-4-Clause-UC:EXACT(name:name=THE REGENTS AND CONTRIBUTORS)
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files:     BSD-4-Clause.txt
-Copyright: __NO_COPYRIGHT__ in: BSD-4-Clause.txt
+Copyright: 2010 Mr. BSD
 License:   BSD-4-Clause:EXACT(name:name=COPYRIGHT HOLDER)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -1768,31 +1768,31 @@ License:   BSD-4-Clause:EXACT(name:name=COPYRIGHT HOLDER)
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files:     BSL-1.0.txt
-Copyright: {{Joe Coder}} {{2004 - 2006}}.
+Copyright: 2004-2006 Foo Bar
 License:   BSL-1.0:EXTRA(version)
  Distributed under the Boost Software License, Version 1.0.
 
 Files:     GFDL-1.1+.txt
-Copyright: {{YEAR}} {{YOUR NAME}}.
+Copyright: 1989 foo bar baz.
 License:   GFDL-1.1+:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.1
  or any later version published by the Free Software Foundation;
- *** with the Invariant Sections being LIST THEIR TITLES, with the
+ with the Invariant Sections being LIST THEIR TITLES, with the
  Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License". ***
+ Free Documentation License".
 
 Files:     GFDL-1.1.txt
-Copyright: {{YEAR}} {{YOUR NAME}}.
+Copyright: 1999 FOO BAR BAZ
 License:   GFDL-1.1:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.1
  published by the Free Software Foundation;
- *** with the Invariant Sections being LIST THEIR TITLES, with the
+ with the Invariant Sections being LIST THEIR TITLES, with the
  Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License". ***
+ Free Documentation License".
 
 Files:     GFDL-1.1_FULL.txt
 Copyright: 2000 Free Software Foundation, Inc.
@@ -2148,14 +2148,14 @@ License:   GFDL-1.1+:FULL_LICENSE
  Free Documentation License".***
 
 Files:     GFDL-1.2+.txt
-Copyright: {{YEAR}} {{YOUR NAME}}.
+Copyright: 2011 FOO BAR.
 License:   GFDL-1.2+:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.2
  or any later version published by the Free Software Foundation;
- *** with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
  replace the "with...Texts." line with this:
@@ -2167,14 +2167,14 @@ License:   GFDL-1.2+:VARIANT1(version,later)
  Version 1.2 can be found in `/usr/share/common-licenses/GFDL-1.2'.
 
 Files:     GFDL-1.2.txt
-Copyright: {{YEAR}} {{YOUR NAME}}.
+Copyright: 1999-2011 FOO BAR.
 License:   GFDL-1.2:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.2
  published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
  replace the "with...Texts." line with this:
@@ -2574,9 +2574,9 @@ License:   GFDL-1.2+:FULL_LICENSE
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.2
  or any later version published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
  replace the "with...Texts." line with this:
@@ -2588,27 +2588,27 @@ License:   GFDL-1.2+:FULL_LICENSE
  Version 1.2 can be found in `/usr/share/common-licenses/GFDL-1.2'.
 
 Files:     GFDL-1.3+.txt
-Copyright: {{YEAR}} {{YOUR NAME}}.
+Copyright: 1980-2011 FOO BAR.
 License:   GFDL-1.3+:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.3
  or any later version published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.3 can be found in `/usr/share/common-licenses/GFDL-1.3'.
 
 Files:     GFDL-1.3.txt
-Copyright: {{YEAR}} {{YOUR NAME}}.
+Copyright: 2016 O'my god.
 License:   GFDL-1.3:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.3
  published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.3 can be found in `/usr/share/common-licenses/GFDL-1.3'.
@@ -3057,15 +3057,15 @@ License:   GFDL-1.3+:FULL_LICENSE
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.3
  or any later version published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.3 can be found in `/usr/share/common-licenses/GFDL-1.3'.
 
 Files:     GPL-1.0+.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 1989 John Doe
 License:   GPL-1.0+:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -3308,7 +3308,7 @@ License:   GPL-1.0+:FULL_LICENSE
  Version 1 can be found in `/usr/share/common-licenses/GPL-1'.
 
 Files:     GPL-1.0.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2001 John Doe
 License:   GPL-1.0:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -3328,7 +3328,7 @@ License:   GPL-1.0:VARIANT1(version,later)
  Version 1 can be found in `/usr/share/common-licenses/GPL-1'.
 
 Files:     GPL-2.0+.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2001 John Doe
 License:   GPL-2.0+:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -3671,7 +3671,7 @@ License:   GPL-2.0+:FULL_LICENSE
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
 Files:     GPL-2.0+_SHORT.txt
-Copyright: __NO_COPYRIGHT__ in: GPL-2.0+_SHORT.txt
+Copyright: 2001 John Doe
 License:   GPL-2.0+:VARIANT1(version,later)
  Distribute under GPL version 2 or later.
  .
@@ -3703,7 +3703,7 @@ License:   GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
 Files:     GPL-2.0.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2010 Jane Doe
 License:   GPL-2.0:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -3721,7 +3721,7 @@ License:   GPL-2.0:VARIANT1(version,later)
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
 Files:     GPL-2.0_kernel.txt
-Copyright: __NO_COPYRIGHT__ in: GPL-2.0_kernel.txt
+Copyright: 2009 Jane Doe
 License:   GPL-2.0:VARIANT1(version,later)
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License version 2 as
@@ -3740,7 +3740,7 @@ License:   GPL-2.0:VARIANT1(version,later)
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
 Files:     GPL-3.0+.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 1999 Jane Doe
 License:   GPL-3.0+:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -4368,7 +4368,7 @@ License:   GPL-3.0+:FULL_LICENSE
  Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
 
 Files:     GPL-3.0.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 1999 Jane Doe
 License:   GPL-3.0:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -4401,7 +4401,7 @@ License:   ISC:ISC-EXACT(name:name=ISC)
  SOFTWARE.
 
 Files:     LGPL-2.0+.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2010 Jane Doe
 License:   LGPL-2.0+:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Library General Public License as published by the Free
@@ -4878,7 +4878,7 @@ License:   LGPL-2.0+:FULL_LICENSE
  Version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
 
 Files:     LGPL-2.0.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2010-2014 Jane Doe
 License:   LGPL-2.0:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Library General Public License as published by the Free
@@ -4897,7 +4897,7 @@ License:   LGPL-2.0:VARIANT1(version,later)
  Version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
 
 Files:     LGPL-2.1+.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2010 Jane Doe
 License:   LGPL-2.1+:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Lesser General Public License as published by the Free
@@ -5392,7 +5392,7 @@ License:   LGPL-2.1+:FULL_LICENSE
  Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
 Files:     LGPL-2.1.txt
-Copyright: {{year}} {{name of author}}
+Copyright: 2013 The Linux Foundation.
 License:   LGPL-2.1:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Lesser General Public License as published by the Free
@@ -5410,7 +5410,7 @@ License:   LGPL-2.1:VARIANT1(version,later)
  Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
 Files:     LPPL-1.0.txt
-Copyright: {{YEAR}} {{NAME}}
+Copyright: 2013 The Linux Foundation.
 License:   LPPL-1.0:EXTRA(version)
  This program can redistributed and/or modified under the terms
  of the LaTeX Project Public License Distributed from CTAN
@@ -5418,7 +5418,7 @@ License:   LPPL-1.0:EXTRA(version)
  version 1 of the License, or (at your option) any later version.
 
 Files:     LPPL-1.1.txt
-Copyright: {{YEAR}} {{NAME}}
+Copyright: 2013 The Linux Foundation.
 License:   LPPL-1.1:EXTRA(version)
  This program may be distributed and/or modified under the conditions of the
  LaTeX Project Public License, either version 1.1
@@ -5431,7 +5431,7 @@ License:   LPPL-1.1:EXTRA(version)
  This program consists of the files pig.dtx and pig.ins
 
 Files:     LPPL-1.2.txt
-Copyright: {{YEAR}} {{NAME}}
+Copyright: 2013 The Linux Foundation.
 License:   LPPL-1.2:EXTRA(version)
  This program may be distributed and/or modified under the conditions of the
  LaTeX Project Public License, either version 1.2
@@ -5444,7 +5444,7 @@ License:   LPPL-1.2:EXTRA(version)
  This program consists of the files pig.dtx and pig.ins
 
 Files:     LPPL-1.3a.txt
-Copyright: [year] [name]
+Copyright: 2013 The Linux Foundation.
 License:   LPPL-1.3:EXTRA(version)
  This work may be distributed and/or modified under the conditions of the LaTeX
  Project Public License, either version 1.3
@@ -5463,7 +5463,7 @@ License:   LPPL-1.3:EXTRA(version)
  [filename].
 
 Files:     LPPL-1.3c.txt
-Copyright: {{YEAR}} {{NAME}}
+Copyright: 2013 The Linux Foundation.
 License:   LPPL-1.3:EXTRA(version)
  This work may be distributed and/or modified under the conditions of the LaTeX
  Project Public License, either version 1.3 of this license or (at your option)
@@ -5480,7 +5480,7 @@ License:   LPPL-1.3:EXTRA(version)
  pig.sty.
 
 Files:     MIT.txt
-Copyright: __NO_COPYRIGHT__ in: MIT.txt
+Copyright: 2013 The Linux Foundation.
 License:   Expat:Expat-EXACT()
  Permission is hereby granted, free of charge, to any person obtaining a copy of
  this software and associated documentation files (the "Software"), to deal in
@@ -5704,12 +5704,12 @@ License:   MPL-1.0:VARIANT1(version)
  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
  the specific language governing rights and limitations under the License.
  .
- The Original Code is {{---}}.
+ The Original Code is orig.c.
  .
- The Initial Developer of the Original Code is {{---}}. Portions created by
- {{---}} are Copyright (C) {{---}} .
+ The Initial Developer of the Original Code is OLD MAN. Portions created by
+ John Doe are Copyright (C) John Doe .
  .
- Contributor(s): {{---}}.
+ Contributor(s): Foo Bar.
 
 Files:     MPL-1.1.txt
 Copyright: __NO_COPYRIGHT__ in: MPL-1.1.txt
@@ -5722,17 +5722,17 @@ License:   MPL-1.1:VARIANT1(version)
  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
  the specific language governing rights and limitations under the License.
  .
- The Original Code is {{---}}.
+ The Original Code is foo.c.
  .
- The Initial Developer of the Original Code is {{---}}. Portions created by
- {{---}} are Copyright (C) {{---}}.
+ The Initial Developer of the Original Code is James Brown. Portions created by
+ John Doe and associates are Copyright (C) John Doe and assiciates.
  .
- Contributor(s): {{---}}.
+ Contributor(s): Foo Bar.
  .
  Alternatively, the contents of this file may be used under the terms of the
 
 Files:     MPL-2.0-no-copyleft-exception.txt
-Copyright: __NO_COPYRIGHT__ in: MPL-2.0-no-copyleft-exception.txt
+Copyright: 2012 Joe Brown
 License:   MPL-2.0:VARIANT2-INCOMPATIBLE(version)
  This Source Code Form is subject to the terms of the Mozilla Public License, v.
  2.0. If a copy of the MPL was not distributed with this file, You can obtain
@@ -5741,7 +5741,7 @@ License:   MPL-2.0:VARIANT2-INCOMPATIBLE(version)
  the Mozilla Public License, v. 2.0.
 
 Files:     MPL-2.0.txt
-Copyright: __NO_COPYRIGHT__ in: MPL-2.0.txt
+Copyright: 2012 Joe Brown
 License:   MPL-2.0:VARIANT3(version)
  This Source Code Form is subject to the terms of the Mozilla Public License, v.
  2.0. If a copy of the MPL was not distributed with this file, You can obtain
@@ -5772,7 +5772,7 @@ License:   PERMISSIVE:VARIANT2-NOWARRANTY()
  PARTICULAR PURPOSE.
 
 Files:     PERMISSIVE_GNU-ALL.txt
-Copyright: __NO_COPYRIGHT__ in: PERMISSIVE_GNU-ALL.txt
+Copyright: 2012 Joe Brown
 License:   PERMISSIVE:VARIANT0-NOWARRANTY()
  Copying and distribution of this file, with or without modification,
  are permitted in any medium without royalty provided the copyright
@@ -5782,7 +5782,7 @@ License:   PERMISSIVE:VARIANT0-NOWARRANTY()
  Older versions of this license did not have the second sentence with the express warranty disclaimer.
 
 Files:     SGI-B-1.0.txt
-Copyright: __NO_COPYRIGHT__ in: SGI-B-1.0.txt
+Copyright: 2012 Joe Brown
 License:   SGI-B-1.0:EXTRA(version)
  License Applicability. Except to the extent portions of this file are made
  subject to an alternative license as permitted in the SGI Free Software License
@@ -5895,7 +5895,7 @@ License:   SGI-B-2.0:WITH-NOENDORSE()
  Silicon Graphics, Inc.
 
 Files:     W3C.txt
-Copyright: {{---}} World Wide Web Consortium, (Massachusetts Institute of Technology, European Research Consortium for Informatics and Mathematics, Keio University).
+Copyright: 2000 World Wide Web Consortium, (Massachusetts Institute of Technology, European Research Consortium for Informatics and Mathematics, Keio University).
 License:   W3C:EXTRA()
  This work is distributed under the W3C® Software License in the hope that it
  will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -5969,8 +5969,10 @@ License:   ISC:ISC-MID-NOENDORSE()
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Files:     Zlib.txt
-Copyright: __NO_COPYRIGHT__ in: Zlib.txt
+Copyright: 2013 Zlib Entity
 License:   Zlib:Zlib-EXACT()
+ zlib License
+ .
  This software is provided &apos;as-is&apos;, without any express or implied
  warranty. In no event will the authors be held liable for any damages
  arising from the use of this software.
