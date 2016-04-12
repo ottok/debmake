@@ -4,6 +4,8 @@
 
 PWD=$(shell pwd)
 
+TEST_FILE ?= @1_c.txt
+
 PYTHONPATH:=$(shell pwd)/../..
 export PYTHONPATH
 
@@ -75,6 +77,16 @@ test-id:
 	diff -u $(PWD)/../.LICENSE.KEEP $(PWD)/../.LICENSE.LOG > $(PWD)/../.LICENSE.DIFF
 	# If different, above line returns non-zero(=ERROR) and exit
 	@echo "=== SUCCESS ==="
+
+test1:
+	echo $$PATH
+	echo $$PYTHONPATH
+	cd .. ;\
+	echo "File: $(TEST_FILE) "; \
+	checkdep5.py $(TEST_FILE)
+	@echo "=== SUCCESS ==="
+
+
 clean:
 	rm -f $(PWD)/../.LICENSE.LOG $(PWD)/../.LICENSE.DIFF $(PWD)/../.FULL_LICENSE.STDERR
 
