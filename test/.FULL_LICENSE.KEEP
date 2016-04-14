@@ -76,7 +76,7 @@ License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Files:     @1_c_l_c.txt
-Copyright: __NO_COPYRIGHT__ in: @1_c_l_c.txt
+Copyright: 2008 Foo Bar
 License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the
@@ -97,8 +97,6 @@ License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- .
- Copyright 2008 Foo Bar
 
 Files:     @1_cpp.txt
 Copyright: 2008 Foo Bar
@@ -126,52 +124,48 @@ License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
 Files:     @1_dq.txt
 Copyright: 2008 Foo Bar
 License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
- " Permission is hereby granted, free of charge, to any person obtaining a
- " copy of this software and associated documentation files (the
- " "Software"), to deal in the Software without restriction, including
- " without limitation the rights to use, copy, modify, merge, publish,
- " distribute, sub license, and/or sell copies of the Software, and to
- " permit persons to whom the Software is furnished to do so, subject to
- " the following conditions:
- "
- " The above copyright notice and this permission notice (including the
- " next paragraph) shall be included in all copies or substantial portions
- " of the Software.
- "
- " THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- " OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- " MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
- " IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
- " ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- " TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- " SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
  .
- This is not a part of license :-)
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Files:     @1_excl.txt
 Copyright: 2008 Foo Bar
-License:   __UNKNOWN__:()
- ! Permission is hereby granted, free of charge, to any person obtaining a
- ! copy of this software and associated documentation files (the
- ! "Software"), to deal in the Software without restriction, including
- ! without limitation the rights to use, copy, modify, merge, publish,
- ! distribute, sub license, and/or sell copies of the Software, and to
- ! permit persons to whom the Software is furnished to do so, subject to
- ! the following conditions:
- !
- ! The above copyright notice and this permission notice (including the
- ! next paragraph) shall be included in all copies or substantial portions
- ! of the Software.
- !
- ! THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- ! OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- ! MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
- ! IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
- ! ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- ! TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- ! SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
  .
- This is not a part of license :-)
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Files:     @1_lua.txt
 Copyright: 2008 Foo Bar
@@ -1618,7 +1612,7 @@ License:   BSD-2-Clause-NETBSD:EXACT(name:name=THE NETBSD FOUNDATION, INC. AND C
  OF SUCH DAMAGE.
 
 Files:     BSD-2-Clause.txt
-Copyright: 2020 Baz Lightyear
+Copyright: __NO_COPYRIGHT__ in: BSD-2-Clause.txt
 License:   BSD-2-Clause:EXACT(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -3126,6 +3120,49 @@ License:   GPL-1.0+:FULL_LICENSE
  software. If the software is modified by someone else and passed on, we
  want its recipients to know that what they have is not the original, so
  that any problems introduced by others will not reflect on the original
+ authors&apos; reputations.
+ .
+ The precise terms and conditions for copying, distribution and
+ modification follow.
+ .
+ GNU GENERAL PUBLIC LICENSE
+ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ .
+ 0. This License Agreement applies to any program or other work which
+ contains a notice placed by the copyright holder saying it may be
+ distributed under the terms of this General Public License. The
+ "Program", below, refers to any such program or work, and a "work based
+ on the Program" means either the Program or any work containing the
+ Program or a portion of it, either verbatim or with modifications. Each
+ licensee is addressed as "you".
+ .
+ 1. You may copy and distribute verbatim copies of the Program&apos;s source
+ code as you receive it, in any medium, provided that you conspicuously and
+ appropriately publish on each copy an appropriate copyright notice and
+ disclaimer of warranty; keep intact all the notices that refer to this
+ General Public License and to the absence of any warranty; and give any
+ other recipients of the Program a copy of this General Public License
+ along with the Program. You may charge a fee for the physical act of
+ transferring a copy.
+ .
+ 2. You may modify your copy or copies of the Program or any portion of
+ it, and copy and distribute such modifications under the terms of Paragraph
+ 1 above, provided that you also do the following:
+ .
+ a) cause the modified files to carry prominent notices stating that
+ you changed the files and the date of any change; and
+ .
+ b) cause the whole of any work that you distribute or publish, that
+ in whole or in part contains the Program or any part thereof, either
+ with or without modifications, to be licensed at no charge to all
+ third parties under the terms of this General Public License (except
+ that you may choose to grant warranty protection to some or all
+ third parties, at your option).
+ .
+ c) If the modified program normally reads commands interactively when
+ run, you must cause it, when started running for such interactive use
+ in the simplest and most usual way, to print or display an
+ announcement including an appropriate copyright notice and a notice
  that there is no warranty (or else, saying that you provide a
  warranty) and that users may redistribute the program under these
  conditions, and telling the user how to view a copy of this General
@@ -3359,6 +3396,10 @@ License:   GPL-2.0+:FULL_LICENSE
  guarantee your freedom to share and change free software--to make sure the
  software is free for all its users. This General Public License applies to most
  of the Free Software Foundation&apos;s software and to any other program whose
+ authors commit to using it. (Some other Free Software Foundation software is
+ covered by the GNU Lesser General Public License instead.) You can apply it to
+ your programs, too.
+ .
  When we speak of free software, we are referring to freedom, not price. Our
  General Public Licenses are designed to make sure that you have the freedom to
  distribute copies of free software (and charge for this service if you wish),
@@ -3774,6 +3815,8 @@ License:   GPL-3.0+:FULL_LICENSE
  versions of a program--to make sure it remains free software for all its users.
  We, the Free Software Foundation, use the GNU General Public License for most
  of our software; it applies also to any other work released this way by its
+ authors. You can apply it to your programs, too.
+ .
  When we speak of free software, we are referring to freedom, not price. Our
  General Public Licenses are designed to make sure that you have the freedom to
  distribute copies of free software (and charge for them if you wish), that you
@@ -3797,6 +3840,10 @@ License:   GPL-3.0+:FULL_LICENSE
  .
  For the developers&apos; and authors&apos; protection, the GPL clearly explains
  that there is no warranty for this free software. For both users&apos; and
+ authors&apos; sake, the GPL requires that modified versions be marked as
+ changed, so that their problems will not be attributed erroneously to authors
+ of previous versions.
+ .
  Some devices are designed to deny users access to install or run modified
  versions of the software inside them, although the manufacturer can do so. This
  is fundamentally incompatible with the aim of protecting users&apos; freedom to
@@ -4438,6 +4485,8 @@ License:   LGPL-2.0+:FULL_LICENSE
  .
  This license, the Library General Public License, applies to some specially
  designated Free Software Foundation software, and to any other libraries whose
+ authors decide to use it. You can use it for your libraries, too.
+ .
  When we speak of free software, we are referring to freedom, not price. Our
  General Public Licenses are designed to make sure that you have the freedom to
  distribute copies of free software (and charge for this service if you wish),
