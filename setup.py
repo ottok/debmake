@@ -20,7 +20,7 @@ class deb(clean_):
         if self.dry_run:
             return
         clean_.run(self)
-        subprocess.call('if [ -e setup.py ]; then debmake -d -y -b":py3" -i debuild; fi', shell=True) 
+        subprocess.call('if [ -e setup.py ]; then debmake -d -y -zx -b":py3" -i debuild; fi', shell=True) 
 
 setup(name=__programname__,
     version=__version__,

@@ -17,7 +17,7 @@ If you are updating this source in the git repo, read on.
    (If new test case is added and it build result is good, copy the new
    test/.LICENSE.LOG to test/.LICENSE.KEEP to make this SUCESS)
 7. Build with
-   $ debmake -d -y -b':py3' -i pdebuild
+   $ debmake -d -y -zx -b':py3' -i pdebuild
     or
    $ python3 setup.py deb
 
