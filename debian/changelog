@@ -1,8 +1,15 @@
-debmake (4.2.6-1) UNRELEASED; urgency=medium
+debmake (4.2.6-1) unstable; urgency=medium
 
-  * Split copyright.py. 
+  * Split core part of copyright.py as checkdep5.py
+  * Refine regex for format in checkdep5.py
+  * Update full license output format in checkdep5.py
+  * Rewrite parse_lines logic in checkdep5.py
+  * Allow bigger head and tail junk chars in lc.py
+  * Refine and add test cases such as SGI-* license
+  * Add test1 target for Makefile
+  * Support compression types for setup.py
 
- -- Osamu Aoki <osamu@debian.org>  Sun, 27 Mar 2016 19:07:46 +0900
+ -- Osamu Aoki <osamu@debian.org>  Mon, 13 Jun 2016 23:33:24 +0900
 
 debmake (4.2.5-1) unstable; urgency=medium
 
