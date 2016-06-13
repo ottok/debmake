@@ -14,7 +14,7 @@ debmake (4.2.6-1) unstable; urgency=medium
 debmake (4.2.5-1) unstable; urgency=medium
 
   * Sort copyright by name. 
-  * Require LICENSE files to be real file. Closes: Closes: #819054
+  * Require LICENSE files to be real file.  Closes: #819054
   * Prety print .FULL_LICENSE test output of copyright.py.
   * Fix slow regex for year/name split in the copyright line.
   * Drop consecutive blank lines.
