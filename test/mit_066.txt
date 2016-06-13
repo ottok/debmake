@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1995 by Robin Cutshaw <robin@XFree86.Org>
 Copyright 2000 by Egbert Eich
 Copyright 2002 by David Dawes
@@ -25,3 +26,6 @@ IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
 OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+*/
+
+BOGUS LINE

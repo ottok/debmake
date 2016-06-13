@@ -1,24 +1,6 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
-#%#%#%# 
-Full name
-
-GNU Free Documentation License v1.1
-
-Short identifier
-
-GFDL-1.1
-
-Other web pages for this license
-
-http://www.gnu.org/licenses/old-licenses/fdl-1.1.txt
-
-Notes
-
-This license was released March 2000
-
-Text
-
+#%#%#%# GNU Free Documentation License v1.1
 GNU Free Documentation License
 Version 1.1, March 2000
 

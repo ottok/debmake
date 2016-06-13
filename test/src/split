@@ -47,7 +47,12 @@ def header(g):
     print ("#%#%#%# This is copyright analyser test data by Osamu Aoki.", file=g)
     print ("#%#%#%# The following lines shall not be considered copyright statement.", file=g)
     print ("#%#%#%# ", file=g)
+    print ("/*", file=g)
 
+def tailer(g):
+    print ("*/", file=g)
+    print ("", file=g)
+    print ("BOGUS LINE", file=g)
 #######################################################################
 # Test script
 #######################################################################
@@ -64,6 +69,7 @@ if __name__ == '__main__':
                 #print('C: {}'.format(line))
                 if mode == 'L': # L -> C
                     if i != 0:
+                        tailer(g)
                         g.close()
                     i += 1
                     g = open('mit_{:03}.txt'.format(i), 'w')

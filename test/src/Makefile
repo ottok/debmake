@@ -4,6 +4,8 @@
 
 PWD=$(shell pwd)
 
+TEST_FILE ?= @1_c.txt
+
 PYTHONPATH:=$(shell pwd)/../..
 export PYTHONPATH
 
@@ -13,10 +15,7 @@ export PATH
 LC_ALL=C.UTF-8
 export LC_ALL
 
-all: test2
-	# If different, next line returns non-zero(=ERROR)
-	#diff -u $(PWD)/../.LICENSE.KEEP $(PWD)/../.LICENSE.LOG
-	diff -u $(PWD)/../.FULL_LICENSE.KEEP $(PWD)/../.FULL_LICENSE.LOG
+all: test
 
 # Please place data from SPDX in src/dspdx/*
 spdx:
@@ -45,35 +44,51 @@ mit:
 	@if [ ! -f copyright ]; then \
 	echo "Please place "copyright" file from xorg-common package"; \
 	fi
-	cd .. ; sed -n -e '1,47p' -e '53,$$p' src/copyright > copyright-clean
+	cd .. ; \
+	sed -n -e '1,47p' -e '53,$$p' src/copyright | \
+	grep -v "^SGI FREE SOFTWARE LICENSE B" > copyright-clean
 	cd ..; src/split copyright-clean
 	rm -f ../copyright-clean
+
+test: test-dep5
+
+test-dep5:
+	echo $$PATH
+	echo $$PYTHONPATH
+	cd .. ;\
+	: 2> $(PWD)/../.FULL_LICENSE.STDERR; \
+	(for x in $$(ls *.txt); do \
+	echo "File: $$x " >&2; \
+	checkdep5.py $$x 2>> $(PWD)/../.FULL_LICENSE.STDERR; \
+	done ) > $(PWD)/../.FULL_LICENSE.LOG
+	diff -u $(PWD)/../.FULL_LICENSE.KEEP $(PWD)/../.FULL_LICENSE.LOG > $(PWD)/../.FULL_LICENSE.DIFF
+	# If different, above line returns non-zero(=ERROR) and exit
+	@echo "=== SUCCESS ==="
+
+test-id:
+	echo $$PATH
+	echo $$PYTHONPATH
+	cd .. ;\
+	: 2> $(PWD)/../.LICENSE.STDERR; \
+	(for x in $$(ls *.txt); do \
+	echo "File: $$x " >&2; \
+	checkdep5.py -i $$x 2>> $(PWD)/../.LICENSE.STDERR; \
+	done ) > $(PWD)/../.LICENSE.LOG
+	diff -u $(PWD)/../.LICENSE.KEEP $(PWD)/../.LICENSE.LOG > $(PWD)/../.LICENSE.DIFF
+	# If different, above line returns non-zero(=ERROR) and exit
+	@echo "=== SUCCESS ==="
 
 test1:
 	echo $$PATH
 	echo $$PYTHONPATH
 	cd .. ;\
-	(for x in *.txt; do \
-	printf "%s\t" "$$x" ; \
-	copyright.py -i $$x ; \
-	echo -n '.' >&2 ;\
-	done ; echo >&2 ) | sort > $(PWD)/../.LICENSE.LOG
-	diff -u $(PWD)/../.LICENSE.KEEP $(PWD)/../.LICENSE.LOG > $(PWD)/../.LICENSE.DIFF \
-		&& echo "SUCCESS" || echo "FAIL"
+	echo "File: $(TEST_FILE) "; \
+	checkdep5.py $(TEST_FILE)
+	@echo "=== SUCCESS ==="
 
-test2:
-	echo $$PATH
-	echo $$PYTHONPATH
-	cd .. ;\
-	(for x in $$(ls *.txt); do \
-	copyright.py $$x ; \
-	echo -n '.' >&2 ;\
-	done ; echo >&2 ) > $(PWD)/../.FULL_LICENSE.LOG
-	diff -u $(PWD)/../.FULL_LICENSE.KEEP $(PWD)/../.FULL_LICENSE.LOG > $(PWD)/../.FULL_LICENSE.DIFF \
-		&& echo "SUCCESS" || echo "FAIL"
 
 clean:
-	rm -f $(PWD)/../.LICENSE.LOG $(PWD)/../.LICENSE.DIFF
+	rm -f $(PWD)/../.LICENSE.LOG $(PWD)/../.LICENSE.DIFF $(PWD)/../.FULL_LICENSE.STDERR
 
 distclean: clean
 

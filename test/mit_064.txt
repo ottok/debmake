@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright (C) 1996-1999 SciTech Software, Inc.
 Copyright (C) David Mosberger-Tang
 Copyright (C) 1999 Egbert Eich
@@ -25,3 +26,6 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 
 
+*/
+
+BOGUS LINE

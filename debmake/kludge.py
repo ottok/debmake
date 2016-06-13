@@ -29,7 +29,7 @@ import operator
 import os
 import re
 import sys
-import debmake.copyright
+import debmake.checkdep5
 import debmake.scanfiles
 
 re_round0 = re.compile(r'\.0')
@@ -117,7 +117,7 @@ def copydiff(mode, pedantic):
     # scan copyright of the source tree and create license_new[]
     ###########################################################################
     (nonlink_files, xml_html_files, binary_files, huge_files, extcount, extcountlist) = debmake.scanfiles.scanfiles()
-    data_new = debmake.copyright.check_copyright(nonlink_files, mode=1, pedantic=pedantic)
+    data_new = debmake.checkdep5.checkdep5(nonlink_files, mode=1, pedantic=pedantic)
     licenses_new = {}
     for (licenseid, licensetext, files, copyright_lines) in data_new:
         licenseid = licenseid.strip()
@@ -191,4 +191,4 @@ def kludge(mode, pedantic):
 
 ##############################################################################
 if __name__ == '__main__':
-    kludge(1)
+    kludge(1, False)

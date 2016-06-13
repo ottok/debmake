@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1993 by Davor Matic
 
 Permission to use, copy, modify, distribute, and sell this software
@@ -12,3 +13,6 @@ the suitability of this software for any purpose.  It is provided "as
 is" without express or implied warranty.
 
 
+*/
+
+BOGUS LINE

@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright © 2003-2004 Philip Blundell
 
 Permission to use, copy, modify, distribute, and sell this software and its
@@ -23,3 +24,6 @@ PERFORMANCE OF THIS SOFTWARE.
 
 
 
+*/
+
+BOGUS LINE

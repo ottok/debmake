@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
-#%#%#%# 
+#%#%#%# MS-DOS FILE
+/*
 Copyright (c) 2006, Intel Corporation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -41,3 +42,5 @@ Specifications v.2.0 and later (together the "UEFI Specifications");
 only as necessary to emulate an implementation of the UEFI Specifications; 
 and to create firmware, applications, utilities and/or drivers.
 
+*/
+BOGUS

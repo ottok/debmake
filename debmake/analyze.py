@@ -30,7 +30,7 @@ import subprocess
 import debmake.grep
 import debmake.read
 import debmake.compat
-import debmake.copyright
+import debmake.checkdep5
 import debmake.scanfiles
 import debmake.yn
 ###########################################################################
@@ -395,7 +395,7 @@ def analyze(para):
     if os.path.isfile('debian/copyright'):
         para['cdata'] = []
     else:
-        para['cdata'] = debmake.copyright.check_copyright(para['nonlink_files'], mode=2)
+        para['cdata'] = debmake.checkdep5.checkdep5(para['nonlink_files'], mode=2)
     #######################################################################
     # compiler: set build dependency etc. if they are used
     if 'c' in para['extcount'].keys():

@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright © 2011 Dave Airlie
 Copyright © 2000-2001 Juliusz Chroboczek
 Copyright © 1998 Egbert Eich
@@ -37,3 +38,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 
+
+
+*/
+
+BOGUS LINE
