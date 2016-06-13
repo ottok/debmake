@@ -1,28 +1,314 @@
-== file ==
-@0_longline.txt
-== copyright ==
-_INITIAL_LONG_LINE_(32768chars.) in: @0_longline.txt
-== ID ==
-__UNKNOWN__:()
-== license_lines ==
- __INITIAL_LONG_LINE__ (binary file?)
+Files:     @0_longline.txt
+Copyright: __NO_COPYRIGHT_NOR_LICENSE__
+License:   __NO_COPYRIGHT_NOR_LICENSE__
 
-== file ==
-@0_screen.png.txt
-== copyright ==
-_MANY_NON_ASCII_(4chars. over 7chars.) in: @0_screen.png.txt
-== ID ==
-__NO_LICENSE_TEXT__:----
-== license_lines ==
+Files:     @0_screen.png.txt
+Copyright: __NO_COPYRIGHT_NOR_LICENSE__
+License:   __NO_COPYRIGHT_NOR_LICENSE__
 
-== file ==
-@c_cpp_aptitude.cc.txt
-== copyright ==
-1999-2010 Daniel Burrows
-2008-2009 Obey Arthur Liu
-== ID ==
-GPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     @1_basic.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_c.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_c2.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_c_l_c.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_cpp.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_dq.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_excl.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_lua.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_pcnt.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_python.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_qython.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_shell.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @1_sq.txt
+Copyright: 2008 Foo Bar
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sub license, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice (including the
+ next paragraph) shall be included in all copies or substantial portions
+ of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ IN NO EVENT SHALL TUNGSTEN GRAPHICS AND/OR ITS SUPPLIERS BE LIABLE FOR
+ ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     @c_cpp_aptitude.cc.txt
+Copyright: 1999-2010 Daniel Burrows
+           2008-2009 Obey Arthur Liu
+License:   GPL-2.0+:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -43,26 +329,18 @@ GPL-2.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-@gplline.txt
-== copyright ==
-2012 Aron Xu <aron@debian.org>
-2012 Osamu Aoki <osamu@debian.org>
-== ID ==
-GPL-2.0+:VARIANT3(version,later)
-== license_lines ==
+Files:     @gplline.txt
+Copyright: 2012 Aron Xu <aron@debian.org>
+           2012 Osamu Aoki <osamu@debian.org>
+License:   GPL-2.0+:VARIANT3(version,later)
  GNU General Public License version 2 or later.
  .
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-@intel-bsd.txt
-== copyright ==
-2011 Intel Corporation
-== ID ==
-BSD_ACCOMPANY:VARIANT0()
-== license_lines ==
+Files:     @intel-bsd.txt
+Copyright: 2011 Intel Corporation
+License:   BSD_ACCOMPANY:VARIANT0()
  This program and the accompanying materials
  are licensed and made available under the terms and conditions of the BSD License
  which accompanies this distribution.  The full text of the license may be found at
@@ -71,13 +349,9 @@ BSD_ACCOMPANY:VARIANT0()
  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 
-== file ==
-@intel-efi0.txt
-== copyright ==
-2006 Intel Corporation.
-== ID ==
-BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI exception2
-== license_lines ==
+Files:     @intel-efi0.txt
+Copyright: 2006 Intel Corporation.
+License:   BSD-3-Clause:GENERIC(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI exception2
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:
@@ -119,13 +393,9 @@ BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI excep
  On Debian systems, the complete text of the BSD 3-clause "New" or "Revised"
  License can be found in `/usr/share/common-licenses/BSD'.
 
-== file ==
-@intel-efi1.txt
-== copyright ==
-2007-2011 Intel Corporation.
-== ID ==
-BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI exception1
-== license_lines ==
+Files:     @intel-efi1.txt
+Copyright: 2007-2011 Intel Corporation.
+License:   BSD-3-Clause:GENERIC(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI exception1
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:
@@ -164,25 +434,17 @@ BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS) with EFI excep
  On Debian systems, the complete text of the BSD 3-clause "New" or "Revised"
  License can be found in `/usr/share/common-licenses/BSD'.
 
-== file ==
-@intel-efi2.txt
-== copyright ==
-2006-2010 Intel Corporation.
-== ID ==
-_SAME_ACCOMPANY_:VARIANT0()
-== license_lines ==
+Files:     @intel-efi2.txt
+Copyright: 2006-2010 Intel Corporation.
+License:   _SAME_ACCOMPANY_:VARIANT0()
  This program and the accompanying materials
  are licensed and made available under the terms and conditions of the Software
  License Agreement which accompanies this distribution.
 
-== file ==
-@main.c.txt
-== copyright ==
-2007-2015 Peng Huang <shawn.p.huang@gmail.com>
-2007-2015 Red Hat, Inc.
-== ID ==
-LGPL-2.1+:VARIANT1(version,later)
-== license_lines ==
+Files:     @main.c.txt
+Copyright: 2007-2015 Peng Huang <shawn.p.huang@gmail.com>
+           2007-2015 Red Hat, Inc.
+License:   LGPL-2.1+:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -201,13 +463,9 @@ LGPL-2.1+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Lesser General Public License
  Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
-== file ==
-@oldfsf.c.txt
-== copyright ==
-1987-1998 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     @oldfsf.c.txt
+Copyright: 1987-1998 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later)
  NOTE: The canonical source of this file is maintained with the GNU C Library.
  Bugs can be reported to bug-glibc@gnu.org.
  .
@@ -231,13 +489,9 @@ GPL-2.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-@openssl-code.txt
-== copyright ==
-1995-1998 Eric Young (eay@cryptsoft.com)
-== ID ==
-OpenSSL:SSLeay(name:ERIC YOUNG)
-== license_lines ==
+Files:     @openssl-code.txt
+Copyright: 1995-1998 Eric Young (eay@cryptsoft.com)
+License:   OpenSSL:SSLeay(name:name=ERIC YOUNG)
  This package is an SSL implementation written
  by Eric Young (eay@cryptsoft.com).
  The implementation was written so as to conform with Netscapes SSL.
@@ -291,13 +545,9 @@ OpenSSL:SSLeay(name:ERIC YOUNG)
  copied and put under another distribution licence
  [including the GNU Public Licence.]
 
-== file ==
-@openssl-tool.txt
-== copyright ==
-2008 The OpenSSL Project.
-== ID ==
-OpenSSL:OpenSSL(apachename,name:THE OpenSSL PROJECT)
-== license_lines ==
+Files:     @openssl-tool.txt
+Copyright: 2008 The OpenSSL Project.
+License:   OpenSSL:OpenSSL(altname,name:name=THE OpenSSL PROJECT:altname=OpenSSL Toolkit and OpenSSL Project)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -342,14 +592,10 @@ OpenSSL:OpenSSL(apachename,name:THE OpenSSL PROJECT)
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  OF THE POSSIBILITY OF SUCH DAMAGE.
 
-== file ==
-@spl-gpl2+.c.txt
-== copyright ==
-2007-2010 Lawrence Livermore National Security, LLC.
-2001-2007 The Regents of the University of California. Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).  Chris Dunlap <cdunlap@llnl.gov>. UCRL-CODE-235197
-== ID ==
-GPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     @spl-gpl2+.c.txt
+Copyright: 2001-2007 The Regents of the University of California. Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).  Chris Dunlap <cdunlap@llnl.gov>. UCRL-CODE-235197
+           2007-2010 Lawrence Livermore National Security, LLC.
+License:   GPL-2.0+:VARIANT1(version,later)
  This file is from LSD-Tools, the LLNL Software Development Toolbox.
  .
  LSD-Tools is free software; you can redistribute it and/or modify it
@@ -364,19 +610,15 @@ GPL-2.0+:VARIANT1(version,later)
  .
  You should have received a copy of the GNU General Public License along
  with LSD-Tools.  If not, see <http://www.gnu.org/licenses/>.
- ****************************************************************************
+ .
  Refer to "list.h" for documentation on public functions.
  .
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-AGPL-1.0_FULL.txt
-== copyright ==
-2002 Affero Inc. 510 Third Street - Suite 225, San Francisco, CA 94107, USA
-== ID ==
-AGPL-1.0+:FULL_LICENSE
-== license_lines ==
+Files:     AGPL-1.0_FULL.txt
+Copyright: 2002 Affero Inc. 510 Third Street - Suite 225, San Francisco, CA 94107, USA
+License:   AGPL-1.0+:FULL_LICENSE
  This license is a modified version of the GNU General Public License copyright (C) 1989, 1991 Free Software Foundation, Inc. made with their permission. Section 2(d) has been added to cover use of software over a computer network.
  .
  Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
@@ -467,13 +709,9 @@ AGPL-1.0+:FULL_LICENSE
  .
  12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-== file ==
-AGPL-3.0+.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-AGPL-3.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     AGPL-3.0+.txt
+Copyright: 2016 foo bar bogus
+License:   AGPL-3.0+:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU Affero General Public License as published by the Free
  Software Foundation, either version 3 of the License, or (at your option) any
@@ -486,13 +724,9 @@ AGPL-3.0+:VARIANT1(version,later)
  You should have received a copy of the GNU Affero General Public License along
  with this program. If not, see <http://www.gnu.org/licenses/>.
 
-== file ==
-AGPL-3.0.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-AGPL-3.0:VARIANT1(version,later)
-== license_lines ==
+Files:     AGPL-3.0.txt
+Copyright: 2000 bozo boozer
+License:   AGPL-3.0:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU Affero General Public License as published by the Free
  Software Foundation, version 3 of the License.
@@ -504,13 +738,9 @@ AGPL-3.0:VARIANT1(version,later)
  You should have received a copy of the GNU Affero General Public License along
  with this program. If not, see <http://www.gnu.org/licenses/>.
 
-== file ==
-AGPL-3.0_FULL.txt
-== copyright ==
-2007 Free Software Foundation, Inc.
-== ID ==
-AGPL-3.0+:FULL_LICENSE
-== license_lines ==
+Files:     AGPL-3.0_FULL.txt
+Copyright: 2007 Free Software Foundation, Inc.
+License:   AGPL-3.0+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies of this license
  document, but changing it is not allowed.
  .
@@ -1129,13 +1359,9 @@ AGPL-3.0+:FULL_LICENSE
  You should have received a copy of the GNU Affero General Public License along
  with this program. If not, see <http://www.gnu.org/licenses/>.
 
-== file ==
-APSL-1.0.txt
-== copyright ==
-1999 Apple Computer, Inc.
-== ID ==
-APSL-1.0:EXTRA(version)
-== license_lines ==
+Files:     APSL-1.0.txt
+Copyright: 1999 Apple Computer, Inc.
+License:   APSL-1.0:EXTRA(version)
  This file contains Original Code and/or Modifications of
  Original Code as defined in and that are subject to the Apple Public
  Source License Version 1.0 (the &apos;License&apos;). You may not use this file
@@ -1151,13 +1377,9 @@ APSL-1.0:EXTRA(version)
  License for the specific language governing rights and limitations
  under the License.
 
-== file ==
-APSL-1.1.txt
-== copyright ==
-1999-2000 Apple Computer, Inc.
-== ID ==
-APSL-1.1:EXTRA(version)
-== license_lines ==
+Files:     APSL-1.1.txt
+Copyright: 1999-2000 Apple Computer, Inc.
+License:   APSL-1.1:EXTRA(version)
  This file contains Original Code and/or Modifications of Original Code as
  defined in and that are subject to the Apple Public Source License Version 1.1
  (the "License"). You may not use this file except in compliance with the
@@ -1171,13 +1393,9 @@ APSL-1.1:EXTRA(version)
  OR NON- INFRINGEMENT. Please see the License for the specific language
  governing rights and limitations under the License.
 
-== file ==
-APSL-1.2.txt
-== copyright ==
-1999-2001 Apple Computer, Inc.
-== ID ==
-APSL-1.2:EXTRA(version)
-== license_lines ==
+Files:     APSL-1.2.txt
+Copyright: 1999-2001 Apple Computer, Inc.
+License:   APSL-1.2:EXTRA(version)
  This file contains Original Code and/or Modifications of Original Code as
  defined in and that are subject to the Apple Public Source License Version 1.2
  (the &apos;License&apos;). You may not use this file except in compliance with
@@ -1191,13 +1409,9 @@ APSL-1.2:EXTRA(version)
  PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT. Please see the License for the
  specific language governing rights and limitations under the License.
 
-== file ==
-APSL-2.0.txt
-== copyright ==
-1999-2003 Apple Computer, Inc.
-== ID ==
-APSL-2.0:EXTRA(version)
-== license_lines ==
+Files:     APSL-2.0.txt
+Copyright: 1999-2003 Apple Computer, Inc.
+License:   APSL-2.0:EXTRA(version)
  This file contains Original Code and/or Modifications of Original Code as
  defined in and that are subject to the Apple Public Source License Version 2.0
  (the &apos;License&apos;). You may not use this file except in compliance with
@@ -1211,13 +1425,9 @@ APSL-2.0:EXTRA(version)
  PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT. Please see the License for the
  specific language governing rights an limitations under the License."
 
-== file ==
-Apache-1.0.txt
-== copyright ==
-1995-1999 The Apache Group.
-== ID ==
-Apache-1.0:EXACT(apachename:Apache Server and Apache Group)
-== license_lines ==
+Files:     Apache-1.0.txt
+Copyright: 1995-1999 The Apache Group.
+License:   Apache-1.0:EXACT(altname:altname=Apache Server and Apache Group)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1263,13 +1473,9 @@ Apache-1.0:EXACT(apachename:Apache Server and Apache Group)
  Illinois, Urbana-Champaign. For more information on the Apache Group and the
  Apache HTTP server project, please see http://www.apache.org/.
 
-== file ==
-Apache-1.1.txt
-== copyright ==
-2000 The Apache Software Foundation.
-== ID ==
-Apache-1.1:EXACT(apachename:Apache and Apache Software Foundation)
-== license_lines ==
+Files:     Apache-1.1.txt
+Copyright: 2000 The Apache Software Foundation.
+License:   Apache-1.1:EXACT(altname:altname=Apache and Apache Software Foundation)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1313,13 +1519,9 @@ Apache-1.1:EXACT(apachename:Apache and Apache Software Foundation)
  National Center for Supercomputing Applications, University of Illinois,
  Urbana-Champaign.
 
-== file ==
-Apache-2.0_var1.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-Apache-2.0:EXTRA(version)
-== license_lines ==
+Files:     Apache-2.0_var1.txt
+Copyright: __NO_COPYRIGHT__ in: Apache-2.0_var1.txt
+License:   Apache-2.0:EXTRA(version)
  Licensed to the Apache Software Foundation (ASF) under one or more contributor
  license agreements. See the NOTICE file distributed with this work for
  additional information regarding copyright ownership. The ASF licenses this
@@ -1337,13 +1539,9 @@ Apache-2.0:EXTRA(version)
  On Debian systems, the complete text of the Apache License Version 2.0
   can be found in `/usr/share/common-licenses/Apache-2.0'.
 
-== file ==
-Apache-2.0_var2.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-Apache-2.0:EXTRA(version)
-== license_lines ==
+Files:     Apache-2.0_var2.txt
+Copyright: 1999 foo bar
+License:   Apache-2.0:EXTRA(version)
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use
  this file except in compliance with the License. You may obtain a copy of the
  License at
@@ -1358,13 +1556,9 @@ Apache-2.0:EXTRA(version)
  On Debian systems, the complete text of the Apache License Version 2.0
   can be found in `/usr/share/common-licenses/Apache-2.0'.
 
-== file ==
-BSD-2-Clause-FreeBSD.txt
-== copyright ==
-1992-2012 The FreeBSD Project.
-== ID ==
-BSD-2-Clause-FreeBSD:EXACT(name:THE FREEBSD PROJECT)
-== license_lines ==
+Files:     BSD-2-Clause-FreeBSD.txt
+Copyright: 1992-2012 The FreeBSD Project.
+License:   BSD-2-Clause-FreeBSD:EXACT(name:name=THE FREEBSD PROJECT)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1390,13 +1584,9 @@ BSD-2-Clause-FreeBSD:EXACT(name:THE FREEBSD PROJECT)
  of the authors and should not be interpreted as representing official policies,
  either expressed or implied, of the FreeBSD Project.
 
-== file ==
-BSD-2-Clause-NetBSD.txt
-== copyright ==
-2008 The NetBSD Foundation, Inc.
-== ID ==
-BSD-2-Clause-NETBSD:EXACT(name:THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS)
-== license_lines ==
+Files:     BSD-2-Clause-NetBSD.txt
+Copyright: 2008 The NetBSD Foundation, Inc.
+License:   BSD-2-Clause-NETBSD:EXACT(name:name=THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS)
  This code is derived from software contributed to The NetBSD Foundation by
  .
  Redistribution and use in source and binary forms, with or without
@@ -1421,13 +1611,9 @@ BSD-2-Clause-NETBSD:EXACT(name:THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS)
  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  OF SUCH DAMAGE.
 
-== file ==
-BSD-2-Clause.txt
-== copyright ==
-<YEAR>, <OWNER>
-== ID ==
-BSD-2-Clause:EXACT(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
-== license_lines ==
+Files:     BSD-2-Clause.txt
+Copyright: __NO_COPYRIGHT__ in: BSD-2-Clause.txt
+License:   BSD-2-Clause:EXACT(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1449,13 +1635,9 @@ BSD-2-Clause:EXACT(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-== file ==
-BSD-3-Clause-Clear.txt
-== copyright ==
-[xxxx]-[xxxx] [Owner Organization]
-== ID ==
-BSD-3-Clause-Clear:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
-== license_lines ==
+Files:     BSD-3-Clause-Clear.txt
+Copyright: 1990-1999 Bogus Program Co-op
+License:   BSD-3-Clause-Clear:GENERIC(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted (subject to the limitations in the disclaimer
  below) provided that the following conditions are met:
@@ -1484,13 +1666,9 @@ BSD-3-Clause-Clear:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  OF SUCH DAMAGE.
 
-== file ==
-BSD-3-Clause.txt
-== copyright ==
-<YEAR>, <OWNER>
-== ID ==
-BSD-3-Clause:EXACT(:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
-== license_lines ==
+Files:     BSD-3-Clause.txt
+Copyright: 2000 John Doe
+License:   BSD-3-Clause:EXACT(:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1519,13 +1697,9 @@ BSD-3-Clause:EXACT(:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  On Debian systems, the complete text of the BSD 3-clause "New" or "Revised"
  License can be found in `/usr/share/common-licenses/BSD'.
 
-== file ==
-BSD-4-Clause-UC.txt
-== copyright ==
-[various years] The Regents of the University of California. All rights reserved.
-== ID ==
-BSD-4-Clause-UC:EXACT(name:THE REGENTS AND CONTRIBUTORS)
-== license_lines ==
+Files:     BSD-4-Clause-UC.txt
+Copyright: 1960-2020 The Regents of the University of California. All rights reserved.
+License:   BSD-4-Clause-UC:EXACT(name:name=THE REGENTS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1555,13 +1729,9 @@ BSD-4-Clause-UC:EXACT(name:THE REGENTS AND CONTRIBUTORS)
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-== file ==
-BSD-4-Clause.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-BSD-4-Clause:EXACT(name:COPYRIGHT HOLDER)
-== license_lines ==
+Files:     BSD-4-Clause.txt
+Copyright: 2010 Mr. BSD
+License:   BSD-4-Clause:EXACT(name:name=COPYRIGHT HOLDER)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -1591,52 +1761,36 @@ BSD-4-Clause:EXACT(name:COPYRIGHT HOLDER)
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-== file ==
-BSL-1.0.txt
-== copyright ==
-{{Joe Coder}} {{2004 - 2006}}.
-== ID ==
-BSL-1.0:EXTRA(version)
-== license_lines ==
+Files:     BSL-1.0.txt
+Copyright: 2004-2006 Foo Bar
+License:   BSL-1.0:EXTRA(version)
  Distributed under the Boost Software License, Version 1.0.
 
-== file ==
-GFDL-1.1+.txt
-== copyright ==
-{{YEAR}} {{YOUR NAME}}.
-== ID ==
-GFDL-1.1+:VARIANT1(version,later)
-== license_lines ==
+Files:     GFDL-1.1+.txt
+Copyright: 1989 foo bar baz.
+License:   GFDL-1.1+:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.1
  or any later version published by the Free Software Foundation;
- *** with the Invariant Sections being LIST THEIR TITLES, with the
+ with the Invariant Sections being LIST THEIR TITLES, with the
  Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License". ***
+ Free Documentation License".
 
-== file ==
-GFDL-1.1.txt
-== copyright ==
-{{YEAR}} {{YOUR NAME}}.
-== ID ==
-GFDL-1.1:VARIANT1(version,later)
-== license_lines ==
+Files:     GFDL-1.1.txt
+Copyright: 1999 FOO BAR BAZ
+License:   GFDL-1.1:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.1
  published by the Free Software Foundation;
- *** with the Invariant Sections being LIST THEIR TITLES, with the
+ with the Invariant Sections being LIST THEIR TITLES, with the
  Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License". ***
+ Free Documentation License".
 
-== file ==
-GFDL-1.1_FULL.txt
-== copyright ==
-2000 Free Software Foundation, Inc.
-== ID ==
-GFDL-1.1+:FULL_LICENSE
-== license_lines ==
+Files:     GFDL-1.1_FULL.txt
+Copyright: 2000 Free Software Foundation, Inc.
+License:   GFDL-1.1+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
  .
@@ -1987,19 +2141,15 @@ GFDL-1.1+:FULL_LICENSE
  A copy of the license is included in the section entitled "GNU
  Free Documentation License".***
 
-== file ==
-GFDL-1.2+.txt
-== copyright ==
-{{YEAR}} {{YOUR NAME}}.
-== ID ==
-GFDL-1.2+:VARIANT1(version,later)
-== license_lines ==
+Files:     GFDL-1.2+.txt
+Copyright: 2011 FOO BAR.
+License:   GFDL-1.2+:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.2
  or any later version published by the Free Software Foundation;
- *** with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
  replace the "with...Texts." line with this:
@@ -2010,19 +2160,15 @@ GFDL-1.2+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.2 can be found in `/usr/share/common-licenses/GFDL-1.2'.
 
-== file ==
-GFDL-1.2.txt
-== copyright ==
-{{YEAR}} {{YOUR NAME}}.
-== ID ==
-GFDL-1.2:VARIANT1(version,later)
-== license_lines ==
+Files:     GFDL-1.2.txt
+Copyright: 1999-2011 FOO BAR.
+License:   GFDL-1.2:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.2
  published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
  replace the "with...Texts." line with this:
@@ -2033,13 +2179,9 @@ GFDL-1.2:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.2 can be found in `/usr/share/common-licenses/GFDL-1.2'.
 
-== file ==
-GFDL-1.2_FULL.txt
-== copyright ==
-2000-2002 Free Software Foundation, Inc.
-== ID ==
-GFDL-1.2+:FULL_LICENSE
-== license_lines ==
+Files:     GFDL-1.2_FULL.txt
+Copyright: 2000-2002 Free Software Foundation, Inc.
+License:   GFDL-1.2+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
  .
@@ -2426,9 +2568,9 @@ GFDL-1.2+:FULL_LICENSE
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.2
  or any later version published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
  replace the "with...Texts." line with this:
@@ -2439,47 +2581,35 @@ GFDL-1.2+:FULL_LICENSE
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.2 can be found in `/usr/share/common-licenses/GFDL-1.2'.
 
-== file ==
-GFDL-1.3+.txt
-== copyright ==
-{{YEAR}} {{YOUR NAME}}.
-== ID ==
-GFDL-1.3+:VARIANT1(version,later)
-== license_lines ==
+Files:     GFDL-1.3+.txt
+Copyright: 1980-2011 FOO BAR.
+License:   GFDL-1.3+:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.3
  or any later version published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.3 can be found in `/usr/share/common-licenses/GFDL-1.3'.
 
-== file ==
-GFDL-1.3.txt
-== copyright ==
-{{YEAR}} {{YOUR NAME}}.
-== ID ==
-GFDL-1.3:VARIANT1(version,later)
-== license_lines ==
+Files:     GFDL-1.3.txt
+Copyright: 2016 O'my god.
+License:   GFDL-1.3:VARIANT1(version,later)
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.3
  published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.3 can be found in `/usr/share/common-licenses/GFDL-1.3'.
 
-== file ==
-GFDL-1.3_FULL.txt
-== copyright ==
-2000-2008 Free Software Foundation, Inc.
-== ID ==
-GFDL-1.3+:FULL_LICENSE
-== license_lines ==
+Files:     GFDL-1.3_FULL.txt
+Copyright: 2000-2008 Free Software Foundation, Inc.
+License:   GFDL-1.3+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
  .
@@ -2921,20 +3051,16 @@ GFDL-1.3+:FULL_LICENSE
  Permission is granted to copy, distribute and/or modify this document
  under the terms of the GNU Free Documentation License, Version 1.3
  or any later version published by the Free Software Foundation;
- ***with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
  A copy of the license is included in the section entitled "GNU
- Free Documentation License".***
+ Free Documentation License".
  .
  On Debian systems, the complete text of the GNU Free Documentation License
  Version 1.3 can be found in `/usr/share/common-licenses/GFDL-1.3'.
 
-== file ==
-GPL-1.0+.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-GPL-1.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-1.0+.txt
+Copyright: 1989 John Doe
+License:   GPL-1.0+:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation; either version 1, or (at your option) any later version.
@@ -2952,13 +3078,9 @@ GPL-1.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 1 can be found in `/usr/share/common-licenses/GPL-1'.
 
-== file ==
-GPL-1.0+_FULL.txt
-== copyright ==
-1989 Free Software Foundation, Inc.
-== ID ==
-GPL-1.0+:FULL_LICENSE
-== license_lines ==
+Files:     GPL-1.0+_FULL.txt
+Copyright: 1989 Free Software Foundation, Inc.
+License:   GPL-1.0+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
  .
@@ -2998,6 +3120,49 @@ GPL-1.0+:FULL_LICENSE
  software. If the software is modified by someone else and passed on, we
  want its recipients to know that what they have is not the original, so
  that any problems introduced by others will not reflect on the original
+ authors&apos; reputations.
+ .
+ The precise terms and conditions for copying, distribution and
+ modification follow.
+ .
+ GNU GENERAL PUBLIC LICENSE
+ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ .
+ 0. This License Agreement applies to any program or other work which
+ contains a notice placed by the copyright holder saying it may be
+ distributed under the terms of this General Public License. The
+ "Program", below, refers to any such program or work, and a "work based
+ on the Program" means either the Program or any work containing the
+ Program or a portion of it, either verbatim or with modifications. Each
+ licensee is addressed as "you".
+ .
+ 1. You may copy and distribute verbatim copies of the Program&apos;s source
+ code as you receive it, in any medium, provided that you conspicuously and
+ appropriately publish on each copy an appropriate copyright notice and
+ disclaimer of warranty; keep intact all the notices that refer to this
+ General Public License and to the absence of any warranty; and give any
+ other recipients of the Program a copy of this General Public License
+ along with the Program. You may charge a fee for the physical act of
+ transferring a copy.
+ .
+ 2. You may modify your copy or copies of the Program or any portion of
+ it, and copy and distribute such modifications under the terms of Paragraph
+ 1 above, provided that you also do the following:
+ .
+ a) cause the modified files to carry prominent notices stating that
+ you changed the files and the date of any change; and
+ .
+ b) cause the whole of any work that you distribute or publish, that
+ in whole or in part contains the Program or any part thereof, either
+ with or without modifications, to be licensed at no charge to all
+ third parties under the terms of this General Public License (except
+ that you may choose to grant warranty protection to some or all
+ third parties, at your option).
+ .
+ c) If the modified program normally reads commands interactively when
+ run, you must cause it, when started running for such interactive use
+ in the simplest and most usual way, to print or display an
+ announcement including an appropriate copyright notice and a notice
  that there is no warranty (or else, saying that you provide a
  warranty) and that users may redistribute the program under these
  conditions, and telling the user how to view a copy of this General
@@ -3179,13 +3344,9 @@ GPL-1.0+:FULL_LICENSE
  On Debian systems, the complete text of the GNU General Public License
  Version 1 can be found in `/usr/share/common-licenses/GPL-1'.
 
-== file ==
-GPL-1.0.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-GPL-1.0:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-1.0.txt
+Copyright: 2001 John Doe
+License:   GPL-1.0:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation; version 1.
@@ -3203,13 +3364,9 @@ GPL-1.0:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 1 can be found in `/usr/share/common-licenses/GPL-1'.
 
-== file ==
-GPL-2.0+.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-GPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-2.0+.txt
+Copyright: 2001 John Doe
+License:   GPL-2.0+:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation; either version 2 of the License, or (at your option) any later
@@ -3226,13 +3383,9 @@ GPL-2.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-GPL-2.0+_FULL.txt
-== copyright ==
-1989-1991 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:FULL_LICENSE
-== license_lines ==
+Files:     GPL-2.0+_FULL.txt
+Copyright: 1989-1991 Free Software Foundation, Inc.
+License:   GPL-2.0+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies of this license
  document, but changing it is not allowed.
  .
@@ -3243,6 +3396,10 @@ GPL-2.0+:FULL_LICENSE
  guarantee your freedom to share and change free software--to make sure the
  software is free for all its users. This General Public License applies to most
  of the Free Software Foundation&apos;s software and to any other program whose
+ authors commit to using it. (Some other Free Software Foundation software is
+ covered by the GNU Lesser General Public License instead.) You can apply it to
+ your programs, too.
+ .
  When we speak of free software, we are referring to freedom, not price. Our
  General Public Licenses are designed to make sure that you have the freedom to
  distribute copies of free software (and charge for this service if you wish),
@@ -3554,25 +3711,17 @@ GPL-2.0+:FULL_LICENSE
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-GPL-2.0+_SHORT.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-GPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-2.0+_SHORT.txt
+Copyright: 2001 John Doe
+License:   GPL-2.0+:VARIANT1(version,later)
  Distribute under GPL version 2 or later.
  .
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-GPL-2.0+_autoconf_exception.txt
-== copyright ==
-1996-2009 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later) with autoconf exception1
-== license_lines ==
+Files:     GPL-2.0+_autoconf_exception.txt
+Copyright: 1996-2009 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2, or (at your option)
@@ -3594,13 +3743,9 @@ GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-GPL-2.0.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-GPL-2.0:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-2.0.txt
+Copyright: 2010 Jane Doe
+License:   GPL-2.0:VARIANT1(version,later)
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation version 2 of the License.
@@ -3616,13 +3761,9 @@ GPL-2.0:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-GPL-2.0_kernel.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-GPL-2.0:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-2.0_kernel.txt
+Copyright: 2009 Jane Doe
+License:   GPL-2.0:VARIANT1(version,later)
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License version 2 as
  published by the Free Software Foundation.
@@ -3639,13 +3780,9 @@ GPL-2.0:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-GPL-3.0+.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-GPL-3.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-3.0+.txt
+Copyright: 1999 Jane Doe
+License:   GPL-3.0+:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation, either version 3 of the License, or (at your option) any later
@@ -3661,13 +3798,9 @@ GPL-3.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
 
-== file ==
-GPL-3.0+_FULL.txt
-== copyright ==
-2007 Free Software Foundation, Inc.
-== ID ==
-GPL-3.0+:FULL_LICENSE
-== license_lines ==
+Files:     GPL-3.0+_FULL.txt
+Copyright: 2007 Free Software Foundation, Inc.
+License:   GPL-3.0+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies of this license
  document, but changing it is not allowed.
  .
@@ -3682,6 +3815,8 @@ GPL-3.0+:FULL_LICENSE
  versions of a program--to make sure it remains free software for all its users.
  We, the Free Software Foundation, use the GNU General Public License for most
  of our software; it applies also to any other work released this way by its
+ authors. You can apply it to your programs, too.
+ .
  When we speak of free software, we are referring to freedom, not price. Our
  General Public Licenses are designed to make sure that you have the freedom to
  distribute copies of free software (and charge for them if you wish), that you
@@ -3705,6 +3840,10 @@ GPL-3.0+:FULL_LICENSE
  .
  For the developers&apos; and authors&apos; protection, the GPL clearly explains
  that there is no warranty for this free software. For both users&apos; and
+ authors&apos; sake, the GPL requires that modified versions be marked as
+ changed, so that their problems will not be attributed erroneously to authors
+ of previous versions.
+ .
  Some devices are designed to deny users access to install or run modified
  versions of the software inside them, although the manufacturer can do so. This
  is fundamentally incompatible with the aim of protecting users&apos; freedom to
@@ -4275,13 +4414,9 @@ GPL-3.0+:FULL_LICENSE
  On Debian systems, the complete text of the GNU General Public License
  Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
 
-== file ==
-GPL-3.0.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-GPL-3.0:VARIANT1(version,later)
-== license_lines ==
+Files:     GPL-3.0.txt
+Copyright: 1999 Jane Doe
+License:   GPL-3.0:VARIANT1(version,later)
  This program is free software: you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
  Foundation, version 3 of the License.
@@ -4296,14 +4431,10 @@ GPL-3.0:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
 
-== file ==
-ISC.txt
-== copyright ==
-1995-2003 Internet Software Consortium
-2004-2010 Internet Systems Consortium, Inc. ("ISC")
-== ID ==
-ISC:ISC-EXACT(name:ISC)
-== license_lines ==
+Files:     ISC.txt
+Copyright: 1995-2003 Internet Software Consortium
+           2004-2010 Internet Systems Consortium, Inc. ("ISC")
+License:   ISC:ISC-EXACT(name:name=ISC)
  Permission to use, copy, modify, and/or distribute this software for any
  purpose with or without fee is hereby granted, provided that the above
  copyright notice and this permission notice appear in all copies.
@@ -4316,13 +4447,9 @@ ISC:ISC-EXACT(name:ISC)
  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-LGPL-2.0+.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-LGPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     LGPL-2.0+.txt
+Copyright: 2010 Jane Doe
+License:   LGPL-2.0+:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Library General Public License as published by the Free
  Software Foundation; either version 2 of the License, or (at your option) any
@@ -4340,13 +4467,9 @@ LGPL-2.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Library General Public License
  Version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
 
-== file ==
-LGPL-2.0+_FULL.txt
-== copyright ==
-1991 Free Software Foundation, Inc.
-== ID ==
-LGPL-2.0+:FULL_LICENSE
-== license_lines ==
+Files:     LGPL-2.0+_FULL.txt
+Copyright: 1991 Free Software Foundation, Inc.
+License:   LGPL-2.0+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies of this license
  document, but changing it is not allowed.
  .
@@ -4362,6 +4485,8 @@ LGPL-2.0+:FULL_LICENSE
  .
  This license, the Library General Public License, applies to some specially
  designated Free Software Foundation software, and to any other libraries whose
+ authors decide to use it. You can use it for your libraries, too.
+ .
  When we speak of free software, we are referring to freedom, not price. Our
  General Public Licenses are designed to make sure that you have the freedom to
  distribute copies of free software (and charge for this service if you wish),
@@ -4801,13 +4926,9 @@ LGPL-2.0+:FULL_LICENSE
  On Debian systems, the complete text of the GNU Library General Public License
  Version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
 
-== file ==
-LGPL-2.0.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-LGPL-2.0:VARIANT1(version,later)
-== license_lines ==
+Files:     LGPL-2.0.txt
+Copyright: 2010-2014 Jane Doe
+License:   LGPL-2.0:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Library General Public License as published by the Free
  Software Foundation version 2 of the License.
@@ -4824,13 +4945,9 @@ LGPL-2.0:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Library General Public License
  Version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
 
-== file ==
-LGPL-2.1+.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-LGPL-2.1+:VARIANT1(version,later)
-== license_lines ==
+Files:     LGPL-2.1+.txt
+Copyright: 2010 Jane Doe
+License:   LGPL-2.1+:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Lesser General Public License as published by the Free
  Software Foundation; either version 2.1 of the License, or (at your option) any
@@ -4847,13 +4964,9 @@ LGPL-2.1+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Lesser General Public License
  Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
-== file ==
-LGPL-2.1+_FULL.txt
-== copyright ==
-1991-1999 Free Software Foundation, Inc.
-== ID ==
-LGPL-2.1+:FULL_LICENSE
-== license_lines ==
+Files:     LGPL-2.1+_FULL.txt
+Copyright: 1991-1999 Free Software Foundation, Inc.
+License:   LGPL-2.1+:FULL_LICENSE
  Everyone is permitted to copy and distribute verbatim copies of this license
  document, but changing it is not allowed.
  .
@@ -5327,13 +5440,9 @@ LGPL-2.1+:FULL_LICENSE
  On Debian systems, the complete text of the GNU Lesser General Public License
  Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
-== file ==
-LGPL-2.1.txt
-== copyright ==
-{{year}} {{name of author}}
-== ID ==
-LGPL-2.1:VARIANT1(version,later)
-== license_lines ==
+Files:     LGPL-2.1.txt
+Copyright: 2013 The Linux Foundation.
+License:   LGPL-2.1:VARIANT1(version,later)
  This library is free software; you can redistribute it and/or modify it under
  the terms of the GNU Lesser General Public License as published by the Free
  Software Foundation version 2.1 of the License.
@@ -5349,25 +5458,17 @@ LGPL-2.1:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU Lesser General Public License
  Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
-== file ==
-LPPL-1.0.txt
-== copyright ==
-{{YEAR}} {{NAME}}
-== ID ==
-LPPL-1.0:EXTRA(version)
-== license_lines ==
+Files:     LPPL-1.0.txt
+Copyright: 2013 The Linux Foundation.
+License:   LPPL-1.0:EXTRA(version)
  This program can redistributed and/or modified under the terms
  of the LaTeX Project Public License Distributed from CTAN
  archives in directory macros/latex/base/lppl.txt; either
  version 1 of the License, or (at your option) any later version.
 
-== file ==
-LPPL-1.1.txt
-== copyright ==
-{{YEAR}} {{NAME}}
-== ID ==
-LPPL-1.1:EXTRA(version)
-== license_lines ==
+Files:     LPPL-1.1.txt
+Copyright: 2013 The Linux Foundation.
+License:   LPPL-1.1:EXTRA(version)
  This program may be distributed and/or modified under the conditions of the
  LaTeX Project Public License, either version 1.1
  of this license or (at your option) any later version.
@@ -5378,13 +5479,9 @@ LPPL-1.1:EXTRA(version)
  .
  This program consists of the files pig.dtx and pig.ins
 
-== file ==
-LPPL-1.2.txt
-== copyright ==
-{{YEAR}} {{NAME}}
-== ID ==
-LPPL-1.2:EXTRA(version)
-== license_lines ==
+Files:     LPPL-1.2.txt
+Copyright: 2013 The Linux Foundation.
+License:   LPPL-1.2:EXTRA(version)
  This program may be distributed and/or modified under the conditions of the
  LaTeX Project Public License, either version 1.2
  of this license or (at your option) any later version.
@@ -5395,13 +5492,9 @@ LPPL-1.2:EXTRA(version)
  .
  This program consists of the files pig.dtx and pig.ins
 
-== file ==
-LPPL-1.3a.txt
-== copyright ==
-[year] [name]
-== ID ==
-LPPL-1.3:EXTRA(version)
-== license_lines ==
+Files:     LPPL-1.3a.txt
+Copyright: 2013 The Linux Foundation.
+License:   LPPL-1.3:EXTRA(version)
  This work may be distributed and/or modified under the conditions of the LaTeX
  Project Public License, either version 1.3
  of this license or (at your option) any later version.
@@ -5418,13 +5511,9 @@ LPPL-1.3:EXTRA(version)
  This work consists of the files [filename] and [filename] and the derived file
  [filename].
 
-== file ==
-LPPL-1.3c.txt
-== copyright ==
-{{YEAR}} {{NAME}}
-== ID ==
-LPPL-1.3:EXTRA(version)
-== license_lines ==
+Files:     LPPL-1.3c.txt
+Copyright: 2013 The Linux Foundation.
+License:   LPPL-1.3:EXTRA(version)
  This work may be distributed and/or modified under the conditions of the LaTeX
  Project Public License, either version 1.3 of this license or (at your option)
  any later version. The latest version of this license is in http://
@@ -5439,13 +5528,9 @@ LPPL-1.3:EXTRA(version)
  This work consists of the files pig.dtx and pig.ins and the derived file
  pig.sty.
 
-== file ==
-MIT.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-Expat:Expat-EXACT()
-== license_lines ==
+Files:     MIT.txt
+Copyright: 2013 The Linux Foundation.
+License:   Expat:Expat-EXACT()
  Permission is hereby granted, free of charge, to any person obtaining a copy of
  this software and associated documentation files (the "Software"), to deal in
  the Software without restriction, including without limitation the rights to
@@ -5464,13 +5549,9 @@ Expat:Expat-EXACT()
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 
-== file ==
-MIT_X11-Dickey.txt
-== copyright ==
-1996 Thomas E. Dickey <dickey@clark.net>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11-Dickey.txt
+Copyright: 1996 Thomas E. Dickey <dickey@clark.net>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -5488,14 +5569,10 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-MIT_X11-HP-SUN.txt
-== copyright ==
-1993-1994 Hewlett-Packard Company
-1994-1995 Sun Microsystems, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11-HP-SUN.txt
+Copyright: 1993-1994 Hewlett-Packard Company
+           1994-1995 Sun Microsystems, Inc.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software
  and its documentation for any purpose is hereby granted without fee,
  provided that the above copyright notice appear in all copies and
@@ -5518,13 +5595,9 @@ ISC:ISC-MID-NOENDORSE()
  .
  This version tidied and debugged by Steve Underwood May 1999
 
-== file ==
-MIT_X11-HP.txt
-== copyright ==
-1989 Hewlett-Packard Company, Palo Alto, California.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11-HP.txt
+Copyright: 1989 Hewlett-Packard Company, Palo Alto, California.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -5541,14 +5614,10 @@ ISC:ISC-MID-NOENDORSE()
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-MIT_X11-Open-Group.txt
-== copyright ==
-2002 Red Hat Inc., Durham, North Carolina.
-1985-2001 The Open Group
-== ID ==
-ISC:ISC-LAST-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11-Open-Group.txt
+Copyright: 1985-2001 The Open Group
+           2002 Red Hat Inc., Durham, North Carolina.
+License:   ISC:ISC-LAST-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -5569,13 +5638,9 @@ ISC:ISC-LAST-NOENDORSE()
  used in advertising or otherwise to promote the sale, use or other dealings
  in this Software without prior written authorization from The Open Group.
 
-== file ==
-MIT_X11-Vrije-Universiteit.txt
-== copyright ==
-1992 Vrije Universiteit, The Netherlands
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11-Vrije-Universiteit.txt
+Copyright: 1992 Vrije Universiteit, The Netherlands
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted, provided
  that the above copyright notice appear in all copies and that both that
@@ -5594,15 +5659,11 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-MIT_X11-digital.txt
-== copyright ==
-1987-1993 Digital Equipment Corporation, Maynard, Massachusetts.
-1991 Massachusetts Institute of Technology, Cambridge, Massachusetts.
-1991-1993 Olivetti Research Limited, Cambridge, England.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11-digital.txt
+Copyright: 1987-1993 Digital Equipment Corporation, Maynard, Massachusetts.
+           1991 Massachusetts Institute of Technology, Cambridge, Massachusetts.
+           1991-1993 Olivetti Research Limited, Cambridge, England.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -5619,13 +5680,9 @@ ISC:ISC-MID-NOENDORSE()
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-MIT_X11.txt
-== copyright ==
-1996 X Consortium
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     MIT_X11.txt
+Copyright: 1996 X Consortium
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -5652,25 +5709,21 @@ MIT:GENERIC-WITH-NOENDORSE()
  .
  X Window System is a trademark of X Consortium, Inc.
 
-== file ==
-MIT_disclaimer-required.txt
-== copyright ==
-2006 Adam Jackson
-2005-2008 Daniel Stone
-1998 Egbert Eich
-2006-2007 Intel Corporation
-2000-2001 Juliusz Chroboczek
-1999 Keith Packard
-2006 Luc Verhaegen
-2009-2010 NVIDIA Corporation
-2006 Nokia Corporation
-1987-2010 Oracle and/or its affiliates.
-2006-2008 Peter Hutterer
-2007-2009 Red Hat, Inc.
-2006-2009 Simon Thum
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     MIT_disclaimer-required.txt
+Copyright: 1987-2010 Oracle and/or its affiliates.
+           1998 Egbert Eich
+           1999 Keith Packard
+           2000-2001 Juliusz Chroboczek
+           2005-2008 Daniel Stone
+           2006 Adam Jackson
+           2006 Luc Verhaegen
+           2006 Nokia Corporation
+           2006-2007 Intel Corporation
+           2006-2008 Peter Hutterer
+           2006-2009 Simon Thum
+           2007-2009 Red Hat, Inc.
+           2009-2010 NVIDIA Corporation
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -5690,13 +5743,9 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
 
-== file ==
-MPL-1.0.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-MPL-1.0:VARIANT1(version)
-== license_lines ==
+Files:     MPL-1.0.txt
+Copyright: __NO_COPYRIGHT__ in: MPL-1.0.txt
+License:   MPL-1.0:VARIANT1(version)
  The contents of this file are subject to the Mozilla Public License Version 1.0
  (the "License"); you may not use this file except in compliance with the
  License. You may obtain a copy of the License at http://www.mozilla.org/MPL/
@@ -5704,20 +5753,16 @@ MPL-1.0:VARIANT1(version)
  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
  the specific language governing rights and limitations under the License.
  .
- The Original Code is {{---}}.
+ The Original Code is orig.c.
  .
- The Initial Developer of the Original Code is {{---}}. Portions created by
- {{---}} are Copyright (C) {{---}} .
+ The Initial Developer of the Original Code is OLD MAN. Portions created by
+ John Doe are Copyright (C) John Doe .
  .
- Contributor(s): {{---}}.
+ Contributor(s): Foo Bar.
 
-== file ==
-MPL-1.1.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-MPL-1.1:VARIANT1(version)
-== license_lines ==
+Files:     MPL-1.1.txt
+Copyright: __NO_COPYRIGHT__ in: MPL-1.1.txt
+License:   MPL-1.1:VARIANT1(version)
  The contents of this file are subject to the Mozilla Public License Version 1.1
  (the "License"); you may not use this file except in compliance with the
  License. You may obtain a copy of the License at http://www.mozilla.org/MPL/
@@ -5726,46 +5771,34 @@ MPL-1.1:VARIANT1(version)
  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
  the specific language governing rights and limitations under the License.
  .
- The Original Code is {{---}}.
+ The Original Code is foo.c.
  .
- The Initial Developer of the Original Code is {{---}}. Portions created by
- {{---}} are Copyright (C) {{---}}.
+ The Initial Developer of the Original Code is James Brown. Portions created by
+ John Doe and associates are Copyright (C) John Doe and assiciates.
  .
- Contributor(s): {{---}}.
+ Contributor(s): Foo Bar.
  .
  Alternatively, the contents of this file may be used under the terms of the
 
-== file ==
-MPL-2.0-no-copyleft-exception.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-MPL-2.0:VARIANT2-INCOMPATIBLE(version)
-== license_lines ==
+Files:     MPL-2.0-no-copyleft-exception.txt
+Copyright: 2012 Joe Brown
+License:   MPL-2.0:VARIANT2-INCOMPATIBLE(version)
  This Source Code Form is subject to the terms of the Mozilla Public License, v.
  2.0. If a copy of the MPL was not distributed with this file, You can obtain
  one at http://mozilla.org/MPL/2.0/.
  This Source Code Form is “Incompatible With Secondary Licenses”, as defined by
  the Mozilla Public License, v. 2.0.
 
-== file ==
-MPL-2.0.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-MPL-2.0:VARIANT3(version)
-== license_lines ==
+Files:     MPL-2.0.txt
+Copyright: 2012 Joe Brown
+License:   MPL-2.0:VARIANT3(version)
  This Source Code Form is subject to the terms of the Mozilla Public License, v.
  2.0. If a copy of the MPL was not distributed with this file, You can obtain
  one at http://mozilla.org/MPL/2.0/.
 
-== file ==
-Makefile.in.txt
-== copyright ==
-1994-2011 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT2-NOWARRANTY()
-== license_lines ==
+Files:     Makefile.in.txt
+Copyright: 1994-2011 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT2-NOWARRANTY()
  This Makefile.in is free software; the Free Software Foundation
  gives unlimited permission to copy and/or distribute it,
  with or without modifications, as long as this notice is preserved.
@@ -5775,13 +5808,9 @@ PERMISSIVE:VARIANT2-NOWARRANTY()
  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  PARTICULAR PURPOSE.
 
-== file ==
-PERMISSIVE.txt
-== copyright ==
-1994-2009 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT2-NOWARRANTY()
-== license_lines ==
+Files:     PERMISSIVE.txt
+Copyright: 1994-2009 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT2-NOWARRANTY()
  This Makefile.in is free software; the Free Software Foundation
  gives unlimited permission to copy and/or distribute it,
  with or without modifications, as long as this notice is preserved.
@@ -5791,13 +5820,9 @@ PERMISSIVE:VARIANT2-NOWARRANTY()
  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  PARTICULAR PURPOSE.
 
-== file ==
-PERMISSIVE_GNU-ALL.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-PERMISSIVE:VARIANT0-NOWARRANTY()
-== license_lines ==
+Files:     PERMISSIVE_GNU-ALL.txt
+Copyright: 2012 Joe Brown
+License:   PERMISSIVE:VARIANT0-NOWARRANTY()
  Copying and distribution of this file, with or without modification,
  are permitted in any medium without royalty provided the copyright
  notice and this notice are preserved.  This file is offered as-is,
@@ -5805,13 +5830,9 @@ PERMISSIVE:VARIANT0-NOWARRANTY()
  .
  Older versions of this license did not have the second sentence with the express warranty disclaimer.
 
-== file ==
-SGI-B-1.0.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-SGI-B-1.0:EXTRA(version)
-== license_lines ==
+Files:     SGI-B-1.0.txt
+Copyright: 2012 Joe Brown
+License:   SGI-B-1.0:EXTRA(version)
  License Applicability. Except to the extent portions of this file are made
  subject to an alternative license as permitted in the SGI Free Software License
  B, Version 1.0 (the "License"), the contents of this file are subject only to
@@ -5834,13 +5855,44 @@ SGI-B-1.0:EXTRA(version)
  Original Code] Silicon Graphics, Inc. Copyright in any portions created by
  third parties is as indicated elsewhere herein.
 
-== file ==
-SGI-B-1.1.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-SGI-B-1.1:EXTRA(version)
-== license_lines ==
+Files:     SGI-B-1.1-GL.txt
+Copyright: __NO_COPYRIGHT__ in: SGI-B-1.1-GL.txt
+License:   SGI-B-1.1:EXTRA(version)
+ License Applicability. Except to the extent portions of this file are
+ made subject to an alternative license as permitted in the SGI Free
+ Software License B, Version 1.1 (the "License"), the contents of this
+ file are subject only to the provisions of the License. You may not use
+ this file except in compliance with the License. You may obtain a copy
+ of the License at Silicon Graphics, Inc., attn: Legal Services, 1600
+ Amphitheatre Parkway, Mountain View, CA 94043-1351, or at:
+ .
+ http://oss.sgi.com/projects/FreeB
+ .
+ Note that, as provided in the License, the Software is distributed on an
+ "AS IS" basis, with ALL EXPRESS AND IMPLIED WARRANTIES AND CONDITIONS
+ DISCLAIMED, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES AND
+ CONDITIONS OF MERCHANTABILITY, SATISFACTORY QUALITY, FITNESS FOR A
+ PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+ .
+ Original Code. The Original Code is: OpenGL Sample Implementation,
+ Version 1.2.1, released January 26, 2000, developed by Silicon Graphics,
+ Inc. The Original Code is Copyright (c) 1991-2000 Silicon Graphics, Inc.
+ Copyright in any portions created by third parties is as indicated
+ elsewhere herein.
+ .
+ Additional Notice Provisions: The application programming interfaces
+ established by SGI in conjunction with the Original Code are The
+ OpenGL(R) Graphics System: A Specification (Version 1.2.1), released
+ April 1, 1999; The OpenGL(R) Graphics System Utility Library (Version
+ 1.3), released November 4, 1998; and OpenGL(R) Graphics with the X
+ Window System(R) (Version 1.3), released October 19, 1998. This software
+ was created using the OpenGL(R) version 1.2.1 Sample Implementation
+ published by SGI, but has not been independently verified as being
+ compliant with the OpenGL(R) version 1.2.1 Specification.
+
+Files:     SGI-B-1.1.txt
+Copyright: __NO_COPYRIGHT__ in: SGI-B-1.1.txt
+License:   SGI-B-1.1:EXTRA(version)
  License Applicability. Except to the extent portions of this file are made
  subject to an alternative license as permitted in the SGI Free Software License
  B, Version 1.1 (the "License"), the contents of this file are subject only to
@@ -5863,25 +5915,44 @@ SGI-B-1.1:EXTRA(version)
  Original Code] Silicon Graphics, Inc. Copyright in any portions created by
  third parties is as indicated elsewhere herein.
 
-== file ==
-W3C.txt
-== copyright ==
-{{---}} World Wide Web Consortium, (Massachusetts Institute of Technology, European Research Consortium for Informatics and Mathematics, Keio University).
-== ID ==
-W3C:EXTRA()
-== license_lines ==
+Files:     SGI-B-2.0.txt
+Copyright: 1991-2000 Silicon Graphics, Inc.
+License:   SGI-B-2.0:WITH-NOENDORSE()
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the "Software"),
+ to deal in the Software without restriction, including without limitation
+ the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ and/or sell copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice including the dates of first publication and
+ either this permission notice or a reference to
+ http://oss.sgi.com/projects/FreeB/
+ shall be included in all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ SILICON GRAPHICS, INC. BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ .
+ Except as contained in this notice, the name of Silicon Graphics, Inc.
+ shall not be used in advertising or otherwise to promote the sale, use or
+ other dealings in this Software without prior written authorization from
+ Silicon Graphics, Inc.
+
+Files:     W3C.txt
+Copyright: 2000 World Wide Web Consortium, (Massachusetts Institute of Technology, European Research Consortium for Informatics and Mathematics, Keio University).
+License:   W3C:EXTRA()
  This work is distributed under the W3C® Software License in the hope that it
  will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-None
-== file ==
-XFREE86-1.1.txt
-== copyright ==
-1994-2006 The XFree86 Project, Inc.
-== ID ==
-MIT:XORG+BSD(name:)
-== license_lines ==
+Files:     XFREE86-1.1.txt
+Copyright: 1994-2006 The XFree86 Project, Inc.
+License:   MIT:XORG+BSD(name,altname:name=:altname=The XFree86 Project, Inc (http://www.xfree86.org/) and its contributors)
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -5924,13 +5995,9 @@ MIT:XORG+BSD(name:)
  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-== file ==
-XFree86.txt
-== copyright ==
-1997 The XFree86 Project, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     XFree86.txt
+Copyright: 1997 The XFree86 Project, Inc.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -5950,13 +6017,11 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-Zlib.txt
-== copyright ==
-__NO_COPYRIGHT__
-== ID ==
-Zlib:Zlib-EXACT()
-== license_lines ==
+Files:     Zlib.txt
+Copyright: 2013 Zlib Entity
+License:   Zlib:Zlib-EXACT()
+ zlib License
+ .
  This software is provided &apos;as-is&apos;, without any express or implied
  warranty. In no event will the authors be held liable for any damages
  arising from the use of this software.
@@ -5973,13 +6038,9 @@ Zlib:Zlib-EXACT()
  misrepresented as being the original software.
  3. This notice may not be removed or altered from any source distribution.
 
-== file ==
-aclocal.m4.txt
-== copyright ==
-1996-2011 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT2-NOWARRANTY()
-== license_lines ==
+Files:     aclocal.m4.txt
+Copyright: 1996-2011 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT2-NOWARRANTY()
  This file is free software; the Free Software Foundation
  gives unlimited permission to copy and/or distribute it,
  with or without modifications, as long as this notice is preserved.
@@ -5989,13 +6050,9 @@ PERMISSIVE:VARIANT2-NOWARRANTY()
  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  PARTICULAR PURPOSE.
 
-== file ==
-config.guess.txt
-== copyright ==
-1992-2012 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later) with autoconf exception1
-== license_lines ==
+Files:     config.guess.txt
+Copyright: 1992-2012 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  This file is free software; you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -6025,13 +6082,9 @@ GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-config.sub.txt
-== copyright ==
-1992-2012 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later) with autoconf exception1
-== license_lines ==
+Files:     config.sub.txt
+Copyright: 1992-2012 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  This file is (in principle) common to ALL GNU software.
  The presence of a machine in this file suggests that SOME GNU software
  can handle that machine.  It does not imply ALL GNU software can.
@@ -6057,14 +6110,10 @@ GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-configure.ac.txt
-== copyright ==
-2007-2010 Lawrence Livermore National Security, LLC.
-2007 The Regents of the University of California. Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).  Brian Behlendorf <behlendorf1@llnl.gov>. UCRL-CODE-235197
-== ID ==
-GPL-2.0+:VARIANT1(version,later)
-== license_lines ==
+Files:     configure.ac.txt
+Copyright: 2007 The Regents of the University of California. Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).  Brian Behlendorf <behlendorf1@llnl.gov>. UCRL-CODE-235197
+           2007-2010 Lawrence Livermore National Security, LLC.
+License:   GPL-2.0+:VARIANT1(version,later)
  This file is part of the SPL, Solaris Porting Layer.
  For details, see <http://zfsonlinux.org/>.
  .
@@ -6084,23 +6133,15 @@ GPL-2.0+:VARIANT1(version,later)
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-configure.txt
-== copyright ==
-1992-2010 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT5()
-== license_lines ==
+Files:     configure.txt
+Copyright: 1992-2010 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT5()
  This configure script is free software; the Free Software Foundation
  gives unlimited permission to copy, distribute and modify it.
 
-== file ==
-depcomp.txt
-== copyright ==
-1999-2011 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later) with autoconf exception1
-== license_lines ==
+Files:     depcomp.txt
+Copyright: 1999-2011 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2, or (at your option)
@@ -6124,13 +6165,9 @@ GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-install-sh.txt
-== copyright ==
-1994 X Consortium
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     install-sh.txt
+Copyright: 1994 X Consortium
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to
  deal in the Software without restriction, including without limitation the
@@ -6162,24 +6199,16 @@ MIT:GENERIC-WITH-NOENDORSE()
  This script is compatible with the BSD install script, but was written
  from scratch.
 
-== file ==
-libtool.m4.txt
-== copyright ==
-1996-2011 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT3()
-== license_lines ==
+Files:     libtool.m4.txt
+Copyright: 1996-2011 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT3()
  This file is free software; the Free Software Foundation gives
  unlimited permission to copy and/or distribute it, with or without
  modifications, as long as this notice is preserved.
 
-== file ==
-ltmain.sh.txt
-== copyright ==
-1996-2011 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later) with libtool exception1
-== license_lines ==
+Files:     ltmain.sh.txt
+Copyright: 1996-2011 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later) with libtool exception1
  This is free software; see the source for copying conditions.  There is NO
  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  .
@@ -6207,57 +6236,37 @@ GPL-2.0+:VARIANT1(version,later) with libtool exception1
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-ltoptions.m4.txt
-== copyright ==
-2004-2009 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT3()
-== license_lines ==
+Files:     ltoptions.m4.txt
+Copyright: 2004-2009 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT3()
  This file is free software; the Free Software Foundation gives
  unlimited permission to copy and/or distribute it, with or without
  modifications, as long as this notice is preserved.
 
-== file ==
-ltsugar.m4.txt
-== copyright ==
-2004-2008 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT3()
-== license_lines ==
+Files:     ltsugar.m4.txt
+Copyright: 2004-2008 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT3()
  This file is free software; the Free Software Foundation gives
  unlimited permission to copy and/or distribute it, with or without
  modifications, as long as this notice is preserved.
 
-== file ==
-ltversion.m4.txt
-== copyright ==
-2004 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT3()
-== license_lines ==
+Files:     ltversion.m4.txt
+Copyright: 2004 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT3()
  This file is free software; the Free Software Foundation gives
  unlimited permission to copy and/or distribute it, with or without
  modifications, as long as this notice is preserved.
 
-== file ==
-lt~obsolete.m4.txt
-== copyright ==
-2004-2009 Free Software Foundation, Inc.
-== ID ==
-PERMISSIVE:VARIANT3()
-== license_lines ==
+Files:     lt~obsolete.m4.txt
+Copyright: 2004-2009 Free Software Foundation, Inc.
+License:   PERMISSIVE:VARIANT3()
  This file is free software; the Free Software Foundation gives
  unlimited permission to copy and/or distribute it, with or without
  modifications, as long as this notice is preserved.
 
-== file ==
-missing.txt
-== copyright ==
-1996-2012 Free Software Foundation, Inc.
-== ID ==
-GPL-2.0+:VARIANT1(version,later) with autoconf exception1
-== license_lines ==
+Files:     missing.txt
+Copyright: 1996-2012 Free Software Foundation, Inc.
+License:   GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2, or (at your option)
@@ -6279,27 +6288,23 @@ GPL-2.0+:VARIANT1(version,later) with autoconf exception1
  On Debian systems, the complete text of the GNU General Public License
  Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
 
-== file ==
-mit_001.txt
-== copyright ==
-2006 Adam Jackson
-2005-2008 Daniel Stone
-2011 Dave Airlie
-1998 Egbert Eich
-2003-2013 Geert Uytterhoeven
-2006-2007 Intel Corporation
-2000-2001 Juliusz Chroboczek
-1999 Keith Packard
-2006 Luc Verhaegen
-2009-2010 NVIDIA Corporation
-2006 Nokia Corporation
-1987-2010 Oracle and/or its affiliates.
-2006-2008 Peter Hutterer
-2007-2009 Red Hat, Inc.
-2006-2009 Simon Thum
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_001.txt
+Copyright: 1987-2010 Oracle and/or its affiliates.
+           1998 Egbert Eich
+           1999 Keith Packard
+           2000-2001 Juliusz Chroboczek
+           2003-2013 Geert Uytterhoeven
+           2005-2008 Daniel Stone
+           2006 Adam Jackson
+           2006 Luc Verhaegen
+           2006 Nokia Corporation
+           2006-2007 Intel Corporation
+           2006-2008 Peter Hutterer
+           2006-2009 Simon Thum
+           2007-2009 Red Hat, Inc.
+           2009-2010 NVIDIA Corporation
+           2011 Dave Airlie
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -6319,14 +6324,10 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_002.txt
-== copyright ==
-2005-2008 Colin Harrison
-1994-2003 The XFree86 Project, Inc.
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_002.txt
+Copyright: 1994-2003 The XFree86 Project, Inc.
+           2005-2008 Colin Harrison
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy of
  this software and associated documentation files (the "Software"), to deal in
  the Software without restriction, including without limitation the rights to
@@ -6348,13 +6349,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  be used in advertising or otherwise to promote the sale, use or other dealings
  in this Software without prior written authorization from the XFree86 Project.
 
-== file ==
-mit_003.txt
-== copyright ==
-1997 The XFree86 Project, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_003.txt
+Copyright: 1997 The XFree86 Project, Inc.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -6374,14 +6371,10 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_004.txt
-== copyright ==
-2002 Red Hat Inc., Durham, North Carolina.
-1985-2001 The Open Group
-== ID ==
-ISC:ISC-LAST-NOENDORSE()
-== license_lines ==
+Files:     mit_004.txt
+Copyright: 1985-2001 The Open Group
+           2002 Red Hat Inc., Durham, North Carolina.
+License:   ISC:ISC-LAST-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -6402,13 +6395,9 @@ ISC:ISC-LAST-NOENDORSE()
  used in advertising or otherwise to promote the sale, use or other dealings
  in this Software without prior written authorization from The Open Group.
 
-== file ==
-mit_005.txt
-== copyright ==
-1987-1995 X Consortium
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_005.txt
+Copyright: 1987-1995 X Consortium
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -6430,13 +6419,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  used in advertising or otherwise to promote the sale, use or other dealings
  in this Software without prior written authorization from the X Consortium.
 
-== file ==
-mit_006.txt
-== copyright ==
-2008 Tungsten Graphics, Inc., Cedar Park, Texas.
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_006.txt
+Copyright: 2008 Tungsten Graphics, Inc., Cedar Park, Texas.
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -6457,14 +6442,10 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_007.txt
-== copyright ==
-2007 Red Hat, Inc.
-1999-2000 SuSE, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_007.txt
+Copyright: 1999-2000 SuSE, Inc.
+           2007 Red Hat, Inc.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -6482,15 +6463,11 @@ ISC:ISC-MID-NOENDORSE()
  OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_008.txt
-== copyright ==
-1987-1993 Digital Equipment Corporation, Maynard, Massachusetts.
-1991 Massachusetts Institute of Technology, Cambridge, Massachusetts.
-1991-1993 Olivetti Research Limited, Cambridge, England.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_008.txt
+Copyright: 1987-1993 Digital Equipment Corporation, Maynard, Massachusetts.
+           1991 Massachusetts Institute of Technology, Cambridge, Massachusetts.
+           1991-1993 Olivetti Research Limited, Cambridge, England.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -6507,14 +6484,10 @@ ISC:ISC-MID-NOENDORSE()
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_009.txt
-== copyright ==
-1987 Digital Equipment Corporation, Maynard, Massachusetts,
-1994 Quarterdeck Office Systems.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_009.txt
+Copyright: 1987 Digital Equipment Corporation, Maynard, Massachusetts,
+           1994 Quarterdeck Office Systems.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -6532,13 +6505,9 @@ ISC:ISC-MID-NOENDORSE()
  OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
  OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_010.txt
-== copyright ==
-1997 Digital Equipment Corporation.
-== ID ==
-MIT:DEC()
-== license_lines ==
+Files:     mit_010.txt
+Copyright: 1997 Digital Equipment Corporation.
+License:   MIT:DEC()
  This software is furnished under license and may be used and copied only in
  accordance with the following terms and conditions.  Subject to these
  conditions, you may download, copy, install, use, modify and distribute
@@ -6565,13 +6534,9 @@ MIT:DEC()
  negligence, tort, under statute, in equity, at law or otherwise, even
  if advised of the possibility of such damage.
 
-== file ==
-mit_011.txt
-== copyright ==
-1991-1997 Digital Equipment Corporation, Maynard, Massachusetts.
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_011.txt
+Copyright: 1991-1997 Digital Equipment Corporation, Maynard, Massachusetts.
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -6593,16 +6558,10 @@ MIT:GENERIC-WITH-NOENDORSE()
  shall not be used in advertising or otherwise to promote the sale, use or other
  dealings in this Software without prior written authorization from Digital
  Equipment Corporation.
- .
- SGI FREE SOFTWARE LICENSE B (Version 2.0, Sept. 18, 2008)
 
-== file ==
-mit_012.txt
-== copyright ==
-1991-2000 Silicon Graphics, Inc.
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE()
-== license_lines ==
+Files:     mit_012.txt
+Copyright: 1991-2000 Silicon Graphics, Inc.
+License:   SGI-B-2.0:W/O-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -6623,13 +6582,9 @@ MIT:GENERIC-W/O-NOENDORSE()
  OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 
-== file ==
-mit_013.txt
-== copyright ==
-1994-1995 Hewlett-Packard Company
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_013.txt
+Copyright: 1994-1995 Hewlett-Packard Company
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -6654,13 +6609,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  sale, use or other dealings in this Software without prior written
  authorization from the Hewlett-Packard Company.
 
-== file ==
-mit_014.txt
-== copyright ==
-1989 Hewlett-Packard Company, Palo Alto, California.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_014.txt
+Copyright: 1989 Hewlett-Packard Company, Palo Alto, California.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -6677,15 +6628,11 @@ ISC:ISC-MID-NOENDORSE()
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_015.txt
-== copyright ==
-2001-2004 Red Hat Inc., Durham, North Carolina.
-2004-2005 Red Hat Inc., Raleigh, North Carolina.
-2003 the XFree86 Project, Inc.
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_015.txt
+Copyright: 2001-2004 Red Hat Inc., Durham, North Carolina.
+           2003 the XFree86 Project, Inc.
+           2004-2005 Red Hat Inc., Raleigh, North Carolina.
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -6707,14 +6654,10 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 
-== file ==
-mit_016.txt
-== copyright ==
-2008 Red Hat, Inc.
-2000 SuSE, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_016.txt
+Copyright: 2000 SuSE, Inc.
+           2008 Red Hat, Inc.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software
  and its documentation for any purpose is hereby granted without
  fee, provided that the above copyright notice appear in all copies
@@ -6751,14 +6694,10 @@ ISC:ISC-MID-NOENDORSE()
  OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_017.txt
-== copyright ==
-1998-1999 Precision Insight, Inc., Cedar Park, Texas.
-2006 Red Hat, Inc.
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_017.txt
+Copyright: 1998-1999 Precision Insight, Inc., Cedar Park, Texas.
+           2006 Red Hat, Inc.
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -6778,14 +6717,10 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
  THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_018.txt
-== copyright ==
-2004 Red Hat Inc., Durham, North Carolina.
-1995 X Consortium
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_018.txt
+Copyright: 1995 X Consortium
+           2004 Red Hat Inc., Durham, North Carolina.
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -6811,16 +6746,12 @@ MIT:GENERIC-WITH-NOENDORSE()
  use or other dealings in this Software without prior written
  authorization from the X Consortium.
 
-== file ==
-mit_019.txt
-== copyright ==
-2002-2009 Apple Computer, Inc.
-1998-2000 Precision Insight, Inc., Cedar Park, Texas.
-2003-2004 Torrey T. Lyons.
-2000 VA Linux Systems, Inc.
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_019.txt
+Copyright: 1998-2000 Precision Insight, Inc., Cedar Park, Texas.
+           2000 VA Linux Systems, Inc.
+           2002-2009 Apple Computer, Inc.
+           2003-2004 Torrey T. Lyons.
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -6841,13 +6772,9 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_020.txt
-== copyright ==
-2003 IBM Corporation
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_020.txt
+Copyright: 2003 IBM Corporation
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -6867,13 +6794,9 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_021.txt
-== copyright ==
-2004-2005 IBM Corporation
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_021.txt
+Copyright: 2004-2005 IBM Corporation
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -6894,13 +6817,9 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 
-== file ==
-mit_022.txt
-== copyright ==
-1997 Metro Link Incorporated
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_022.txt
+Copyright: 1997 Metro Link Incorporated
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -6923,14 +6842,10 @@ MIT:GENERIC-WITH-NOENDORSE()
  used in advertising or otherwise to promote the sale, use or other dealings
  in this Software without prior written authorization from Metro Link.
 
-== file ==
-mit_023.txt
-== copyright ==
-1997 Matthieu Herrb
-1995-1998 Metro Link, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_023.txt
+Copyright: 1995-1998 Metro Link, Inc.
+           1997 Matthieu Herrb
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -6949,13 +6864,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_024.txt
-== copyright ==
-1998 Metro Link Incorporated
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_024.txt
+Copyright: 1998 Metro Link Incorporated
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software
  and its documentation for any purpose is hereby granted without fee,
  provided that the above copyright notice appear in all copies and that
@@ -6976,13 +6887,9 @@ ISC:ISC-MID-NOENDORSE()
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_025.txt
-== copyright ==
-2000 Conectiva S.A. (http://www.conectiva.com)
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_025.txt
+Copyright: 2000 Conectiva S.A. (http://www.conectiva.com)
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -7006,13 +6913,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  dealings in this Software without prior written authorization from
  Conectiva Linux.
 
-== file ==
-mit_026.txt
-== copyright ==
-2001 Andy Ritger  aritger@nvidia.com
-== ID ==
-BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
-== license_lines ==
+Files:     mit_026.txt
+Copyright: 2001 Andy Ritger  aritger@nvidia.com
+License:   BSD-3-Clause:GENERIC(name:name=THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -7043,13 +6946,9 @@ BSD-3-Clause:GENERIC(name:THE COPYRIGHT HOLDERS AND CONTRIBUTORS)
  On Debian systems, the complete text of the BSD 3-clause "New" or "Revised"
  License can be found in `/usr/share/common-licenses/BSD'.
 
-== file ==
-mit_027.txt
-== copyright ==
-1992 Vrije Universiteit, The Netherlands
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_027.txt
+Copyright: 1992 Vrije Universiteit, The Netherlands
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted, provided
  that the above copyright notice appear in all copies and that both that
@@ -7068,13 +6967,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_028.txt
-== copyright ==
-1998 Concurrent Computer Corporation
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_028.txt
+Copyright: 1998 Concurrent Computer Corporation
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software
  and its documentation for any purpose is hereby granted without fee,
  provided that the above copyright notice appear in all copies and that
@@ -7095,13 +6990,9 @@ ISC:ISC-MID-NOENDORSE()
  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_029.txt
-== copyright ==
-2004 Nokia
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_029.txt
+Copyright: 2004 Nokia
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7120,13 +7011,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_030.txt
-== copyright ==
-1988-1991 Adobe Systems Incorporated.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_030.txt
+Copyright: 1988-1991 Adobe Systems Incorporated.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sublicense this software and its
  documentation for any purpose and without fee is hereby granted, provided that
  the above copyright notices appear in all copies and that both those copyright
@@ -7155,13 +7042,9 @@ ISC:ISC-MID-NOENDORSE()
  Adobe, PostScript, and Display PostScript are trademarks of Adobe Systems
  Incorporated which may be registered in certain jurisdictions.
 
-== file ==
-mit_031.txt
-== copyright ==
-1989 Network Computing Devices, Inc., Mountain View, California.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_031.txt
+Copyright: 1989 Network Computing Devices, Inc., Mountain View, California.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted, provided
  that the above copyright notice appear in all copies and that both that
@@ -7172,13 +7055,9 @@ ISC:ISC-MID-NOENDORSE()
  suitability of this software for any purpose.  It is provided "as is"
  without express or implied warranty.
 
-== file ==
-mit_032.txt
-== copyright ==
-1987 the Regents of the University of California
-== ID ==
-ISC:ISC-W/O-NOENDORSE()
-== license_lines ==
+Files:     mit_032.txt
+Copyright: 1987 the Regents of the University of California
+License:   ISC:ISC-W/O-NOENDORSE()
  Permission to use, copy, modify, and distribute this
  software and its documentation for any purpose and without
  fee is hereby granted, provided that the above copyright
@@ -7187,14 +7066,10 @@ ISC:ISC-W/O-NOENDORSE()
  software for any purpose.  It is provided "as is" without
  express or implied warranty.
 
-== file ==
-mit_033.txt
-== copyright ==
-1992-1993 Data General Corporation;
-1992-1993 OMRON Corporation
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_033.txt
+Copyright: 1992-1993 Data General Corporation;
+           1992-1993 OMRON Corporation
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that the
  above copyright notice appear in all copies and that both that copyright
@@ -7213,16 +7088,12 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
  OF THIS SOFTWARE.
 
-== file ==
-mit_034.txt
-== copyright ==
-2002 Apple Computer, Inc.
-1998-2006 Keith Packard
-2000-2002 Keith Packard, member of The XFree86 Project, Inc.
-2003 Torrey T. Lyons.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_034.txt
+Copyright: 1998-2006 Keith Packard
+           2000-2002 Keith Packard, member of The XFree86 Project, Inc.
+           2002 Apple Computer, Inc.
+           2003 Torrey T. Lyons.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7241,17 +7112,13 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_035.txt
-== copyright ==
-2000 Compaq Computer Corporation
-1999 Keith Packard
-2002 MontaVista Software Inc.
-2006 Nokia Corporation
-2005 OpenedHand Ltd.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_035.txt
+Copyright: 1999 Keith Packard
+           2000 Compaq Computer Corporation
+           2002 MontaVista Software Inc.
+           2005 OpenedHand Ltd.
+           2006 Nokia Corporation
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7271,13 +7138,9 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_036.txt
-== copyright ==
-1993 Davor Matic
-== ID ==
-ISC:ISC-W/O-NOENDORSE()
-== license_lines ==
+Files:     mit_036.txt
+Copyright: 1993 Davor Matic
+License:   ISC:ISC-W/O-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software
  and its documentation for any purpose is hereby granted without fee,
  provided that the above copyright notice appear in all copies and that
@@ -7286,14 +7149,10 @@ ISC:ISC-W/O-NOENDORSE()
  the suitability of this software for any purpose.  It is provided "as
  is" without express or implied warranty.
 
-== file ==
-mit_037.txt
-== copyright ==
-2005-2008 Colin Harrison
-2001-2004 Harold L Hunt II
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_037.txt
+Copyright: 2001-2004 Harold L Hunt II
+           2005-2008 Colin Harrison
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -7318,13 +7177,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  or other dealings in this Software without prior written authorization
  from Harold L Hunt II.
 
-== file ==
-mit_038.txt
-== copyright ==
-1990-1991 Thomas Roell, Dinkelscherben, Germany.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_038.txt
+Copyright: 1990-1991 Thomas Roell, Dinkelscherben, Germany.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7343,14 +7198,10 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_039.txt
-== copyright ==
-1993 David Wexelblat <dwex@goblin.org>
-1990-1991 Thomas Roell, Dinkelscherben, Germany
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_039.txt
+Copyright: 1990-1991 Thomas Roell, Dinkelscherben, Germany
+           1993 David Wexelblat <dwex@goblin.org>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7370,14 +7221,10 @@ ISC:ISC-MID-NOENDORSE()
  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_040.txt
-== copyright ==
-1991-1993 SGCS (Snitily Graphics Consulting Services), USA.
-1990-1993 Thomas Roell, Germany.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_040.txt
+Copyright: 1990-1993 Thomas Roell, Germany.
+           1991-1993 SGCS (Snitily Graphics Consulting Services), USA.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software
  and its documentation for any purpose is hereby granted without fee,
  provided that the above copyright notice appear in all copies and
@@ -7397,14 +7244,10 @@ ISC:ISC-MID-NOENDORSE()
  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_041.txt
-== copyright ==
-2000-2002 Alan Hourihane, Flint Mountain, North Wales.
-1998 Alan Hourihane, Wigan, England.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_041.txt
+Copyright: 1998 Alan Hourihane, Wigan, England.
+           2000-2002 Alan Hourihane, Flint Mountain, North Wales.
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7423,13 +7266,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_042.txt
-== copyright ==
-1995 Kaleb S. KEITHLEY
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_042.txt
+Copyright: 1995 Kaleb S. KEITHLEY
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -7454,13 +7293,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  or other dealings in this Software without prior written authorization
  from Kaleb S. KEITHLEY
 
-== file ==
-mit_043.txt
-== copyright ==
-1997 Matthieu Herrb
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_043.txt
+Copyright: 1997 Matthieu Herrb
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7479,13 +7314,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_044.txt
-== copyright ==
-2004 Egbert Eich
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_044.txt
+Copyright: 2004 Egbert Eich
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to
  deal in the Software without restriction, including without limitation the
@@ -7507,15 +7338,11 @@ MIT:GENERIC-WITH-NOENDORSE()
  be used in advertising or otherwise to promote the sale, use or other deal-
  ings in this Software without prior written authorization from Egbert Eich.
 
-== file ==
-mit_045.txt
-== copyright ==
-1993 David McCullough <davidm@stallion.oz.au>
-1993 David Wexelblat <dwex@goblin.org>
-2005 Kean Johnston <jkj@sco.com>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_045.txt
+Copyright: 1993 David McCullough <davidm@stallion.oz.au>
+           1993 David Wexelblat <dwex@goblin.org>
+           2005 Kean Johnston <jkj@sco.com>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7534,14 +7361,10 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_046.txt
-== copyright ==
-1993 David Wexelblat <dwex@goblin.org>
-1992 Orest Zborowski <obz@Kodak.com>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_046.txt
+Copyright: 1992 Orest Zborowski <obz@Kodak.com>
+           1993 David Wexelblat <dwex@goblin.org>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7561,14 +7384,10 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_047.txt
-== copyright ==
-1993 David Dawes <dawes@xfree86.org>
-1992 Orest Zborowski <obz@Kodak.com>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_047.txt
+Copyright: 1992 Orest Zborowski <obz@Kodak.com>
+           1993 David Dawes <dawes@xfree86.org>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7588,13 +7407,9 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_048.txt
-== copyright ==
-1995-1999 Frederic Lepied, France. <fred@sugix.frmug.fr.net>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_048.txt
+Copyright: 1995-1999 Frederic Lepied, France. <fred@sugix.frmug.fr.net>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is  hereby granted without fee, provided that
  the  above copyright   notice appear  in   all  copies and  that both  that
@@ -7613,14 +7428,10 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS  ACTION, ARISING    OUT OF OR   IN  CONNECTION  WITH THE USE    OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_049.txt
-== copyright ==
-1993 David Wexelblat <dwex@goblin.org>
-1992 Rich Murphey <Rich@Rice.edu>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_049.txt
+Copyright: 1992 Rich Murphey <Rich@Rice.edu>
+           1993 David Wexelblat <dwex@goblin.org>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7640,14 +7451,10 @@ ISC:ISC-MID-NOENDORSE()
  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_050.txt
-== copyright ==
-1993 David Dawes <dawes@xfree86.org>
-1992 Rich Murphey <Rich@Rice.edu>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_050.txt
+Copyright: 1992 Rich Murphey <Rich@Rice.edu>
+           1993 David Dawes <dawes@xfree86.org>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7667,13 +7474,9 @@ ISC:ISC-MID-NOENDORSE()
  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_051.txt
-== copyright ==
-2003-2004 Anders Carlsson
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_051.txt
+Copyright: 2003-2004 Anders Carlsson
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7692,15 +7495,11 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_052.txt
-== copyright ==
-2003 Anders Carlsson
-2003-2004 Eric Anholt
-2004 Keith Packard
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_052.txt
+Copyright: 2003 Anders Carlsson
+           2003-2004 Eric Anholt
+           2004 Keith Packard
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7719,13 +7518,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_053.txt
-== copyright ==
-1998 Todd C. Miller <Todd.Miller@courtesan.com>
-== ID ==
-ISC:ISC-W/O-NOENDORSE()
-== license_lines ==
+Files:     mit_053.txt
+Copyright: 1998 Todd C. Miller <Todd.Miller@courtesan.com>
+License:   ISC:ISC-W/O-NOENDORSE()
  Permission to use, copy, modify, and distribute this software for any
  purpose with or without fee is hereby granted, provided that the above
  copyright notice and this permission notice appear in all copies.
@@ -7738,13 +7533,9 @@ ISC:ISC-W/O-NOENDORSE()
  OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_054.txt
-== copyright ==
-2003-2004 Philip Blundell
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_054.txt
+Copyright: 2003-2004 Philip Blundell
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7763,17 +7554,13 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_055.txt
-== copyright ==
-2003 David H. Dawes.
-1997 Metro Link, Inc.
-1994-2003 The XFree86 Project, Inc.
-2003 X-Oz Technologies.
-2004 X.Org Foundation
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_055.txt
+Copyright: 1994-2003 The XFree86 Project, Inc.
+           1997 Metro Link, Inc.
+           2003 David H. Dawes.
+           2003 X-Oz Technologies.
+           2004 X.Org Foundation
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -7797,24 +7584,20 @@ MIT:GENERIC-WITH-NOENDORSE()
  the sale, use or other dealings in this Software without prior written
  authorization from the copyright holder(s) and author(s).
 
-== file ==
-mit_056.txt
-== copyright ==
-2000 Compaq Computer Corporation
-1999 David Holland <davidh@iquest.net>
-1993 David Wexelblat <dwex@goblin.org>
-2008 George Sapountzis <gsap7@yahoo.gr>
-2002 Hewlett-Packard Company
-2006 Intel Corporation
-2006-2007 Keith Packard
-2004 Nicholas Miell
-2008 Red Hat, Inc
-2004-2005 Red Hat, Inc.
-1990-1991 Thomas Roell, Dinkelscherben, Germany
-2005 Trolltech AS
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_056.txt
+Copyright: 1990-1991 Thomas Roell, Dinkelscherben, Germany
+           1993 David Wexelblat <dwex@goblin.org>
+           1999 David Holland <davidh@iquest.net>
+           2000 Compaq Computer Corporation
+           2002 Hewlett-Packard Company
+           2004 Nicholas Miell
+           2004-2005 Red Hat, Inc.
+           2005 Trolltech AS
+           2006 Intel Corporation
+           2006-2007 Keith Packard
+           2008 George Sapountzis <gsap7@yahoo.gr>
+           2008 Red Hat, Inc
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that copyright
@@ -7834,13 +7617,10 @@ ISC:ISC-MID-NOENDORSE()
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_057.txt
-== copyright ==
-2000 Keith Packard, member of The XFree86 Project, Inc. 2005 Lars Knoll & Zack Rusin, Trolltech
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_057.txt
+Copyright: 2000 Keith Packard, member of The XFree86 Project, Inc.
+           2005 Lars Knoll & Zack Rusin, Trolltech
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -7860,17 +7640,13 @@ ISC:ISC-MID-NOENDORSE()
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_058.txt
-== copyright ==
-2000-2001 Nokia Home Communications
-2007-2008 Red Hat, Inc.
-1987-1998 The Open Group
-1998-2001 The XFree86 Project, Inc.
-2000 VA Linux Systems, Inc.
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_058.txt
+Copyright: 1987-1998 The Open Group
+           1998-2001 The XFree86 Project, Inc.
+           2000 VA Linux Systems, Inc.
+           2000-2001 Nokia Home Communications
+           2007-2008 Red Hat, Inc.
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -7896,13 +7672,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  or other dealings in this Software without prior written authorization
  of the copyright holder.
 
-== file ==
-mit_059.txt
-== copyright ==
-1996 Thomas E. Dickey <dickey@clark.net>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_059.txt
+Copyright: 1996 Thomas E. Dickey <dickey@clark.net>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, and distribute this software and its
  documentation for any purpose and without fee is hereby granted,
  provided that the above copyright notice appear in all copies and that
@@ -7920,20 +7692,16 @@ ISC:ISC-MID-NOENDORSE()
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_060.txt
-== copyright ==
-2004-2005 Alexander Gottwald
-2001 Andreas Monitzer.
-2002-2003 Apple Computer, Inc.
-2002-2009 Apple Inc.
-2001-2004 Greg Parker.
-2007 Jeremy Huddleston
-1998-1999 Precision Insight, Inc., Cedar Park, Texas.
-2001-2004 Torrey T. Lyons
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_060.txt
+Copyright: 1998-1999 Precision Insight, Inc., Cedar Park, Texas.
+           2001 Andreas Monitzer.
+           2001-2004 Greg Parker.
+           2001-2004 Torrey T. Lyons
+           2002-2003 Apple Computer, Inc.
+           2002-2009 Apple Inc.
+           2004-2005 Alexander Gottwald
+           2007 Jeremy Huddleston
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -7956,14 +7724,10 @@ MIT:GENERIC-WITH-NOENDORSE()
  holders shall not be used in advertising or otherwise to promote the sale,
  use or other dealings in this Software without prior written authorization.
 
-== file ==
-mit_061.txt
-== copyright ==
-1999-2000 Eric Sunshine <sunshine@sunshineco.com>
-2001-2005 Thomas Winischhofer, Vienna, Austria.
-== ID ==
-BSD-3-Clause:GENERIC(name:THE AUTHOR)
-== license_lines ==
+Files:     mit_061.txt
+Copyright: 1999-2000 Eric Sunshine <sunshine@sunshineco.com>
+           2001-2005 Thomas Winischhofer, Vienna, Austria.
+License:   BSD-3-Clause:GENERIC(name:name=THE AUTHOR)
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -7989,13 +7753,9 @@ BSD-3-Clause:GENERIC(name:THE AUTHOR)
  On Debian systems, the complete text of the BSD 3-clause "New" or "Revised"
  License can be found in `/usr/share/common-licenses/BSD'.
 
-== file ==
-mit_062.txt
-== copyright ==
-2005 Bogdan D. bogdand@users.sourceforge.net
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_062.txt
+Copyright: 2005 Bogdan D. bogdand@users.sourceforge.net
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy of
  this software and associated documentation files (the "Software"), to deal in
  the Software without restriction, including without limitation the rights to
@@ -8017,13 +7777,9 @@ MIT:GENERIC-WITH-NOENDORSE()
  advertising or otherwise to promote the sale, use or other dealings in this
  Software without prior written authorization from the author.
 
-== file ==
-mit_063.txt
-== copyright ==
-2002 David Dawes
-== ID ==
-MIT:GENERIC-WITH-NOENDORSE()
-== license_lines ==
+Files:     mit_063.txt
+Copyright: 2002 David Dawes
+License:   MIT:GENERIC-WITH-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -8047,16 +7803,12 @@ MIT:GENERIC-WITH-NOENDORSE()
  dealings in this Software without prior written authorization from
  the author(s).
 
-== file ==
-mit_064.txt
-== copyright ==
-2008 Bart Trojanowski, Symbio Technologies, LLC
-David Mosberger-Tang
-1999 Egbert Eich
-1996-1999 SciTech Software, Inc.
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_064.txt
+Copyright: 1996-1999 SciTech Software, Inc.
+           1999 Egbert Eich
+           2008 Bart Trojanowski, Symbio Technologies, LLC
+           David Mosberger-Tang
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and
  its documentation for any purpose is hereby granted without fee,
  provided that the above copyright notice appear in all copies and that
@@ -8075,13 +7827,9 @@ ISC:ISC-MID-NOENDORSE()
  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_065.txt
-== copyright ==
-2005-2006 Luc Verhaegen.
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE()
-== license_lines ==
+Files:     mit_065.txt
+Copyright: 2005-2006 Luc Verhaegen.
+License:   MIT:GENERIC-W/O-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -8100,15 +7848,11 @@ MIT:GENERIC-W/O-NOENDORSE()
  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_066.txt
-== copyright ==
-2002 David Dawes
-2000 Egbert Eich
-1995 Robin Cutshaw <robin@XFree86.Org>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_066.txt
+Copyright: 1995 Robin Cutshaw <robin@XFree86.Org>
+           2000 Egbert Eich
+           2002 David Dawes
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -8128,13 +7872,9 @@ ISC:ISC-MID-NOENDORSE()
  IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_067.txt
-== copyright ==
-1997-2004 Marc Aurele La France (TSI @ UQV), tsi@xfree86.org
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_067.txt
+Copyright: 1997-2004 Marc Aurele La France (TSI @ UQV), tsi@xfree86.org
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that copyright
@@ -8153,23 +7893,19 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
  OF THIS SOFTWARE.
 
-== file ==
-mit_068.txt
-== copyright ==
-1992 David Dawes <dawes@XFree86.org>
-1993 David Wexelblat <dwex@XFree86.org>
-1994-1996 Holger Veit <Holger.Veit@gmd.de>
-1992 Jim Tsillas <jtsilla@damon.ccs.northeastern.edu>
-1992 Orest Zborowski <obz@eskimo.com>
-1992 Rich Murphey <Rich@Rice.edu>
-1992 Robert Baron <Robert.Baron@ernst.mach.cs.cmu.edu>
-1997 Takis Psarogiannakopoulos <takis@dpmms.cam.ac.uk>
-1994-2003 The XFree86 Project, Inc
-1990-1991 Thomas Roell, Dinkelscherben, Germany
-1993 Vrije Universiteit, The Netherlands
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_068.txt
+Copyright: 1990-1991 Thomas Roell, Dinkelscherben, Germany
+           1992 David Dawes <dawes@XFree86.org>
+           1992 Jim Tsillas <jtsilla@damon.ccs.northeastern.edu>
+           1992 Orest Zborowski <obz@eskimo.com>
+           1992 Rich Murphey <Rich@Rice.edu>
+           1992 Robert Baron <Robert.Baron@ernst.mach.cs.cmu.edu>
+           1993 David Wexelblat <dwex@XFree86.org>
+           1993 Vrije Universiteit, The Netherlands
+           1994-1996 Holger Veit <Holger.Veit@gmd.de>
+           1994-2003 The XFree86 Project, Inc
+           1997 Takis Psarogiannakopoulos <takis@dpmms.cam.ac.uk>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -8189,13 +7925,9 @@ ISC:ISC-MID-NOENDORSE()
  IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_069.txt
-== copyright ==
-2001-2005 J. Kean Johnston <jkj@sco.com>
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_069.txt
+Copyright: 2001-2005 J. Kean Johnston <jkj@sco.com>
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -8214,13 +7946,9 @@ ISC:ISC-MID-NOENDORSE()
  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_070.txt
-== copyright ==
-2000 Jakub Jelinek (jakub@redhat.com)
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE()
-== license_lines ==
+Files:     mit_070.txt
+Copyright: 2000 Jakub Jelinek (jakub@redhat.com)
+License:   MIT:GENERIC-W/O-NOENDORSE()
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -8238,13 +7966,9 @@ MIT:GENERIC-W/O-NOENDORSE()
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_071.txt
-== copyright ==
-1997-1998 UCHIYAMA Yasushi
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_071.txt
+Copyright: 1997-1998 UCHIYAMA Yasushi
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -8263,13 +7987,11 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_072.txt
-== copyright ==
-2000 Keith Packard 2004 Eric Anholt 2005 Zack Rusin
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_072.txt
+Copyright: 2000 Keith Packard
+           2004 Eric Anholt
+           2005 Zack Rusin
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -8289,13 +8011,9 @@ ISC:ISC-MID-NOENDORSE()
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
 
-== file ==
-mit_073.txt
-== copyright ==
-2002-2007 IBM Corporation
-== ID ==
-MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
-== license_lines ==
+Files:     mit_073.txt
+Copyright: 2002-2007 IBM Corporation
+License:   MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation
@@ -8328,13 +8046,9 @@ MIT:GENERIC-W/O-NOENDORSE-REQDISCLAIMER()
  AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== file ==
-mit_074.txt
-== copyright ==
-2007 OpenedHand Ltd
-== ID ==
-ISC:ISC-MID-NOENDORSE()
-== license_lines ==
+Files:     mit_074.txt
+Copyright: 2007 OpenedHand Ltd
+License:   ISC:ISC-MID-NOENDORSE()
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
  the above copyright notice appear in all copies and that both that
@@ -8353,13 +8067,9 @@ ISC:ISC-MID-NOENDORSE()
  TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  PERFORMANCE OF THIS SOFTWARE.
 
-== file ==
-mit_075.txt
-== copyright ==
-1987-1993 The Regents of the University of California.
-== ID ==
-BSD-3-Clause:GENERIC(name:THE REGENTS AND CONTRIBUTORS)
-== license_lines ==
+Files:     mit_075.txt
+Copyright: 1987-1993 The Regents of the University of California.
+License:   BSD-3-Clause:GENERIC(name:name=THE REGENTS AND CONTRIBUTORS)
  This code is derived from software contributed to Berkeley by
  Chris Torek.
  .

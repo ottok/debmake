@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1990, 1991 by Thomas Roell, Dinkelscherben, Germany
 Copyright 1992 by David Dawes <dawes@XFree86.org>
 Copyright 1992 by Jim Tsillas <jtsilla@damon.ccs.northeastern.edu>
@@ -33,3 +34,6 @@ IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
 OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+*/
+
+BOGUS LINE

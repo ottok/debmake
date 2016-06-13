@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 The following is the 'standard copyright' agreed upon by most contributors,
 and is currently the canonical license preferred by the X.Org Foundation.
 This is a slight variant of the common MIT license form published by the
@@ -44,6 +45,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
-
+*/
 
 

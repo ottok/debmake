@@ -51,10 +51,20 @@ def dist(para):
             line = f.readline()
         if re.search('python3', line):
             # http://docs.python.org/3/distutils/
-            command = 'python3 setup.py sdist'
+            if para['targz'] == 'tar.xz':
+                command = 'python3 setup.py sdist --owner=root --group=root --formats=xztar'
+            elif para['targz'] == 'tar.bz2':
+                command = 'python3 setup.py sdist --owner=root --group=root --formats=bztar'
+            else:
+                command = 'python3 setup.py sdist --owner=root --group=root --formats=gztar'
         else:
             # http://docs.python.org/2/distutils/
-            command = 'python setup.py sdist'
+            if para['targz'] == 'tar.xz':
+                command = 'python setup.py sdist --owner=root --group=root --formats=xztar'
+            elif para['targz'] == 'tar.bz2':
+                command = 'python setup.py sdist --owner=root --group=root --formats=bztar'
+            else:
+                command = 'python setup.py sdist --owner=root --group=root --formats=gztar'
         print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: setup.py failed.', file=sys.stderr)

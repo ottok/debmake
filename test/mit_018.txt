@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright (c) 1995  X Consortium
 Copyright 2004 Red Hat Inc., Durham, North Carolina.
 All Rights Reserved.
@@ -31,3 +32,6 @@ use or other dealings in this Software without prior written
 authorization from the X Consortium.
 
 
+*/
+
+BOGUS LINE

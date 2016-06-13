@@ -29,7 +29,8 @@ import re
 #     "the Apache Group for use in the Apache HTTP server project
 #      (http://www.apache.org/)"
 ###############################################################################
-LMAX = 1200 # max junk text (head and tail)
+LMAX_HEAD = 64*64   # max junk text in chars (head), 64lines*64chars
+LMAX_TAIL = 1024*64 # max junk text in chars (tail), 1024lines*64chars
 # order rules by specific to generic
 list_main = [] # main rule list = [(name, regex, [variable, ...]), ...]
 list_sub = []  # substring rule list for debug
@@ -45,8 +46,8 @@ def pattern(text, tail=' '):
     return text                             # pattern normally ends with ' '
 ###############################################################################
 # regular expression (head and tail given as non-greedy match)
-rhead0=r'^(?P<head>.{0,' + '{}'.format(LMAX) + r'}?)'
-rtail0=r'(?P<tail>.{0,'  + '{}'.format(LMAX) + r'}?)$'
+rhead0=r'^(?P<head>.{0,' + '{}'.format(LMAX_HEAD) + r'}?)'
+rtail0=r'(?P<tail>.{0,'  + '{}'.format(LMAX_TAIL) + r'}?)$'
 def regex(reg, rhead=rhead0, rtail=rtail0):
     return re.compile(rhead + reg + rtail, re.IGNORECASE)
 ###############################################################################
@@ -197,7 +198,7 @@ r_Apache3 = pattern(r'''
     ''')
 list_sub += ['r_Apache4'] # BSD4 alternative
 r_Apache4 = pattern(r'''
-    (?:..? )?The names? (?P<apachename>.{2,85}) must not be used to endorse or promote products
+    (?:..? )?The names? (?P<altname>.{2,85}) must not be used to endorse or promote products
     derived from this software without prior written permission.  For written
     permission, please contact .{2,85}.
     ''')
@@ -244,11 +245,11 @@ r_Apache71 = pattern(r'''
 ### Apache 1.0
 list_main += [('Apache-1.0', 'EXACT',
     regex(r_BSD0G + r_BSD1G + r_BSD2G + r_BSD3G + r_Apache4 + r_Apache5 + r_Apache6 + r_Apache70),
-    ['apachename'])]
+    ['altname'])]
 ### Apache 1.1
 list_main += [('Apache-1.1', 'EXACT',
     regex(r_BSD0G + r_BSD1G + r_BSD2G + r_Apache3 + r_Apache4 + r_Apache5 + r_Apache71),
-    ['apachename'])]
+    ['altname'])]
 ###############################################################################
 # OpenSSL
 ###############################################################################
@@ -275,7 +276,7 @@ r_openssl = pattern(r'''
     ''')
 list_main += [('OpenSSL', 'OpenSSL',
     regex(r_BSD0G + r_BSD1G + r_BSD2G +  r_BSD3G + r_Apache4 + r_Apache5 + r_openssl + r_BSDWG),
-    ['apachename', 'name'])]
+    ['altname', 'name'])]
 ### OpenSSL-like (BSD with Advertizing but not Apache nor OpenSSL)
 list_main += [('BSD *** AD-Clause ***', 'GENERIC',
     regex(r_BSD0G + r_BSD1G + r_BSD2G + r_BSD3G + r'.*'),
@@ -330,22 +331,27 @@ r_pemission_expatG = pattern(r'''
 list_sub += ['r_notice_expatG']
 r_notice_expatG = pattern(r'''
     The above copyright notice(?:|s|\(s\)) (including the dates of first
-    publication )?and (?:this permission notice|either this permission notice
-    or a reference to http://oss.sgi.com/projects/FreeB/) (?:shall be
-    included|appear) in all copies(?: or substantial portions)?(?: of the
-    Software)?(?: and that both the above copyright notice(?:|s|\(s\)) and this
-    permission notice appear in supporting documentation)?.
+    publication )?and this permission notice (?:shall be included|appear) in
+    all copies(?: or substantial portions)?(?: of the Software)?(?: and that
+    both the above copyright notice(?:|s|\(s\)) and this permission notice
+    appear in supporting documentation)?.
     ''')
 # Expat variants = r_notice_expat with variants (requiredisclaimer)
 list_sub += ['r_notice_expatGRD']
 r_notice_expatGRD = pattern(r'''
     The above copyright notice(?:|s|\(s\)) (including the dates of first
-    publication )?and (?:this permission notice|either this permission notice
-    or a reference to http://oss.sgi.com/projects/FreeB/) \(including the next
-    paragraph\) (?:shall be included|appear) in all copies(?: or substantial
-    portions)?(?: of the Software)?(?: and that both the above copyright
-    notice(?:|s|\(s\)) and this permission notice appear in supporting
-    documentation)?.
+    publication )?and this permission notice \(including the next paragraph\)
+    (?:shall be included|appear) in all copies(?: or substantial portions)?(?:
+    of the Software)?(?: and that both the above copyright notice(?:|s|\(s\))
+    and this permission notice appear in supporting documentation)?.
+    ''')
+# SGI-B-2.0 (must be before MIT:GENERIC-WITH-NOENDORSE)
+list_sub += ['r_notice_sgi']
+r_notice_sgi = pattern(r'''
+    The above copyright notice including the dates of first publication and
+    either this permission notice or a reference to
+    http://oss.sgi.com/projects/FreeB/ shall be included in all copies or
+    substantial portions of the Software.
     ''')
 # Expat variants = r_disclaimer_expat with variants
 list_sub += ['r_disclaimer_expatG']
@@ -363,6 +369,11 @@ r_disclaimer_expatG = pattern(r'''
     THE|PERFORMANCE OF THIS) SOFTWARE\.
     ''')
 # noendorse (=BSD4) is not used in Expat but used in many old MIT licenses
+# SGI-B-2.0 (must be before MIT:GENERIC-WITH-NOENDORSE)
+list_main += [('SGI-B-2.0', 'WITH-NOENDORSE', regex(r_pemission_expatG +
+    r_notice_sgi + r_disclaimer_expatG + r_BSD4G), []), ]
+list_main += [('SGI-B-2.0', 'W/O-NOENDORSE', regex(r_pemission_expatG +
+    r_notice_sgi + r_disclaimer_expatG), []), ]
 # MIT Xorg variants with warranty
 list_main += [('MIT', 'GENERIC-WITH-NOENDORSE',
     regex(r_pemission_expatG + r_notice_expatG + r_disclaimer_expatG + r_BSD4G),
@@ -524,26 +535,13 @@ list_sub += ['r_BSD3A'] # BSD3 alternative
 r_BSD3A = pattern(r'''
     (?:..? )?The end-user documentation included with the redistribution, if
     any, must include the following acknowledgment: This product includes
-    software developed by .{2,85}(?:, in the same place and form as other
+    software developed by (?P<altname>.{2,85})(?:, in the same place and form as other
     third-party acknowledgments)?\. Alternately, this acknowledgment may appear
     in the software itself, in the same form and location as other such
     third-party acknowledgments.
     ''')
 list_main += [('MIT', 'XORG+BSD', regex(r_pemission_expatG + r_BSD1G +r_BSD2G +r_BSD3A
-    + r_BSD4G + r_BSDWG ), ['name']), ]
-###############################################################################
-# SGI
-###############################################################################
-list_sub += ['r_notice_sgi']
-r_notice_sgi = pattern(r'''
-    The above copyright notice including the dates of first publication and
-    either this permission notice or a reference to
-    http://oss.sgi.com/projects/FreeB/ shall be included in all copies or
-    substantial portions of the Software.
-    ''')
-# SGI
-list_main += [('SGI-B-2.0', 'EXACT', regex(r_pemission_expatG + r_notice_sgi +
-    r_disclaimer_expatG + r_BSD4G), []), ]
+    + r_BSD4G + r_BSDWG ), ['name', 'altname']), ]
 ###############################################################################
 # Mozilla
 ###############################################################################
@@ -902,9 +900,9 @@ list_exceptions = [
 # attaributes
 ###############################################################################
 r_old_fsf = pattern(r'''
-    675 Mass Ave|
-    59 Temple Place|
-    51 Franklin Steet|
+    675\s+Mass\s+Ave|
+    59\s+Temple\s+Place|
+    51\s+Franklin\s+Steet|
     02139|
     02111-1307
     ''', tail='')
@@ -1057,18 +1055,20 @@ def lc(norm_text, license_lines, mode):
                 try:
                     xname = r0.group('name')
                     if not xname:
-                        print(xname)
+                        #print("ERROR: P<name> is missing", file=sys.stderr)
                         xname = ''
-                    id += ':' + xname + ')'
+                    id += ':name=' + xname
                 except IndexError:
-                    try:
-                        xname = r0.group('apachename')
-                        if not xname:
-                            print(xname)
-                            xname = ''
-                        id += ':' + xname + ')'
-                    except IndexError:
-                        id += ')'
+                    pass
+                try:
+                    xname = r0.group('altname')
+                    if not xname:
+                        #print("ERROR: P<altname> is missing", file=sys.stderr)
+                        xname = ''
+                    id += ':altname=' + xname
+                except IndexError:
+                    pass
+                id += ')'
                 for v in vars:
                     try:
                         if v == 'version':
@@ -1094,7 +1094,7 @@ def lc(norm_text, license_lines, mode):
                                     if license == 'BSD-4-Clause':
                                         license = 'BSD-4-Clause-UC'
                     except IndexError:
-                        print('ERROR: {} missing: {} {}'.format(v, license, id))
+                        print('ERROR: {} missing: {} {}'.format(v, license, id), file=sys.stderr)
 
                 # find only first match
                 break
@@ -1132,39 +1132,39 @@ def lc(norm_text, license_lines, mode):
             licenseid = license + version + suffix + ':' + '----' + with_exception
         else:
             licenseid = license + version + suffix + ':' + id  + with_exception
-    text = ''
+    license_text = ''
     if abs(mode) >= 3: # output comments
             pass
-            # text += '\n### !!! C: {}'.format('\n### !!! C: '.join(list(set_subtypes)))
+            # license_text += '\n### !!! C: {}'.format('\n### !!! C: '.join(list(set_subtypes)))
     if abs(mode) >= 2: # Skip if simple
         # RFC-822 complian and empty lines replaced with " ."
         for line in license_lines:
             line = line.rstrip()
             if line == '':
-                text += '\n .'
+                license_text += '\n .'
             else:
-                text += '\n {}'.format(line)
+                license_text += '\n {}'.format(line)
         for license_at in set_attribs:
             if license_at != '':
-                text += '\n .\n ' + license_at
+                license_text += '\n .\n ' + license_at
         if license + version + suffix in licensefiles.keys():
             (filename, licensename) = licensefiles[license + version + suffix]
-            text += "\n .\n On Debian systems, the complete text of the " + licensename + \
+            license_text += "\n .\n On Debian systems, the complete text of the " + licensename + \
                 " can be found in `/usr/share/common-licenses/{}'.".format(filename)
     if abs(mode) >= 4: # output debug outputs
         if match_text:
-            text += '\n### !!! M: {}'.format(match_text)
+            license_text += '\n### !!! M: {}'.format(match_text)
         if norm_text:
-            text += '\n### !!! T: {}'.format(norm_text)
-    return (licenseid, text)
+            license_text += '\n### !!! T: {}'.format(norm_text)
+    return (licenseid, license_text)
 
 #########################################################################################
 def lc_sub(norm_text, mode):
     # check license for debug regex pattern
     # license_lines: license lines to be checked (list)
     # mode: license check mode
-    # abs(mode) = 5 (single)
-    # abs(mode) = 6 (combination)
+    # abs(mode) = 5 (single regex match check)
+    # abs(mode) = 6 (combination regex match check)
     #####################################################################################
     text = ''
     for subx in list_sub:

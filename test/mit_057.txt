@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright © 2000 Keith Packard, member of The XFree86 Project, Inc.
             2005 Lars Knoll & Zack Rusin, Trolltech
 
@@ -24,3 +25,6 @@ OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 
+*/
+
+BOGUS LINE

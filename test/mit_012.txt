@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright (C) 1991-2000 Silicon Graphics, Inc. All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -24,3 +25,6 @@ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+*/
+
+BOGUS LINE

@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright 1989 by Hewlett-Packard Company, Palo Alto, California.
 All Rights Reserved
 
@@ -21,3 +22,6 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 
+*/
+
+BOGUS LINE

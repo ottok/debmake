@@ -1,14 +1,6 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
-#%#%#%# 
-BSD-4-Clause-UC
-
-Other web pages for this license
-
-http://www.freebsd.org/copyright/license.html
-
-Notes
-
+#%#%#%# BSD-4-Clause-UC http://www.freebsd.org/copyright/license.html
 This is the same license as the BSD-4-Clause, but with a copyright notice for
 the Regents of the University of California. Captures the retroactive deletion
 of the third (advertising) clause of the Original BSD license for BSD-licensed
@@ -17,9 +9,10 @@ ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change)
 
 Text
 
+/*
 BSD-4-Clause (University of California-Specific)
 
-Copyright [various years] The Regents of the University of California. All
+Copyright 1960, 88, 99, 2020 The Regents of the University of California. All
 rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -50,4 +43,6 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+THIS IS BOGUS
 

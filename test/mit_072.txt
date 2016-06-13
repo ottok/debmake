@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright (C) 2000 Keith Packard
               2004 Eric Anholt
               2005 Zack Rusin
@@ -25,3 +26,6 @@ OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 
+*/
+
+BOGUS LINE

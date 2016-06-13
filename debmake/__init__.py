@@ -27,6 +27,7 @@ import subprocess
 import sys
 import time
 import debmake.analyze
+import debmake.checkdep5
 import debmake.copyright
 import debmake.debian
 import debmake.debs
@@ -43,11 +44,11 @@ import debmake.untar
 # Basic package information
 #######################################################################
 
-__debian_policy__   = '3.9.6'   # debian policy version
+__debian_policy__   = '3.9.7'   # debian policy version
 __debian_compat__   = '9'       # debian/comapt
 __programname__     = 'debmake'
-__version__         = '4.2.5'
-__copyright__       = 'Copyright © 2014-2015 Osamu Aoki <osamu@debian.org>'
+__version__         = '4.2.6'
+__copyright__       = 'Copyright © 2014-2016 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -119,7 +120,7 @@ def main():
     if para['copyright'] !=0:
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
         (nonlink_files, xml_html_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
-        data = debmake.copyright.check_copyright(nonlink_files, mode=para['copyright'])
+        data = debmake.checkdep5.checkdep5(nonlink_files, mode=para['copyright'])
         print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'], tutorial=para['tutorial']))
         return
 #######################################################################

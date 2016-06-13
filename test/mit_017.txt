@@ -1,6 +1,7 @@
 #%#%#%# This is copyright analyser test data by Osamu Aoki.
 #%#%#%# The following lines shall not be considered copyright statement.
 #%#%#%# 
+/*
 Copyright © 2006  Red Hat, Inc.
 (C) Copyright 1998-1999 Precision Insight, Inc., Cedar Park, Texas.
 All Rights Reserved.
@@ -25,3 +26,6 @@ OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+*/
+
+BOGUS LINE
