@@ -85,10 +85,12 @@ Source: <url://example.com>
 ###
 ### Please avoid to pick license terms that are more restrictive than the
 ### packaged work, as it may make Debian's contributions unacceptable upstream.
+#
+# Please double check copyright with the licensecheck(1) command.
 
 '''
     else:
-        text += '\n'
+        text += '#\n# Please double check copyright with the licensecheck(1) command.\n\n'
     for (licenseid, licensetext, files, copyright_lines) in cdata:
         # Files:
         text +=             'Files:     {}\n'.format('\n           '.join(files))

@@ -172,6 +172,8 @@ def get_all_files():
                 pass # skip symlink (both for file and dir)
             elif file in SKIP_FILES:
                 pass # skip automatically generated files
+            elif filepath == 'debian/copyright':
+                pass # skip debian/copyrit
             else:
                 re_ext_match = re_ext.search(file)
                 if re_ext_match:
