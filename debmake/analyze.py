@@ -395,7 +395,7 @@ def analyze(para):
     if os.path.isfile('debian/copyright'):
         para['cdata'] = []
     else:
-        para['cdata'] = debmake.checkdep5.checkdep5(para['nonlink_files'], mode=2)
+        para['cdata'] = debmake.checkdep5.checkdep5(para['nonlink_files'], mode=2, pedantic=para['pedantic'])
     #######################################################################
     # compiler: set build dependency etc. if they are used
     if 'c' in para['extcount'].keys():

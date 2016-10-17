@@ -120,7 +120,7 @@ def main():
     if para['copyright'] !=0:
         print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
         (nonlink_files, xml_html_files, binary_files, huge_files, counter, count_list) = debmake.scanfiles.scanfiles()
-        data = debmake.checkdep5.checkdep5(nonlink_files, mode=para['copyright'])
+        data = debmake.checkdep5.checkdep5(nonlink_files, mode=para['copyright'], pedantic=para['pedantic'])
         print(debmake.copyright.copyright('package', set(), data, xml_html_files, binary_files, huge_files, mode=para['copyright'], tutorial=para['tutorial']))
         return
 #######################################################################
