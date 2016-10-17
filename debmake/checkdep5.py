@@ -1076,11 +1076,11 @@ def check_all_licenses(files, encoding='utf-8', mode=0, pedantic=False):
                 md5hashkey = md5hashkey2
                 (licenseid, licensetext) = license_cache[md5hashkey]
             elif pedantic:
-                debmake.debug.debug('Df: {} skipped since pedantic'.format(file), type='f')
+                debmake.debug.debug('Df: {} is treated as {} since pedantic'.format(file, licenseid), type='f')
             elif re_permissive.search(licenseid):
-                debmake.debug.debug('Df: {} skipped since not-matching re_autofiles.search'.format(file), type='f')
+                debmake.debug.debug('Df: {} skipped since not-pedantic and matching re_autofiles'.format(file), type='f')
             elif re_autofiles.search(file):
-                debmake.debug.debug('Df: {} skipped since not-matching re_permissive.search'.format(file), type='f')
+                debmake.debug.debug('Df: {} skipped since not-pedantic and matching re_permissive'.format(file), type='f')
             else:
                 debmake.debug.debug('Df: {} logically this should not happen for __AUTO_PERMISSIVE__ code: {}'.format(file, md5hashkey), type='f')
             debmake.debug.debug('Dl: LICENSE_ID = {}'.format(licenseid), type='l')
