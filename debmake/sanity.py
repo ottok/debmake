@@ -192,4 +192,13 @@ def sanity(para):
     para['homepage'] = '<insert the upstream URL, if relevant>'
     para['vcsvcs'] = 'git://anonscm.debian.org/collab-maint/' + para['package'] + '.git'
     para['vcsbrowser'] = 'http://anonscm.debian.org/gitweb/?p=collab-maint/' + para['package'] + '.git'
+    #######################################################################
+    # Override default for local only package (cheat lintian)
+    #######################################################################
+    if para['invoke']:
+        para['local'] = True
+    if para['local']:
+        para['section'] = 'local'
+        para['homepage'] = 'http://www.debian.org'
+        para['email'] = 'bogus@localhost'
     return para
