@@ -242,6 +242,12 @@ Argument may need to be quoted to protect from the shell.
             default = 0, 
             help = '"force yes" for all prompts')
     p.add_argument(
+            '-L', 
+            '--local', 
+            action = 'store_true', 
+            default = False, 
+            help='generate configuration files for the local package')
+    p.add_argument(
             '-P', 
             '--pedantic', 
             action = 'store_true', 
@@ -308,6 +314,7 @@ Argument may need to be quoted to protect from the shell.
     para['yes']             = min(args.yes, 2)  # -y
                             # 0: ask, 1: yes, 2: no
     para['targz']           = args.targz        # -z
+    para['local']           = args.local        # -L
     para['pedantic']        = args.pedantic     # -P
     para['tutorial']        = args.tutorial     # -T
     ############################################# -o
