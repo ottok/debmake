@@ -31,7 +31,7 @@
 debmake \- program to make the Debian source package
 .SH "SYNOPSIS"
 .sp
-\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR] [\fB\-P\fR] [\fB\-T\fR]
+\fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR] [\fB\-L\fR] [\fB\-P\fR] [\fB\-T\fR]
 .SH "DESCRIPTION"
 .sp
 \fBdebmake\fR helps to build the Debian package from the upstream source\&. Normally, this is done as follows:
@@ -477,7 +477,9 @@ invoke "\fIbuildtool\fR" at the end of execution\&.
 \fIbuildtool\fR
 may be \(lq\fBdpkg\-buildpackage\fR\(rq, \(lq\fBdebuild\fR\(rq, \(lq\fBpdebuild\fR\(rq, \(lq\fBpdebuild \-\-pbuilder cowbuilder\fR\(rq, etc\&.\&.
 .sp
-The default is not to execute any program\&. + Setting this option automatically set the
+The default is not to execute any program\&.
+.sp
+Setting this option automatically sets the
 \fB\-\-local\fR
 option\&.
 .RE
