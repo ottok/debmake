@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 ### see: dh_installdeb(1)
-###      http://www.debian.org/doc/manuals/maint-guide/dother.en.html#maintscripts
+###      https://www.debian.org/doc/manuals/maint-guide/dother.en.html#maintscripts
 ### summary of how this script can be called:
 ###        * <prerm> `remove'
 ###        * <old-prerm> `upgrade' <new-version>
@@ -10,7 +10,7 @@ set -e
 ###        * <deconfigured's-prerm> `deconfigure' `in-favour'
 ###          <package-being-installed> <version> `removing'
 ###          <conflicting-package> <version>
-### for details, see http://www.debian.org/doc/debian-policy/ or
+### for details, see https://www.debian.org/doc/debian-policy/ or
 ### the debian-policy package
 
 case "$1" in

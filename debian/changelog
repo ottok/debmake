@@ -1,3 +1,15 @@
+debmake (4.3.0-1) UNRELEASED; urgency=medium
+
+  [ Boyuan Yang ]
+  * Prefer https URL for Format line in d/copyright. Closes: #854779
+  * Bump Standards-Version to 4.1.1.
+  * Use http URL when applicable.
+  * Fix wrong upstart template name. Closes: #868986
+  * Bump package version to 4.3.0.
+  * Remove several trailing spaces and fix typos.
+
+ -- Boyuan Yang <073plan@gmail.com>  Tue, 24 Oct 2017 08:55:32 +0800
+
 debmake (4.2.9-1) unstable; urgency=medium
 
   * Fix formatting error in manpage.

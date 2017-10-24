@@ -212,11 +212,11 @@ if __name__ == '__main__':
     para['priority'] = 'normal'
     para['fullname'] = 'Osamu Aoki'
     para['email'] = 'osamu@debian.org'
-    para['standard_version'] = '4.0.2'
+    para['standard_version'] = '4.1.1'
     para['build_depends'] = set()
-    para['homepage'] = 'http://www.debian.org'
+    para['homepage'] = 'https://www.debian.org'
     para['vcsvcs'] = 'git:git.debian.org'
-    para['vcsbrowser'] = 'http://anonscm.debian.org'
+    para['vcsbrowser'] = 'https://anonscm.debian.org'
     para['debs'] = set()
     para['dh_with'] = set()
     print(control(para))

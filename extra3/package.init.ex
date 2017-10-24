@@ -10,7 +10,7 @@
 #                    <...>
 #                    <...>
 ### END INIT INFO
-# See http://wiki.debian.org/LSBInitScripts
+# See https://wiki.debian.org/LSBInitScripts
 #     /usr/share/doc/insserv/README.Debian
 #     http://www.debian.org/doc/manuals/maint-guide/dother.en.html#initd
 
