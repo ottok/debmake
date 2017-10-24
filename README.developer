@@ -105,12 +105,12 @@ What does checkdep5() do?
     adata = check_all_licenses()
     bdata = bunch_all_licenses(adata)
     cdata = format_all_licenses(bdata)
-          = [(licenseid, licensetext, files, copyright_lines), ...] 
+          = [(licenseid, licensetext, files, copyright_lines), ...]
 
 What does check_all_licenses() do?
   for each file:
     (copyright_data, license_lines) = checkdep5(file, ...)
-      This extract copyright iand license information section 
+      This extract copyright iand license information section
       out of file using check_lines()
     norm_text = debmake.lc.normalize(license_lines)
       This normalize copyright info.
