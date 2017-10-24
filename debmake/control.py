@@ -106,7 +106,7 @@ Homepage: {7}
             para['section'],
             para['priority'],
             para['fullname'],
-            para['email'], 
+            para['email'],
             ',\n\t'.join(para['build_depends']),
             para['standard_version'],
             para['homepage'],
