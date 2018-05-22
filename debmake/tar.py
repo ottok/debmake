@@ -28,16 +28,25 @@ import re
 import subprocess
 import sys
 import debmake.yn
-###########################################################################
-# tar: called from debmake.main()
-###########################################################################
-# tarball   = package-version.tar.gz (or  package_version.orig.tar.gz)
-# targz     = tar.gz
-# srcdir   = package-version
-# parent    = parent directory name
-# yes       = True if -y, False as default
-###########################################################################
+
+
 def tar(tarball, targz, srcdir, parent, yes):
+    """ create a source tarball excluding the debian/ directory
+    tar: called from debmake.main()
+
+    tarball   = package-version.tar.gz (or package_version.orig.tar.gz)
+    targz     = one of 'tar.gz', 'tar.bz2' or 'tar.xz'
+    srcdir    = package-version
+    parent    = parent directory name
+    yes       = True if -y, False as default
+
+    Please note that 'srcdir' and 'parent' are relative paths
+    (specifically: the basename of the respective directory).
+
+    Side-effects:
+        * 'srcdir' will be deleted, if it already exists and is not the current
+        * the current directory changes to 'srcdir' after successful completion
+    """
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if os.path.isdir('.pc'):
         print('E: .pc/ directory exists.  Stop "debmake -t ..."', file=sys.stderr)
