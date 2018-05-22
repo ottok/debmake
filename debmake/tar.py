@@ -67,27 +67,30 @@ def tar(tarball, targz, srcdir, parent, yes):
             debmake.yn.yn('remove "{}" directory in tar'
                           .format(srcdir), 'rm -rf ' + srcdir, yes)
         # copy from parent to srcdir using hardlinks (with debian/* data)
-        command = ('rsync -av --link-dest=' + os.getcwd() + '/' + parent + ' '
-                   + parent + '/. ' + srcdir)
-        print('I: $ {}'.format(command), file=sys.stderr)
-        if subprocess.call(command, shell=True) != 0:
+        copy_command = ['rsync', '-av',
+                        '--link-dest', os.path.join(os.getcwd(), parent),
+                        os.path.join(parent, os.path.curdir), srcdir]
+        print('I: $ {}'.format(' '.join(copy_command)), file=sys.stderr)
+        if subprocess.call(copy_command) != 0:
             print('E: rsync -aCv failed.', file=sys.stderr)
             exit(1)
     # tar while excluding VCS and debian directories
-    command = ('tar --exclude=\'' + srcdir
-               + '/debian\' --anchored --exclude-vcs ')
+    tar_command = ['tar', '--exclude', os.path.join(srcdir, 'debian'),
+                   '--anchored', '--exclude-vcs']
     if targz == 'tar.gz':
-        command += '-cvzf '
+        tar_command.append('--gzip')
     elif targz == 'tar.bz2':
-        command += '--bzip2 -cvf '
+        tar_command.append('--bzip2')
     elif targz == 'tar.xz':
-        command += '--xz -cvf '
+        tar_command.append('--xz')
     else:
         print('E: Wrong file format "{}".'.format(targz), file=sys.stderr)
         exit(1)
-    command += tarball + ' ' + srcdir
-    print('I: $ {}'.format(command), file=sys.stderr)
-    if subprocess.call(command, shell=True) != 0:
+    tar_command.append('-cvf')
+    tar_command.append(tarball)
+    tar_command.append(srcdir)
+    print('I: $ {}'.format(' '.join(tar_command)), file=sys.stderr)
+    if subprocess.call(tar_command) != 0:
         print('E: tar failed {}.'.format(tarball), file=sys.stderr)
         exit(1)
     print('I: {} tarball made'.format(tarball), file=sys.stderr)
