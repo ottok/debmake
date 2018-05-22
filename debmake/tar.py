@@ -22,11 +22,10 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-import glob
 import os
-import re
 import subprocess
 import sys
+
 import debmake.yn
 
 
@@ -49,8 +48,10 @@ def tar(tarball, targz, srcdir, parent, yes):
     """
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if os.path.isdir('.pc'):
-        print('E: .pc/ directory exists.  Stop "debmake -t ..."', file=sys.stderr)
-        print('E: Remove applied patches and remove .pc/ directory, first.', file=sys.stderr)
+        print('E: .pc/ directory exists.  Stop "debmake -t ..."',
+              file=sys.stderr)
+        print('E: Remove applied patches and remove .pc/ directory, first.',
+              file=sys.stderr)
         exit(1)
     #######################################################################
     # make distribution tarball using tar excluding debian/ directory
@@ -59,18 +60,22 @@ def tar(tarball, targz, srcdir, parent, yes):
     os.chdir('..')
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if srcdir == parent:
-        print('I: good, -t (--tar) run in the versioned directory', file=sys.stderr)
+        print('I: good, -t (--tar) run in the versioned directory',
+              file=sys.stderr)
     else:
         if os.path.isdir(srcdir):
-            debmake.yn.yn('remove "{}" directory in tar'.format(srcdir), 'rm -rf ' + srcdir, yes)
+            debmake.yn.yn('remove "{}" directory in tar'
+                          .format(srcdir), 'rm -rf ' + srcdir, yes)
         # copy from parent to srcdir using hardlinks (with debian/* data)
-        command = "rsync -av --link-dest='" + os.getcwd() + '/' + parent + "' '" + parent + "/.' '" + srcdir + "'"
+        command = ('rsync -av --link-dest=' + os.getcwd() + '/' + parent + ' '
+                   + parent + '/. ' + srcdir)
         print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: rsync -aCv failed.', file=sys.stderr)
             exit(1)
     # tar while excluding VCS and debian directories
-    command = 'tar --exclude=\'' + srcdir + '/debian\' --anchored --exclude-vcs '
+    command = ('tar --exclude=\'' + srcdir
+               + '/debian\' --anchored --exclude-vcs ')
     if targz == 'tar.gz':
         command += '-cvzf '
     elif targz == 'tar.bz2':
@@ -90,6 +95,6 @@ def tar(tarball, targz, srcdir, parent, yes):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 
+
 if __name__ == '__main__':
     print('No test program')
-
