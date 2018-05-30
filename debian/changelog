@@ -2,7 +2,9 @@ debmake (4.3.0-1) UNRELEASED; urgency=medium
 
   [ Boyuan Yang ]
   * Prefer https URL for Format line in d/copyright. Closes: #854779
-  * Bump Standards-Version to 4.1.1.
+  * Bump Standards-Version to 4.1.4.
+  * Apply "wrap-and-sort -abst" to debian/control file.
+  * Use Salsa platform for project homepage and Vcs fields.
   * Use http URL when applicable.
   * Fix wrong upstart template name. Closes: #868986
   * Bump package version to 4.3.0.
