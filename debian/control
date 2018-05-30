@@ -2,7 +2,10 @@ Source: debmake
 Section: devel
 Priority: optional
 Maintainer: Osamu Aoki <osamu@debian.org>
-Build-Depends: debhelper (>=9), dh-python, python3-all
+Build-Depends:
+ debhelper (>=9),
+ dh-python,
+ python3-all,
 Standards-Version: 4.1.1
 Homepage: https://anonscm.debian.org/git/collab-maint/debmake.git
 Vcs-Git: https://anonscm.debian.org/git/collab-maint/debmake.git
@@ -11,25 +14,34 @@ Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/debmake.git
 Package: debmake
 Architecture: all
 Multi-Arch: foreign
-Depends: devscripts, dpkg-dev, rsync, ${misc:Depends}, ${python3:Depends}
-Recommends: build-essential, strace, wget | curl
-Suggests: autotools-dev,
-          ccache,
-          cmake,
-          cowbuilder,
-          dh-autoreconf,
-          dh-python,
-          eatmydata,
-          gem2deb,
-          git,
-          git-buildpackage,
-          gitk,
-          javahelper,
-          lintian,
-          mc,
-          pbuilder,
-          quilt,
-          rpm2cpio
+Depends:
+ devscripts,
+ dpkg-dev,
+ rsync,
+ ${misc:Depends},
+ ${python3:Depends},
+Recommends:
+ build-essential,
+ strace,
+ wget | curl,
+Suggests:
+ autotools-dev,
+ ccache,
+ cmake,
+ cowbuilder,
+ dh-autoreconf,
+ dh-python,
+ eatmydata,
+ gem2deb,
+ git,
+ git-buildpackage,
+ gitk,
+ javahelper,
+ lintian,
+ mc,
+ pbuilder,
+ quilt,
+ rpm2cpio,
 Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source
