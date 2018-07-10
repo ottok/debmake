@@ -91,7 +91,7 @@ def main():
     para['year'] = time.strftime("%Y")
     para['standard_version'] = __debian_policy__    # Debian policy_
     para['compat'] = __debian_compat__              # debhelper
-    para['build_depends']   = {'debhelper (>=' + para['compat'] +')'}
+    para['build_depends']   = {'debhelper (>=' + para['compat'] +'~)'}
     para['desc'] = ''
     para['desc_long'] = ''
     para['export'] = set()

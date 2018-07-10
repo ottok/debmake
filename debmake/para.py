@@ -41,7 +41,9 @@ def env(var):
 def para(para):
     debmail = env('DEBEMAIL')
     if not debmail:
-        debmail = os.getlogin() + '@localhost'
+        # os.getlogin may not work well: #769392
+        #debmail = os.getlogin() + '@localhost'
+        debemail = pwd.getpwuid(os.getuid())[0] + '@localhost'
     debfullname = env('DEBFULLNAME')
     if not debfullname:
         # os.getlogin may not work well: #769392
