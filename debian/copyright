@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: debmake
-Source: https://anonscm.debian.org/cgit/collab-maint/debmake.git
+Source: https://salsa.debian.org/debian/debmake
 
 Files: *
 Copyright: 2014 Osamu Aoki
