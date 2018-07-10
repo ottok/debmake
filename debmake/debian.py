@@ -161,7 +161,7 @@ def debian(para):
     # Optional files which is nice to be created for the new source (level=2)
     # Harmless but some interactive editting are desirable.
     # * create templates only for the first binary package:
-    #   package.menu, package.docs, package.examples, package.manpages, 
+    #   package.menu, package.docs, package.examples, package.manpages,
     #   package.preinst, package.prerm, package.postinst, package.postrm
     # * create for all but dbg binary packages: package.install
     # * create for lib package: package.symbol

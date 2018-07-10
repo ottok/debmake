@@ -1,12 +1,12 @@
 Source: debmake
 Section: devel
-Priority: extra
+Priority: optional
 Maintainer: Osamu Aoki <osamu@debian.org>
-Build-Depends: debhelper (>=9), dh-python, python3-all
-Standards-Version: 3.9.8
-Homepage: http://anonscm.debian.org/cgit/collab-maint/debmake.git
-Vcs-Git: git://anonscm.debian.org/collab-maint/debmake.git
-Vcs-Browser: http://anonscm.debian.org/cgit/collab-maint/debmake.git
+Build-Depends: debhelper (>= 11~), dh-python, python3-all
+Standards-Version: 4.1.4
+Homepage: https://salsa.debian.org/debian/debmake
+Vcs-Git: https://salsa.debian.org/debian/debmake.git
+Vcs-Browser: https://salsa.debian.org/debian/debmake
 
 Package: debmake
 Architecture: all
@@ -34,7 +34,7 @@ Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source
  package.  The generated debian/rules file uses the new dh command syntax from
- the debhelper (>=9) package.
+ the debhelper (>=11~) package.
  .
  The debmake command invoked in the upstream source tree without any option can
  generate files which is good enough to create a single arch=any Debian binary

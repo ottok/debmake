@@ -12,7 +12,7 @@ class clean(clean_):
     def run(self):
         if self.dry_run:
             return
-        subprocess.call('if [ -e setup.py ]; then rm -rf build dist debmake/__pycache__ MANIFEST; fi', shell=True) 
+        subprocess.call('if [ -e setup.py ]; then rm -rf build dist debmake/__pycache__ MANIFEST; fi', shell=True)
         clean_.run(self)
 
 class deb(clean_):
@@ -20,7 +20,7 @@ class deb(clean_):
         if self.dry_run:
             return
         clean_.run(self)
-        subprocess.call('if [ -e setup.py ]; then debmake -d -y -zx -b":py3" -i debuild; fi', shell=True) 
+        subprocess.call('if [ -e setup.py ]; then debmake -d -y -zx -b":py3" -i debuild; fi', shell=True)
 
 setup(name=__programname__,
     version=__version__,
@@ -28,7 +28,7 @@ setup(name=__programname__,
     long_description='Debian source package making utility to populate the debian directory.',
     author='Osamu Aoki',
     author_email='osamu@debian.org',
-    url='http://people.debian.org/~osamu/',
+    url='https://people.debian.org/~osamu/',
     packages=[__programname__],
     package_dir={__programname__: __programname__},
     scripts=['scripts/' + __programname__ ],
@@ -52,9 +52,9 @@ setup(name=__programname__,
         ('lib/debmake', glob.glob('desc/*')),
         ],
     classifiers = ['Development Status :: 3 - Alpha',
-        'Environment :: Console', 
-        'Intended Audience :: Developers', 
-        'License :: OSI Approved :: MIT License', 
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3',

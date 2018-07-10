@@ -1,8 +1,8 @@
 Metadata-Version: 1.1
 Name: debmake
-Version: 4.2.9
+Version: 4.3.0
 Summary: Debian package making utility
-Home-page: http://people.debian.org/~osamu/
+Home-page: https://people.debian.org/~osamu/
 Author: Osamu Aoki
 Author-email: osamu@debian.org
 License: MIT License
