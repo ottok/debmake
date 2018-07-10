@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # vim:se tw=0 sts=4 ts=4 et ai:
 """
-Copyright © 2014-2015 Osamu Aoki
+Copyright © 2014-2018 Osamu Aoki
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the
@@ -44,11 +44,11 @@ import debmake.untar
 # Basic package information
 #######################################################################
 
-__debian_policy__   = '3.9.8'   # debian policy version
-__debian_compat__   = '9'       # debian/comapt
+__debian_policy__   = '4.1.4'   # debian policy version
+__debian_compat__   = '11'       # debian/compat
 __programname__     = 'debmake'
-__version__         = '4.2.9'
-__copyright__       = 'Copyright © 2014-2016 Osamu Aoki <osamu@debian.org>'
+__version__         = '4.3.0'
+__copyright__       = 'Copyright © 2014-2018 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -91,7 +91,7 @@ def main():
     para['year'] = time.strftime("%Y")
     para['standard_version'] = __debian_policy__    # Debian policy_
     para['compat'] = __debian_compat__              # debhelper
-    para['build_depends']   = {'debhelper (>=' + para['compat'] +')'}
+    para['build_depends']   = {'debhelper (>=' + para['compat'] +'~)'}
     para['desc'] = ''
     para['desc_long'] = ''
     para['export'] = set()
@@ -109,7 +109,7 @@ def main():
 #######################################################################
     if para['print_version']:
         print('{0} (version: {1}) {2}\n\n{3}'.format(
-                para['program_name'], 
+                para['program_name'],
                 para['program_version'],
                 para['program_copyright'],
                 para['program_license']), file=sys.stderr)

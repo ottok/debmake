@@ -65,7 +65,7 @@ def copyright(package_name, license_file_masks, cdata, xml_html_files, binary_fi
     #      -1: -cccc debug simple, -2 -ccccc debug normal -3 -cccccc debug extensive
     # make text to print
     text = '''\
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: {}
 Source: <url://example.com>
 '''.format(package_name)

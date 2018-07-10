@@ -55,7 +55,7 @@ def tar(tarball, targz, srcdir, parent, yes):
         if os.path.isdir(srcdir):
             debmake.yn.yn('remove "{}" directory in tar'.format(srcdir), 'rm -rf ' + srcdir, yes)
         # copy from parent to srcdir using hardlinks (with debian/* data)
-        command = 'rsync -av --link-dest=' + os.getcwd() + '/' + parent + ' ' + parent + '/. ' + srcdir
+        command = "rsync -av --link-dest='" + os.getcwd() + '/' + parent + "' '" + parent + "/.' '" + srcdir + "'"
         print('I: $ {}'.format(command), file=sys.stderr)
         if subprocess.call(command, shell=True) != 0:
             print('E: rsync -aCv failed.', file=sys.stderr)
