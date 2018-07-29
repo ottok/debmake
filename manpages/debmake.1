@@ -2,12 +2,12 @@
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
-.\"      Date: 12/04/2016
+.\"      Date: 07/29/2018
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "12/04/2016" "DEBMAKE" "Debmake Manual"
+.TH "DEBMAKE" "1" "07/29/2018" "DEBMAKE" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-debmake \- program to make the Debian source package
+debmake \- program to make a Debian source package
 .SH "SYNOPSIS"
 .sp
 \fBdebmake\fR [\fB\-h\fR] [\fB\-c\fR | \fB\-k\fR] [\fB\-n\fR | \fB\-a\fR \fIpackage\-version\fR\fB\&.orig\&.tar\&.gz\fR | \fB\-d\fR | \fB\-t\fR ] [\fB\-p\fR \fIpackage\fR] [\fB\-u\fR \fIversion\fR] [\fB\-r\fR \fIrevision\fR] [\fB\-z\fR \fIextension\fR] [\fB\-b\fR "\fIbinarypackage\fR\fI, \&...\fR]" [\fB\-e\fR \fIfoo@example\&.org\fR] [\fB\-f\fR "\fIfirstname lastname\fR"] [\fB\-i\fR "\fIbuildtool\fR" | \fB\-j\fR] [\fB\-l\fR \fIlicense_file\fR] [\fB\-m\fR] [\fB\-o\fR \fIfile\fR] [\fB\-q\fR] [\fB\-s\fR] [\fB\-v\fR] [\fB\-w\fR "\fIaddon, \&...\fR"] [\fB\-x\fR [01234]] [\fB\-y\fR] [\fB\-L\fR] [\fB\-P\fR] [\fB\-T\fR]
 .SH "DESCRIPTION"
 .sp
-\fBdebmake\fR helps to build the Debian package from the upstream source\&. Normally, this is done as follows:
+\fBdebmake\fR helps to build a Debian package from the upstream source\&. Normally, this is done as follows:
 .sp
 .RS 4
 .ie n \{\
@@ -57,7 +57,7 @@ file\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-It is untared to create many files under the
+It is untarred to create many files under the
 \fIpackage\-version/\fR
 directory\&.
 .RE
@@ -72,7 +72,7 @@ directory\&.
 .\}
 debmake is invoked in the
 \fIpackage\-version/\fR
-directory possibly without any arguments\&.
+directory, possibly without any arguments\&.
 .RE
 .sp
 .RS 4
@@ -105,7 +105,7 @@ or
 directory to make Debian packages\&.
 .RE
 .sp
-Make sure to protect the arguments of the \fB\-b\fR, \fB\-f\fR, \fB\-l\fR, and \fB\-w\fR options from the shell interference by quoting them properly\&.
+Make sure to protect the arguments of the \fB\-b\fR, \fB\-f\fR, \fB\-l\fR, and \fB\-w\fR options from shell interference by quoting them properly\&.
 .SS "optional arguments:"
 .PP
 \fB\-h\fR, \fB\-\-help\fR
@@ -189,13 +189,13 @@ file must be organized to list the generic file patterns before the specific exc
 \fB\-n\fR, \fB\-\-native\fR
 .RS 4
 make a native Debian source package without
-\fB\&.orig\&.tar\&.gz\fR\&. This makes the \(lq\fB3\&.0 (native)\fR\(rq format package\&.
+\fB\&.orig\&.tar\&.gz\fR\&. This makes a \(lq\fB3\&.0 (native)\fR\(rq format package\&.
 .sp
-If you are thinking to package a Debian specific source tree with
-\fBdebian/\fR* in it into a native Debian package, please think otherwise\&. You can use the \(lq\fBdebmake \-d \-i debuild\fR\(rq or \(lq\fBdebmake \-t \-i debuild\fR\(rq commands to make the \(lq\fB3\&.0 (quilt)\fR\(rq format non\-native Debian package\&. The only difference is that the
+If you are thinking of packaging a Debian\-specific source tree with
+\fBdebian/\fR* in it into a native Debian package, please think otherwise\&. You can use the \(lq\fBdebmake \-d \-i debuild\fR\(rq or \(lq\fBdebmake \-t \-i debuild\fR\(rq commands to make a \(lq\fB3\&.0 (quilt)\fR\(rq format non\-native Debian package\&. The only difference is that the
 \fBdebian/changelog\fR
 file must use the non\-native version scheme:
-\fIversion\-revision\fR\&. The non\-native package is more friendly to the downstream distributions\&.
+\fIversion\-revision\fR\&. The non\-native package is more friendly to downstream distributions\&.
 .RE
 .PP
 \fB\-a\fR \fIpackage\-version\fR\fB\&.tar\&.gz\fR, \fB\-\-archive\fR \fIpackage\-version\fR\fB\&.tar\&.gz\fR
@@ -207,8 +207,7 @@ use the upstream source tarball directly\&. (\fB\-p\fR,
 The upstream tarball may be specified as
 \fIpackage_version\fR\fB\&.orig\&.tar\&.gz\fR
 and
-\fBtar\&.gz\fR
-for all cases may be
+\fBtar\&.gz\fR\&. For other cases, it may be
 \fBtar\&.bz2\fR, or
 \fBtar\&.xz\fR\&.
 .sp
@@ -245,7 +244,7 @@ format, e\&.g\&.,
 \fI0~1403012359\fR, from the UTC date and time\&. The generated tarball excludes the
 \fBdebian/\fR
 directory found in the upstream VCS\&. (It also excludes typical VCS directories:
-\fB\&.git/ \&.hg/ \&.svn/ \&.CVS/\fR)
+\fB\&.git/ \&.hg/ \&.svn/ \&.CVS/\fR\&.)
 .RE
 .PP
 \fB\-p\fR \fIpackage\fR, \fB\-\-package\fR \fIpackage\fR
@@ -266,7 +265,7 @@ set the Debian package revision\&.
 \fB\-z\fR \fIextension\fR, \fB\-\-targz\fR \fIextension\fR
 .RS 4
 set the tarball type,
-\fIextension\fR=(\fBtar\&.gz\fR|\fBtar\&.bz2\fR|\fBtar\&.xz\fR) (alias:
+\fIextension\fR=(\fBtar\&.gz\fR|\fBtar\&.bz2\fR|\fBtar\&.xz\fR)\&. (alias:
 \fBz\fR,
 \fBb\fR,
 \fBx\fR)
@@ -274,13 +273,13 @@ set the tarball type,
 .PP
 \fB\-b\fR "\fIbinarypackage[:type],\&...\fR", \fB\-\-binaryspec\fR "\fIbinarypackage[:type],\&...\fR"
 .RS 4
-set the binary package specs by the comma separated list of
+set the binary package specs by a comma separated list of
 \fIbinarypackage:type\fR
-pairs, e\&.g\&., in the full form \(lq\fBfoo:bin,foo\-doc:doc,libfoo1:lib,libfoo1\-dbg:dbg,libfoo\-dev:dev\fR\(rq or in the short form \(lq\fB,\-doc,libfoo1,libfoo1\-dbg, libfoo\-dev\fR\(rq\&.
+pairs, e\&.g\&., in the full form \(lq\fBfoo:bin,foo\-doc:doc,libfoo1:lib,libfoo1\-dbg:dbg,libfoo\-dev:dev\fR\(rq or in the short form, \(lq\fB\-doc,libfoo1,libfoo1\-dbg, libfoo\-dev\fR\(rq\&.
 .sp
 Here,
 \fIbinarypackage\fR
-is the binary package name; and the optional
+is the binary package name, and the optional
 \fItype\fR
 is chosen from the following
 \fItype\fR
@@ -320,7 +319,7 @@ values:
 .IP \(bu 2.3
 .\}
 \fBdbg\fR: Debug symbol package (any, same) (alias:
-\fBdb\fR) (deprecated for strech and after since the \-dbgsym package is automatically generated)
+\fBdb\fR) (deprecated for stretch and after since the \-dbgsym package is automatically generated)
 .RE
 .sp
 .RS 4
@@ -475,7 +474,7 @@ The default is taken from the value of the environment variable
 .RS 4
 invoke "\fIbuildtool\fR" at the end of execution\&.
 \fIbuildtool\fR
-may be \(lq\fBdpkg\-buildpackage\fR\(rq, \(lq\fBdebuild\fR\(rq, \(lq\fBpdebuild\fR\(rq, \(lq\fBpdebuild \-\-pbuilder cowbuilder\fR\(rq, etc\&.\&.
+may be \(lq\fBdpkg\-buildpackage\fR\(rq, \(lq\fBdebuild\fR\(rq, \(lq\fBpdebuild\fR\(rq, \(lq\fBpdebuild \-\-pbuilder cowbuilder\fR\(rq, etc\&.
 .sp
 The default is not to execute any program\&.
 .sp
@@ -520,13 +519,12 @@ directory\&.
 .RS 4
 add formatted license text to the end of the
 \fBdebian/copyright\fR
-file holding license scan results
+file holding license scan results\&.
 .sp
-The default is add
+The default is to add
 \fBCOPYING\fR
 and
-\fBLICENSE\fR
-and
+\fBLICENSE\fR, and
 \fIlicense_file\fR
 needs to list only the additional file names all separated by \(lq\fB,\fR\(rq\&.
 .RE
@@ -538,10 +536,10 @@ force packages to be non\-multiarch\&.
 .PP
 \fB\-o\fR \fIfile\fR, \fB\-\-option\fR \fIfile\fR
 .RS 4
-read optional parameters from the
+read optional parameters from
 \fIfile\fR\&. (This is not for everyday use\&.)
 .sp
-The
+The content of
 \fIfile\fR
 is sourced as the Python3 code at the end of
 \fBpara\&.py\fR\&. For example, the package description can be specified by the following file\&.
@@ -598,15 +596,17 @@ For Autotools based packages, setting
 \fBautoreconf\fR
 as
 \fIaddon\fR
-forces to run \(lq\fBautoreconf \-i \-v \-f\fR\(rq for every package building\&. Otherwise,
+forces running \(lq\fBautoreconf \-i \-v \-f\fR\(rq for every package building\&. Otherwise,
 \fBautotools\-dev\fR
 as
 \fIaddon\fR
-is used as default\&.
+is used as the default\&.
 .sp
 For Autotools based packages, if they install Python programs,
 \fBpython2\fR
-as addon is needed for packages with \(lq\fBcompat < 9\fR\(rq since this is non\-obvious\&. But for
+as
+\fIaddon\fR
+is needed for packages with \(lq\fBcompat < 9\fR\(rq since this is non\-obvious\&. But for
 \fBsetup\&.py\fR
 based packages,
 \fBpython2\fR
@@ -620,11 +620,16 @@ command when it is required\&.
 .PP
 \fB\-x\fR \fIn\fR, \fB\-\-extra\fR \fIn\fR
 .RS 4
-generate extra configuration files as templates\&.
+generate configuration files as templates\&. (Please note
+\fBdebian/changelog\fR,
+\fBdebian/control\fR,
+\fBdebian/copyright\fR, and
+\fBdebian/rules\fR
+are bare minimum configuration files to build a Debian binary package\&.)
 .sp
 The number
 \fIn\fR
-changes which configuration templates are generated\&.
+determines which configuration templates are generated\&.
 .sp
 .RS 4
 .ie n \{\
@@ -634,7 +639,7 @@ changes which configuration templates are generated\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-\fB\-x0\fR: bare minimum configuration files\&. (default if these files exist already)
+\fB\-x0\fR: bare minimum configuration files\&. (default option if any of bare minimum configuration files already exist)
 .RE
 .sp
 .RS 4
@@ -645,7 +650,9 @@ changes which configuration templates are generated\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-\fB\-x1\fR: ,, + desirable configuration files\&. (default for new packages)
+\fB\-x1\fR: all
+\fB\-x0\fR
+files + desirable configuration files for the single binary package\&. (default option for the single binary package if none of bare minimum configuration files exist)
 .RE
 .sp
 .RS 4
@@ -656,7 +663,9 @@ changes which configuration templates are generated\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-\fB\-x2\fR: ,, + interesting configuration files\&. (recommended for experts, multi binary aware)
+\fB\-x2\fR: all
+\fB\-x1\fR
+files + desirable configuration files for the multi binary package\&. (default option for the multi binary package if none of bare minimum configuration files exist)
 .RE
 .sp
 .RS 4
@@ -667,9 +676,11 @@ changes which configuration templates are generated\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-\fB\-x3\fR: ,, + unusual configuration template files with the extra
+\fB\-x3\fR: all
+\fB\-x2\fR
+files + unusual configuration template files\&. Unsual configuration template files are generated with the extra
 \fB\&.ex\fR
-suffix to ease their removal\&. (recommended for new users) To use these as configuration files, rename their file names into ones without the
+suffix to ease their removal\&. To use these as configuration files, rename their file names to ones without the
 \fB\&.ex\fR
 suffix\&.
 .RE
@@ -682,7 +693,9 @@ suffix\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-\fB\-x4\fR: ,, + copyright file examples\&.
+\fB\-x4\fR: all
+\fB\-x3\fR
+files + copyright file examples\&.
 .RE
 .RE
 .PP
@@ -708,7 +721,7 @@ output tutorial comment lines in template files\&.
 .RE
 .SH "EXAMPLES"
 .sp
-For a well behaving source, you can build a good\-for\-local\-use installable single Debian binary package easily with one command\&. Test install of such a package generated in this way offers a good alternative to the traditional \(lq\fBmake install\fR\(rq command to the \fB/usr/local\fR directory since the Debian package can be removed cleanly by the \(lq\fBdpkg \-P\fR \fI\&...\(rq\fR command\&. Here are some examples of how to build such test packages\&. (These should work in most cases\&. If the \fB\-d\fR option does not work, try the \fB\-t\fR option instead\&.)
+For a well behaving source, you can build a good\-for\-local\-use installable single Debian binary package easily with one command\&. Test install of such a package generated in this way offers a good alternative to the traditional \(lq\fBmake install\fR\(rq command installing into the \fB/usr/local\fR directory since the Debian package can be removed cleanly by the \(lq\fBdpkg \-P\fR \fI\&...\(rq\fR command\&. Here are some examples of how to build such test packages\&. (These should work in most cases\&. If the \fB\-d\fR option does not work, try the \fB\-t\fR option instead\&.)
 .sp
 For a typical C program source tree packaged with autoconf/automake:
 .sp
@@ -723,7 +736,7 @@ For a typical C program source tree packaged with autoconf/automake:
 \fBdebmake \-d \-i debuild\fR
 .RE
 .sp
-For a typical python module source tree:
+For a typical Python module source tree:
 .sp
 .RS 4
 .ie n \{\
@@ -736,7 +749,7 @@ For a typical python module source tree:
 \fBdebmake \-s \-d \-b":python" \-i debuild\fR
 .RE
 .sp
-For a typical python module in the \fIpackage\-version\fR\fB\&.tar\&.gz\fR archive:
+For a typical Python module in the \fIpackage\-version\fR\fB\&.tar\&.gz\fR archive:
 .sp
 .RS 4
 .ie n \{\
@@ -749,7 +762,7 @@ For a typical python module in the \fIpackage\-version\fR\fB\&.tar\&.gz\fR archi
 \fBdebmake \-s \-a \fR\fB\fIpackage\-version\fR\fR\fB\&.tar\&.gz \-b":python" \-i debuild\fR
 .RE
 .sp
-For a typical perl module in the \fIPackage\-version\fR\fB\&.tar\&.gz\fR archive:
+For a typical Perl module in the \fIPackage\-version\fR\fB\&.tar\&.gz\fR archive:
 .sp
 .RS 4
 .ie n \{\
@@ -773,7 +786,7 @@ Packaging may require installation of some additional specialty helper packages\
 .sp -1
 .IP \(bu 2.3
 .\}
-Python3 program may require the
+Python3 programs may require the
 \fBdh\-python\fR
 package\&.
 .RE
@@ -786,7 +799,7 @@ package\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-Autotools (Autoconf + Automake) build system may require
+The Autotools (Autoconf + Automake) build system may require
 \fBautotools\-dev\fR
 or
 \fBdh\-autoreconf\fR
@@ -801,7 +814,7 @@ package\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-Ruby program may require the
+Ruby programs may require the
 \fBgem2deb\fR
 package\&.
 .RE
@@ -814,7 +827,7 @@ package\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-Java program may require the
+Java programs may require the
 \fBjavahelper\fR
 package\&.
 .RE
@@ -846,9 +859,9 @@ etc\&.
 .sp
 \fBdebmake\fR is meant to provide template files for the package maintainer to work on\&. Comment lines started by \fB#\fR contain the tutorial text\&. You must remove or edit such comment lines before uploading to the Debian archive\&.
 .sp
-The license extraction and assignment process involves a lot of heuristics, it may fail in some cases\&. It is highly recommended to use other tools such as \fBlicensecheck\fR from the \fBdevscripts\fR package in conjunction with \fBdebmake\fR\&.
+The license extraction and assignment process involves a lot of heuristics; it may fail in some cases\&. It is highly recommended to use other tools such as \fBlicensecheck\fR from the \fBdevscripts\fR package in conjunction with \fBdebmake\fR\&.
 .sp
-There are some limitations for what characters may be used as a part of the Debian package\&. The most notable limitation is the prohibition of uppercase letters in the package name\&. Here is the summary in the regular expression\&.
+There are some limitations for what characters may be used as a part of the Debian package\&. The most notable limitation is the prohibition of uppercase letters in the package name\&. Here is a summary as a set of regular expressions:
 .sp
 .RS 4
 .ie n \{\
@@ -894,7 +907,7 @@ Upstream version (\fB\-u\fR): [0\-9][\-+\&.:~a\-z0\-9A\-Z]*
 Debian revision (\fB\-r\fR): [0\-9][+\&.~a\-z0\-9A\-Z]*
 .RE
 .sp
-See the exact definition in Chapter 5 \- Control files and their fields of the \(lqDebian Policy Manual\(rq\&.
+See the exact definition in Chapter 5 \- Control files and their fields in the \(lqDebian Policy Manual\(rq\&.
 .sp
 \fBdebmake\fR assumes relatively simple packaging cases\&. So all programs related to the interpreter are assumed to be "\fBArchitecture: all\fR"\&. This is not always true\&.
 .SH "DEBUG"
@@ -1072,13 +1085,13 @@ Use this as:
 See README\&.developer in the source for more\&.
 .SH "AUTHOR"
 .sp
-Copyright \(co 2014\-2015 Osamu Aoki <osamu@debian\&.org>
+Copyright \(co 2014\-2017 Osamu Aoki <osamu@debian\&.org>
 .SH "LICENSE"
 .sp
 Expat License
 .SH "SEE ALSO"
 .sp
-The \fBdebmake\-doc\fR package provides the \(lqGuide for Debian Maintainers\(rq in the plain text, HTML and PDF formats under the \fB/usr/share/doc/debmake\-doc/\fR directory\&.
+The \fBdebmake\-doc\fR package provides the \(lqGuide for Debian Maintainers\(rq in plain text, HTML and PDF formats under the \fB/usr/share/doc/debmake\-doc/\fR directory\&.
 .sp
 Also, please read the original Debian New Maintainers\(cq Guide provided by the the \fBmaint\-guide\fR package\&.
 .sp
