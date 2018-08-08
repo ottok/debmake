@@ -65,36 +65,37 @@ Debian package to a Debian system:
 
     $ sudo apt-get install debmake
 
-Source to the non-Debian POSIX system with Python3 (user: ~/.local)
+Source to the non-Debian POSIX system with Python3 (user: `~/.local`)
 
     $ python3 setup.py install --user
 
 ($PATH should be set to include ~/.local/bin )
 
-Source to the non-Debian POSIX system with Python3 (system: /usr/local)
+Source to the non-Debian POSIX system with Python3 (system: `/usr/local`)
 
     $ sudo python3 setup.py install
 
 ## How to modify
 
 1. Check-out "devel" branch
-   $ git clone --branch devel https://salsa.debian.org/debian/debmake.git 
+
+    $ git clone --branch devel https://salsa.debian.org/debian/debmake.git 
 
 2. Make modification
 3. when debmake command line interface changes:
       * update debmake-doc package
-      * generate a new debmake.1 file in its source
-      * copy generated debmake.1 file into manpages/debmake.1
+      * generate a new `debmake.1` file in its source
+      * copy generated `debmake.1` file into `manpages/debmake.1`
 4. Add a new entry to the debian/changelog with the new upstream version
-   ("dch -i" creates entry such as 4.1.1-2 --> change to 4.1.2-1)
-5. Update debmake/__init__.py with new upstream version 4.1.2
-6. Update test/.LICENSE.KEEP
+   ("`dch -i`" creates entry such as `4.1.1-2` --> change to `4.1.2-1`)
+5. Update `debmake/__init__.py` with new upstream version `4.1.2`
+6. Update `test/.LICENSE.KEEP`
 
         $ cd test/src; make
           ... verify it is SUCCESS
 
    (If new test case is added and it build result is good, copy the new
-   test/.LICENSE.LOG to test/.LICENSE.KEEP to make this SUCCESS)
+   `test/.LICENSE.LOG` to `test/.LICENSE.KEEP` to make this SUCCESS)
 
 7. Build with
 
@@ -120,17 +121,18 @@ Please follow PEP-8 as much as possible.
 ## Debug the source code
 
 The source code can be tested by:
- * Set up the module loading path $PYTHONPATH and the command search path $PATH
-   from the debmake source directory /path/to where setup.py is found:
+
+ * Set up the module loading path `$PYTHONPATH` and the command search path `$PATH`
+   from the debmake source directory `/path/to` where `setup.py` is found:
 
           $ cd /path/to
           $ export PYTHONPATH=`pwd`
           $ export PATH=`pwd`/debmake:`pwd`/scripts:$PATH
 
-   Now all scripts such as copyright.py and lc.py can be executed
+   Now all scripts such as `copyright.py` and `lc.py` can be executed
    independently from the command line for debugging.
 
- * checkdep5.py [-s|-c|-t|-i|--] <file>
+ * ```checkdep5.py [-s|-c|-t|-i|--] <file>```
    
         -s	 selftest
         -c  extract copyright info as formatted text
@@ -138,9 +140,10 @@ The source code can be tested by:
         -i  check license ID with extra info
         --  check license ID and extract copyright (default)
 
-   Use "make test-dep5" and "make test-id" in test/src/Makefile to test.
+   Use "```make test-dep5```" and "```make test-id```" in `test/src/Makefile` to test.
 
- * lc.py [-][1|2|3|4|5|6] <files ...>
+ * ```lc.py [-][1|2|3|4|5|6] <files ...>```
+
    check <files ...> for license ID in different mode of -c options in debmake
 
         1: -c       license ID
@@ -154,11 +157,11 @@ The source code can be tested by:
 
 Trouble shoot hints:
  * What to do for strange string contaminating license info?
-   *  => Fix check_lines()       in debmake/checkdep5.py
+   *  => Fix `check_lines()`       in debmake/checkdep5.py
  * What to do for incorrect range calculation for copyright years.
-   *  => Fix analyze_copyright() in debmake/checkdep5.py
+   *  => Fix `analyze_copyright()` in debmake/checkdep5.py
  * What to do for strange license type assignment?
-   * => Fix lc()                in debmake/lc.py
+   * => Fix `lc()`                in debmake/lc.py
 
 ## Hints for reading the source
 
@@ -180,12 +183,12 @@ How copyright files are scanned by debmake in normal usage?
                                    -+--> debmake/scanfiles.py scanfiles()
                                     +--> debmake/checkdep5.py checkdep5()
 
-What does scanfiles() do?
+What does `scanfiles()` do?
   * Scan all files in source tree and make list of files for each category:
     * nonlink_files, xml_html_files, binary_files, huge_files
   * extensions holds all file extension types
 
-What does checkdep5() do?
+What does `checkdep5()` do?
   * Scan nonlink_files and return summary of copyright info as cdata
   by 3 step operations:
 
@@ -194,7 +197,7 @@ What does checkdep5() do?
         cdata = format_all_licenses(bdata)
               = [(licenseid, licensetext, files, copyright_lines), ...]
 
-What does check_all_licenses() do?
+What does `check_all_licenses()` do?
 
     for each file:
       (copyright_data, license_lines) = checkdep5(file, ...)
