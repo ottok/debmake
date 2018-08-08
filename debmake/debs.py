@@ -97,10 +97,6 @@ def debs(binaryspec, package, monoarch, dh_with):
             a = 'any'
             m = 'same'
             t = 'dev'
-        elif match_suffix(p, '-dbg'):
-            a = 'any'
-            m = 'same'
-            t = 'dbg'
         elif match_suffix(p, '-bin') or \
              match_suffix(p, 'tools') or \
              match_suffix(p, 'utils'):
@@ -139,10 +135,6 @@ def debs(binaryspec, package, monoarch, dh_with):
                 a = 'all'
                 m = 'foreign'
                 t = 'data'
-            elif match_prefix(t, 'db'): # dbg
-                a = 'any'
-                m = 'same'
-                t = 'dbg'
             elif match_prefix(t, 'de'): # dev
                 a = 'any'
                 m = 'same'
@@ -258,9 +250,8 @@ def debs(binaryspec, package, monoarch, dh_with):
             exit(1)
         pset.update({p})
         if t in tset:
-            if t != 'dbg':
-                print('W: duplicate definition of package type "{}"'.format(t), file=sys.stderr)
-                print('W: *** manual modifiocation of debian/{}.install required ***'.format(p), file=sys.stderr)
+            print('W: duplicate definition of package type "{}"'.format(t), file=sys.stderr)
+            print('W: *** manual modification of debian/{}.install required ***'.format(p), file=sys.stderr)
         tset.update({t})
         ###################################################################
         # append dictionary to a list
@@ -285,7 +276,7 @@ if __name__ == '__main__':
         print('deb not match deb')
     print('----- no dh_with')
 #    dh_with = set()
-#    binaryspec = '-,-doc:doc,libpackage1, libpackage-dev, libpackage1-dbg'
+#    binaryspec = '-,-doc:doc,libpackage1, libpackage-dev'
 #    monoarch = False
 #    debs(binaryspec, 'package', monoarch, dh_with)
 #    print('----- dh_with python3')

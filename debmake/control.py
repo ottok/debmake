@@ -174,9 +174,7 @@ def control_bin(para, deb):
     else:
         multiarch = 'Multi-Arch: ' + deb['multiarch'] + '\n'
         predepends = ''
-    if deb['type'] == 'dbg':
-        section = 'Section: debug\n'
-    elif deb['type'] == 'dev':
+    if deb['type'] == 'dev':
         section = 'Section: libdevel\n'
     elif deb['type'] == 'lib':
         section = 'Section: libs\n'
