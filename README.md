@@ -96,7 +96,6 @@ Source to the non-Debian POSIX system with Python3 (system: `/usr/local`)
 
    (If new test case is added and it build result is good, copy the new
    `test/.LICENSE.LOG` to `test/.LICENSE.KEEP` to make this SUCCESS)
-
 7. Build with
 
         $ debmake -d -y -zx -b':py3' -i pdebuild
@@ -104,7 +103,6 @@ Source to the non-Debian POSIX system with Python3 (system: `/usr/local`)
    or
 
         $ python3 setup.py deb
-
 8. Clean source tree with
 
         $ python3 setup.py clean
