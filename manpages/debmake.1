@@ -2,12 +2,12 @@
 .\"     Title: debmake
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
-.\"      Date: 07/29/2018
+.\"      Date: 08/08/2018
 .\"    Manual: Debmake Manual
 .\"    Source: DEBMAKE
 .\"  Language: English
 .\"
-.TH "DEBMAKE" "1" "07/29/2018" "DEBMAKE" "Debmake Manual"
+.TH "DEBMAKE" "1" "08/08/2018" "DEBMAKE" "Debmake Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -275,7 +275,7 @@ set the tarball type,
 .RS 4
 set the binary package specs by a comma separated list of
 \fIbinarypackage:type\fR
-pairs, e\&.g\&., in the full form \(lq\fBfoo:bin,foo\-doc:doc,libfoo1:lib,libfoo1\-dbg:dbg,libfoo\-dev:dev\fR\(rq or in the short form, \(lq\fB\-doc,libfoo1,libfoo1\-dbg, libfoo\-dev\fR\(rq\&.
+pairs, e\&.g\&., in the full form \(lq\fBfoo:bin,foo\-doc:doc,libfoo1:lib,libfoo\-dev:dev\fR\(rq or in the short form, \(lq\fB\-doc,libfoo1,libfoo\-dev\fR\(rq\&.
 .sp
 Here,
 \fIbinarypackage\fR
@@ -308,18 +308,6 @@ values:
 .\}
 \fBdata\fR: Data (fonts, graphics, \&...) package (all, foreign) (alias:
 \fBda\fR)
-.RE
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
-\fBdbg\fR: Debug symbol package (any, same) (alias:
-\fBdb\fR) (deprecated for stretch and after since the \-dbgsym package is automatically generated)
 .RE
 .sp
 .RS 4
