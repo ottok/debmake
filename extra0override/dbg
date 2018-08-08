@@ -1,4 +1,0 @@
-### See https://www.debian.org/doc/manuals/developers-reference/best-pkging-practices.html#bpp-dbg
-override_dh_strip:
-{}
-

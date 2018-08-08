@@ -188,10 +188,10 @@ def sanity(para):
     # Dynamic content with package name etc.
     #######################################################################
     para['section'] = 'unknown'
-    para['priority'] = 'extra'
+    para['priority'] = 'optional'
     para['homepage'] = '<insert the upstream URL, if relevant>'
-    para['vcsvcs'] = 'git://anonscm.debian.org/collab-maint/' + para['package'] + '.git'
-    para['vcsbrowser'] = 'http://anonscm.debian.org/gitweb/?p=collab-maint/' + para['package'] + '.git'
+    para['vcsvcs'] = 'https://salsa.debian.org/debian/' + para['package'] + '.git'
+    para['vcsbrowser'] = 'https://salsa.debian.org/debian/' + para['package']
     #######################################################################
     # Override default for local only package (cheat lintian)
     #######################################################################

@@ -34,7 +34,7 @@ import debmake.checkdep5
 import debmake.scanfiles
 import debmake.yn
 ###########################################################################
-# get master name (remove -dev -dbg)
+# get master name (remove -dev)
 ###########################################################################
 # re.sub: drop "-dev"
 re_dev = re.compile(r'''(-dev$)''')
@@ -43,16 +43,6 @@ def masterdev(name):
         name = re_dev.sub('',name)
     else:
         print('E: development package "{}" does not end with "-dev"'.format(name), file=sys.stderr)
-        exit(1)
-    return name
-
-# re.sub: drop "-dbg"
-re_dbg = re.compile(r'''(-dbg$)''')
-def masterdbg(name):
-    if re_dbg.search(name):
-        name = re_dbg.sub('',name)
-    else:
-        print('E: debug package "{}" does not end with "-dbg"'.format(name), file=sys.stderr)
         exit(1)
     return name
 
@@ -117,7 +107,6 @@ def analyze(para):
     para['bin'] = []
     para['lib'] = []
     para['dev'] = []
-    para['dbg'] = []
     para['data'] = []
     para['doc'] = []
     para['scripts'] = []
@@ -128,8 +117,6 @@ def analyze(para):
             para['lib'].append(deb['package'])
         elif deb['type'] == 'dev':
             para['dev'].append(deb['package'])
-        elif deb['type'] == 'dbg':
-            para['dbg'].append(deb['package'])
         elif deb['type'] == 'doc':
             para['doc'].append(deb['package'])
         elif deb['type'] == 'data':
@@ -139,14 +126,6 @@ def analyze(para):
     if len(para['debs']) != 1 and len(para['dev']) != len(para['lib']):
         print('E: # of "dev":{} != # of "lib": {}.'.format(len(para['dev']), len(para['lib'])), file=sys.stderr)
         exit(1)
-    if len(para['dbg']) == 1:
-        if (len(para['bin']) + len(para['lib'])) == 0:
-            print('E: # of "dbg":{} but # of "bin+lib": {}.'.format(len(para['dbg']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
-            exit(1)
-    elif len(para['dbg']) > 1:
-        if len(para['dbg']) != (len(para['bin']) + len(para['lib'])):
-            print('E: # of "dbg":{} != # of "bin+lib": {}.'.format(len(para['dbg']), len(para['bin']) + len(para['lib'])), file=sys.stderr)
-            exit(1)
     if para['lib'] != []:
         setmultiarch = True
     elif para['bin'] != [] and len(para['debs']) == 1:
@@ -177,22 +156,6 @@ def analyze(para):
             if not match:
                 print('E: {} does not have matching library in "{}".'.format(deb['package'], ', '.join(para['lib'])), file=sys.stderr)
                 exit(1)
-        elif deb['type'] == 'dbg':
-            para['override'].update({'dbg'})
-            pkgs = para['bin'] + para['lib']
-            if len(para['dbg']) == 1:
-                for pkg in pkgs:
-                    para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
-                para['dh_strip'] += '\tdh_strip --dbg-package={}\n'.format(deb['package'])
-            else:
-                pkg = masterdbg(deb['package'])
-                if pkg in pkgs:
-                    para['debs'][i]['depends'].update({pkg + ' (= ${binary:Version})'})
-                else:
-                    print('E: {} does not match package in "{}".'.format(deb['package'], ', '.join(pkgs)), file=sys.stderr)
-                    exit(1)
-                pkgs.remove(pkg)
-                para['dh_strip'] += '\tdh_strip -X{} --dbg-package={}\n'.format(' -X'.join(pkgs), deb['package'])
         elif deb['type'] == 'perl':
             for libpkg in para['lib']:
                 para['debs'][i]['depends'].update({libpkg + ' (>= ${source:Version}), ' + libpkg + ' (<< ${source:Upstream-Version}.0~)'})

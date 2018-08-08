@@ -116,8 +116,6 @@ def debian(para):
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'autoreconf').rstrip() + '\n\n'
     if 'cmake' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'cmake').rstrip() + '\n\n'
-    if 'dbg' in para['override']:
-        substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'dbg').format(para['dh_strip']).rstrip() + '\n\n'
     if 'java' in para['override']:
         substlist['@OVERRIDE@'] += debmake.read.read(override_dir + 'java').rstrip() + '\n\n'
     if 'judge' in para['override']:
@@ -163,7 +161,6 @@ def debian(para):
     # * create templates only for the first binary package:
     #   package.menu, package.docs, package.examples, package.manpages,
     #   package.preinst, package.prerm, package.postinst, package.postrm
-    # * create for all but dbg binary packages: package.install
     # * create for lib package: package.symbol
     ###################################################################
     binlist = {'bin', 'perl', 'python', 'python3', 'ruby', 'script'}
