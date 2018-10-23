@@ -68,7 +68,7 @@ def debs(binaryspec, package, monoarch, dh_with):
         dp = {'${misc:Depends}'}
         pd = set()
         ###################################################################
-        # Prefix names should come first to be overriden later
+        # Prefix names should come first to be overridden later
         ###################################################################
         if match_prefix(p, 'lib'):
             a = 'any'
@@ -242,7 +242,7 @@ def debs(binaryspec, package, monoarch, dh_with):
         else:
             pass
         ###################################################################
-        # loging and sanity check
+        # logging and sanity check
         ###################################################################
         print('I: binary package={} Type={} / Arch={} M-A={}'.format(p, t, a, m), file=sys.stderr)
         if p in pset:

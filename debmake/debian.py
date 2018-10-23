@@ -145,7 +145,7 @@ def debian(para):
     ###################################################################
     # These should be created for the new source (level=1)
     # Basic configuration files for debhelper(7) etc.
-    # No interactive editting required to work.
+    # No interactive editing required to work.
     ###################################################################
     if extra >= 1:
         confdir = para['base_path'] + '/share/debmake/extra1/'
@@ -157,7 +157,7 @@ def debian(para):
             debmake.sed.sed(confdir, 'debian/patches/', substlist, package, tutorial=para['tutorial'])
     ###################################################################
     # Optional files which is nice to be created for the new source (level=2)
-    # Harmless but some interactive editting are desirable.
+    # Harmless but some interactive editing are desirable.
     # * create templates only for the first binary package:
     #   package.menu, package.docs, package.examples, package.manpages,
     #   package.preinst, package.prerm, package.postinst, package.postrm

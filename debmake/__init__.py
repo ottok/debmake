@@ -165,7 +165,7 @@ def main():
     para['parent'] = os.path.basename(os.getcwd()) # update !!!
     print('I: *** start packaging in "{}". ***'.format(para['parent']), file=sys.stderr)
     if para['parent'] != para['srcdir']:
-        print('W: parent dirtectory should be "{}".  (If you use pbuilder, this may be OK.)'.format(para['srcdir']), file=sys.stderr)
+        print('W: parent directory should be "{}".  (If you use pbuilder, this may be OK.)'.format(para['srcdir']), file=sys.stderr)
     if not para['native']:
         print('I: provide {}_{}.orig.tar.gz for non-native Debian package'.format(para['package'], para['version']), file=sys.stderr)
         # ln -sf parent/dist/Foo-1.0.tar.gz foo_1.0.orig.tar.gz

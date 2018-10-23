@@ -137,7 +137,7 @@ r_BSD3G = pattern(r'''
     software must display the following acknowledge?ment. This product includes
     (?:cryptographic )?software (?:developed|written) by .{2,85}(?:\.|\.
     \(http:\/\/www.OpenSSL.org\/\)|The word cryptographic can be left out if
-    the rouines from the library being used are not cryptographic
+    the routines from the library being used are not cryptographic
     related.{0,6}\.)
     ''')
     # dropping "e" as variant, Eric Young's SSL
@@ -158,7 +158,7 @@ r_BSDPG = pattern(r'''
 list_sub += ['r_BSDWG']
 r_BSDWG = pattern(r'''
     THIS SOFTWARE IS PROVIDED(?: BY (?P<name>.{2,85}))? AS.IS
-    AND ANY EXPRESS(?:ED)? OR IMPLIED (?:WARANTY\.|WARRANTIES, INCLUDING, BUT
+    AND ANY EXPRESS(?:ED)? OR IMPLIED (?:WARRANTY\.|WARRANTIES, INCLUDING, BUT
     NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
     PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL .{2,85} BE LIABLE FOR
     ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
@@ -258,7 +258,7 @@ r_ssleay = pattern(r'''
     (?:..? )?All advertising materials mentioning features or use of this
     software must display the following acknowledgement: This product includes
     cryptographic software written by Eric Young \(eay@cryptsoft.com\) The word
-    cryptographic can be left out if the rouines from the library being used
+    cryptographic can be left out if the routines from the library being used
     are not cryptographic related :-\). (?:..? )?If you include any Windows
     specific code \(or a derivative thereof\) from the apps directory
     \(application code\) you must include an acknowledgement: "This product
@@ -529,7 +529,7 @@ r_disclaimer_dec = pattern(r'''
 list_main += [('MIT', 'DEC', regex(r_permission_dec + r_notice_dec + r_noendorse_dec +
     r_disclaimer_dec), []), ]
 ###############################################################################
-# ISC/X11 hybrid with waranty
+# ISC/X11 hybrid with warranty
 ###############################################################################
 list_sub += ['r_BSD3A'] # BSD3 alternative
 r_BSD3A = pattern(r'''
@@ -910,7 +910,7 @@ r_dual = pattern(r'''
     Dual\slicen[cs]e
     ''', tail='')
 
-# regex, copyright addtion, license addition
+# regex, copyright addition, license addition
 list_attributes = [
     (regex(r_old_fsf), '', 'The FSF address in the above text is the old one.'),
     (regex(r_dual), '*** dual license ***', ''),
@@ -973,7 +973,7 @@ def normalize(license_lines):
     return pattern(' '.join(license_data))
 #########################################################################################
 def lc(norm_text, license_lines, mode):
-    # norm_text: normalized license lines to be analized
+    # norm_text: normalized license lines to be analyzed
     # license_lines: original license lines for output
     # mode: license check mode
     # mode = 0: mode for copyright file generation; same as mode == 2 for lc.py
@@ -1114,7 +1114,7 @@ def lc(norm_text, license_lines, mode):
         n_exceptions = len(re_exception.findall(norm_text))
         if n_exceptions > 1:
             with_exception += ' *** check multiple exceptions ***'
-        # attributs handling
+        # attributes handling
         for (re_at, copy_at, license_at) in list_attributes:
             r2 = re_at.search(norm_text)
             if r2:

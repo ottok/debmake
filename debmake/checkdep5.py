@@ -319,7 +319,7 @@ re_preprocess_drop = re.compile(r'''(?:
         ^\.bp                                   # manpage
         )''', re.IGNORECASE | re.VERBOSE)
 # some of the above are duplicate of re_license_drop
-# removal in preproces ensures not to miss extracting the license section
+# removal in preprocess ensures not to miss extracting the license section
 
 re_license_end_always = re.compile(r'''(
         ^EOT$|^EOF$|^EOL$|^END$|        # shell <<EOF like lines

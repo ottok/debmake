@@ -303,7 +303,7 @@ def analyze(para):
             exit(1)
     # Perl
     elif os.path.isfile('Build.PL'):
-        # Prefered over Makefile.PL after debhelper v8
+        # Preferred over Makefile.PL after debhelper v8
         para['build_type']      = 'Perl Module::Build'
         para['build_depends'].update({'perl'})
     elif os.path.isfile('Makefile.PL'):
@@ -348,7 +348,7 @@ def analyze(para):
         if para['desc_long'] =='' and spec:
             para['desc_long'] = description_long('spec', para['base_path'])
     #######################################################################
-    # analize copyright+license content + file extensions
+    # analyze copyright+license content + file extensions
     # copyright, control: build/binary dependency, rules export/override
     #######################################################################
     print('I: scan source for copyright+license text and file extensions', file=sys.stderr)
