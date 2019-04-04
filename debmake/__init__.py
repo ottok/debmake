@@ -44,8 +44,8 @@ import debmake.untar
 # Basic package information
 #######################################################################
 
-__debian_policy__   = '4.1.4'   # debian policy version
-__debian_compat__   = '11'       # debian/compat
+__debian_policy__   = '4.3.0'   # debian policy version
+__debian_compat__   = '12'       # debian/compat
 __programname__     = 'debmake'
 __version__         = '4.3.1'
 __copyright__       = 'Copyright © 2014-2018 Osamu Aoki <osamu@debian.org>'
@@ -91,7 +91,7 @@ def main():
     para['year'] = time.strftime("%Y")
     para['standard_version'] = __debian_policy__    # Debian policy_
     para['compat'] = __debian_compat__              # debhelper
-    para['build_depends']   = {'debhelper (>=' + para['compat'] +'~)'}
+    para['build_depends']   = {'debhelper-compat (= ' + para['compat'] +')'}
     para['desc'] = ''
     para['desc_long'] = ''
     para['export'] = set()
