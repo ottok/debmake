@@ -299,8 +299,7 @@ def analyze(para):
                 if para['desc_long'] =='':
                     para['desc_long'] = description_long('python', para['base_path'])
         else:
-            print('E: unknown python version.  check setup.py.', file=sys.stderr)
-            exit(1)
+            print('W: unknown python version.  check setup.py.', file=sys.stderr)
     # Perl
     elif os.path.isfile('Build.PL'):
         # Preferred over Makefile.PL after debhelper v8
