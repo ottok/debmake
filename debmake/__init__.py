@@ -44,7 +44,7 @@ import debmake.untar
 # Basic package information
 #######################################################################
 
-__debian_policy__   = '4.3.0'   # debian policy version
+__debian_policy__   = '4.4.0'   # debian policy version
 __debian_compat__   = '12'       # debian/compat
 __programname__     = 'debmake'
 __version__         = '4.3.1'
