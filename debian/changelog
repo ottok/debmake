@@ -1,5 +1,9 @@
-debmake (4.3.1-2) unstable; urgency=medium
+debmake (4.3.2-1) UNRELEASED; urgency=medium
 
+  [Ondřej Nový]
+  * d/changelog: Remove trailing whitespaces
+
+  [VictorRodriguez]
   *  Warning instead of error debmake fail due to missing shebang in setup.py
 
  -- vmrod <vm.rod25@gmail.com>  Mon, 06 May 2019 15:29:40 -0500
