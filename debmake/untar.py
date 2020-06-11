@@ -75,8 +75,8 @@ def untar(tarball, targz, srcdir, dist, tar, parent, yes):
         print('I: {}'.format(commandx), file=sys.stderr)
         try:
             tarsrcdirs = subprocess.check_output(commandx, shell=True, universal_newlines=True).strip().split('\n')
-        except CalledProcessError:
-            print('E: failed to list the stem directory of tar.', file=sys.stderr)
+        except subprocess.CalledProcessError as exc:
+            print('E: failed to list the stem directory of tar: {}'.format(exc), file=sys.stderr)
             exit(1)
         # tailing / may or may not exist.
         if len(tarsrcdirs) > 1:
@@ -122,4 +122,3 @@ if __name__ == '__main__':
     os.chdir('tar')
     untar("", "tar.gz", "example-1.0", False, True, "")
     os.chdir('..')
-
