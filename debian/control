@@ -47,4 +47,3 @@ Description: helper script to make the Debian source package
  .
  This debmake command also scans copyright and license texts in the source
  files to help crafting the proper DEP-5 compatible debian/copyright file.
- It does more than what licensecheck(1) offers.

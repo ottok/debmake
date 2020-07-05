@@ -4,7 +4,10 @@ debmake (4.3.2-1) UNRELEASED; urgency=medium
   * d/changelog: Remove trailing whitespaces
 
   [VictorRodriguez]
-  *  Warning instead of error debmake fail due to missing shebang in setup.py
+  * Warning instead of error debmake fail due to missing shebang in setup.py
+
+  [ Osamu Aoki ]
+  * Drop incorrect statement on licensecheck.  Closes: #953724
 
  -- vmrod <vm.rod25@gmail.com>  Mon, 06 May 2019 15:29:40 -0500
 
