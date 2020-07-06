@@ -8,6 +8,7 @@ debmake (4.3.2-1) UNRELEASED; urgency=medium
 
   [ Osamu Aoki ]
   * Drop incorrect statement on licensecheck.  Closes: #953724
+  * Add the Upstream-Contact field. Closes:  #935532
 
  -- vmrod <vm.rod25@gmail.com>  Mon, 06 May 2019 15:29:40 -0500
 
