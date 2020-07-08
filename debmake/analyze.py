@@ -68,10 +68,13 @@ def popular(exttype, msg, debs, extcountlist, yes):
             if exttype == "python" and type == "python3":
                 settype = True
                 break
+            if exttype == "javascript" and type == "nodejs":
+                settype = True
+                break
         if not settype:
             print(
                 'W: many ext = "{}" type extension programs without matching -b set.'.format(
-                    exttype, type
+                    exttype
                 ),
                 file=sys.stderr,
             )
@@ -227,6 +230,18 @@ def analyze(para):
         elif deb["type"] == "ruby":
             para["dh_with"].update({"ruby"})  # may not be needed
             para["build_depends"].update({"ruby"})
+            for libpkg in para["lib"]:
+                para["debs"][i]["depends"].update(
+                    {
+                        libpkg
+                        + " (>= ${source:Version}), "
+                        + libpkg
+                        + " (<< ${source:Upstream-Version}.0~)"
+                    }
+                )
+        elif deb["type"] == "nodejs":
+            para["dh_with"].update({"nodejs"})
+            para["build_depends"].update({"pkg-js-tools"})
             for libpkg in para["lib"]:
                 para["debs"][i]["depends"].update(
                     {
@@ -413,6 +428,11 @@ def analyze(para):
         )
         para["build_type"] = "Ruby setup.rb"
         para["build_depends"].update({"ruby", "gem2deb"})
+    # Javascript nodejs
+    elif os.path.isfile("package.json"):
+        para["build_type"] = "nodejs"
+        para["dh_with"].update({"nodejs"})
+        para["build_depends"].update({"pkg-js-tools"})
     # Java
     elif os.path.isfile("build.xml"):
         para["build_type"] = "Java ant"
@@ -527,6 +547,13 @@ def analyze(para):
     popular(
         "ruby",
         '-b":ruby, ..." missing. Continue?',
+        para["debs"],
+        para["extcountlist"],
+        para["yes"],
+    )
+    popular(
+        "javascript",
+        '-b":nodejs, ..." missing. Continue?',
         para["debs"],
         para["extcountlist"],
         para["yes"],

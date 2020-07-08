@@ -93,6 +93,10 @@ def debs(binaryspec, package, monoarch, dh_with):
             a = "all"
             m = "foreign"
             t = "python3"
+        elif match_prefix(p, "node-"):
+            a = "all"
+            m = "foreign"
+            t = "nodejs"
         else:
             pass
         # Suffix names override
@@ -175,6 +179,10 @@ def debs(binaryspec, package, monoarch, dh_with):
                 a = "all"
                 m = "foreign"
                 t = "ruby"
+            elif match_prefix(t, "no") or (t == "js"):  # node.js
+                a = "all"
+                m = "foreign"
+                t = "nodejs"
             elif match_prefix(t, "sc") or (t == "sh"):  # script
                 a = "all"
                 m = "foreign"
@@ -218,6 +226,9 @@ def debs(binaryspec, package, monoarch, dh_with):
             elif "python3" in dh_with:
                 a = "all"
                 t = "python3"
+            elif "nodejs" in dh_with:
+                a = "all"
+                t = "nodejs"
             elif a == "any":  # bin as default
                 t = "bin"
             else:
