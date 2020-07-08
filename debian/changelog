@@ -1,4 +1,4 @@
-debmake (4.3.2-1) UNRELEASED; urgency=medium
+debmake (4.3.2-1) unstable; urgency=medium
 
   [Ondřej Nový]
   * d/changelog: Remove trailing whitespaces
@@ -8,9 +8,10 @@ debmake (4.3.2-1) UNRELEASED; urgency=medium
 
   [ Osamu Aoki ]
   * Drop incorrect statement on licensecheck.  Closes: #953724
-  * Add the Upstream-Contact field. Closes:  #935532
+  * Add the Upstream-Contact field. Closes: #935532
+  * Add JavaScript Node.js experimental support. Closes: #954828
 
- -- vmrod <vm.rod25@gmail.com>  Mon, 06 May 2019 15:29:40 -0500
+ -- Osamu Aoki <osamu@debian.org>  Thu, 09 Jul 2020 02:06:01 +0900
 
 debmake (4.3.1-1) unstable; urgency=medium
 
@@ -29,7 +30,7 @@ debmake (4.3.0-1) unstable; urgency=medium
   * Fix wrong upstart template name. Closes: #868986
   * Bump debamke package version to 4.3.0.
   * Remove several trailing spaces and fix typos.
-  * Launch safely for undefined DEBEMAIL variable.  Closes:  #858614
+  * Launch safely for undefined DEBEMAIL variable.  Closes: #858614
   * Add quotations for directory path with space.  Closes: #867863
 
  -- Osamu Aoki <osamu@debian.org>  Tue, 10 Jul 2018 23:28:23 +0900
