@@ -24,6 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import os
 import sys
+
 #######################################################################
 # Debug output
 #######################################################################
@@ -31,54 +32,56 @@ def get_debug():
     try:
         e = os.environ["DEBUG"]
     except KeyError:
-        e = ''
+        e = ""
     return e
 
-def debug(msg, type=''):
+
+def debug(msg, type=""):
     e = get_debug()
-    if (e != '' and type == '') or \
-            (type in e):
+    if (e != "" and type == "") or (type in e):
         print(msg, file=sys.stderr)
     return
 
+
 def debug_para(msg, para):
     e = get_debug()
-    if 'p' in e:
-        line = '{}:\n'.format(msg)
+    if "p" in e:
+        line = "{}:\n".format(msg)
         for x in para.keys():
             line += '  para[{}] = "{}"\n'.format(x, para[x])
         print(line, file=sys.stderr)
     elif e:
-        line = '{}:\n'.format(msg)
-        line += '  para[{}] = "{}"\n'.format('package', para['package'])
-        line += '  para[{}] = "{}"\n'.format('version', para['version'])
-        line += '  para[{}] = "{}"\n'.format('revision', para['revision'])
-        line += '  para[{}] = "{}"\n'.format('targz', para['targz'])
+        line = "{}:\n".format(msg)
+        line += '  para[{}] = "{}"\n'.format("package", para["package"])
+        line += '  para[{}] = "{}"\n'.format("version", para["version"])
+        line += '  para[{}] = "{}"\n'.format("revision", para["revision"])
+        line += '  para[{}] = "{}"\n'.format("targz", para["targz"])
         print(line, file=sys.stderr)
     return
 
+
 def debug_debs(msg, debs):
     e = get_debug()
-    if 'd' in e:
-        line = '{}: \n'.format(msg)
+    if "d" in e:
+        line = "{}: \n".format(msg)
         for deb in debs:
-            line += '  Binary Package: {}\n'.format(deb['package'])
-            line += '    Architecture: {}\n'.format(deb['arch'])
-            line += '    Multi-Arch:   {}\n'.format(deb['multiarch'])
-            line += '    Depends:      {}\n'.format(deb['depends'])
-            line += '    Pre-Depends:  {}\n'.format(deb['pre-depends'])
-            line += '    Type:         {}\n'.format(deb['type'])
+            line += "  Binary Package: {}\n".format(deb["package"])
+            line += "    Architecture: {}\n".format(deb["arch"])
+            line += "    Multi-Arch:   {}\n".format(deb["multiarch"])
+            line += "    Depends:      {}\n".format(deb["depends"])
+            line += "    Pre-Depends:  {}\n".format(deb["pre-depends"])
+            line += "    Type:         {}\n".format(deb["type"])
         print(line, file=sys.stderr)
     return
+
 
 #######################################################################
 # Test code
 #######################################################################
-if __name__ == '__main__':
-    debug('DEBUG ON!')
+if __name__ == "__main__":
+    debug("DEBUG ON!")
     para = {}
-    para['package'] = 'package'
-    para['version'] = '1.0'
-    para['targz'] = 'tar.gz'
-    debug_para('debug_para', para)
-
+    para["package"] = "package"
+    para["version"] = "1.0"
+    para["targz"] = "tar.gz"
+    debug_para("debug_para", para)

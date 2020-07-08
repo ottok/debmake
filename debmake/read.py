@@ -27,13 +27,13 @@ def read(file):
     ###################################################################
     # file:      path to the file
     ###################################################################
-    with open(file, mode='r', encoding='utf-8') as f:
+    with open(file, mode="r", encoding="utf-8") as f:
         text = f.read()
     return text
+
 
 #######################################################################
 # Test script
 #######################################################################
-if __name__ == '__main__':
-    print(read('read.py'))
-
+if __name__ == "__main__":
+    print(read("read.py"))

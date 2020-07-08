@@ -25,12 +25,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import re
 import sys
+
 #######################################################################
 # grep rtext file
 def grep(file, rtext, *range):
-    lines = ''
+    lines = ""
     if not os.path.isfile(file):
-        print('I: skipping :: {} (missing file)'.format(file), file=sys.stderr)
+        print("I: skipping :: {} (missing file)".format(file), file=sys.stderr)
     else:
         reg = re.compile(rtext)
         if len(range) == 0:
@@ -42,26 +43,25 @@ def grep(file, rtext, *range):
         else:
             lbgn = range[0]
             lend = range[1]
-        with open(file, mode='r', encoding='utf-8') as f:
+        with open(file, mode="r", encoding="utf-8") as f:
             for (i, l) in enumerate(f.readlines()):
-                if ( i >= lbgn ) and (( lend < 0 ) or ( lend > i)):
+                if (i >= lbgn) and ((lend < 0) or (lend > i)):
                     match = reg.search(l)
                     if match:
                         lines += l
     return lines
 
+
 #######################################################################
 # Test script
 #######################################################################
-if __name__ == '__main__':
-    print(grep('/bin/zcat', r'^#!', 0, 2), end='')
-    print('----')
-    print(grep('/bin/zcat', r'terms', 0, 10), end='')
-    print('----')
-    if grep('/bin/zcat', r'terms', 0, 10):
-        print('found')
-    print('----')
-    if not grep('/bin/zcat', r'teXXXXs', 0, 10):
-        print('not found')
-        
-
+if __name__ == "__main__":
+    print(grep("/bin/zcat", r"^#!", 0, 2), end="")
+    print("----")
+    print(grep("/bin/zcat", r"terms", 0, 10), end="")
+    print("----")
+    if grep("/bin/zcat", r"terms", 0, 10):
+        print("found")
+    print("----")
+    if not grep("/bin/zcat", r"teXXXXs", 0, 10):
+        print("not found")

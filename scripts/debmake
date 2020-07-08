@@ -24,6 +24,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import debmake
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     debmake.main()
-

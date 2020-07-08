@@ -47,57 +47,68 @@ def tar(tarball, targz, srcdir, parent, yes):
         * the current directory changes to 'srcdir' after successful completion
     """
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
-    if os.path.isdir('.pc'):
-        print('E: .pc/ directory exists.  Stop "debmake -t ..."',
-              file=sys.stderr)
-        print('E: Remove applied patches and remove .pc/ directory, first.',
-              file=sys.stderr)
+    if os.path.isdir(".pc"):
+        print('E: .pc/ directory exists.  Stop "debmake -t ..."', file=sys.stderr)
+        print(
+            "E: Remove applied patches and remove .pc/ directory, first.",
+            file=sys.stderr,
+        )
         exit(1)
     #######################################################################
     # make distribution tarball using tar excluding debian/ directory
     # VCS tree are not copied.
     #######################################################################
-    os.chdir('..')
+    os.chdir("..")
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if srcdir == parent:
-        print('I: good, -t (--tar) run in the versioned directory',
-              file=sys.stderr)
+        print("I: good, -t (--tar) run in the versioned directory", file=sys.stderr)
     else:
         if os.path.isdir(srcdir):
-            debmake.yn.yn('remove "{}" directory in tar'
-                          .format(srcdir), 'rm -rf ' + srcdir, yes)
+            debmake.yn.yn(
+                'remove "{}" directory in tar'.format(srcdir), "rm -rf " + srcdir, yes
+            )
         # copy from parent to srcdir using hardlinks (with debian/* data)
-        copy_command = ['rsync', '-av',
-                        '--link-dest', os.path.join(os.getcwd(), parent),
-                        os.path.join(parent, os.path.curdir), srcdir]
-        print('I: $ {}'.format(' '.join(copy_command)), file=sys.stderr)
+        copy_command = [
+            "rsync",
+            "-av",
+            "--link-dest",
+            os.path.join(os.getcwd(), parent),
+            os.path.join(parent, os.path.curdir),
+            srcdir,
+        ]
+        print("I: $ {}".format(" ".join(copy_command)), file=sys.stderr)
         if subprocess.call(copy_command) != 0:
-            print('E: rsync -aCv failed.', file=sys.stderr)
+            print("E: rsync -aCv failed.", file=sys.stderr)
             exit(1)
     # tar while excluding VCS and debian directories
-    tar_command = ['tar', '--exclude', os.path.join(srcdir, 'debian'),
-                   '--anchored', '--exclude-vcs']
-    if targz == 'tar.gz':
-        tar_command.append('--gzip')
-    elif targz == 'tar.bz2':
-        tar_command.append('--bzip2')
-    elif targz == 'tar.xz':
-        tar_command.append('--xz')
+    tar_command = [
+        "tar",
+        "--exclude",
+        os.path.join(srcdir, "debian"),
+        "--anchored",
+        "--exclude-vcs",
+    ]
+    if targz == "tar.gz":
+        tar_command.append("--gzip")
+    elif targz == "tar.bz2":
+        tar_command.append("--bzip2")
+    elif targz == "tar.xz":
+        tar_command.append("--xz")
     else:
         print('E: Wrong file format "{}".'.format(targz), file=sys.stderr)
         exit(1)
-    tar_command.append('-cvf')
+    tar_command.append("-cvf")
     tar_command.append(tarball)
     tar_command.append(srcdir)
-    print('I: $ {}'.format(' '.join(tar_command)), file=sys.stderr)
+    print("I: $ {}".format(" ".join(tar_command)), file=sys.stderr)
     if subprocess.call(tar_command) != 0:
-        print('E: tar failed {}.'.format(tarball), file=sys.stderr)
+        print("E: tar failed {}.".format(tarball), file=sys.stderr)
         exit(1)
-    print('I: {} tarball made'.format(tarball), file=sys.stderr)
+    print("I: {} tarball made".format(tarball), file=sys.stderr)
     os.chdir(srcdir)
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 
 
-if __name__ == '__main__':
-    print('No test program')
+if __name__ == "__main__":
+    print("No test program")
