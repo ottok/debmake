@@ -25,41 +25,42 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import sys
 import debmake.debug
+
 #######################################################################
 # cat >file
-def cat(file, text, end='', tutorial=False):
+def cat(file, text, end="", tutorial=False):
     if os.path.isfile(file) and os.stat(file).st_size != 0:
         # skip if a file exists and non-zero content
-        print('I: skipping :: {} (file exists)'.format(file), file=sys.stderr)
+        print("I: skipping :: {} (file exists)".format(file), file=sys.stderr)
         return
     if tutorial:
-        newtext = ''
-        for line in text.split('\n'):
-            if line[:3] != '###' or line[:4] == '####':
-                newtext += line + '\n'
+        newtext = ""
+        for line in text.split("\n"):
+            if line[:3] != "###" or line[:4] == "####":
+                newtext += line + "\n"
             else:
-                newtext += line[2:] + '\n'
+                newtext += line[2:] + "\n"
         text = newtext
     else:
-        newtext = ''
-        for line in text.split('\n'):
-            if line[:3] != '###' or line[:4] == '####':
-                newtext += line + '\n'
+        newtext = ""
+        for line in text.split("\n"):
+            if line[:3] != "###" or line[:4] == "####":
+                newtext += line + "\n"
         text = newtext
-    text = text.rstrip() + '\n'
+    text = text.rstrip() + "\n"
     path = os.path.dirname(file)
     if path:
         os.makedirs(path, exist_ok=True)
-    with open(file, mode='w', encoding='utf-8') as f:
-        print('I: creating => {}'.format(file), file=sys.stderr)
+    with open(file, mode="w", encoding="utf-8") as f:
+        print("I: creating => {}".format(file), file=sys.stderr)
         print(text, file=f, end=end)
-        debmake.debug.debug('Dw: "{}"'.format(text), type='w')
+        debmake.debug.debug('Dw: "{}"'.format(text), type="w")
     return
+
 
 #######################################################################
 # Test script
 #######################################################################
-if __name__ == '__main__':
-    cat('testfile0.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', tutorial=False)
-    cat('testfile1.tmp', 'fooo\n###barrrr\n####CCCC\nbazzzzz', tutorial=True)
-
+if __name__ == "__main__":
+    cat("testfile0.tmp", "fooo\n###barrrr\n####CCCC\nbazzzzz", tutorial=False)
+    cat("testfile1.tmp", "fooo\n###barrrr\n####CCCC\nbazzzzz", tutorial=True)

@@ -23,21 +23,22 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import os
+
 #######################################################################
 def compat(paracompat):
     ###################################################################
     # file:      path to the file
     ###################################################################
-    if os.path.isfile('debian/compat'):
-        with open('debian/compat', mode='r', encoding='utf-8') as f:
+    if os.path.isfile("debian/compat"):
+        with open("debian/compat", mode="r", encoding="utf-8") as f:
             number = int(f.read().strip())
     else:
         number = int(paracompat.strip())
     return number
 
+
 #######################################################################
 # Test script
 #######################################################################
-if __name__ == '__main__':
-    print(compat('99'))
-
+if __name__ == "__main__":
+    print(compat("99"))

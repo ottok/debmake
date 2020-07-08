@@ -25,25 +25,26 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import subprocess
 import sys
+
 ###########################################################################
 # yn: ask mes and execute command
 ###########################################################################
 def yn(mes, command, yes):
     if yes == 1:
-        yn = 'y'
+        yn = "y"
     elif yes == 2:
-        yn = 'n'
+        yn = "n"
     else:
-        yn = input('?: {} [Y/n]: '.format(mes))
-        if yn == '':
-            yn = 'y'
+        yn = input("?: {} [Y/n]: ".format(mes))
+        if yn == "":
+            yn = "y"
         else:
             yn = yn[0].lower()
-    if (yn =='y'):
+    if yn == "y":
         if command:
-            print('I: $ {}'.format(command), file=sys.stderr)
+            print("I: $ {}".format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
-                print('E: failed to run command.', file=sys.stderr)
+                print("E: failed to run command.", file=sys.stderr)
                 exit(1)
     else:
         print('E: terminating since "n" chosen at Y/n question.', file=sys.stderr)
@@ -51,11 +52,11 @@ def yn(mes, command, yes):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 
-if __name__ == '__main__':
-    print('I: ask', file=sys.stderr)
-    yn("list current directory (ask)", "ls -la", 0)
-    print('I: always yes', file=sys.stderr)
-    yn("list current directory (always yes)", "ls -la", 1)
-    print('I: never yes', file=sys.stderr)
-    yn("list current directory (never yes)", "ls -la", 2)
 
+if __name__ == "__main__":
+    print("I: ask", file=sys.stderr)
+    yn("list current directory (ask)", "ls -la", 0)
+    print("I: always yes", file=sys.stderr)
+    yn("list current directory (always yes)", "ls -la", 1)
+    print("I: never yes", file=sys.stderr)
+    yn("list current directory (never yes)", "ls -la", 2)

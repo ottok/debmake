@@ -25,36 +25,43 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import os
 import subprocess
 import sys
+
 ###########################################################################
 # origtar: called from debmake.main()
 ###########################################################################
 def origtar(package, version, targz, tarball, srcdir):
     # cd ..
-    os.chdir('..')
+    os.chdir("..")
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     #######################################################################
     # make package_versdion.orig.tar.gz in the parent directory if not exist
     # source is in srcdir
     #######################################################################
-    origtargz = package + '_' + version + '.orig.' + targz
+    origtargz = package + "_" + version + ".orig." + targz
     if os.path.isfile(tarball):
         if tarball == origtargz:
-            print('I: Use existing "{}" as upstream tarball'.format(tarball), file=sys.stderr)
+            print(
+                'I: Use existing "{}" as upstream tarball'.format(tarball),
+                file=sys.stderr,
+            )
         else:
-            command = 'ln -sf ' + tarball + ' ' + origtargz
-            print('I: $ {}'.format(command), file=sys.stderr)
+            command = "ln -sf " + tarball + " " + origtargz
+            print("I: $ {}".format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
-                print('E: failed to create symlink.', file=sys.stderr)
+                print("E: failed to create symlink.", file=sys.stderr)
                 exit(1)
     elif os.path.isfile(origtargz):
-        print('I: Use existing "{}" as upstream tarball'.format(origtargz), file=sys.stderr)
+        print(
+            'I: Use existing "{}" as upstream tarball'.format(origtargz),
+            file=sys.stderr,
+        )
     else:
         print('E: missing "{}".'.format(tarball), file=sys.stderr)
         exit(1)
-    os.chdir(srcdir) # calling side ensures this 
+    os.chdir(srcdir)  # calling side ensures this
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     return
 
-if __name__ == '__main__':
-    print('no test')
 
+if __name__ == "__main__":
+    print("no test")

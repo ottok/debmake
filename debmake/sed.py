@@ -27,8 +27,9 @@ import os
 import sys
 import debmake.cat
 import debmake.debug
+
 #######################################################################
-def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
+def sed(confdir, destdir, substlist, package, mask="*", tutorial=False):
     ###################################################################
     # confdir:   configuration file directory with / at the end
     # destdir:   destination directory with / at the end
@@ -38,34 +39,40 @@ def sed(confdir, destdir, substlist, package, mask='*', tutorial=False):
     ###################################################################
     lconfdir = len(confdir)
     for file in glob.glob(confdir + mask):
-        print('I: substituting => {}'.format(file), file=sys.stderr)
-        with open(file, mode='r', encoding='utf-8') as f:
+        print("I: substituting => {}".format(file), file=sys.stderr)
+        with open(file, mode="r", encoding="utf-8") as f:
             text = f.read()
         for k in substlist.keys():
             text = text.replace(k, substlist[k])
-        if file[lconfdir:lconfdir+7] == 'package':
-            newfile = destdir + package + file[lconfdir+7:]
+        if file[lconfdir : lconfdir + 7] == "package":
+            newfile = destdir + package + file[lconfdir + 7 :]
         else:
             newfile = destdir + file[lconfdir:]
-        debmake.debug.debug('Ds: "{}"'.format(text), type='s')
+        debmake.debug.debug('Ds: "{}"'.format(text), type="s")
         debmake.cat.cat(newfile, text, tutorial=tutorial)
     return
+
 
 #######################################################################
 # Test script
 #######################################################################
-if __name__ == '__main__':
+if __name__ == "__main__":
     tutorial = False
     substlist = {
-        '@BINPACKAGE@': 'binpackage',
-        '@PACKAGE@': 'package',
-        '@UCPACKAGE@': 'package'.upper(),
-        '@YEAR@': '2014',
-        '@FULLNAME@': 'fullname',
-        '@EMAIL@': 'email@example.org',
-        '@SHORTDATE@': '11 Jan. 2013',
+        "@BINPACKAGE@": "binpackage",
+        "@PACKAGE@": "package",
+        "@UCPACKAGE@": "package".upper(),
+        "@YEAR@": "2014",
+        "@FULLNAME@": "fullname",
+        "@EMAIL@": "email@example.org",
+        "@SHORTDATE@": "11 Jan. 2013",
     }
-    sed('../extra2/', 'debian/', substlist, 'package', tutorial=tutorial)
-    sed('../extra3/', 'debian/', substlist, 'package', tutorial=tutorial)
-    sed('../extra4/', 'debian/copyright-example/', substlist, 'package', tutorial=tutorial)
-
+    sed("../extra2/", "debian/", substlist, "package", tutorial=tutorial)
+    sed("../extra3/", "debian/", substlist, "package", tutorial=tutorial)
+    sed(
+        "../extra4/",
+        "debian/copyright-example/",
+        substlist,
+        "package",
+        tutorial=tutorial,
+    )
