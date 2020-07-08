@@ -44,11 +44,11 @@ import debmake.untar
 # Basic package information
 #######################################################################
 
-__debian_policy__   = '4.4.0'   # debian policy version
-__debian_compat__   = '12'       # debian/compat
+__debian_policy__   = '4.5.0'   # debian policy version
+__debian_compat__   = '12'      # debian/control Build-Depends: debhelper-compat (= 12)
 __programname__     = 'debmake'
 __version__         = '4.3.2'
-__copyright__       = 'Copyright © 2014-2018 Osamu Aoki <osamu@debian.org>'
+__copyright__       = 'Copyright © 2014-2020 Osamu Aoki <osamu@debian.org>'
 __license__         = '''\
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),

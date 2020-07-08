@@ -1,5 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: debmake
+Upstream-Contact: Osamu Aoki <osamu@debian.org>
 Source: https://salsa.debian.org/debian/debmake
 
 Files: *
