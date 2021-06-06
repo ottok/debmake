@@ -30,7 +30,7 @@ import debmake.yn
 
 
 def tar(tarball, targz, srcdir, parent, yes):
-    """ create a source tarball excluding the debian/ directory
+    """create a source tarball excluding the debian/ directory
     tar: called from debmake.main()
 
     tarball   = package-version.tar.gz (or package_version.orig.tar.gz)
