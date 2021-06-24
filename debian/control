@@ -2,8 +2,11 @@ Source: debmake
 Section: devel
 Priority: optional
 Maintainer: Osamu Aoki <osamu@debian.org>
-Build-Depends: debhelper-compat (= 12), dh-python, python3-all
-Standards-Version: 4.5.0
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3-all,
+               python3-setuptools
+Standards-Version: 4.5.1
 Homepage: https://salsa.debian.org/debian/debmake
 Vcs-Git: https://salsa.debian.org/debian/debmake.git
 Vcs-Browser: https://salsa.debian.org/debian/debmake
@@ -16,7 +19,7 @@ Recommends: build-essential, strace, wget | curl
 Suggests: autotools-dev,
           ccache,
           cmake,
-          cowbuilder,
+          dgit,
           dh-autoreconf,
           dh-python,
           eatmydata,
@@ -27,9 +30,9 @@ Suggests: autotools-dev,
           javahelper,
           lintian,
           mc,
-          pbuilder,
           quilt,
-          rpm2cpio
+          rpm2cpio,
+          sbuild
 Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source

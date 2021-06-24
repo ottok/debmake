@@ -1,0 +1,6 @@
+The Debian packaging of debmake is maintained in git, using the merging
+workflow described in dgit-maint-merge(7).  There isn't a patch queue that can
+be represented as a quilt series.
+
+Please see https://salsa.debian.org/debian/debmake
+

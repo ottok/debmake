@@ -4,10 +4,10 @@ Upstream-Contact: Osamu Aoki <osamu@debian.org>
 Source: https://salsa.debian.org/debian/debmake
 
 Files: *
-Copyright: 2014 Osamu Aoki
+Copyright: 2014-2021 Osamu Aoki
 License: Expat
 
-Files: extra*/*
+Files: src/extra*/*
 Copyright: Jim Van Zandt <jrv@debian.org>
 	Santiago Vila <sanvila@ctv.es>
 	Dirk Eddelbuettel <edd@debian.org>

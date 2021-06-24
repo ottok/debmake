@@ -7,3 +7,9 @@
 
 override_dh_auto_test:
 	cd test/src ; make
+
+override_dh_auto_install:
+	dh_auto_install
+	# These are not for general use (for debug only)
+	mv debian/debmake/usr/bin/debmake-lc debian/debmake/usr/lib/debmake/debmake-lc
+	mv debian/debmake/usr/bin/debmake-dep5 debian/debmake/usr/lib/debmake/debmake-dep-5

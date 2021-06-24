@@ -20,6 +20,10 @@ The author thanks previous efforts on this topic:
  * dh-make: 1998-2012 Craig Small <csmall@debian.org>
             command: dh_make                             (perl script)
 
+UPDATE:
+ * I wrote most of debmake code in 2013-2014.
+ * dh-make were ported from perl to python in 2016 and updated its
+   behavior.  So current dh-make is python3 based.
 
 Rationale for debmake
 ---------------------
@@ -53,4 +57,11 @@ The design guide line of debmake
    default except for the first run in which normal template files are
    generated.
 
- -- Osamu Aoki <osamu@debian.org>  Sun, 14 Dec 2014 17:11:26 +0000
+UPDATE:
+ * Support DEP-8, DEP-12 template
+ * Support dgit-maint-merge(7) work flow
+
+The above was written around 14 Dec 2014 except for UPDATE.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 20 Jun 2021 00:00:00 +0000
+

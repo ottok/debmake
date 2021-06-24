@@ -1,0 +1,5 @@
+#
+# DEP-8: autopkgtest - automatic as-installed package testing
+#        Please check * https://dep-team.pages.debian.net/deps/dep8/
+#                     * /usr/share/doc/autopkgtest
+Tests: testcode1.sh, testcode2.sh
