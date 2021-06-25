@@ -1,3 +1,25 @@
+debmake (4.4.0-1) unstable; urgency=medium
+
+  * New upstream release with major reorganization
+    - Support new features
+      * DEP-8 autopkgtest
+      * DEP-12 upstream metadata
+      * Support dgit-maint-merge user
+      * Support Rules-Requires-Root: no
+      * Update README.md
+    - Update upstream packaging style
+      * setuptools
+      * PEP-517
+      * Use static setup.cnf
+      * module moved under src/
+      * MANIFEST.in for proper sdist
+      * Code proofed by black
+  * Update Debian packaging style
+    - No more gbp packaging
+    - Use "main" with dgit-maint-merge workflow
+
+ -- Osamu Aoki <osamu@debian.org>  Sat, 26 Jun 2021 19:40:44 +0900
+
 debmake (4.3.2-1) unstable; urgency=medium
 
   [Ondřej Nový]
