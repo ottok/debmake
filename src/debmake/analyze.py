@@ -85,9 +85,9 @@ def popular(exttype, msg, debs, extcountlist, yes):
 ###########################################################################
 # description: read from the upstream packaging system
 ###########################################################################
-def description(type, base_path):
+def description(type, base_lib_path):
     text = ""
-    command = base_path + "/lib/debmake/" + type + ".short"
+    command = base_lib_path + type + ".short"
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
@@ -102,9 +102,9 @@ def description(type, base_path):
 ###########################################################################
 # description_long: read from the upstream packaging system
 ###########################################################################
-def description_long(type, base_path):
+def description_long(type, base_lib_path):
     text = ""
-    command = base_path + "/lib/debmake/" + type + ".long"
+    command = base_lib_path + type + ".long"
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
@@ -381,9 +381,11 @@ def analyze(para):
                 para["build_depends"].update({"python-all"})
             if para["spec"]:
                 if para["desc"] == "":
-                    para["desc"] = description("python3", para["base_path"])
+                    para["desc"] = description("python3", para["base_lib_path"])
                 if para["desc_long"] == "":
-                    para["desc_long"] = description_long("python3", para["base_path"])
+                    para["desc_long"] = description_long(
+                        "python3", para["base_lib_path"]
+                    )
         elif debmake.grep.grep("setup.py", "python", 0, 1):
             # http://docs.python.org/2/distutils/
             para["dh_with"].update({"python2"})
@@ -407,9 +409,11 @@ def analyze(para):
                 para["dh_buildsystem"] = "pybuild"
             if para["spec"]:
                 if para["desc"] == "":
-                    para["desc"] = description("python", para["base_path"])
+                    para["desc"] = description("python", para["base_lib_path"])
                 if para["desc_long"] == "":
-                    para["desc_long"] = description_long("python", para["base_path"])
+                    para["desc_long"] = description_long(
+                        "python", para["base_lib_path"]
+                    )
         else:
             print("W: unknown python version.  check setup.py.", file=sys.stderr)
     # Perl
@@ -459,13 +463,13 @@ def analyze(para):
     # high priority spec source, first
     if para["spec"]:
         if para["desc"] == "" and os.path.isfile("META.yml"):
-            para["desc"] = description("META.yml", para["base_path"])
+            para["desc"] = description("META.yml", para["base_lib_path"])
         if para["desc"] == "" and os.path.isfile("Rakefile"):
-            para["desc"] = description("Rakefile", para["base_path"])
+            para["desc"] = description("Rakefile", para["base_lib_path"])
         if para["desc"] == "" and spec:
-            para["desc"] = description("spec", para["base_path"])
+            para["desc"] = description("spec", para["base_lib_path"])
         if para["desc_long"] == "" and spec:
-            para["desc_long"] = description_long("spec", para["base_path"])
+            para["desc_long"] = description_long("spec", para["base_lib_path"])
     #######################################################################
     # analyze copyright+license content + file extensions
     # copyright, control: build/binary dependency, rules export/override

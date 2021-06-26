@@ -50,15 +50,15 @@ def control(para):
     else:
         if para["tutorial"]:
             desc_long_xtra = debmake.read.read(
-                para["base_path"] + "/share/debmake/extra0desc_long/_long_tutorial"
+                para["base_share_path"] + "/extra0desc_long/_long_tutorial"
             ).rstrip()
         else:
             desc_long_xtra = debmake.read.read(
-                para["base_path"] + "/share/debmake/extra0desc_long/_long"
+                para["base_share_path"] + "/extra0desc_long/_long"
             ).rstrip()
     for i, deb in enumerate(para["debs"]):
         desc_long_type = debmake.read.read(
-            para["base_path"] + "/share/debmake/extra0desc_long/" + deb["type"]
+            para["base_share_path"] + "/extra0desc_long/" + deb["type"]
         ).rstrip()
         if ndebs == 1:  # single binary
             deb["desc"] = desc

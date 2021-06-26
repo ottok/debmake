@@ -95,7 +95,7 @@ def debian(para):
     #######################################################################
     # set export string
     #######################################################################
-    export_dir = para["base_path"] + "/share/debmake/extra0export/"
+    export_dir = para["base_share_path"] + "/extra0export/"
     substlist["@EXPORT@"] = ""
     if "compiler" in para["export"]:
         substlist["@EXPORT@"] += (
@@ -114,7 +114,7 @@ def debian(para):
     #######################################################################
     # set override string
     #######################################################################
-    override_dir = para["base_path"] + "/share/debmake/extra0override/"
+    override_dir = para["base_share_path"] + "/extra0override/"
     substlist["@OVERRIDE@"] = ""
     if len(para["debs"]) == 1:
         build_dir = "debian/" + para["debs"][0]["package"]
@@ -179,7 +179,7 @@ def debian(para):
         substlist["@DHBUILDSYSTEM@"] = ""
     else:
         substlist["@DHBUILDSYSTEM@"] = "--buildsystem={}".format(para["dh_buildsystem"])
-    confdir = para["base_path"] + "/share/debmake/extra0/"
+    confdir = para["base_share_path"] + "/extra0/"
     debmake.sed.sed(
         confdir, "debian/", substlist, package, tutorial=para["tutorial"]
     )  # changelog, rules
@@ -190,28 +190,28 @@ def debian(para):
     # No interactive editing required to work.
     ###################################################################
     if extra >= 1:
-        confdir = para["base_path"] + "/share/debmake/extra1/"
+        confdir = para["base_share_path"] + "/extra1/"
         debmake.sed.sed(
             confdir, "debian/", substlist, package, tutorial=para["tutorial"]
         )
-        confdir = para["base_path"] + "/share/debmake/extra1source/"
+        confdir = para["base_share_path"] + "/extra1source/"
         debmake.sed.sed(
             confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
         )
-        confdir = para["base_path"] + "/share/debmake/extra1tests/"
+        confdir = para["base_share_path"] + "/extra1tests/"
         debmake.sed.sed(
             confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
         )
-        confdir = para["base_path"] + "/share/debmake/extra1upstream/"
+        confdir = para["base_share_path"] + "/extra1upstream/"
         debmake.sed.sed(
             confdir, "debian/upstream/", substlist, package, tutorial=para["tutorial"]
         )
-        confdir = para["base_path"] + "/share/debmake/extra1tests/"
+        confdir = para["base_share_path"] + "/extra1tests/"
         debmake.sed.sed(
             confdir, "debian/tests/", substlist, package, tutorial=para["tutorial"]
         )
         if not para["native"]:
-            confdir = para["base_path"] + "/share/debmake/extra1patches/"
+            confdir = para["base_share_path"] + "/extra1patches/"
             debmake.sed.sed(
                 confdir,
                 "debian/patches/",
@@ -219,7 +219,7 @@ def debian(para):
                 package,
                 tutorial=para["tutorial"],
             )
-            confdir = para["base_path"] + "/share/debmake/extra1sourcex/"
+            confdir = para["base_share_path"] + "/extra1sourcex/"
             debmake.sed.sed(
                 confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
             )
@@ -234,12 +234,12 @@ def debian(para):
     binlist = {"bin", "perl", "python", "python3", "ruby", "script"}
     if extra >= 2:
         if len(para["debs"]) == 1:  # if single binary deb
-            confdir = para["base_path"] + "/share/debmake/extra2single/"
+            confdir = para["base_share_path"] + "/extra2single/"
             debmake.sed.sed(
                 confdir, "debian/", substlist, package, tutorial=para["tutorial"]
             )
         else:  # if multi-binary debs
-            confdir = para["base_path"] + "/share/debmake/extra2multi/"
+            confdir = para["base_share_path"] + "/extra2multi/"
             debmake.sed.sed(
                 confdir, "debian/", substlist, package, tutorial=para["tutorial"]
             )
@@ -248,7 +248,7 @@ def debian(para):
                 type = deb["type"]
                 if type in binlist:
                     type = "bin"
-                confdir = para["base_path"] + "/share/debmake/extra2" + type + "/"
+                confdir = para["base_share_path"] + "/extra2" + type + "/"
                 debmake.sed.sed(
                     confdir,
                     "debian/",
@@ -258,7 +258,7 @@ def debian(para):
                 )
                 if deb["package"] == docpackage:
                     type = "doc"
-                    confdir = para["base_path"] + "/share/debmake/extra2" + type + "/"
+                    confdir = para["base_share_path"] + "/extra2" + type + "/"
                     debmake.sed.sed(
                         confdir,
                         "debian/",
@@ -273,7 +273,7 @@ def debian(para):
     ###################################################################
     substlist["@BINPACKAGE@"] = package  # just in case
     if extra >= 3:
-        confdir = para["base_path"] + "/share/debmake/extra3/"
+        confdir = para["base_share_path"] + "/extra3/"
         debmake.sed.sed(
             confdir, "debian/", substlist, package, tutorial=para["tutorial"]
         )
@@ -281,7 +281,7 @@ def debian(para):
     # copyright file examples (level=4)
     ###################################################################
     if extra >= 4:
-        confdir = para["base_path"] + "/share/debmake/extra4/"
+        confdir = para["base_share_path"] + "/extra4/"
         debmake.sed.sed(
             confdir,
             "debian/license-examples/",

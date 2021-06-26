@@ -69,15 +69,10 @@ def main():
     para["desc_long"] = ""
     para["export"] = set()
     para["override"] = set()
-    # get prefix for install --user/ ,, --prefix/ ,, --home
-    fullparent = os.path.realpath(sys.argv[0])
-    # Now symlink etc. has been traced for venv/pipx
-    fullparent = os.path.dirname(fullparent)
-    para["base_path"] = os.path.dirname(fullparent)
     para = debmake.para.para(para)
     debmake.debug.debug_para("Dp: @post-para para[*]", para)
     #######################################################################
-    # -v: print version and copyright notice and exit
+    # -v: print version and copyright notice
     #######################################################################
     if para["print_version"]:
         print(
@@ -89,6 +84,43 @@ def main():
             ),
             file=sys.stderr,
         )
+    #######################################################################
+    # check installed path
+    #######################################################################
+    print("=================================================================")
+    # get prefix for install --user/ ,, --prefix/ ,, --home
+    # ignore case for files in zipped file
+    # https://docs.python.org/3/library/importlib.html#module-importlib.resources
+    # debmake.__file__:
+    #    /usr/lib/python3/dist-packages/debmake/cli.py
+    #    *****            ^^^^^^^^^^^^^^
+    #    $HOME/.local/usr/pipx/venvs/debmake/lib/python3.9/site-packages/debmake/cli.py
+    #    ************************************              ^^^^^^^^^^^^^^
+    #    $SRC_PATH/src/debmake/cli.py (execute from source tree)
+    #              ^^^^
+    #    **************
+    package_dir = os.path.dirname(os.path.dirname(os.path.realpath(debmake.__file__)))
+    print("I: package_dir     = " + package_dir)
+    if os.path.basename(package_dir) != "src":
+        # installed case
+        para["base_path"] = os.path.dirname(
+            os.path.dirname(os.path.dirname(os.path.dirname(package_dir)))
+        )
+        para["base_lib_path"] = para["base_path"] + "/lib/debmake"
+        para["base_share_path"] = para["base_path"] + "/share/debmake"
+    else:
+        # in-source-tree case (src)
+        para["base_path"] = package_dir
+        para["base_lib_path"] = para["base_path"]
+        para["base_share_path"] = para["base_path"]
+    print("I: base_path       = " + para["base_path"])
+    print("I: base_lib_path   = " + para["base_lib_path"])
+    print("I: base_share_path = " + para["base_share_path"])
+    print("=================================================================")
+    #######################################################################
+    # -v: exit
+    #######################################################################
+    if para["print_version"]:
         return
     #######################################################################
     # -c: scan source for copyright+ license text, print and exit
