@@ -10,6 +10,8 @@ if [ -d src ]; then
   export PATH
   echo "I: set PYTHONPATH=$PYTHONPATH"
   echo "I: set PATH=$PATH"
+  # make https://salsa.debian.org/debian/debmake/-/merge_requests/8
+  ln -s src lib
 else
   echo "source this as . setenv"
 fi
