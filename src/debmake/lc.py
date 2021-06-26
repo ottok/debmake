@@ -22,6 +22,8 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+import sys
+import os
 import re
 
 ###############################################################################
@@ -1701,10 +1703,9 @@ def lc_sub(norm_text, mode):
 
 
 #########################################################################################
-if __name__ == "__main__":
-    import sys
-    import os
-
+def lc_main():
+    # lc.py entry point
+    #####################################################################################
     mode = 1
     argc = len(sys.argv)
     if argc <= 1:
@@ -1739,3 +1740,8 @@ if __name__ == "__main__":
                 else:  # abs(mode> => 5 for sunstring match to debug list_sub regex
                     print("File:    {}".format(file))
                     print(lc_sub(norm_text, mode))
+
+
+#########################################################################################
+if __name__ == "__main__":
+    lc_main()

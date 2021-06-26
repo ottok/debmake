@@ -1,0 +1,15 @@
+# SOURCE THIS AS
+#  $ source setenv
+# to set up a debug shell environment
+# vim:se sw=2 ts=2 sts=2 et ai tw=78:
+if [ -d src ]; then
+  HERE=$(realpath .)
+  PYTHONPATH=${HERE}/src
+  PATH=${HERE}/src/debmake:$PATH
+  export PYTHONPATH
+  export PATH
+  echo "I: set PYTHONPATH=$PYTHONPATH"
+  echo "I: set PATH=$PATH"
+else
+  echo "source this as . setenv"
+fi

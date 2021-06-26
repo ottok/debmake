@@ -30,6 +30,7 @@ import os
 import re
 import subprocess
 import sys
+import debmake
 import debmake.debug
 import debmake.lc
 
@@ -1455,10 +1456,7 @@ def checkdep5(files, mode=0, encoding="utf-8", pedantic=False):
     return cdata
 
 
-#######################################################################
-# Test script
-#######################################################################
-if __name__ == "__main__":
+def checkdep5_main():
     utf8 = True
     pedantic = False
     # parse command line
@@ -1583,3 +1581,10 @@ if __name__ == "__main__":
                 # print('Sortkey:   {}'.format(sortkey))
                 print("License:   {}{}".format(licenseid, licensetext))
                 print()
+
+
+#######################################################################
+# Test script
+#######################################################################
+if __name__ == "__main__":
+    checkdep5_main()

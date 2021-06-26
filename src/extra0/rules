@@ -9,7 +9,7 @@
 ### Copy some variable definitions from pkg-info.mk and vendor.mk
 ### under /usr/share/dpkg/ to here if they are useful.
 ###
-@EXPORT@### main packaging script based on dh7 syntax
+@EXPORT@### main packaging script based on post dh7 syntax
 %:
 	dh $@ @DHWITH@ @DHBUILDSYSTEM@
 

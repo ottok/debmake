@@ -113,6 +113,7 @@ Maintainer: {3} <{4}>
 Build-Depends: {5}
 Standards-Version: {6}
 Homepage: {7}
+Rules-Requires-Root: no
 {8}: {9}
 {10}: {11}
 """.format(

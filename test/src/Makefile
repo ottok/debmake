@@ -2,14 +2,14 @@
 # 1. Place "copyright" file from xorg-common package in the same directory
 # 2. Run "make" to check sanity
 
-PWD=$(shell pwd)
+PWD=$(shell realpath $(shell pwd))
 
 TEST_FILE ?= @1_c.txt
 
-PYTHONPATH:=$(shell pwd)/../..
+PYTHONPATH:=$(shell realpath $(shell pwd)/../../src)
 export PYTHONPATH
 
-PATH:=$(shell pwd)/../../debmake:$(PATH)
+PATH:=$(shell realpath $(shell pwd)/../../src/debmake):$(PATH)
 export PATH
 
 LC_ALL=C.UTF-8

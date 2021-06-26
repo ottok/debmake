@@ -3,16 +3,15 @@
 ### Check situation of Python on Debian
 ###     https://wiki.debian.org/Python
 ###
-### For transition to dh_python2 (jessie and later)
 ###     https://wiki.debian.org/Python/TransitionToDHPython2
-###
-### To support python2.7 and python3, there are 2 ways to package:
-###   * packaging with --buildsystem=pybuild (jessie and later)
 ###     https://wiki.debian.org/Python/Pybuild
 ###     https://wiki.debian.org/Python/LibraryStyleGuide
 ###
-###   * packaging without --buildsystem=pybuild (wheezy)
-###     https://wiki.debian.org/Python/AppStyleGuide
+### If a module package doesn't use distutils or setuptools but uses flit
+### you need flit plugin.  See pybuild(1).
+###
+### Pure PEP-517 based build with "python3 -m build ..." is not supported by
+### pybuild yet for bullseye.
 ###
 ### To update the upstream source to support python3, see
 ###     https://wiki.python.org/moin/Python2orPython3

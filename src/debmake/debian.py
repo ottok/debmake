@@ -198,6 +198,18 @@ def debian(para):
         debmake.sed.sed(
             confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
         )
+        confdir = para["base_path"] + "/share/debmake/extra1tests/"
+        debmake.sed.sed(
+            confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
+        )
+        confdir = para["base_path"] + "/share/debmake/extra1upstream/"
+        debmake.sed.sed(
+            confdir, "debian/upstream/", substlist, package, tutorial=para["tutorial"]
+        )
+        confdir = para["base_path"] + "/share/debmake/extra1tests/"
+        debmake.sed.sed(
+            confdir, "debian/tests/", substlist, package, tutorial=para["tutorial"]
+        )
         if not para["native"]:
             confdir = para["base_path"] + "/share/debmake/extra1patches/"
             debmake.sed.sed(
@@ -206,6 +218,10 @@ def debian(para):
                 substlist,
                 package,
                 tutorial=para["tutorial"],
+            )
+            confdir = para["base_path"] + "/share/debmake/extra1sourcex/"
+            debmake.sed.sed(
+                confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
             )
     ###################################################################
     # Optional files which is nice to be created for the new source (level=2)

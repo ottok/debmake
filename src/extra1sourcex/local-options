@@ -1,3 +1,6 @@
 ### Uncomment to active options. See dpkg-source(1)
+#
+# ### gbp-buildpackage(1) user may like this. ###
 #abort-on-upstream-changes
 #unapply-patches
+
