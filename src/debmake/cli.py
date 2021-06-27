@@ -104,7 +104,7 @@ def main():
     if os.path.basename(package_dir) != "src":
         # installed case
         para["base_path"] = os.path.dirname(
-            os.path.dirname(os.path.dirname(os.path.dirname(package_dir)))
+            os.path.dirname(os.path.dirname(package_dir))
         )
         para["base_lib_path"] = para["base_path"] + "/lib/debmake"
         para["base_share_path"] = para["base_path"] + "/share/debmake"
