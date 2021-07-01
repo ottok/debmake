@@ -131,9 +131,9 @@ Rules-Requires-Root: no
         para["vcsbrowser"],
     )
     if "python2" in para["dh_with"]:
-        msg += "X-Python-Version: >= 2.6\n"
+        msg += "#X-Python-Version: >= 2.7\n"
     if "python3" in para["dh_with"]:
-        msg += "X-Python3-Version: >= 3.2\n"
+        msg += "#X-Python3-Version: >= 3.7\n"
     # anything for perl and others XXX FIXME XXX
     msg += "\n"
     return msg
