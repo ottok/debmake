@@ -5,6 +5,9 @@ command to make a Debian package from the upstream VCS/tarball/source-tree.
 
 This is available as the "debmake" package on Debian.
 
+ * Homepage: https://salsa.debian.org/debian/debmake
+ * Default branch: main
+
 See the HTML files in the "debmake-doc" package for the introductory guide.
 
 ## License for the entire source
@@ -67,28 +70,31 @@ Debian/Ubuntu package to a system:
 
     $ sudo apt-get install debmake
 
-For other system, you can create a wheel package and install it with pip or
-pipx.  For example with pipx into venv.
+For other POSIX system, you can create a wheel package and install it with pip
+or pipx.  For example with pipx into venv.
 
     $ python3 setup.py bdist_wheel
     $ pipx install dist/debmake*.wheel
 
 ($PATH should be set to include ~/.local/bin )
 
-## How to modify
+## How to modify as contributor
 
 1. Check-out default branch "main":
         $ git clone https://salsa.debian.org/debian/debmake.git
-2. Make modification to "main" branch (or your private branch
-   and send us pull request).
+2. Make modification to "main" branch (or your private topic branch
+   and send us your pull request or patch).
+
+## How to update as upstream before release
+
+1. Update `src/debmake/__init__.py` with new upstream version `4.1.2`
+2. Add a new entry to the debian/changelog with the new upstream version
+   ("`dch -i`" creates entry such as `4.1.1-2` --> change to `4.1.2-1`)
 3. When debmake command line interface changes:
       * update debmake-doc package
       * generate a new `debmake.1` file in its source
       * copy generated `debmake.1` file into `manpages/debmake.1`
-4. Add a new entry to the debian/changelog with the new upstream version
-   ("`dch -i`" creates entry such as `4.1.1-2` --> change to `4.1.2-1`)
-5. Update `src/debmake/__init__.py` with new upstream version `4.1.2`
-6. Update `test/.LICENSE.KEEP` if test results changes by the following:
+4. Update `test/.LICENSE.KEEP` if test results changes by the following:
 ```
         $ cd test/src; make
           ... verify it is SUCCESS
@@ -96,51 +102,66 @@ pipx.  For example with pipx into venv.
   (If new test case is added and it build result is good, copy the new
    `test/.LICENSE.LOG` to `test/.LICENSE.KEEP` to make
    this SUCCESS)
-
-7. Tag it with upstream version `4.1.2` and build with
+5. Tag it with upstream version `4.1.2` and build with
 ```
-        $ git tag 4.1.2
+        $ git tag -s 4.1.2
         $ git deborig
 	$ sbuild
 ```
-8. Clean source tree with
+6. Clean source tree with
 ```
         $ git clean -d -f -x
 ```
 
-9. Make source only upload. (eventually with dgit-push)
+7. Make source only upload.
+```
+        $ dgit push-source
+```
+
+(Initial dgit transition needs more work with `--deliberately-not-fast-forward`
+or `--overwrite`.  See dgit-maint-merge(7))
 
 Please follow PEP-8 as much as possible.
+ * format source with "black"
  * indent 4 spaces
  * 80 char/line
- *  Coding style exceptions:
+ * Coding style exceptions:
    * line for debug code -> single line for ease of "grep"
    * some regex (max 100 char/line) for readability
-   * format source with "black"
 
-## Debug the source code without installing
+## Debug the source code without installing it as deb package
 
-There are 2 debugging purpose executabls:
+There are 2 debugging purpose executable files for the Debian package:
  * `/usr/lib/debmake/debmake-lc`
  * `/usr/lib/debmake/debmake-dep5`
 
-These are not meant to be general use and has no manpage.  But these help check
-situation inside debmake for debug purpose.
+These are not meant to be general use and has no manpage so they are moved out
+of /usr/bin for Debian package.  These can help check situation inside debmake
+for debug purpose.
 
-The source code can be tested by:
+The source code can be tested by installing its wheel package to your user
+environment.
 
- * Set up the module loading path `$PYTHONPATH` to `src/`; and
-   the command search path `$PATH` to `src/debmake/` respectively from where
-   `setup.py` is found:
 ```
-          $ source setenv
+ $ python3 setup.py bdist_wheel
+ $ pipx install dist/debmake*.whl
 ```
-   Now all scripts such as `cli.py` providing `debmake` equivalent command,
-   `lc.py` providing `/usr/lib/debmake/debmake-lc` command equivalent,
-   `checkdep5.py` providing `/usr/lib/debmake/debmake-dep5` command equivalent
-   can be executed independently from the command line for debugging.
+Here, I use pipx to install debmake module into venv and let it set symlinks in
+~/.local/bin` to executable files for debugging.  Now all scripts such as
+`debmake` providing `debmake` equivalent command, `debmake-lc` providing
+`/usr/lib/debmake/debmake-lc` command equivalent, `debmake-dep5` providing
+`/usr/lib/debmake/debmake-dep5` command equivalent can be executed
+independently from the command line for debugging.
 
- * ```./checkdep5.py [-s|-c|-t|-i|--] <file>```
+ * ```debmake [-h] [-c | -k] [-n | -a package-version.tar.gz | -d | -t]```
+```
+               [-p package] [-u version] [-r revision] [-z extension]
+               [-b binarypackage[:type]] [-e foo@example.org]
+               [-f "firstname lastname"] [-i [debuild|pdebuild|...] | -j]
+               [-l "license_file"] [-m] [-o "file"] [-q] [-s] [-v] [-w args]
+               [-x [01234]] [-y] [-L] [-P] [-T]
+```
+ * ```debmake-dep5.py [-s|-c|-t|-i|--] <file>```
 ```
         -s  selftest
         -c  extract copyright info as formatted text
@@ -148,10 +169,7 @@ The source code can be tested by:
         -i  check license ID with extra info
         --  check license ID and extract copyright (default)
 ```
-
-   Use "```make test-dep5```" and "```make test-id```" in `test/src/Makefile` to test.
-
- * ```./lc.py [-][1|2|3|4|5|6] <files ...>```
+ * ```debmake-lc.py [-][1|2|3|4|5|6] <files ...>```
 
 ```
    check <files ...> for license ID in different mode of -c options in debmake
@@ -165,12 +183,32 @@ The source code can be tested by:
         6: combination sub-string match for debug
 ```
 
-Altenatively, wheel package can be used to create executable in ~/.local/bin`
-for debugging.  Now all scripts such as `debmake` providing `debmake`
-equivalent command, `debmake-lc` providing `/usr/lib/debmake/debmake-lc`
-command equivalent, `debmake-dep5` providing `/usr/lib/debmake/debmake-dep5`
-command equivalent can be executed independently from the command line for
-debugging.
+There are ways to test these code in place without installing them.  One way is
+to set up the module loading path `$PYTHONPATH` to `src/`; and the command
+search path `$PATH` to be extended to include `src/debmake/` respectively from
+where `setup.py` is found by sourcing as:
+```
+          $ source setenv
+```
+
+Now all scripts are available to the shell as:
+ * `__main__.py` providing `/usr/bin/debmake` equivalent
+ * `lc.py` providing `/usr/lib/debmake/debmake-lc` equivalent
+ * `checkdep5.py` providing `/usr/lib/debmake/debmake-dep5` equivalent
+
+An approach to start debamke's `main()` in place is:
+
+```
+ $ cd src
+ $ python3 -m debmake
+```
+
+The last one doesn't need to set up environment variables `$PATH` and
+`$PYTHONPATH`.
+
+Since setting proper environment variables `$PATH` and `$PYTHONPATH` or
+executing command from particular are confusing, I don't recommend testing code
+in place.
 
 Trouble shoot hints:
  * What to do for strange string contaminating license info?
