@@ -12,4 +12,6 @@ debmake: script-not-executable usr/share/debmake/extra2single/postinst
 debmake: script-not-executable usr/share/debmake/extra2single/postrm
 debmake: script-not-executable usr/share/debmake/extra2single/preinst
 debmake: script-not-executable usr/share/debmake/extra2single/prerm
+debmake: package-contains-documentation-outside-usr-share-doc usr/share/debmake/extra1/README.Debian
+debmake: package-contains-documentation-outside-usr-share-doc usr/share/debmake/extra2doc/package.info
 

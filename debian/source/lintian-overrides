@@ -4,3 +4,4 @@ debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.2 invarian
 debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.2+ invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
 debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.3 invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
 debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.3+ invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
+debmake source: no-debian-changes
