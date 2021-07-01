@@ -196,7 +196,7 @@ Now all scripts are available to the shell as:
  * `lc.py` providing `/usr/lib/debmake/debmake-lc` equivalent
  * `checkdep5.py` providing `/usr/lib/debmake/debmake-dep5` equivalent
 
-An approach to start debamke's `main()` in place is:
+An alternative approach to start debamke's `main()` in place is:
 
 ```
  $ cd src
@@ -204,11 +204,11 @@ An approach to start debamke's `main()` in place is:
 ```
 
 The last one doesn't need to set up environment variables `$PATH` and
-`$PYTHONPATH`.
+`$PYTHONPATH` but your working directory must be at `src/`.
 
 Since setting proper environment variables `$PATH` and `$PYTHONPATH` or
-executing command from particular are confusing, I don't recommend testing code
-in place.
+executing a command from a particular path are confusing, I don't recommend
+testing code in place.
 
 Trouble shoot hints:
  * What to do for strange string contaminating license info?
