@@ -87,7 +87,10 @@ def main():
     #######################################################################
     # check installed path
     #######################################################################
-    print("=================================================================")
+    print(
+        "=================================================================",
+        file=sys.stderr,
+    )
     # get prefix for install --user/ ,, --prefix/ ,, --home
     # ignore case for files in zipped file
     # https://docs.python.org/3/library/importlib.html#module-importlib.resources
@@ -100,7 +103,7 @@ def main():
     #              ^^^^
     #    **************
     package_dir = os.path.dirname(os.path.dirname(os.path.realpath(debmake.__file__)))
-    print("I: package_dir     = " + package_dir)
+    print("I: package_dir     = " + package_dir, file=sys.stderr)
     if os.path.basename(package_dir) != "src":
         # installed case
         para["base_path"] = os.path.dirname(
@@ -113,10 +116,13 @@ def main():
         para["base_path"] = package_dir
         para["base_lib_path"] = para["base_path"]
         para["base_share_path"] = para["base_path"]
-    print("I: base_path       = " + para["base_path"])
-    print("I: base_lib_path   = " + para["base_lib_path"])
-    print("I: base_share_path = " + para["base_share_path"])
-    print("=================================================================")
+    print("I: base_path       = " + para["base_path"], file=sys.stderr)
+    print("I: base_lib_path   = " + para["base_lib_path"], file=sys.stderr)
+    print("I: base_share_path = " + para["base_share_path"], file=sys.stderr)
+    print(
+        "=================================================================",
+        file=sys.stderr,
+    )
     #######################################################################
     # -v: exit
     #######################################################################
