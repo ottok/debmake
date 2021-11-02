@@ -174,11 +174,11 @@ def debian(para):
     if para["dh_with"] == set():  # no dh_with
         substlist["@DHWITH@"] = ""
     else:
-        substlist["@DHWITH@"] = "--with {}".format(",".join(para["dh_with"]))
+        substlist["@DHWITH@"] = " --with {}".format(",".join(para["dh_with"]))
     if para["dh_buildsystem"] == "":  # no --buildsystem
         substlist["@DHBUILDSYSTEM@"] = ""
     else:
-        substlist["@DHBUILDSYSTEM@"] = "--buildsystem={}".format(para["dh_buildsystem"])
+        substlist["@DHBUILDSYSTEM@"] = " --buildsystem={}".format(para["dh_buildsystem"])
     confdir = para["base_share_path"] + "/extra0/"
     debmake.sed.sed(
         confdir, "debian/", substlist, package, tutorial=para["tutorial"]
