@@ -59,6 +59,8 @@ The design guide line of debmake
 
 UPDATE:
  * Support DEP-8, DEP-12 template
+   * https://dep-team.pages.debian.net/deps/dep8/
+   * https://dep-team.pages.debian.net/deps/dep12/
  * Support dgit-maint-merge(7) work flow
 
 The above was written around 14 Dec 2014 except for UPDATE.
