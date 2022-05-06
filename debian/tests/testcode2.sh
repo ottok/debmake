@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 # check if debmake works as expected
 LC_ALL=en_US.UTF-8
 export LC_ALL
