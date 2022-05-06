@@ -19,6 +19,7 @@ Recommends: build-essential, strace, wget | curl
 Suggests: autotools-dev,
           ccache,
           cmake,
+          debmake-doc,
           dgit,
           dh-autoreconf,
           dh-python,

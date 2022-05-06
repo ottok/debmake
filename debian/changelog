@@ -1,5 +1,6 @@
 debmake (4.4.0-1) unstable; urgency=medium
 
+  [ Osamu Aoki ]
   * New upstream release with major reorganization
     - Support new features
       * DEP-8 autopkgtest
@@ -17,6 +18,9 @@ debmake (4.4.0-1) unstable; urgency=medium
   * Update Debian packaging style
     - No more gbp packaging
     - Use "main" with dgit-maint-merge workflow
+
+  [ Ben Finney ]
+  * Add dependency “Suggests: debmake-doc”.  Closes: bug#1010651
 
  -- Osamu Aoki <osamu@debian.org>  Sat, 26 Jun 2021 19:40:44 +0900
 
