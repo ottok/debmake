@@ -24,6 +24,13 @@ debmake (4.4.0-1) unstable; urgency=medium
 
  -- Osamu Aoki <osamu@debian.org>  Sat, 26 Jun 2021 19:40:44 +0900
 
+debmake (4.3.2-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * source only upload to enable migration (Closes: #969711)
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 07 Sep 2020 08:40:24 +0200
+
 debmake (4.3.2-1) unstable; urgency=medium
 
   [Ondřej Nový]
