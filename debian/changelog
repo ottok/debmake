@@ -18,6 +18,7 @@ debmake (4.4.0-1) unstable; urgency=medium
   * Update Debian packaging style
     - No more gbp packaging
     - Use "main" with dgit-maint-merge workflow
+    - Address Lintian issues
 
   [ Ben Finney ]
   * Add dependency “Suggests: debmake-doc”.  Closes: bug#1010651
