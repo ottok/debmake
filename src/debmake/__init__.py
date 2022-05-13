@@ -26,7 +26,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # Basic package information
 #######################################################################
 
-__debian_policy__ = "4.5.1"  # debian policy version
+__debian_policy__ = "4.6.1"  # debian policy version
 __debian_compat__ = "13"  # debian/control Build-Depends: debhelper-compat (= 13)
 __programname__ = "debmake"
 __version__ = "4.4.0"
