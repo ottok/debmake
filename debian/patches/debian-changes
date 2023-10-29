@@ -1,0 +1,91 @@
+The Debian packaging of debmake is maintained in git, using the merging
+workflow described in dgit-maint-merge(7).  There isn't a patch queue that can
+be represented as a quilt series.
+
+Please see https://salsa.debian.org/debian/debmake
+
+--- debmake-4.4.0.orig/setup.cfg
++++ debmake-4.4.0/setup.cfg
+@@ -54,6 +54,7 @@ console_scripts =
+ 		src/extra0desc_long/dev
+ 		src/extra0desc_long/doc
+ 		src/extra0desc_long/lib
++		src/extra0desc_long/nodejs
+ 		src/extra0desc_long/perl
+ 		src/extra0desc_long/python
+ 		src/extra0desc_long/python3
+--- debmake-4.4.0.orig/src/debmake/__init__.py
++++ debmake-4.4.0/src/debmake/__init__.py
+@@ -26,7 +26,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ # Basic package information
+ #######################################################################
+ 
+-__debian_policy__ = "4.5.1"  # debian policy version
++__debian_policy__ = "4.6.1"  # debian policy version
+ __debian_compat__ = "13"  # debian/control Build-Depends: debhelper-compat (= 13)
+ __programname__ = "debmake"
+ __version__ = "4.4.0"
+--- debmake-4.4.0.orig/src/debmake/debian.py
++++ debmake-4.4.0/src/debmake/debian.py
+@@ -200,16 +200,12 @@ def debian(para):
+         )
+         confdir = para["base_share_path"] + "/extra1tests/"
+         debmake.sed.sed(
+-            confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
++            confdir, "debian/tests/", substlist, package, tutorial=para["tutorial"]
+         )
+         confdir = para["base_share_path"] + "/extra1upstream/"
+         debmake.sed.sed(
+             confdir, "debian/upstream/", substlist, package, tutorial=para["tutorial"]
+         )
+-        confdir = para["base_share_path"] + "/extra1tests/"
+-        debmake.sed.sed(
+-            confdir, "debian/tests/", substlist, package, tutorial=para["tutorial"]
+-        )
+         if not para["native"]:
+             confdir = para["base_share_path"] + "/extra1patches/"
+             debmake.sed.sed(
+--- debmake-4.4.0.orig/src/debmake/sanity.py
++++ debmake-4.4.0/src/debmake/sanity.py
+@@ -49,7 +49,7 @@ def sanity(para):
+             if os.path.isfile("/usr/bin/wget"):
+                 command = "/usr/bin/wget " + url
+             elif os.path.isfile("/usr/bin/curl"):
+-                command = "/usr/bin/curl " + url
++                command = "/usr/bin/curl -O " + url
+             else:
+                 print("E: please install wget or curl.", file=sys.stderr)
+                 exit(1)
+--- debmake-4.4.0.orig/src/extra0export/compiler
++++ debmake-4.4.0/src/extra0export/compiler
+@@ -4,7 +4,7 @@
+ ### Package maintainers to append CFLAGS
+ #export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+ ### Package maintainers to append LDFLAGS
+-#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
++#export DEB_LDFLAGS_MAINT_APPEND = -Wl,-O1
+ ###
+ ### With debhelper version 9 or newer, the dh command exports
+ ### all buildflags.  So there is no need to include the
+--- debmake-4.4.0.orig/src/extra1tests/control
++++ debmake-4.4.0/src/extra1tests/control
+@@ -2,5 +2,8 @@
+ # DEP-8: autopkgtest - automatic as-installed package testing
+ #        Please check * https://dep-team.pages.debian.net/deps/dep8/
+ #                     * /usr/share/doc/autopkgtest
++#
++# !!! Please make sure to edit this to a valid test, otherwise build will fails
++#
+ #Tests: testcode.sh
+ #Restrictions: allow-stderr, breaks-testbed, needs-internet, needs-root
+--- debmake-4.4.0.orig/src/extra4/LGPL-2.1+
++++ debmake-4.4.0/src/extra4/LGPL-2.1+
+@@ -11,7 +11,7 @@ License: LGPL-2.1+
+  This package is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+- version 2 of the License, or (at your option) any later version.
++ version 2.1 of the License, or (at your option) any later version.
+  .
+  This package is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
