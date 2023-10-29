@@ -49,7 +49,7 @@ def sanity(para):
             if os.path.isfile("/usr/bin/wget"):
                 command = "/usr/bin/wget " + url
             elif os.path.isfile("/usr/bin/curl"):
-                command = "/usr/bin/curl " + url
+                command = "/usr/bin/curl -O " + url
             else:
                 print("E: please install wget or curl.", file=sys.stderr)
                 exit(1)
