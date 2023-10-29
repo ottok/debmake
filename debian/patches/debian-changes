@@ -25,6 +25,17 @@ Please see https://salsa.debian.org/debian/debmake
  __debian_compat__ = "13"  # debian/control Build-Depends: debhelper-compat (= 13)
  __programname__ = "debmake"
  __version__ = "4.4.0"
+--- debmake-4.4.0.orig/src/debmake/analyze.py
++++ debmake-4.4.0/src/debmake/analyze.py
+@@ -436,7 +436,7 @@ def analyze(para):
+     elif os.path.isfile("package.json"):
+         para["build_type"] = "nodejs"
+         para["dh_with"].update({"nodejs"})
+-        para["build_depends"].update({"pkg-js-tools"})
++        para["build_depends"].update({"dh-nodejs"})
+     # Java
+     elif os.path.isfile("build.xml"):
+         para["build_type"] = "Java ant"
 --- debmake-4.4.0.orig/src/debmake/debian.py
 +++ debmake-4.4.0/src/debmake/debian.py
 @@ -200,16 +200,12 @@ def debian(para):
