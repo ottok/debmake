@@ -1,3 +1,25 @@
+debmake (4.4.0-2) unstable; urgency=medium
+
+  [ Baptiste Beauplat ]
+  * Update policy version to 4.6.1
+
+  [ Marco Mattiolo ]
+  * Update LGPL-2.1+ license paragraph to really point to LGPL-2.1 or later
+    (not 2.0)
+
+  [ Akbarkhon Variskhanov ]
+  * Replace linker flag --as-needed with -O1
+
+  [ Osamu Aoki ]
+  * Fix setup.cfg for src/extra0desc_long/nodejs
+    Closes: #969177
+  * Use "curl -O URL" instead of "curl URL"
+    Closes: #1021872
+  * Drop source/control
+    Closes: #1028595
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 29 Oct 2023 17:21:41 +0900
+
 debmake (4.4.0-1) unstable; urgency=medium
 
   [ Osamu Aoki ]
