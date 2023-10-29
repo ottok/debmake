@@ -436,7 +436,7 @@ def analyze(para):
     elif os.path.isfile("package.json"):
         para["build_type"] = "nodejs"
         para["dh_with"].update({"nodejs"})
-        para["build_depends"].update({"pkg-js-tools"})
+        para["build_depends"].update({"dh-nodejs"})
     # Java
     elif os.path.isfile("build.xml"):
         para["build_type"] = "Java ant"
