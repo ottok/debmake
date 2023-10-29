@@ -200,15 +200,11 @@ def debian(para):
         )
         confdir = para["base_share_path"] + "/extra1tests/"
         debmake.sed.sed(
-            confdir, "debian/source/", substlist, package, tutorial=para["tutorial"]
+            confdir, "debian/tests/", substlist, package, tutorial=para["tutorial"]
         )
         confdir = para["base_share_path"] + "/extra1upstream/"
         debmake.sed.sed(
             confdir, "debian/upstream/", substlist, package, tutorial=para["tutorial"]
-        )
-        confdir = para["base_share_path"] + "/extra1tests/"
-        debmake.sed.sed(
-            confdir, "debian/tests/", substlist, package, tutorial=para["tutorial"]
         )
         if not para["native"]:
             confdir = para["base_share_path"] + "/extra1patches/"
