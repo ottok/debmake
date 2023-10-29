@@ -1,3 +1,9 @@
+debmake (4.4.0-3) unstable; urgency=medium
+
+  * Use dh-nodejs instead of pkg-js-tools
+
+ -- Osamu Aoki <osamu@debian.org>  Mon, 30 Oct 2023 00:07:42 +0900
+
 debmake (4.4.0-2) unstable; urgency=medium
 
   [ Baptiste Beauplat ]
