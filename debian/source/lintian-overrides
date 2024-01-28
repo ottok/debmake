@@ -1,7 +1,6 @@
-debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.1 invariant part is: {{with the invariant sections being list their titles, with the front-cover texts being list, and with the back-cover texts being list
-debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.1+ invariant part is: {{with the invariant sections being list their titles, with the front-cover texts being list, and with the back-cover texts being list
-debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.2 invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
-debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.2+ invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
-debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.3 invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
-debmake source: license-problem-gfdl-invariants test/src/dspdx/GFDL-1.3+ invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts
-debmake source: no-debian-changes
+debmake source: license-problem-gfdl-invariants invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts [test/src/dspdx/GFDL-1.2]
+debmake source: license-problem-gfdl-invariants invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts [test/src/dspdx/GFDL-1.2+]
+debmake source: license-problem-gfdl-invariants invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts [test/src/dspdx/GFDL-1.3]
+debmake source: license-problem-gfdl-invariants invariant part is: {{with no invariant sections, no front-cover texts, and no back-cover texts [test/src/dspdx/GFDL-1.3+]
+debmake source: license-problem-gfdl-invariants invariant part is: {{with the invariant sections being list their titles, with the front-cover texts being list, and with the back-cover texts being list [test/src/dspdx/GFDL-1.1]
+debmake source: license-problem-gfdl-invariants invariant part is: {{with the invariant sections being list their titles, with the front-cover texts being list, and with the back-cover texts being list [test/src/dspdx/GFDL-1.1+]

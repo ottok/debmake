@@ -1,10 +1,10 @@
-debmake: extra-license-file usr/share/debmake/extra4/Artistic-1.0
-debmake: extra-license-file usr/share/debmake/extra4/GPL-2.0+
-debmake: extra-license-file usr/share/debmake/extra4/GPL-3.0+
-debmake: extra-license-file usr/share/debmake/extra4/LGPL-2.1+
-debmake: extra-license-file usr/share/debmake/extra4/LGPL-3.0+
-debmake: package-contains-documentation-outside-usr-share-doc usr/share/debmake/extra1/README.Debian
-debmake: package-contains-documentation-outside-usr-share-doc usr/share/debmake/extra2doc/package.info
+debmake: extra-license-file [usr/share/debmake/extra4/Artistic-1.0]
+debmake: extra-license-file [usr/share/debmake/extra4/GPL-2.0+]
+debmake: extra-license-file [usr/share/debmake/extra4/GPL-3.0+]
+debmake: extra-license-file [usr/share/debmake/extra4/LGPL-2.1+]
+debmake: extra-license-file [usr/share/debmake/extra4/LGPL-3.0+]
+debmake: package-contains-documentation-outside-usr-share-doc [usr/share/debmake/extra1/README.Debian]
+debmake: package-contains-documentation-outside-usr-share-doc [usr/share/debmake/extra2doc/package.info]
 debmake: script-not-executable [usr/share/debmake/extra0/rules]
 debmake: script-not-executable [usr/share/debmake/extra2multi/package.postinst]
 debmake: script-not-executable [usr/share/debmake/extra2multi/package.postrm]
@@ -14,4 +14,3 @@ debmake: script-not-executable [usr/share/debmake/extra2single/postinst]
 debmake: script-not-executable [usr/share/debmake/extra2single/postrm]
 debmake: script-not-executable [usr/share/debmake/extra2single/preinst]
 debmake: script-not-executable [usr/share/debmake/extra2single/prerm]
-
