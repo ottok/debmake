@@ -14,6 +14,27 @@ Please see https://salsa.debian.org/debian/debmake
  		src/extra0desc_long/perl
  		src/extra0desc_long/python
  		src/extra0desc_long/python3
+@@ -75,6 +76,7 @@ console_scripts =
+ 		src/extra0override/pythons
+ 	share/debmake/extra1 =
+ 		src/extra1/README.Debian
++		src/extra1/salsa-ci.yml
+ 		src/extra1/watch
+ 	share/debmake/extra1patches = src/extra1patches/series
+ 	share/debmake/extra1source = src/extra1source/format
+@@ -116,6 +118,7 @@ console_scripts =
+ 		src/extra3/compat.ex
+ 		src/extra3/manpage.1.ex
+ 		src/extra3/manpage.asciidoc.ex
++		src/extra3/manpage.md.ex
+ 		src/extra3/manpage.sgml.ex
+ 		src/extra3/manpage.xml.ex
+ 		src/extra3/package.bug-control.ex
+@@ -156,4 +159,3 @@ console_scripts =
+ 		src/desc/python3.short
+ 		src/desc/specin.long
+ 		src/desc/specin.short
+-
 --- debmake-4.4.0.orig/src/debmake/__init__.py
 +++ debmake-4.4.0/src/debmake/__init__.py
 @@ -26,7 +26,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN
@@ -25,6 +46,38 @@ Please see https://salsa.debian.org/debian/debmake
  __debian_compat__ = "13"  # debian/control Build-Depends: debhelper-compat (= 13)
  __programname__ = "debmake"
  __version__ = "4.4.0"
+--- debmake-4.4.0.orig/src/debmake/__main__.py
++++ debmake-4.4.0/src/debmake/__main__.py
+@@ -289,7 +289,7 @@ def main():
+         if subprocess.call(command, shell=True) != 0:
+             print("E: failed to run dpkg-depcheck.", file=sys.stderr)
+             exit(1)
+-        command = 'LANG=C ; sed -e "1d" < ../{0}.depcheck.log | sort >../{0}.build-dep.log'.format(
++        command = r'LANG=C ; sed -e "1d" < ../{0}.depcheck.log | sort >../{0}.build-dep.log'.format(
+             para["package"]
+         )
+         print("I: $ {}".format(command), file=sys.stderr)
+@@ -301,9 +301,9 @@ def main():
+             command = (
+                 "LANG=C; find debian/"
+                 + bpackage
+-                + ' -type f 2>&1 | sed -e "s/^debian\/'
++                + r' -type f 2>&1 | sed -e "s/^debian\/'
+                 + bpackage
+-                + '\///" | sort >../{0}.install.log'.format(para["package"])
++                + r'\///" | sort >../{0}.install.log'.format(para["package"])
+             )
+             print("I: $ {}".format(command), file=sys.stderr)
+             if subprocess.call(command, shell=True) != 0:
+@@ -312,7 +312,7 @@ def main():
+                 )
+                 exit(1)
+         elif len(para["debs"]) > 1:
+-            command = 'LANG=C; find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" | sort >../{0}.install.log'.format(
++            command = r'LANG=C; find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" | sort >../{0}.install.log'.format(
+                 para["package"]
+             )
+             print("I: $ {}".format(command), file=sys.stderr)
 --- debmake-4.4.0.orig/src/debmake/analyze.py
 +++ debmake-4.4.0/src/debmake/analyze.py
 @@ -436,7 +436,7 @@ def analyze(para):
@@ -78,6 +131,19 @@ Please see https://salsa.debian.org/debian/debmake
  ###
  ### With debhelper version 9 or newer, the dh command exports
  ### all buildflags.  So there is no need to include the
+--- /dev/null
++++ debmake-4.4.0/src/extra1/salsa-ci.yml
+@@ -0,0 +1,10 @@
++# For more information on what jobs are run see:
++# https://salsa.debian.org/salsa-ci-team/pipeline
++#
++# To enable the jobs, go to your repository (at salsa.debian.org)
++# and click over Settings > CI/CD > Expand (in General pipelines).
++# In "CI/CD configuration file" write debian/salsa-ci.yml and click
++# in "Save Changes". The CI tests will run after the next commit.
++---
++include:
++  - https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/recipes/debian.yml
 --- debmake-4.4.0.orig/src/extra1tests/control
 +++ debmake-4.4.0/src/extra1tests/control
 @@ -2,5 +2,8 @@
@@ -89,6 +155,136 @@ Please see https://salsa.debian.org/debian/debmake
 +#
  #Tests: testcode.sh
  #Restrictions: allow-stderr, breaks-testbed, needs-internet, needs-root
+--- /dev/null
++++ debmake-4.4.0/src/extra3/manpage.md.ex
+@@ -0,0 +1,127 @@
++% @UCPACKAGE@(SECTION) | User Commands
++%
++% "@SHORTDATE@"
++
++[comment]: # The lines above form a Pandoc metadata block. They must be
++[comment]: # the first ones in the file.
++[comment]: # See https://pandoc.org/MANUAL.html#metadata-blocks for details.
++
++[comment]: # pandoc -s -f markdown -t man package.md -o package.1
++[comment]: #
++[comment]: # A manual page package.1 will be generated. You may view the
++[comment]: # manual page with: nroff -man package.1 | less. A typical entry
++[comment]: # in a Makefile or Makefile.am is:
++[comment]: #
++[comment]: # package.1: package.md
++[comment]: #         pandoc --standalone --from=markdown --to=man $< --output=$@
++[comment]: #
++[comment]: # The pandoc binary is found in the pandoc package. Please remember
++[comment]: # that if you create the nroff version in one of the debian/rules
++[comment]: # file targets, such as build, you will need to include pandoc in
++[comment]: # your Build-Depends control field.
++
++[comment]: # lowdown is a low dependency, lightweight alternative to
++[comment]: # pandoc as a markdown to manpage translator. Use with:
++[comment]: #
++[comment]: # package.1: package.md
++[comment]: #         lowdown -s -Tman -o $@ $<
++[comment]: #
++[comment]: # And add lowdown to the Build-Depends control field.
++
++[comment]: # Remove the lines starting with '[comment]:' in this file in order
++[comment]: # to avoid warning messages.
++
++# NAME
++
++@PACKAGE@ - short summary
++
++# SYNOPSIS
++
++**@PACKAGE@** **-e** _this_ [**\-\-example=that**] [{**-e** | **\-\-example**} _this_]
++                 [{**-e** | **\-\-example**} {_this_ | _that_}]
++
++**@PACKAGE@** [{**-h** | *\-\-help**} | {**-v** | **\-\-version**}]
++
++# DESCRIPTION
++
++**@PACKAGE@** is a program that...
++
++# OPTIONS
++
++The program follows the usual GNU command line syntax, with long options
++starting with two dashes ('-'). A summary of options is included below.
++
++**-e** _this_, **\-\-example=**_that_
++:   Does this and that.
++
++**-h**, **\-\-help**
++:   Show summary of options.
++
++**-v**, **\-\-version**
++:   Show version of program.
++
++# FILES
++
++/etc/foo.conf
++:   The system-wide configuration file to control the behaviour of
++    @PACKAGE@. See **foo.conf**(5) for further details.
++
++${HOME}/.foo.conf
++:   The per-user configuration file to control the behaviour of
++    @PACKAGE@. See **foo.conf**(5) for further details.
++
++# ENVIRONMENT
++
++**FOO_CONF**
++:   If used, the defined file is used as configuration file (see also
++    the section called “FILES”).
++
++# DIAGNOSTICS
++
++The following diagnostics may be issued on stderr:
++
++Bad configuration file. Exiting.
++:   The configuration file seems to contain a broken configuration
++    line. Use the **\-\-verbose** option, to get more info.
++
++**@PACKAGE@** provides some return codes, that can be used in scripts:
++
++    Code Diagnostic
++    0 Program exited successfully.
++    1 The configuration file seems to be broken.
++
++# BUGS
++
++The program is currently limited to only work with the foobar library.
++
++The upstream BTS can be found at http://bugzilla.foo.tld.
++
++# SEE ALSO
++
++**bar**(1), **baz**(1), **foo.conf**(5)
++
++The programs are documented fully by The Rise and Fall of a Fooish Bar
++available via the **info**(1) system.
++
++# AUTHOR
++
++@FULLNAME@ <@EMAIL@>
++:   Wrote this manpage for the Debian system.
++
++# COPYRIGHT
++
++Copyright © @YEAR@ @FULLNAME@
++
++This manual page was written for the Debian system (and may be used by
++others).
++
++Permission is granted to copy, distribute and/or modify this document under
++the terms of the GNU General Public License, Version 2 or (at your option)
++any later version published by the Free Software Foundation.
++
++On Debian systems, the complete text of the GNU General Public License
++can be found in /usr/share/common-licenses/GPL.
++
++[comment]: #  Local Variables:
++[comment]: #  mode: markdown
++[comment]: #  End:
 --- debmake-4.4.0.orig/src/extra4/LGPL-2.1+
 +++ debmake-4.4.0/src/extra4/LGPL-2.1+
 @@ -11,7 +11,7 @@ License: LGPL-2.1+
