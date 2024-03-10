@@ -1,3 +1,17 @@
+debmake (4.4.0-4) unstable; urgency=medium
+
+  [ Otto Kekäläinen ]
+  * Enable Salsa-CI
+  * Fix Lintian overrides
+  * Extend manpage examples to include one in Markdown
+  * Add salsa-ci.yml in extra level 1
+
+  [ Osamu Aoki ]
+  * Use raw string for 3.12 compatibility.  Closes: #1065590
+  * Add d/gbp.conf
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 10 Mar 2024 22:02:27 +0900
+
 debmake (4.4.0-3) unstable; urgency=medium
 
   * Use dh-nodejs instead of pkg-js-tools
