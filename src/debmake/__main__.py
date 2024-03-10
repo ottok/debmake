@@ -289,7 +289,7 @@ def main():
         if subprocess.call(command, shell=True) != 0:
             print("E: failed to run dpkg-depcheck.", file=sys.stderr)
             exit(1)
-        command = 'LANG=C ; sed -e "1d" < ../{0}.depcheck.log | sort >../{0}.build-dep.log'.format(
+        command = r'LANG=C ; sed -e "1d" < ../{0}.depcheck.log | sort >../{0}.build-dep.log'.format(
             para["package"]
         )
         print("I: $ {}".format(command), file=sys.stderr)
@@ -301,9 +301,9 @@ def main():
             command = (
                 "LANG=C; find debian/"
                 + bpackage
-                + ' -type f 2>&1 | sed -e "s/^debian\/'
+                + r' -type f 2>&1 | sed -e "s/^debian\/'
                 + bpackage
-                + '\///" | sort >../{0}.install.log'.format(para["package"])
+                + r'\///" | sort >../{0}.install.log'.format(para["package"])
             )
             print("I: $ {}".format(command), file=sys.stderr)
             if subprocess.call(command, shell=True) != 0:
@@ -312,7 +312,7 @@ def main():
                 )
                 exit(1)
         elif len(para["debs"]) > 1:
-            command = 'LANG=C; find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" | sort >../{0}.install.log'.format(
+            command = r'LANG=C; find debian/tmp -type f 2>&1 | sed -e "s/^debian\/tmp\///" | sort >../{0}.install.log'.format(
                 para["package"]
             )
             print("I: $ {}".format(command), file=sys.stderr)
