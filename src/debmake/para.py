@@ -25,9 +25,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import argparse
 import os
 import pwd
-import sys
-import time
 import debmake.read
+
 
 ###########################################################################
 # undefined environment variable -> ''
@@ -41,12 +40,12 @@ def env(var):
 #######################################################################
 # Initialize parameters
 #######################################################################
-def para(para):
+def para(para={}):
     debmail = env("DEBEMAIL")
     if not debmail:
         # os.getlogin may not work well: #769392
         # debmail = os.getlogin() + '@localhost'
-        debemail = pwd.getpwuid(os.getuid())[0] + "@localhost"
+        debmail = pwd.getpwuid(os.getuid())[0] + "@localhost"
     debfullname = env("DEBFULLNAME")
     if not debfullname:
         # os.getlogin may not work well: #769392

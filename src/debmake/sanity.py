@@ -29,6 +29,7 @@ import re
 import subprocess
 import sys
 
+
 ###########################################################################
 # sanity: called from debmake.main()
 ###########################################################################
@@ -36,6 +37,7 @@ def sanity(para):
     #######################################################################
     # Normalize para[] for each exclusive build case (-d -t -a)
     #######################################################################
+    parent = ""
     package = ""
     version = ""
     revision = ""
@@ -57,7 +59,6 @@ def sanity(para):
             if subprocess.call(command, shell=True) != 0:
                 print("E: wget/curl failed.", file=sys.stderr)
                 exit(1)
-        parent = ""
         # tarball: ibus-1.5.5-2.fc19.src.rpm
         resrcrpm = re.match(
             r"([^/_]+-[^/_-]+)-[0-9]+\.[^.]+\.src\.rpm$",
@@ -115,13 +116,13 @@ def sanity(para):
             )
             exit(1)
     #######################################################################
-    if not para["archive"]:  # not -a
+    else:  # if not para["archive"]:  # not -a
         parent = os.path.basename(os.getcwd())
         # check changelog for package/version/revision (non-native package)
         if not para["native"] and os.path.isfile("debian/changelog"):
             with open("debian/changelog", mode="r", encoding="utf-8") as f:
                 line = f.readline()
-            pkgver = re.match("([^ \t]+)[ \t]+\(([^()]+)-([^-()]+)\)", line)
+            pkgver = re.match(r"([^ \t]+)[ \t]+\(([^()]+)-([^-()]+)\)", line)
             if pkgver:
                 package = pkgver.group(1).lower()
                 version = pkgver.group(2)
@@ -132,7 +133,7 @@ def sanity(para):
     #######################################################################
     if para["tar"]:  # -t
         if version == "":
-            version = datetime.datetime.utcnow().strftime(
+            version = datetime.datetime.now(datetime.timezone.utc).strftime(
                 "0~%y%m%d%H%M"
             )  # 0~YYMMDDHHmm
     #######################################################################

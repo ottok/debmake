@@ -22,7 +22,6 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-import glob
 import os
 import subprocess
 import sys
@@ -30,6 +29,8 @@ import debmake.cat
 import debmake.control
 import debmake.copyright
 import debmake.sed
+import debmake.read
+
 
 #######################################################################
 def debian(para):
@@ -60,7 +61,7 @@ def debian(para):
             para["extra"] = "2"
     try:
         extra = int(para["extra"])
-    except:
+    except ValueError:
         extra = 4
     print('I: debmake -x "{}" ...'.format(extra), file=sys.stderr)
     ###################################################################
@@ -116,10 +117,6 @@ def debian(para):
     #######################################################################
     override_dir = para["base_share_path"] + "/extra0override/"
     substlist["@OVERRIDE@"] = ""
-    if len(para["debs"]) == 1:
-        build_dir = "debian/" + para["debs"][0]["package"]
-    else:
-        build_dir = "debian/tmp"
     if "autogen" in para["override"]:
         substlist["@OVERRIDE@"] += (
             debmake.read.read(override_dir + "autogen").rstrip() + "\n\n"
@@ -178,7 +175,9 @@ def debian(para):
     if para["dh_buildsystem"] == "":  # no --buildsystem
         substlist["@DHBUILDSYSTEM@"] = ""
     else:
-        substlist["@DHBUILDSYSTEM@"] = " --buildsystem={}".format(para["dh_buildsystem"])
+        substlist["@DHBUILDSYSTEM@"] = " --buildsystem={}".format(
+            para["dh_buildsystem"]
+        )
     confdir = para["base_share_path"] + "/extra0/"
     debmake.sed.sed(
         confdir, "debian/", substlist, package, tutorial=para["tutorial"]

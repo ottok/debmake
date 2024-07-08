@@ -24,15 +24,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import sys
 
+
 ###########################################################################
 def match_prefix(name, prefix):
-    l = len(prefix)
-    return (len(name) > 1) and (name[:l] == prefix)
+    return (len(name) > 1) and (name[: len(prefix)] == prefix)
 
 
 def match_suffix(name, suffix):
-    l = len(suffix)
-    return (len(name) > 1) and (name[-l:] == suffix)
+    return (len(name) > 1) and (name[-len(suffix) :] == suffix)
 
 
 ###########################################################################

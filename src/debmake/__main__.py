@@ -141,8 +141,8 @@ def main():
             xml_html_files,
             binary_files,
             huge_files,
-            counter,
-            count_list,
+            _,
+            _,
         ) = debmake.scanfiles.scanfiles()
         data = debmake.checkdep5.checkdep5(
             nonlink_files, mode=para["copyright"], pedantic=para["pedantic"]

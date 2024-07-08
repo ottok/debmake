@@ -26,6 +26,7 @@ import os
 import re
 import sys
 
+
 #######################################################################
 # grep rtext file
 def grep(file, rtext, *range):
@@ -44,11 +45,11 @@ def grep(file, rtext, *range):
             lbgn = range[0]
             lend = range[1]
         with open(file, mode="r", encoding="utf-8") as f:
-            for (i, l) in enumerate(f.readlines()):
+            for i, line in enumerate(f.readlines()):
                 if (i >= lbgn) and ((lend < 0) or (lend > i)):
-                    match = reg.search(l)
+                    match = reg.search(line)
                     if match:
-                        lines += l
+                        lines += line
     return lines
 
 

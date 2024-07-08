@@ -91,8 +91,9 @@ def description(type, base_lib_path):
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
-    for line in p.stdout.readlines():
-        text += line.decode("utf-8").strip() + " "
+    if p.stdout is not None:
+        for line in p.stdout.readlines():
+            text += line.decode("utf-8").strip() + " "
     if p.wait() != 0:
         print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
         exit(1)
@@ -108,12 +109,13 @@ def description_long(type, base_lib_path):
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
-    for line in p.stdout.readlines():
-        l = line.decode("utf-8").rstrip()
-        if l:
-            text += " " + l + "\n"
-        else:
-            text += " .\n"
+    if p.stdout is not None:
+        for line in p.stdout.readlines():
+            l_chomp = line.decode("utf-8").rstrip()
+            if l_chomp:
+                text += " " + l_chomp + "\n"
+            else:
+                text += " .\n"
     if p.wait() != 0:
         print('E: "{}" returns "{}"'.format(command, p.returncode), file=sys.stderr)
         exit(1)
@@ -284,7 +286,7 @@ def analyze(para):
     if (
         os.path.isfile("configure.ac")
         and os.path.isfile("Makefile.am")
-        and not ("autotools-dev" in para["dh_with"])
+        and ("autotools-dev" not in para["dh_with"])
     ):
         para["dh_with"].update({"autoreconf"})
         para["build_type"] = "Autotools with autoreconf"
@@ -297,7 +299,7 @@ def analyze(para):
     elif (
         os.path.isfile("configure.in")
         and os.path.isfile("Makefile.am")
-        and not ("autotools-dev" in para["dh_with"])
+        and ("autotools-dev" not in para["dh_with"])
     ):
         para["dh_with"].update({"autoreconf"})
         para["build_type"] = "Autotools with autoreconf (old)"

@@ -27,6 +27,7 @@ import subprocess
 import sys
 import debmake.yn
 
+
 ###########################################################################
 # untar: called from debmake.main()
 ###########################################################################
@@ -38,7 +39,7 @@ import debmake.yn
 # parent    = package (original VCS directory for -d)
 # yes       = True if -y, False as default
 ###########################################################################
-def untar(tarball, targz, srcdir, dist, tar, parent, yes):
+def untar(tarball, targz, srcdir, dist, tar, parent, yes=False):
     print('I: pwd = "{}"'.format(os.getcwd()), file=sys.stderr)
     if not os.path.isfile(tarball):
         print('E: missing the "{}" file.'.format(tarball), file=sys.stderr)

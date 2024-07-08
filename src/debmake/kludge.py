@@ -29,6 +29,7 @@ import operator
 import os
 import re
 import sys
+import debmake.debug
 import debmake.checkdep5
 import debmake.scanfiles
 
@@ -47,9 +48,7 @@ def copydiff(mode, pedantic):
     patterns_for_license = []
     license = ""
     default_license = ""
-    f_file = False
     f_cont = False
-    f_license = False
     patterns = []
     iptn = -1
     licenses_old = {}
@@ -77,7 +76,7 @@ def copydiff(mode, pedantic):
                                     type="n",
                                 )
                             elif os.path.isdir(file_or_dir):
-                                for dir, subdirs, files in os.walk(file_or_dir):
+                                for dir, _, files in os.walk(file_or_dir):
                                     # debmake.debug.debug('Dn: Pattern #{:02}: {}, dir={}, files={}'.format(iptn, ptn, dir, files), type='n')
                                     for file in files:
                                         filepath = os.path.join(dir, file)
@@ -101,19 +100,16 @@ def copydiff(mode, pedantic):
             # Next stanza
             patterns_for_license = []
             license = ""
-            f_file = False
             f_cont = False
-            f_license = False
         elif line[:6].lower() == "files:":
             patterns_for_license += line[6:].split()
-            f_file = True
             f_cont = True
         elif line[:8].lower() == "license:":
             license = line[8:].strip()
             f_cont = False
-        elif f_cont == True and line[:1] == " ":
+        elif f_cont and line[:1] == " ":
             patterns_for_license += line.split()
-        elif f_cont == True and line[:1] == "\t":
+        elif f_cont and line[:1] == "\t":
             patterns_for_license += line.split()
         elif line[:1].lower() != " ":
             f_cont = False
@@ -141,15 +137,15 @@ def copydiff(mode, pedantic):
     ###########################################################################
     (
         nonlink_files,
-        xml_html_files,
-        binary_files,
-        huge_files,
-        extcount,
-        extcountlist,
+        _,  # xml_html_files,
+        _,  # binary_files,
+        _,  # huge_files,
+        _,  # extcount,
+        _,  # extcountlist,
     ) = debmake.scanfiles.scanfiles()
     data_new = debmake.checkdep5.checkdep5(nonlink_files, mode=1, pedantic=pedantic)
     licenses_new = {}
-    for (licenseid, licensetext, files, copyright_lines) in data_new:
+    for licenseid, _, files, _ in data_new:
         licenseid = licenseid.strip()
         debmake.debug.debug(
             'Dn: debian/copyright: "{}": {}'.format(licenseid, files), type="n"
@@ -164,6 +160,27 @@ def copydiff(mode, pedantic):
         if iptn in iptn_to_ptn.keys():
             ptn = iptn_to_ptn[iptn]
             files = iptn_to_files[iptn]
+            for file in files:
+                old = licenses_old[file]
+                if file in licenses_new.keys():
+                    new = licenses_new[file]
+                else:
+                    new = ""
+                if new == "_SAME_" and default_license != "":
+                    new = default_license
+                if old == new and mode <= 5:
+                    printdiff = False  # exact match
+                elif old.lower() == new.lower() and mode <= 4:
+                    printdiff = False  # case insensitive match
+                elif old.lower() == re_round0.sub("", new.lower()) and mode <= 4:
+                    printdiff = False  # ignore tailing .0
+                elif new == "" and mode <= 3:
+                    printdiff = False
+                elif new[:2] == "__" and mode <= 2:
+                    printdiff = False
+                else:  # (old, new) not the same or mode >= 6
+                    printdiff = True
+                data.append((iptn, ptn, file, printdiff, old, new))
         else:
             print(
                 'W: ***** Pattern #{:02}: "{}" unused, reorder debian/copyright *****'.format(
@@ -171,48 +188,31 @@ def copydiff(mode, pedantic):
                 ),
                 file=sys.stderr,
             )
-        for file in files:
-            old = licenses_old[file]
-            if file in licenses_new.keys():
-                new = licenses_new[file]
-            else:
-                new = ""
-            if new == "_SAME_" and default_license != "":
-                new = default_license
-            if old == new and mode <= 5:
-                printdiff = False  # exact match
-            elif old.lower() == new.lower() and mode <= 4:
-                printdiff = False  # case insensitive match
-            elif old.lower() == re_round0.sub("", new.lower()) and mode <= 4:
-                printdiff = False  # ignore tailing .0
-            elif new == "" and mode <= 3:
-                printdiff = False
-            elif new[:2] == "__" and mode <= 2:
-                printdiff = False
-            else:  # (old, new) not the same or mode >= 6
-                printdiff = True
-            data.append((iptn, ptn, file, printdiff, old, new))
     return data
 
 
 def kludge(mode, pedantic):
     basedata = copydiff(mode, pedantic)
     iptn_group_data = []
-    data = sorted(basedata, key=operator.itemgetter(0))
-    for k, g in itertools.groupby(basedata, operator.itemgetter(0)):
+    for _, g in itertools.groupby(basedata, operator.itemgetter(0)):
         iptn_group_data.append(list(g))  # Store group iterator as a list
     data_iptn_licenses = []
     for iptn_group in iptn_group_data:
         licenses_group_data = []
         iptn_group = sorted(iptn_group, key=operator.itemgetter(4, 5))
-        for k, g in itertools.groupby(iptn_group, operator.itemgetter(4, 5)):
+        for _, g in itertools.groupby(iptn_group, operator.itemgetter(4, 5)):
             licenses_group_data.append(list(g))  # Store group iterator as a list
         data_iptn_licenses.append(licenses_group_data)
     print("=== debian/copyright checked for {} data ===".format(len(basedata)))
     outdata = []
     for match_iptn in data_iptn_licenses:
         for match_licenses in match_iptn:
+            iptn = -1
+            ptn = ""
             files = []
+            printdiff = False
+            old = ""
+            new = ""
             for match_iptn_licenses in match_licenses:
                 (iptn, ptn, file, printdiff, old, new) = match_iptn_licenses
                 if printdiff:

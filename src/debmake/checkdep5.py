@@ -22,13 +22,11 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-import glob
 import hashlib
 import itertools
 import operator
 import os
 import re
-import subprocess
 import sys
 import debmake
 import debmake.debug
@@ -89,10 +87,39 @@ fs = [
     "F_PLAIN0I",  # After  initial line), ignore and insert blank line; or set EOF
     "F_EOF",  # force EOF before processing the next line
 ]
-# enum(fs)
-for (i, name) in enumerate(fs):
-    exec("{} = {}".format(name.strip(), i))
-F_EOF = -1  # override
+# enum(fs) @ pre-pyright
+# for i, name in enumerate(fs):
+#    exec("{} = {}".format(name.strip(), i))
+# expand enum(fs) @ post-pyright
+F_BLNK = 0
+F_QUOTE = 1
+F_BLKP = 2
+F_BLKPE = 3
+F_BLKP0 = 4
+F_BLKQ = 5
+F_BLKQE = 6
+F_BLKQ0 = 7
+F_BLKC = 8
+F_BLKCE = 9
+F_BLKC2 = 10
+F_BLKC1 = 11
+F_BLKC0 = 12
+F_PLAIN1 = 13
+F_PLAIN2 = 14
+F_PLAIN3 = 15
+F_PLAIN4 = 16
+F_PLAIN5 = 17
+F_PLAIN6 = 18
+F_PLAIN7 = 19
+F_PLAIN8 = 20
+F_PLAIN9 = 21
+F_PLAIN10 = 22
+F_PLAIN11 = 23
+F_PLAIN12 = 24
+F_PLAIN0 = 25
+F_PLAIN0U = 26
+F_PLAIN0I = 27
+F_EOF = -1
 
 # entry format style id list
 all_non_entry_formats = {
@@ -127,10 +154,16 @@ cs = [
     "C_LICN",  # license found
     "C_LICNB",  # blank after C_LICN
 ]
-# enum(cs)
-for (i, name) in enumerate(cs):
-    exec("{} = {}".format(name.strip(), i))
-
+# enum(cs) pre-pyright
+# for i, name in enumerate(cs):
+#    print("{} = {}".format(name.strip(), i))
+C_INIT = 0
+C_COPY = 1
+C_COPYB = 2
+C_AUTH = 3
+C_AUTHB = 4
+C_LICN = 5
+C_LICNB = 6
 # ------------------------------------------------------------------
 # format rule definitions
 # ------------------------------------------------------------------
@@ -549,6 +582,7 @@ re_license_end_next = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
+
 ###################################################################
 # parse_lines() uses following to process line in its MAIN-LOOP:
 ###################################################################
@@ -583,7 +617,7 @@ def check_format_style(line, xformat_state, persistent_format):
 # ------------------------------------------------------------------
 # count non-ascii characters
 # ------------------------------------------------------------------
-re_ascii = re.compile("[\s!-~]")
+re_ascii = re.compile(r"[\s!-~]")
 
 
 def len_non_ascii(line):
@@ -734,7 +768,7 @@ def analyze_copyright(copyright_lines, file, utf8=True, pedantic=False):
         copyright_lines = [
             "__MANY_COPYRIGHT_LINES__({}lines) in: {}".format(n_copyright_lines, file)
         ]
-    for (i, copyright_line) in enumerate(copyright_lines):
+    for i, copyright_line in enumerate(copyright_lines):
         copyright_line = copyright_line.strip()
         copyright_lines[i] = copyright_line
         n_copyright = len(copyright_line)
@@ -793,7 +827,7 @@ re_license_drop = re.compile(
 # The above needs to be duplicated to be included in re_preprocess_drop
 
 
-def clean_license(license_lines, file, utf8=True, pedantic=False):
+def clean_license(license_lines, file, utf8=True):
     # ------------------------------------------------------------------
     # sanitize license_lines
     # ------------------------------------------------------------------
@@ -804,12 +838,12 @@ def clean_license(license_lines, file, utf8=True, pedantic=False):
                 n_license_lines, license_lines[0][0:NORMAL_LINE_LENGTH]
             )
         ]
-    for (i, license_line) in enumerate(license_lines):
+    for i, license_line in enumerate(license_lines):
         if license_line[0 : len(file) + 1] == (file + ":"):
             license_lines[i] = ""
         license_lines[i] = re_license_drop.sub("", license_lines[i])
     bad_lines = 0
-    for (i, license_line) in enumerate(license_lines):
+    for i, license_line in enumerate(license_lines):
         license_line = license_line.strip()
         license_lines[i] = license_line
         n_license = len(license_line)
@@ -821,7 +855,7 @@ def clean_license(license_lines, file, utf8=True, pedantic=False):
                 )
             else:
                 license_lines[i] = "_LONG_LINE_({}chars.) ... truncated.: {}".format(
-                    n_license
+                    i, n_license
                 )
                 license_lines = license_lines[0 : i + 1]
                 break
@@ -888,7 +922,7 @@ def parse_lines(lines, file, utf8=True, pedantic=False):
     ##########################################################################
     # MAIN-LOOP for lines (start)
     ##########################################################################
-    for (i, line) in enumerate(lines):
+    for i, line in enumerate(lines):
         # set previous values
         xformat_state = format_state
         xcontent_state = content_state
@@ -1043,7 +1077,6 @@ def parse_lines(lines, file, utf8=True, pedantic=False):
                 type="m",
             )
             license_lines.append(line)
-            license_found = True
             content_state = C_LICN
             content_found |= {C_LICN}
         elif xcontent_state == C_LICN:  # line != ''
@@ -1154,7 +1187,7 @@ def parse_lines(lines, file, utf8=True, pedantic=False):
     copyright_data = analyze_copyright(
         copyright_lines, file, utf8=utf8, pedantic=pedantic
     )
-    license_lines = clean_license(license_lines, file, utf8=utf8, pedantic=pedantic)
+    license_lines = clean_license(license_lines, file, utf8=utf8)
     debmake.debug.debug("Da: AUTHOR(s)/TRANSLATOR(s):", type="a")
     for line in author_lines:
         debmake.debug.debug("Da: {}".format(line), type="a")
@@ -1178,9 +1211,9 @@ def parse_encoded_lines(file, encoding="utf-8", pedantic=False):
     ###################################################################
     except UnicodeDecodeError as e:
         print(
-            "W: Non-UTF-8 char found, using latin-1: {}".format(file), file=sys.stderr
+            "W: Non-UTF-8 char found, using latin-1: {}\nW: ... {}".format(file, e),
+            file=sys.stderr,
         )
-        fd.close()
         with open(file, "r", encoding="latin-1") as fd:
             (copyright_data, license_lines) = parse_lines(
                 fd.readlines(), file, utf8=False, pedantic=pedantic
@@ -1235,8 +1268,10 @@ re_permissive = re.compile(
         )""",
     re.IGNORECASE | re.VERBOSE,
 )
+
+
 ###################################################################
-# Check all appearing copyright and license texts
+# Check all appearing copyright and license texts in files
 ###################################################################
 # data[*][0]: license name ID: licenseid
 # data[*][1]: file name (bunched, list): files
@@ -1266,14 +1301,13 @@ def check_all_licenses(files, encoding="utf-8", mode=0, pedantic=False):
         "\n Autogenerated files with permissive licenses.",
     )
     if len(files) == 0:
-        print("W: check_all_licenses(files) should have files", file=sys.stderr)
-    if sys.hexversion >= 0x03030000:  # Python 3.3 ...
-        print("I: ", file=sys.stderr, end="", flush=True)
+        print("E: check_all_licenses(files) should have files", file=sys.stderr)
+        exit(1)
+    print("I: ", file=sys.stderr, end="", flush=True)
     for file in files:
         debmake.debug.debug("Df: check_all_licenses file={}".format(file), type="f")
         if os.path.isfile(file):
-            if sys.hexversion >= 0x03030000:  # Python 3.3 ...
-                print(".", file=sys.stderr, end="", flush=True)
+            print(".", file=sys.stderr, end="", flush=True)
             (copyright_data, license_lines) = parse_encoded_lines(
                 file, encoding=encoding, pedantic=pedantic
             )
@@ -1281,18 +1315,25 @@ def check_all_licenses(files, encoding="utf-8", mode=0, pedantic=False):
                 # without copyright and without license
                 norm_text = ""
                 md5hashkey = md5hashkey0
-                copyright_data = {"__NO_COPYRIGHT_NOR_LICENSE__": (9999, 0)}
+                copyright_data = {
+                    "__NO_COPYRIGHT_NOR_LICENSE__": (9999, 0)
+                }
             elif license_lines == []:
                 # with copyright but without license
                 norm_text = ""
                 md5hashkey = md5hashkey1
-            else:
-                if copyright_data == {}:
-                    copyright_data = {"__NO_COPYRIGHT__ in: {}".format(file): (9999, 0)}
+            elif copyright_data == {}:
                 norm_text = debmake.lc.normalize(license_lines)
                 md5hash = hashlib.md5()
                 md5hash.update(norm_text.encode())
                 md5hashkey = md5hash.hexdigest()
+                copyright_data = {"__NO_COPYRIGHT__ in: {}".format(file): (9999, 0)}
+            else:
+                norm_text = debmake.lc.normalize(license_lines)
+                md5hash = hashlib.md5()
+                md5hash.update(norm_text.encode())
+                md5hashkey = md5hash.hexdigest()
+                # copyright_data is already set by parse_encoded_lines
             if md5hashkey in license_cache.keys():
                 (licenseid, licensetext) = license_cache[md5hashkey]
             else:
@@ -1342,8 +1383,8 @@ def check_all_licenses(files, encoding="utf-8", mode=0, pedantic=False):
                     ),
                     type="c",
                 )
-            for l in license_lines:
-                debmake.debug.debug("Dl: {}".format(l), type="l")
+            for ll in license_lines:
+                debmake.debug.debug("Dl: {}".format(ll), type="l")
         elif os.path.isdir(file):
             print(
                 "W: skip check_all_licenses on directory: {}".format(file),
@@ -1362,16 +1403,31 @@ def check_all_licenses(files, encoding="utf-8", mode=0, pedantic=False):
 
 
 def bunch_all_licenses(adata):
+    if len(adata) == 0:
+        print("E: bunch_all_licenses(adata) should have adata", file=sys.stderr)
+        exit(1)
     # group scan result by license
     group_by_license = []
-    adata = sorted(adata, key=operator.itemgetter(0))  # sort by md5hashkey
-    for k, g in itertools.groupby(adata, operator.itemgetter(0)):
+    adata = sorted(adata, key=operator.itemgetter(0))  # sort by md5hashkey @ 0th-item
+    for _, g in itertools.groupby(adata, operator.itemgetter(0)):
         group_by_license.append(list(g))  # Store group iterator as a list
+    if len(group_by_license) == 0:
+        print("E: group_by_license list should not be []", file=sys.stderr)
+        exit(1)
     # bunch the same license for reporting
     bdata = []
+    md5hash = hashlib.md5()
+    md5hash.update("__UNSET__".encode())
+    md5hashkey3 = md5hash.hexdigest()
     for data_by_license in group_by_license:
         bunched_files = []
+        licenseid = ""
+        licensetext = ""
+        md5hashkey = md5hashkey3
         bunched_copyright_data = {}
+        if len(data_by_license) == 0:
+            print("E: data_by_license list should not be []", file=sys.stderr)
+            exit(1)
         for (
             md5hashkey,
             copyright_data,
@@ -1414,7 +1470,7 @@ def format_copyright(copyright_list):
         copyright_lines = ""
     else:
         copyright_lines = spaces + "\n"
-    for (year_min, year_max, name) in copyright_list:
+    for year_min, year_max, name in copyright_list:
         if year_max == 0:  # not found
             copyright_lines += "{}{}\n".format(spaces, name)
         elif year_min == year_max:
@@ -1430,12 +1486,12 @@ def format_all_licenses(bdata):
     bdata = sorted(
         bdata, key=operator.itemgetter(0)
     )  # sort by sortkey (more files comes early)
-    for k, g in itertools.groupby(bdata, operator.itemgetter(0)):
+    for _, g in itertools.groupby(bdata, operator.itemgetter(0)):
         group_by_license.append(list(g))  # Store group iterator as a list
     cdata = []
     for data_by_sortkey in group_by_license:
         for (
-            sortkey,
+            _,
             bunched_files,
             copyright_list,
             licenseid,
@@ -1459,6 +1515,8 @@ def checkdep5(files, mode=0, encoding="utf-8", pedantic=False):
 def checkdep5_main():
     utf8 = True
     pedantic = False
+    file = ""
+    files = []
     # parse command line
     if sys.argv[1] == "-s":
         mode = "selftest"
@@ -1501,7 +1559,8 @@ def checkdep5_main():
                 "REAL CODE",
             ],
             "filename",
-            True,
+            utf8=utf8,
+            pedantic=pedantic,
         )
         print(" copyright_data: ", end="")
         print(copyright_data)
@@ -1516,8 +1575,8 @@ def checkdep5_main():
                     "1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation, Inc. BOGUS DATA",
                 ],
                 "FILENAME",
-                utf8=True,
-                pedantic=False,
+                utf8=utf8,
+                pedantic=pedantic,
             )
         )
         print("self-test: checkdep5.py normalize_name():i\n ", end="")
@@ -1536,7 +1595,7 @@ def checkdep5_main():
                 print("\n".join(license_lines))
             if mode == "id":
                 norm_text = debmake.lc.normalize(license_lines)
-                (licenseid, license_text) = debmake.lc.lc(norm_text, license_lines, -2)
+                (licenseid, _) = debmake.lc.lc(norm_text, license_lines, -2)
                 print("{}\t{}".format(file, licenseid))
         elif mode == "adata":
             # get adata = check_all_licenses(files, encoding=encoding, mode=mode, pedantic=pedantic)
@@ -1573,7 +1632,7 @@ def checkdep5_main():
                 print()
         else:  # mode == 'dep5':
             # get cdata = sorted, the more bunched files, the earlier it is listed
-            for (licenseid, licensetext, files, copyright_lines) in checkdep5(
+            for licenseid, licensetext, files, copyright_lines in checkdep5(
                 files, mode=-2
             ):
                 print("Files:     {}".format("\n           ".join(sorted(files))))

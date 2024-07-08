@@ -28,6 +28,7 @@ import re
 import subprocess
 import sys
 
+
 ###########################################################################
 # dist: called from debmake.main()
 ###########################################################################
@@ -176,7 +177,7 @@ def dist(para):
                 file=sys.stderr,
             )
     else:
-        print("E: {} can not be found.".format(distpackage), file=sys.stderr)
+        print("E: {}/*.tar.*z can not be found.".format(distdir), file=sys.stderr)
         print("E: not even likely tarball found", file=sys.stderr)
         exit(1)
     #######################################################################

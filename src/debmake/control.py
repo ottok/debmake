@@ -25,6 +25,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import re
 import debmake.read
 
+
 #######################################################################
 def control(para):
     ndebs = len(para["debs"])
@@ -141,9 +142,9 @@ Rules-Requires-Root: no
 
 #######################################################################
 def guess_vcsvcs(vcsvcs):
-    if re.search("\.git$", vcsvcs):
+    if re.search(r"\.git$", vcsvcs):
         return "#Vcs-Git"
-    elif re.search("\.hg$", vcsvcs):
+    elif re.search(r"\.hg$", vcsvcs):
         return "#Vcs-Hg"
     elif re.search("^:pserver:", vcsvcs):
         # CVS :pserver:anonymous@anonscm.debian.org:/cvs/webwml
@@ -161,9 +162,9 @@ def guess_vcsvcs(vcsvcs):
 
 #######################################################################
 def guess_vcsbrowser(vcsbrowser):
-    if re.search("\.git$", vcsbrowser):
+    if re.search(r"\.git$", vcsbrowser):
         return "#Vcs-Browser"
-    elif re.search("\.hg$", vcsbrowser):
+    elif re.search(r"\.hg$", vcsbrowser):
         return "#Vcs-Browser"
     elif re.search("^:pserver:", vcsbrowser):
         # CVS :pserver:anonymous@anonscm.debian.org:/cvs/webwml

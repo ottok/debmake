@@ -26,6 +26,7 @@ import glob
 import os
 import sys
 
+
 ###################################################################
 # Format licence
 ###################################################################
@@ -52,9 +53,9 @@ def license_text(file, encoding="utf-8"):
                 lines.append(line.rstrip())
     except UnicodeDecodeError as e:
         print(
-            "W: Non-UTF-8 char found, using latin-1: {}".format(file), file=sys.stderr
+            "W: Non-UTF-8 char found, using latin-1: {}\nW: ... {}".format(file, e),
+            file=sys.stderr,
         )
-        fd.close()
         lines = []
         with open(file, "r", encoding="latin-1") as fd:
             for line in fd.readlines():
@@ -110,7 +111,7 @@ Source: <url://example.com>
         text += (
             "#\n# Please double check copyright with the licensecheck(1) command.\n\n"
         )
-    for (licenseid, licensetext, files, copyright_lines) in cdata:
+    for licenseid, licensetext, files, copyright_lines in cdata:
         # Files:
         text += "Files:     {}\n".format("\n           ".join(files))
         # Copyright:

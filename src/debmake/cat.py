@@ -26,6 +26,7 @@ import os
 import sys
 import debmake.debug
 
+
 #######################################################################
 # cat >file
 def cat(file, text, end="", tutorial=False):

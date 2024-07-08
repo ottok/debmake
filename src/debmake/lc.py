@@ -1429,7 +1429,7 @@ re_LICENSE_AFFERO = regex(
     rhead=r"^(?P<head>.*?)",
     rtail="(?P<tail>.*?)$",
 )
-re_LICENSE = regex(
+re_LICENSE_GNU = regex(
     pattern(
         r"""
     (?:(?P<agpl>AFFERO GENERAL PUBLIC LICENSE.*)
@@ -1464,6 +1464,8 @@ licensefiles = {
     "LGPL-3.0": ("LGPL-3", "GNU Lesser General Public License\n Version 3"),
     "LGPL-3.0+": ("LGPL-3", "GNU Lesser General Public License\n Version 3"),
 }
+
+
 #########################################################################################
 def normalize(license_lines):
     # normalize license to a single normalized line with single space
@@ -1498,19 +1500,17 @@ def lc(norm_text, license_lines, mode):
     # 1st-line part
     license = ""  # License type: GPL, BSD, ...
     id = ""  # "FULL_LICENSE", "EXACT", ...
-    idx = ""
     version = ""  # 3
     suffix = ""  #
     with_exception = ""  #  ' with ' + ... + ' exception'
     match_text = ""  # mode == 4 5 6 ... used by debug
+    norm_text = norm_text.strip() + " "  # Ensure a tailing space
     set_attribs = set()
-    norm_text = norm_text.strip()
-    if len(norm_text) == 0:
+    if norm_text == " ":
         license = "__NO_LICENSE_TEXT__"
-        text = ""
+        norm_text = ""  # Ensure null text
     elif len(norm_text) > size_FULL and re_FULL.search(norm_text):
         # full license text (very rough guess) ... skip scanning too many regex
-        norm_text = norm_text + " "  # Ensure a tailing space
         la = re_LICENSE_AFFERO.search(norm_text)
         lh = re_LICENSE_HEADER.search(norm_text)
         if la:
@@ -1520,23 +1520,23 @@ def lc(norm_text, license_lines, mode):
             id = "FULL_LICENSE"
         elif lh:
             norm_text = lh.group("tail").strip() + " "
-            l = re_LICENSE.search(norm_text)
-            if l:
-                if l.group("agpl"):
+            gnu_text = re_LICENSE_GNU.search(norm_text)
+            if gnu_text:
+                if gnu_text.group("agpl"):
                     license = "AGPL"
-                    version = l.group("version")
+                    version = gnu_text.group("version")
                     id = "FULL_LICENSE"
-                elif l.group("lgpl"):
+                elif gnu_text.group("lgpl"):
                     license = "LGPL"
-                    version = l.group("version")
+                    version = gnu_text.group("version")
                     id = "FULL_LICENSE"
-                elif l.group("gfdl"):
+                elif gnu_text.group("gfdl"):
                     license = "GFDL"
-                    version = l.group("version")
+                    version = gnu_text.group("version")
                     id = "FULL_LICENSE"
-                elif l.group("gpl"):
+                elif gnu_text.group("gpl"):
                     license = "GPL"
-                    version = l.group("version")
+                    version = gnu_text.group("version")
                     id = "FULL_LICENSE"
                 else:
                     license = "__GPL_LIKE__"
@@ -1552,9 +1552,7 @@ def lc(norm_text, license_lines, mode):
     # elif len(norm_text) > size_FULL:
     # license = '__TOO_LONG_TYPE1__'
     else:
-        # normal license scan
-        norm_text = norm_text + " "  # Ensure a tailing space
-        for (license, id, regex, vars) in list_main:
+        for license, id, regex, vars in list_main:
             r0 = regex.search(norm_text)
             if r0:
                 match_text = r0.group(0)
@@ -1611,7 +1609,7 @@ def lc(norm_text, license_lines, mode):
         if license == "MPL" and id == "VARIANT2-INCOMPATIBLE" and version == "-2.0":
             version = version + "-no-copyleft-exception"
         # exceptions handling
-        for (re_ex, text_ex, id_ex) in list_exceptions:
+        for re_ex, text_ex, id_ex in list_exceptions:
             r2 = re_ex.search(norm_text)
             if r2:
                 if mode >= 0:
@@ -1625,7 +1623,7 @@ def lc(norm_text, license_lines, mode):
         if n_exceptions > 1:
             with_exception += " *** check multiple exceptions ***"
         # attributes handling
-        for (re_at, copy_at, license_at) in list_attributes:
+        for re_at, copy_at, license_at in list_attributes:
             r2 = re_at.search(norm_text)
             if r2:
                 if license_at != "":
@@ -1690,15 +1688,12 @@ def lc_sub(norm_text, mode):
             if abs(mode) >= 6:
                 for suby in list_sub:
                     if subx != suby:
-                        try:
-                            r = re.compile(eval(subx) + eval(suby), re.IGNORECASE)
-                            if r.search(norm_text):
-                                # match with combination of subx + suby
-                                text += '==== {} + {} => "{}"\n'.format(
-                                    subx, suby, r.search(norm_text).group(0)
-                                )
-                        except:
-                            pass
+                        rr = re.compile(eval(subx) + eval(suby), re.IGNORECASE)
+                        if rr.search(norm_text):
+                            # match with combination of subx + suby
+                            text += '==== {} + {} => "{}"\n'.format(
+                                subx, suby, rr.search(norm_text).group(0)
+                            )
     return text
 
 
@@ -1711,6 +1706,7 @@ def lc_main():
     if argc <= 1:
         print("Syntax: " + sys.argv[0] + " [-][123456] file1 file2 ...")
     else:
+        files = []
         if argc == 2:
             files = sys.argv[1:]
         elif argc >= 3:

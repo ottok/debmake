@@ -127,7 +127,6 @@ extequiv = {
     "ico": "media",
     "mp3": "media",
     "ogg": "media",
-    "wav": "media",
     "ttf": "media",
     "TTF": "media",
     "otf": "media",
@@ -138,6 +137,7 @@ extequiv = {
 # re.search file name extension
 
 re_ext = re.compile(r"\.(?P<ext>[^.]+)(?:\.in|\.gz|\.bz2|\.xz|\.Z\|.z|~)*$")
+
 
 ###################################################################
 # Check if binary file
