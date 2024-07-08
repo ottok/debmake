@@ -1,3 +1,27 @@
+debmake (4.5.0-1) unstable; urgency=medium
+
+  * release new upstream with pyright conformance
+  * update pyproject.toml of debmake package
+    * remove setup.py, setup.cfg
+  * reorganize source tree
+    * all data in a subdirectory
+      * all data = .txt
+      * all shell = .sh (more robust)
+    * remove left-over d/compat support
+    * remove Python distutils support
+    * add Python pyproject.toml etc. support
+    * update, reorganize, and add template files
+    * remove old -x4 option support and add new -x4
+    * add .ex suffix through script for -x3 and -x4
+    * update watch file version 4
+    * update policy version 4.6.2
+    * update debhelper v13
+  * add automatic -z setting feature
+  * black formatted
+  * update manpage
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 28 Jul 2024 01:09:04 +0900
+
 debmake (4.4.0-4) unstable; urgency=medium
 
   [ Otto Kekäläinen ]
