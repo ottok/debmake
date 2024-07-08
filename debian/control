@@ -4,6 +4,8 @@ Priority: optional
 Maintainer: Osamu Aoki <osamu@debian.org>
 Build-Depends: debhelper-compat (= 13),
                dh-python,
+               dh-sequence-single-binary,
+               pybuild-plugin-pyproject,
                python3-all,
                python3-setuptools
 Standards-Version: 4.5.1
