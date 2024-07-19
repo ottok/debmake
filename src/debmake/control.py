@@ -51,15 +51,15 @@ def control(para):
     else:
         if para["tutorial"]:
             desc_long_xtra = debmake.read.read(
-                para["base_share_path"] + "/extra0desc_long/_long_tutorial"
+                para["data_path"] + "extra0desc_long__long_tutorial.txt"
             ).rstrip()
         else:
             desc_long_xtra = debmake.read.read(
-                para["base_share_path"] + "/extra0desc_long/_long"
+                para["data_path"] + "extra0desc_long__long.txt"
             ).rstrip()
     for i, deb in enumerate(para["debs"]):
         desc_long_type = debmake.read.read(
-            para["base_share_path"] + "/extra0desc_long/" + deb["type"]
+            para["data_path"] + "extra0desc_long_" + deb["type"] + ".txt"
         ).rstrip()
         if ndebs == 1:  # single binary
             deb["desc"] = desc
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     para["priority"] = "normal"
     para["fullname"] = "Osamu Aoki"
     para["email"] = "osamu@debian.org"
-    para["standard_version"] = "4.1.1"
+    para["standard_version"] = "4.6.2"
     para["build_depends"] = set()
     para["homepage"] = "https://www.debian.org"
     para["vcsvcs"] = "git:git.debian.org"

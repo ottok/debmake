@@ -22,6 +22,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+
 import glob
 import os
 import re
@@ -29,7 +30,6 @@ import sys
 import subprocess
 import debmake.grep
 import debmake.read
-import debmake.compat
 import debmake.checkdep5
 import debmake.scanfiles
 import debmake.yn
@@ -85,9 +85,9 @@ def popular(exttype, msg, debs, extcountlist, yes):
 ###########################################################################
 # description: read from the upstream packaging system
 ###########################################################################
-def description(type, base_lib_path):
+def description(type, data_path):
     text = ""
-    command = base_lib_path + type + ".short"
+    command = data_path + type + ".short.sh"
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
@@ -103,9 +103,9 @@ def description(type, base_lib_path):
 ###########################################################################
 # description_long: read from the upstream packaging system
 ###########################################################################
-def description_long(type, base_lib_path):
+def description_long(type, data_path):
     text = ""
-    command = base_lib_path + type + ".long"
+    command = data_path + type + ".long.sh"
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
@@ -169,7 +169,6 @@ def analyze(para):
     ###################################################################
     # package list by types (second pass)
     ###################################################################
-    para["dh_strip"] = ""
     for i, deb in enumerate(para["debs"]):
         if deb["type"] == "bin":
             para["export"].update({"compiler"})
@@ -206,8 +205,8 @@ def analyze(para):
                     }
                 )
         elif deb["type"] == "python":
-            para["dh_with"].update({"python2"})  # better to be explicit
-            para["build_depends"].update({"python-all"})
+            para["dh_with"].update({"python3"})  # better to be explicit
+            para["build_depends"].update({"python3-all", "dh-python"})
             for libpkg in para["lib"]:
                 para["debs"][i]["depends"].update(
                     {
@@ -267,6 +266,11 @@ def analyze(para):
             pass
     #######################################################################
     # auto-set build system by files in the base directory
+    #   update para["dh_with"] -- debian build component dh_*
+    #   para["build_type"] -- upstrean build type
+    #   para["build_depends"] -- build dependency packages
+    #   para["export"] -- exported build environment variable type
+    #   para["override"] -- set override_dh_* setting type
     #######################################################################
     para["build_type"] = ""  # reset value
     para["dh_buildsystem"] = ""  # normally not needed
@@ -359,65 +363,70 @@ def analyze(para):
         para["override"].update({"makefile"})
         if setmultiarch:
             para["override"].update({"multiarch"})
-    # Python distutils
+    # Python setuptools
     elif os.path.isfile("setup.py"):
-        if debmake.grep.grep("setup.py", "python3", 0, 1):
+        para["dh_with"].update({"python3"})
+        para["build_type"] = "Python setuptools (setup.py)"
+        para["dh_buildsystem"] = "pybuild"
+        # dh-python and python3-build are pulled in by pybuild-plugin-pyproject"
+        para["build_depends"].update({"python3-all", "pybuild-plugin-pyproject"})
+        if para["spec"]:
+            if para["desc"] == "":
+                para["desc"] = description("python3", para["data_path"])
+            if para["desc_long"] == "":
+                para["desc_long"] = description_long("python3", para["data_path"])
+        if debmake.grep.grep("setup.py", "python3", 0, 1) or debmake.grep.grep(
+            "setup.py", "python", 0, 1
+        ):
             # http://docs.python.org/3/distutils/
-            para["dh_with"].update({"python3"})
-            if debmake.grep.grep("setup.py", r"from\s+setuptools\s+import\s+setup"):
-                para["build_depends"].update(
-                    {"python3-all", "dh-python", "python3-setuptools"}
-                )
-            elif debmake.grep.grep(
-                "setup.py", r"from\s+distutils.core\s+import\s+setup"
+            if debmake.grep.grep(
+                "setup.py", r"from\s+setuptools\s+import\s+setup", 0, -1
             ):
-                para["build_depends"].update({"python3-all", "dh-python"})
+                # TODO: this needs verification
+                para["build_depends"].update({"python3-setuptools"})
             else:
+                # non-setuptools (pure distutil?) may not be supported
                 print(
-                    "W: neither distutils nor setuptools.  check setup.py.",
+                    "W: no setuptools. (distutils?)  check setup.py.",
                     file=sys.stderr,
                 )
-                para["build_depends"].update({"python3-all", "dh-python"})
-            para["dh_buildsystem"] = "pybuild"
-            if "python2" in para["dh_with"]:
-                para["build_depends"].update({"python-all"})
-            if para["spec"]:
-                if para["desc"] == "":
-                    para["desc"] = description("python3", para["base_lib_path"])
-                if para["desc_long"] == "":
-                    para["desc_long"] = description_long(
-                        "python3", para["base_lib_path"]
-                    )
-        elif debmake.grep.grep("setup.py", "python", 0, 1):
-            # http://docs.python.org/2/distutils/
-            para["dh_with"].update({"python2"})
-            para["build_type"] = "Python distutils"
-            if debmake.grep.grep("setup.py", r"from\s+setuptools\s+import\s+setup"):
-                para["build_depends"].update(
-                    {"python3-all", "dh-python", "python-setuptools"}
-                )
-            elif debmake.grep.grep(
-                "setup.py", r"from\s+distutils.core\s+import\s+setup"
-            ):
-                para["build_depends"].update({"python3-all", "dh-python"})
-            else:
-                print(
-                    "W: neither distutils nor setuptools.  check setup.py.",
-                    file=sys.stderr,
-                )
-                para["build_depends"].update({"python3-all", "dh-python"})
-            if "python3" in para["dh_with"]:
-                para["build_depends"].update({"python3-all", "dh-python"})
-                para["dh_buildsystem"] = "pybuild"
-            if para["spec"]:
-                if para["desc"] == "":
-                    para["desc"] = description("python", para["base_lib_path"])
-                if para["desc_long"] == "":
-                    para["desc_long"] = description_long(
-                        "python", para["base_lib_path"]
-                    )
         else:
-            print("W: unknown python version.  check setup.py.", file=sys.stderr)
+            print("W: unknown python system.  check setup.py.", file=sys.stderr)
+    elif os.path.isfile("setup.cnf"):
+        para["dh_with"].update({"python3"})
+        para["build_type"] = "Python setuptools (setup.cnf)"
+        para["dh_buildsystem"] = "pybuild"
+        # dh-python and python3-build are pulled in by pybuild-plugin-pyproject"
+        para["build_depends"].update({"python3-all", "pybuild-plugin-pyproject"})
+        # TODO: check if this is good idea
+        para["build_depends"].update({"python3-setuptools"})
+    elif os.path.isfile("pyproject.toml"):
+        para["dh_with"].update({"python3"})
+        para["build_type"] = "Python (pyproject.toml: PEP-518, PEP-621, PEP-660)"
+        para["dh_buildsystem"] = "pybuild"
+        # dh-python and python3-build are pulled in by pybuild-plugin-pyproject"
+        para["build_depends"].update({"python3-all", "pybuild-plugin-pyproject"})
+        if debmake.grep.grep("pyproject.toml", r"setuptools", 0, -1):
+            # TODO: check if this is good idea
+            para["build_depends"].update({"python3-setuptools"})
+            # para["build_depends"].update({"python3-setuptools-whl"})
+            print("W: setuptools build system.", file=sys.stderr)
+        elif debmake.grep.grep("pyproject.toml", r"hatchling", 0, -1):
+            # TODO: check if this is good idea
+            para["build_depends"].update({"python3-hatchling"})
+            print("W: Hatchling build system.", file=sys.stderr)
+        elif debmake.grep.grep("pyproject.toml", r"flit_core", 0, -1):
+            # TODO: check if this is good idea
+            para["build_depends"].update({"flit"})
+            print("W: Flit build system.", file=sys.stderr)
+        elif debmake.grep.grep("pyproject.toml", r"pdm-backend", 0, -1):
+            # TODO: check if this is good idea
+            para["build_depends"].update({"python3-pdm"})
+            # para["build_depends"].update({"python3-pdm-pep517"})
+            print("W: PDM build system.", file=sys.stderr)
+        else:
+            # TODO: check if this is good idea
+            print("W: unknown python build system.", file=sys.stderr)
     # Perl
     elif os.path.isfile("Build.PL"):
         # Preferred over Makefile.PL after debhelper v8
@@ -465,13 +474,13 @@ def analyze(para):
     # high priority spec source, first
     if para["spec"]:
         if para["desc"] == "" and os.path.isfile("META.yml"):
-            para["desc"] = description("META.yml", para["base_lib_path"])
+            para["desc"] = description("META.yml", para["data_path"])
         if para["desc"] == "" and os.path.isfile("Rakefile"):
-            para["desc"] = description("Rakefile", para["base_lib_path"])
+            para["desc"] = description("Rakefile", para["data_path"])
         if para["desc"] == "" and spec:
-            para["desc"] = description("spec", para["base_lib_path"])
+            para["desc"] = description("spec", para["data_path"])
         if para["desc_long"] == "" and spec:
-            para["desc_long"] = description_long("spec", para["base_lib_path"])
+            para["desc_long"] = description_long("spec", para["data_path"])
     #######################################################################
     # analyze copyright+license content + file extensions
     # copyright, control: build/binary dependency, rules export/override

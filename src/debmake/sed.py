@@ -22,6 +22,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+
 import glob
 import sys
 import debmake.cat
@@ -29,13 +30,13 @@ import debmake.debug
 
 
 #######################################################################
-def sed(confdir, destdir, substlist, package, mask="*", tutorial=False):
+def sed(confdir, destdir, substlist, package, mask="*.txt", suffix="", tutorial=False):
     ###################################################################
     # confdir:   configuration file directory with / at the end
     # destdir:   destination directory with / at the end
     # substlist: substitution dictionary
     # package:   binary package name
-    # mask:      source file mask for glob. Usually, *
+    # mask:      source file mask for glob. Usually, *.txt
     ###################################################################
     lconfdir = len(confdir)
     for file in glob.glob(confdir + mask):
@@ -45,10 +46,10 @@ def sed(confdir, destdir, substlist, package, mask="*", tutorial=False):
         for k in substlist.keys():
             text = text.replace(k, substlist[k])
         if file[lconfdir : lconfdir + 7] == "package":
-            newfile = destdir + package + file[lconfdir + 7 :]
+            newfile = destdir + package + file[lconfdir + 7 : -4] + suffix
         else:
-            newfile = destdir + file[lconfdir:]
-        debmake.debug.debug('Ds: "{}"'.format(text), type="s")
+            newfile = destdir + file[lconfdir:-4] + suffix
+        debmake.debug.debug('Dr: "{}"'.format(text), type="r")
         debmake.cat.cat(newfile, text, tutorial=tutorial)
     return
 
@@ -67,12 +68,5 @@ if __name__ == "__main__":
         "@EMAIL@": "email@example.org",
         "@SHORTDATE@": "11 Jan. 2013",
     }
-    sed("../extra2/", "debian/", substlist, "package", tutorial=tutorial)
-    sed("../extra3/", "debian/", substlist, "package", tutorial=tutorial)
-    sed(
-        "../extra4/",
-        "debian/copyright-example/",
-        substlist,
-        "package",
-        tutorial=tutorial,
-    )
+    sed("data/extra2_", "debian/", substlist, "package", tutorial=tutorial)
+    sed("data/extra3_", "debian/", substlist, "package", tutorial=tutorial)

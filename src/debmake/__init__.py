@@ -26,10 +26,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # Basic package information
 #######################################################################
 
-__debian_policy__ = "4.6.1"  # debian policy version
+__debian_policy__ = "4.6.2"  # debian policy version
 __debian_compat__ = "13"  # debian/control Build-Depends: debhelper-compat (= 13)
 __programname__ = "debmake"
-__version__ = "4.4.0"
+__version__ = "4.5.0"
 __copyright__ = "Copyright © 2014-2021 Osamu Aoki <osamu@debian.org>"
 __license__ = """\
 Permission is hereby granted, free of charge, to any person obtaining a

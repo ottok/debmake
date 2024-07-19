@@ -7,7 +7,7 @@ Files: *
 Copyright: 2014-2021 Osamu Aoki
 License: Expat
 
-Files: src/extra*/*
+Files: src/debmake/data/*
 Copyright: Jim Van Zandt <jrv@debian.org>
 	Santiago Vila <sanvila@ctv.es>
 	Dirk Eddelbuettel <edd@debian.org>

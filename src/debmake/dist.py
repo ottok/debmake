@@ -45,45 +45,45 @@ def dist(para):
             exit(1)
         distdir = "."
     #######################################################################
-    # make distribution tarball using setup.py
+    # make distribution tarball using setup.py -- disabled
     #######################################################################
-    elif os.path.isfile("setup.py"):
-        # Python distutils
-        with open("setup.py", mode="r", encoding="utf-8") as f:
-            line = f.readline()
-        if re.search("python3", line):
-            # http://docs.python.org/3/distutils/
-            if para["targz"] == "tar.xz":
-                command = (
-                    "python3 setup.py sdist --owner=root --group=root --formats=xztar"
-                )
-            elif para["targz"] == "tar.bz2":
-                command = (
-                    "python3 setup.py sdist --owner=root --group=root --formats=bztar"
-                )
-            else:
-                command = (
-                    "python3 setup.py sdist --owner=root --group=root --formats=gztar"
-                )
-        else:
-            # http://docs.python.org/2/distutils/
-            if para["targz"] == "tar.xz":
-                command = (
-                    "python setup.py sdist --owner=root --group=root --formats=xztar"
-                )
-            elif para["targz"] == "tar.bz2":
-                command = (
-                    "python setup.py sdist --owner=root --group=root --formats=bztar"
-                )
-            else:
-                command = (
-                    "python setup.py sdist --owner=root --group=root --formats=gztar"
-                )
-        print("I: $ {}".format(command), file=sys.stderr)
-        if subprocess.call(command, shell=True) != 0:
-            print("E: setup.py failed.", file=sys.stderr)
-            exit(1)
-        distdir = "dist"
+    # elif os.path.isfile("setup.py"):
+    #     # Python distutils
+    #     with open("setup.py", mode="r", encoding="utf-8") as f:
+    #         line = f.readline()
+    #     if re.search("python3", line):
+    #         # http://docs.python.org/3/distutils/
+    #         if para["targz"] == "tar.xz":
+    #             command = (
+    #                 "python3 setup.py sdist --owner=root --group=root --formats=xztar"
+    #             )
+    #         elif para["targz"] == "tar.bz2":
+    #             command = (
+    #                 "python3 setup.py sdist --owner=root --group=root --formats=bztar"
+    #             )
+    #         else:
+    #             command = (
+    #                 "python3 setup.py sdist --owner=root --group=root --formats=gztar"
+    #             )
+    #     else:
+    #         # http://docs.python.org/2/distutils/
+    #         if para["targz"] == "tar.xz":
+    #             command = (
+    #                 "python setup.py sdist --owner=root --group=root --formats=xztar"
+    #             )
+    #         elif para["targz"] == "tar.bz2":
+    #             command = (
+    #                 "python setup.py sdist --owner=root --group=root --formats=bztar"
+    #             )
+    #         else:
+    #             command = (
+    #                 "python setup.py sdist --owner=root --group=root --formats=gztar"
+    #             )
+    #     print("I: $ {}".format(command), file=sys.stderr)
+    #     if subprocess.call(command, shell=True) != 0:
+    #         print("E: setup.py failed.", file=sys.stderr)
+    #         exit(1)
+    #     distdir = "dist"
     #######################################################################
     # make distribution tarball using Build.PL
     #######################################################################

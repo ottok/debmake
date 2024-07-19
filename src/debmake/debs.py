@@ -61,11 +61,11 @@ def debs(binaryspec, package, monoarch, dh_with):
         # get real binary package name: p
         ###################################################################
         p = y[0].strip()
-        if p == "":
+        if p == "":  # null ==> package
             p = package
-        elif p == "-":
+        elif p == "-":  # - ==> package
             p = package
-        elif p[0] == "-":
+        elif p[0] == "-":  # -doc ==> package-doc
             p = package + p
         # first default values and then override or update values
         a = "any"  # arch

@@ -1,0 +1,10 @@
+# You must remove unused comment lines for the released package.
+### See gbp.conf(5) provided by git-buildpackage package
+###
+### Even if you don't use gbp-buildpackage command and its workflow, this may be
+### useful for gbp-dch command by setting debian-branch.
+
+###[DEFAULT]
+###debian-branch = main
+###debian-tag = %(version)s
+###export-dir = ../build-area

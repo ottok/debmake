@@ -26,6 +26,7 @@ import os
 import subprocess
 import sys
 import time
+import importlib.resources
 import debmake
 import debmake.analyze
 import debmake.checkdep5
@@ -52,6 +53,9 @@ def main():
     #######################################################################
     debmake.debug.debug("D: {} started".format(sys.argv[0]), type="i")
     debmake.debug.debug("D: PYTHONPATH = {} ".format(":".join(sys.path)), type="i")
+    debmake.debug.debug(
+        "D: DEBMAKE_PATH = {}".format(importlib.resources.files("debmake")), type="i"
+    )
     print("I: set parameters", file=sys.stderr)
     para = {}
     para["cwd"] = os.getcwd()
@@ -87,42 +91,9 @@ def main():
     #######################################################################
     # check installed path
     #######################################################################
-    print(
-        "I: =================================================================",
-        file=sys.stderr,
-    )
-    # get prefix for install --user/ ,, --prefix/ ,, --home
-    # ignore case for files in zipped file
-    # https://docs.python.org/3/library/importlib.html#module-importlib.resources
-    # debmake.__file__:
-    #    /usr/lib/python3/dist-packages/debmake/cli.py
-    #    *****            ^^^^^^^^^^^^^^
-    #    $HOME/.local/usr/pipx/venvs/debmake/lib/python3.9/site-packages/debmake/cli.py
-    #    ************************************              ^^^^^^^^^^^^^^
-    #    $SRC_PATH/src/debmake/cli.py (execute from source tree)
-    #              ^^^^
-    #    **************
-    package_dir = os.path.dirname(os.path.dirname(os.path.realpath(debmake.__file__)))
-    print("I: package_dir     = " + package_dir, file=sys.stderr)
-    if os.path.basename(package_dir) != "src":
-        # installed case
-        para["base_path"] = os.path.dirname(
-            os.path.dirname(os.path.dirname(package_dir))
-        )
-        para["base_lib_path"] = para["base_path"] + "/lib/debmake"
-        para["base_share_path"] = para["base_path"] + "/share/debmake"
-    else:
-        # in-source-tree case (src)
-        para["base_path"] = package_dir
-        para["base_lib_path"] = para["base_path"]
-        para["base_share_path"] = para["base_path"]
-    print("I: base_path       = " + para["base_path"], file=sys.stderr)
-    print("I: base_lib_path   = " + para["base_lib_path"], file=sys.stderr)
-    print("I: base_share_path = " + para["base_share_path"], file=sys.stderr)
-    print(
-        "I: =================================================================",
-        file=sys.stderr,
-    )
+    # FIXME: for now I use UNIX only so object is str
+    para["data_path"] = "{}/data/".format(importlib.resources.files("debmake"))
+    debmake.debug.debug("D: data_path = {}".format(para["data_path"]), type="i")
     #######################################################################
     # -v: exit
     #######################################################################

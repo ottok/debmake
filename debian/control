@@ -3,12 +3,10 @@ Section: devel
 Priority: optional
 Maintainer: Osamu Aoki <osamu@debian.org>
 Build-Depends: debhelper-compat (= 13),
-               dh-python,
                dh-sequence-single-binary,
                pybuild-plugin-pyproject,
-               python3-all,
-               python3-setuptools
-Standards-Version: 4.5.1
+               python3
+Standards-Version: 4.6.2
 Homepage: https://salsa.debian.org/debian/debmake
 Vcs-Git: https://salsa.debian.org/debian/debmake.git
 Vcs-Browser: https://salsa.debian.org/debian/debmake
@@ -30,6 +28,7 @@ Suggests: autotools-dev,
           dgit,
           dh-autoreconf,
           dh-python,
+          dh-sequence-single-binary,
           eatmydata,
           gem2deb,
           git,
@@ -38,6 +37,8 @@ Suggests: autotools-dev,
           javahelper,
           lintian,
           mc,
+          pybuild-plugin-pyproject,
+          python3-build,
           quilt,
           rpm2cpio,
           sbuild
@@ -45,7 +46,7 @@ Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source
  package.  The generated debian/rules file uses the new dh command syntax from
- the debhelper (>=11~) package.
+ the debhelper (>=13~) package.
  .
  The debmake command invoked in the upstream source tree without any option can
  generate files which is good enough to create a single arch=any Debian binary

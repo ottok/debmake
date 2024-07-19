@@ -34,28 +34,25 @@ def cat(file, text, end="", tutorial=False):
         # skip if a file exists and non-zero content
         print("I: skipping :: {} (file exists)".format(file), file=sys.stderr)
         return
+    newtext = ""
     if tutorial:
-        newtext = ""
         for line in text.split("\n"):
-            if line[:3] != "###" or line[:4] == "####":
+            if line[:3] != "###":
                 newtext += line + "\n"
             else:
                 newtext += line[2:] + "\n"
-        text = newtext
     else:
-        newtext = ""
         for line in text.split("\n"):
-            if line[:3] != "###" or line[:4] == "####":
+            if line[:3] != "###":
                 newtext += line + "\n"
-        text = newtext
-    text = text.rstrip() + "\n"
+    newtext = newtext.rstrip() + "\n"
     path = os.path.dirname(file)
     if path:
         os.makedirs(path, exist_ok=True)
     with open(file, mode="w", encoding="utf-8") as f:
         print("I: creating => {}".format(file), file=sys.stderr)
-        print(text, file=f, end=end)
-        debmake.debug.debug('Dw: "{}"'.format(text), type="w")
+        print(newtext, file=f, end=end)
+        debmake.debug.debug('Dw: "{}"'.format(newtext), type="w")
     return
 
 

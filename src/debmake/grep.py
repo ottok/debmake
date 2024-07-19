@@ -30,6 +30,9 @@ import sys
 #######################################################################
 # grep rtext file
 def grep(file, rtext, *range):
+    # range 0,1: grep on the first line (0-th)
+    # range 5,8: grep on the 6-th line to the 8-th line
+    # range 5,-1: grep on the 6-th line to the last line
     lines = ""
     if not os.path.isfile(file):
         print("I: skipping :: {} (missing file)".format(file), file=sys.stderr)
@@ -37,10 +40,10 @@ def grep(file, rtext, *range):
         reg = re.compile(rtext)
         if len(range) == 0:
             lbgn = 0
-            lend = -1
+            lend = 1
         elif len(range) == 1:
             lbgn = range[0]
-            lend = -1
+            lend = lbgn + 1
         else:
             lbgn = range[0]
             lend = range[1]

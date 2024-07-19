@@ -2,7 +2,7 @@ debmake for Debian
 ------------------
 
 The debmake command is a helper script to generate basic Debian packaging files
-using debhelper version 9 or newer with multiarch conscious way.  See the
+using debhelper version 13 or newer with multiarch conscious way.  See the
 debmake(1) manpage in this package and the HTML documentation provided in the
 debmake-doc package for more.
 
@@ -22,8 +22,9 @@ The author thanks previous efforts on this topic:
 
 UPDATE:
  * I wrote most of debmake code in 2013-2014.
- * dh-make were ported from perl to python in 2016 and updated its
-   behavior.  So current dh-make is python3 based.
+ * dh-make was ported from perl to python in 2016 and updated its behavior.
+   So current dh-make is python3 based.
+ * I updated debmake for debhelper v13 in 2024.
 
 Rationale for debmake
 ---------------------
@@ -65,5 +66,4 @@ UPDATE:
 
 The above was written around 14 Dec 2014 except for UPDATE.
 
- -- Osamu Aoki <osamu@debian.org>  Sun, 20 Jun 2021 00:00:00 +0000
-
+ -- Osamu Aoki <osamu@debian.org>  Tue, 09 Jul 2024 05:44:29 +0000

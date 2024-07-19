@@ -22,10 +22,12 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+
 import argparse
 import os
 import pwd
 import debmake.read
+import debmake.debug
 
 
 ###########################################################################
@@ -341,12 +343,18 @@ Argument may need to be quoted to protect from the shell.
     para["local"] = args.local  # -L
     para["pedantic"] = args.pedantic  # -P
     para["tutorial"] = args.tutorial  # -T
+    if para["copyright"] >= 3:
+        para["tutorial"] = True  # override
     ############################################# -o
     if args.option:
         exec(debmake.read.read(args.option))
     #######################################################################
     # return command line parameters
     #######################################################################
+    text = ""
+    for p, v in para.items():
+        text = text + "para['{}'] = \"{}\"\n".format(p, v)
+    debmake.debug.debug('Dp: "{}"'.format(text), type="p")
     return para
 
 
