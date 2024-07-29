@@ -65,7 +65,7 @@ def para(para={}):
 
 {0} helps to build the Debian package from the upstream source.
 Normally, this is done as follows:
- * The upstream tarball is downloaded as the package-version.tar.gz file.
+ * The upstream tarball is downloaded as the package-version.tar.[gx]z file.
  * It is untared to create many files under the package-version/ directory.
  * {0} is invoked in the package-version/ directory possibly without any arguments.
  * Files in the package-version/debian/ directory are manually adjusted.
@@ -151,7 +151,7 @@ Argument may need to be quoted to protect from the shell.
         "-z",
         "--targz",
         action="store",
-        default="",
+        default="*",
         help="set the tarball type, extension=(tar.gz|tar.bz2|tar.xz)",
         metavar="extension",
     )

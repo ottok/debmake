@@ -168,14 +168,19 @@ def sanity(para):
             para["targz"] = targz
         elif para["targz"] != targz:
             print(
-                'W: -r "{}" != auto set value "{}"'.format(para["targz"], targz),
+                'W: extension used for -a "{}" != value for -x "{}"'.format(targz, para["targz"]),
                 file=sys.stderr,
             )
     #######################################################################
+    if para["tar"]:  # -t
+        # default for -t is tar.xz
+        if para["targz"] == "*":
+            para["targz"] = "tar.xz"
+    #######################################################################
     if not para["archive"]:  # not -a
-        # set para['targz']
-        if para["targz"] == "":
-            para["targz"] = "tar.gz"
+        # sanity check and set para['targz'] for short forms
+        if para["targz"] == "*": # default: resolve later
+            pass
         elif para["targz"][0] == "g":
             para["targz"] = "tar.gz"
         elif para["targz"][0] == "b":
@@ -195,7 +200,7 @@ def sanity(para):
             )
             exit(1)
     #######################################################################
-    if para["archive"]:
+    if para["archive"]: # -a
         para["srcdir"] = para["package"] + "-" + para["version"]
         # para['tar'] may be Foo-1.0.tar.xz and keep it so.
     elif para["dist"]:  # -d
@@ -221,6 +226,24 @@ def sanity(para):
         elif para["package"] == "":  # -u set, -p missing
             para["package"] = parent.lower()
         para["srcdir"] = para["package"] + "-" + para["version"]
+        if para["targz"] == "*": # last chance to resolve
+            if os.path.isfile("../" + para["package"] + "-" + para["version"] + ".tar.xz"):
+                para["targz"] = "tar.xz"
+            elif os.path.isfile("../" + para["package"] + "-" + para["version"] + ".tar.gz"):
+                para["targz"] = "tar.gz"
+            elif os.path.isfile("../" + para["package"] + "-" + para["version"] + ".tar.bz2"):
+                para["targz"] = "tar.bz2"
+            elif os.path.isfile("../" + para["package"] + "_" + para["version"] + ".orig.tar.xz"):
+                para["targz"] = "tar.xz"
+            elif os.path.isfile("../" + para["package"] + "_" + para["version"] + ".orig.tar.gz"):
+                para["targz"] = "tar.gz"
+            elif os.path.isfile("../" + para["package"] + "_" + para["version"] + ".orig.tar.bz2"):
+                para["targz"] = "tar.bz2"
+            else:
+                print(
+                    "E: upstream tarball missing for -p {} -u {}".format(para["package"], para["version"]), file=sys.stderr
+                )
+                exit(1)
         para["tarball"] = para["package"] + "-" + para["version"] + "." + para["targz"]
     #######################################################################
     if para["revision"] == "":

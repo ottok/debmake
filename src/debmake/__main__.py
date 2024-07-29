@@ -205,7 +205,7 @@ def main():
         )
     if not para["native"]:
         print(
-            "I: provide {}_{}.orig.tar.gz for non-native Debian package".format(
+            "I: provide {}_{}.orig.tar.?z for non-native Debian package".format(
                 para["package"], para["version"]
             ),
             file=sys.stderr,
