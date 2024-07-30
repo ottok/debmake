@@ -65,7 +65,7 @@ def popular(exttype, msg, debs, extcountlist, yes):
             if type == exttype:
                 settype = True
                 break
-            if exttype == "python" and type == "python3":
+            if exttype == "python3" and type == "python3":
                 settype = True
                 break
             if exttype == "javascript" and type == "nodejs":
@@ -195,18 +195,6 @@ def analyze(para):
                 )
                 exit(1)
         elif deb["type"] == "perl":
-            for libpkg in para["lib"]:
-                para["debs"][i]["depends"].update(
-                    {
-                        libpkg
-                        + " (>= ${source:Version}), "
-                        + libpkg
-                        + " (<< ${source:Upstream-Version}.0~)"
-                    }
-                )
-        elif deb["type"] == "python":
-            para["dh_with"].update({"python3"})  # better to be explicit
-            para["build_depends"].update({"python3-all", "dh-python"})
             for libpkg in para["lib"]:
                 para["debs"][i]["depends"].update(
                     {
@@ -534,11 +522,8 @@ def analyze(para):
         if setmultiarch and para["build_type"][0:9] != "Autotools":
             para["override"].update({"multiarch"})
     #######################################################################
-    # set build dependency and override if --with python2/python3
+    # set build dependency and override if --with python3
     #######################################################################
-    if "python2" in para["dh_with"]:
-        para["build_depends"].update({"python-all"})
-        para["override"].update({"pythons"})
     if "python3" in para["dh_with"]:
         para["build_depends"].update({"python3-all", "dh-python"})
         para["override"].update({"pythons"})
@@ -553,8 +538,8 @@ def analyze(para):
         para["yes"],
     )
     popular(
-        "python",
-        '-b":python, ..." or -b":python3" missing. Continue?',
+        "python3",
+        '-b":python3" is missing. Continue?',
         para["debs"],
         para["extcountlist"],
         para["yes"],

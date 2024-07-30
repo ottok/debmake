@@ -131,10 +131,6 @@ Rules-Requires-Root: no
         guess_vcsbrowser(para["vcsbrowser"]),
         para["vcsbrowser"],
     )
-    if "python2" in para["dh_with"]:
-        msg += "#X-Python-Version: >= 2.7\n"
-    if "python3" in para["dh_with"]:
-        msg += "#X-Python3-Version: >= 3.7\n"
     # anything for perl and others XXX FIXME XXX
     msg += "\n"
     return msg
@@ -243,7 +239,7 @@ if __name__ == "__main__":
     print(control(para))
     print("***********************************************************")
     para["dh_with"] = set({"python3"})
-    para["binaryspec"] = "-:python,-doc:doc,lib"
+    para["binaryspec"] = "-:python3,-doc:doc,lib"
     para["monoarch"] = False
     para["debs"] = debmake.debs.debs(
         para["binaryspec"], para["package"], para["monoarch"], para["dh_with"]

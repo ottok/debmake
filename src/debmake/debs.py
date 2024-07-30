@@ -87,7 +87,7 @@ def debs(binaryspec, package, monoarch, dh_with):
         elif match_prefix(p, "python-"):
             a = "all"
             m = "foreign"
-            t = "python"
+            t = "python3"
         elif match_prefix(p, "python3-"):
             a = "all"
             m = "foreign"
@@ -166,23 +166,19 @@ def debs(binaryspec, package, monoarch, dh_with):
                 a = "all"
                 m = "foreign"
                 t = "perl"
-            elif match_prefix(t, "python3") or (t == "py3"):  # python3
+            elif match_prefix(t, "py"): # python3 python py py3
                 a = "all"
                 m = "foreign"
                 t = "python3"
-            elif match_prefix(t, "py"):  # python
-                a = "all"
-                m = "foreign"
-                t = "python"
-            elif match_prefix(t, "ruby") or (t == "rb"):  # ruby
+            elif match_prefix(t, "ru"):  # ruby
                 a = "all"
                 m = "foreign"
                 t = "ruby"
-            elif match_prefix(t, "no") or (t == "js"):  # node.js
+            elif match_prefix(t, "no") or (t == "js"):  # node, js
                 a = "all"
                 m = "foreign"
                 t = "nodejs"
-            elif match_prefix(t, "sc") or (t == "sh"):  # script
+            elif match_prefix(t, "sc") or (t == "sh"):  # script, sh
                 a = "all"
                 m = "foreign"
                 t = "script"
@@ -219,9 +215,6 @@ def debs(binaryspec, package, monoarch, dh_with):
             elif "perl_makemaker" in dh_with:
                 a = "all"
                 t = "perl"
-            elif "python2" in dh_with:
-                a = "all"
-                t = "python"
             elif "python3" in dh_with:
                 a = "all"
                 t = "python3"
@@ -259,8 +252,6 @@ def debs(binaryspec, package, monoarch, dh_with):
             dp.update({"${shlibs:Depends}"})
         elif t == "perl":  # dh_perl(1)
             dp.update({"${perl:Depends}"})
-        elif t == "python":  # dh_python2
-            dp.update({"${python:Depends}"})
         elif t == "python3":  # dh_python3
             dp.update({"${python3:Depends}"})
         elif t == "ruby":  # gem2deb ??? XXXX FIXME XXXX
