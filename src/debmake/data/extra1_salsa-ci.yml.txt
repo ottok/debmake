@@ -8,3 +8,19 @@
 ---
 include:
   - https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/recipes/debian.yml
+
+# # This commented-out sample disables all default tests, only disable those
+# # CI tests that is required to get the CI process to succeed.
+#
+# variables:
+#   SALSA_CI_DISABLE_APTLY: 1
+#   SALSA_CI_DISABLE_AUTOPKGTEST: 1
+#   SALSA_CI_DISABLE_BLHC: 1
+#   SALSA_CI_DISABLE_LINTIAN: 1
+#   SALSA_CI_DISABLE_PIUPARTS: 1
+#   SALSA_CI_DISABLE_REPROTEST: 1
+#   SALSA_CI_DISABLE_BUILD_PACKAGE_ALL: 1
+#   SALSA_CI_DISABLE_BUILD_PACKAGE_ANY: 1
+#   SALSA_CI_DISABLE_BUILD_PACKAGE_I386: 1
+#   SALSA_CI_DISABLE_CROSSBUILD_ARM64: 1
+
