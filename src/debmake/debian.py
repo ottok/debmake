@@ -355,13 +355,13 @@ def debian(para):
             tutorial=para["tutorial"],
         )
     ###################################################################
-    # wrap-and-sort
+    # wrap-and-sort -vast
     # comments may be reordered to be placed after an empty line
     ###################################################################
-    command = "wrap-and-sort"
+    command = "wrap-and-sort -vast"
     print("I: $ {}".format(command), file=sys.stderr)
     if subprocess.call(command, shell=True) != 0:
-        print("E: failed to run wrap-and-sort.", file=sys.stderr)
+        print("E: failed to run \"wrap-and-sort -vast\".", file=sys.stderr)
         exit(1)
     print(
         "I: $ {} complete.  Now, debian/* may have a blank line at the top.".format(
