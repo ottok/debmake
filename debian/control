@@ -2,10 +2,11 @@ Source: debmake
 Section: devel
 Priority: optional
 Maintainer: Osamu Aoki <osamu@debian.org>
-Build-Depends: debhelper-compat (= 13),
-               dh-sequence-single-binary,
-               pybuild-plugin-pyproject,
-               python3
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-single-binary,
+ pybuild-plugin-pyproject,
+ python3,
 Standards-Version: 4.7.0
 Homepage: https://salsa.debian.org/debian/debmake
 Vcs-Git: https://salsa.debian.org/debian/debmake.git
@@ -14,34 +15,39 @@ Vcs-Browser: https://salsa.debian.org/debian/debmake
 Package: debmake
 Architecture: all
 Multi-Arch: foreign
-Depends: devscripts,
-         dpkg-dev,
-         python3-debian,
-         rsync,
-         ${misc:Depends},
-         ${python3:Depends}
-Recommends: build-essential, strace, wget | curl
-Suggests: autotools-dev,
-          ccache,
-          cmake,
-          debmake-doc,
-          dgit,
-          dh-autoreconf,
-          dh-python,
-          dh-sequence-single-binary,
-          eatmydata,
-          gem2deb,
-          git,
-          git-buildpackage,
-          gitk,
-          javahelper,
-          lintian,
-          mc,
-          pybuild-plugin-pyproject,
-          python3-build,
-          quilt,
-          rpm2cpio,
-          sbuild
+Depends:
+ devscripts,
+ dpkg-dev,
+ python3-debian,
+ rsync,
+ ${misc:Depends},
+ ${python3:Depends},
+Recommends:
+ build-essential,
+ strace,
+ wget | curl,
+Suggests:
+ autotools-dev,
+ ccache,
+ cmake,
+ debmake-doc,
+ dgit,
+ dh-autoreconf,
+ dh-python,
+ dh-sequence-single-binary,
+ eatmydata,
+ gem2deb,
+ git,
+ git-buildpackage,
+ gitk,
+ javahelper,
+ lintian,
+ mc,
+ pybuild-plugin-pyproject,
+ python3-build,
+ quilt,
+ rpm2cpio,
+ sbuild,
 Description: helper script to make the Debian source package
  This package helps you to convert an upstream source package (or VCS contents)
  into the Debian package by adding files required for the Debian source

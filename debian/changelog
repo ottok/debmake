@@ -1,3 +1,10 @@
+debmake (4.5.1-1) unstable; urgency=medium
+
+  * Use "wrap-and-sort -vast" in debmake
+  * Package updated with "wrap-and-sort -vast"
+
+ -- Osamu Aoki <osamu@debian.org>  Thu, 28 Nov 2024 18:17:27 +0900
+
 debmake (4.5.0-1) unstable; urgency=medium
 
   * release new upstream with pyright conformance
