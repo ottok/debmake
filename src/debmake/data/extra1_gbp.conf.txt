@@ -1,10 +1,23 @@
 # You must remove unused comment lines for the released package.
 ### See gbp.conf(5) provided by git-buildpackage package
-###
-### Even if you don't use gbp-buildpackage command and its workflow, this may be
-### useful for gbp-dch command by setting debian-branch.
 
 ###[DEFAULT]
-###debian-branch = main
-###debian-tag = %(version)s
-###export-dir = ../build-area
+#### DEP-14 format
+###debian-branch = debian/latest
+###upstream-branch = upstream/latest
+#### Always use pristine tar in projects that use source tarball imports
+###pristine-tar = True
+
+#### Configure the upstream tag format below, so that `gbp import-orig` will run
+#### correctly, and link tarball import branch (`upstream/latest`) with the
+#### equivalent upstream release tag, showing a complete audit trail of what
+#### upstream released and what was imported into Debian.
+###upstream-vcs-tag = %(version%~%.)s
+
+#### If upstream publishes tarball signatures, git-buildpackage will by default
+#### import and use the them. Change this to 'on' to make 'gbp import-orig' abort
+#### if the signature is not found or is not valid.
+####upstream-signatures = on
+
+#### Ensure the Debian maintainer signs git tags automatically
+###sign-tags = True
